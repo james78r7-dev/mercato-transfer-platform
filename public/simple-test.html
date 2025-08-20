@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>اختبار بسيط - نظام التزامن</title>
+    <script src="shared-data.js"></script>
+    <script>
+      if (!window.barcelonaDataManager) {
+        window.barcelonaDataManager = new BarcelonaDataManager();
+      }
+    </script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: #f0f0f0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .status {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        .success { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .error { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+        .info { background: #d1ecf1; color: #0c5460; border: 1px solid #bee5eb; }
+        .warning { background: #fff3cd; color: #856404; border: 1px solid #ffeaa7; }
+        
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 5px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover { background: #0056b3; }
+        
+        .log {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            padding: 10px;
+            height: 200px;
+            overflow-y: auto;
+            font-family: monospace;
+            font-size: 12px;
+        }
+        
+        .player-list {
+            margin: 20px 0;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 5px;
+        }
+        
+        .player-item {
+            padding: 5px;
+            margin: 2px 0;
+            background: white;
+            border-radius: 3px;
+            border-left: 3px solid #007bff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧪 اختبار بسيط - نظام التزامن</h1>
+        
+        <div id="status"></div>
+        
+        <h3>🔧 اختبارات النظام</h3>
+        <button onclick="testDataManager()">اختبار مدير البيانات</button>
+        <button onclick="testStorage()">اختبار التخزين</button>
+        <button onclick="testSync()">اختبار التزامن</button>
+        <button onclick="addTestPlayer()">إضافة لاعب تجريبي</button>
+        <button onclick="clearData()">مسح البيانات</button>
+        
+        <h3>📊 البيانات الحالية</h3>
+        <div id="playerCount">عدد اللاعبين: 0</div>
+        <div id="playerList" class="player-list"></div>
+        
+        <h3>📝 سجل العمليات</h3>
+        <div id="log" class="log"></div>
+    </div>
+
+    <script>
+        let logElement;
+        
+        function log(message, type = 'info') {
+            const timestamp = new Date().toLocaleTimeString();
+            const entry = document.createElement('div');
+            entry.innerHTML = `[${timestamp}] ${message}`;
+            entry.style.color = type === 'error' ? 'red' : type === 'success' ? 'green' : 'black';
+            logElement.appendChild(entry);
+            logElement.scrollTop = logElement.scrollHeight;
+        }
+        
+        function updateStatus(message, type) {
+            const statusDiv = document.getElementById('status');
+            statusDiv.innerHTML = `<div class="status ${type}">${message}</div>`;
+        }
+        
+        function updatePlayerDisplay() {
+            const players = window.BARCELONA_SHARED_DATA?.players || [];
+            document.getElementById('playerCount').textContent = `عدد اللاعبين: ${players.length}`;
+            
+            const playerList = document.getElementById('playerList');
+            playerList.innerHTML = '';
+            
+            players.forEach((player, index) => {
+                const playerDiv = document.createElement('div');
+                playerDiv.className = 'player-item';
+                playerDiv.innerHTML = `
+                    <strong>${player.name}</strong> - ${player.position} - ${player.currentClub} 
+                    (${player.probability}%) - ${player.status}
+                    <button onclick="deletePlayer(${index})" style="float: left; background: #dc3545; padding: 2px 8px; font-size: 10px;">حذف</button>
+                `;
+                playerList.appendChild(playerDiv);
+            });
+        }
+        
+        function testDataManager() {
+            log('بدء اختبار مدير البيانات...', 'info');
+            
+            try {
+                if (window.barcelonaDataManager) {
+                    const players = window.barcelonaDataManager.getPlayers();
+                    log(`✅ مدير البيانات يعمل - ${players.length} لاعب`, 'success');
+                    updateStatus('✅ مدير البيانات يعمل بشكل صحيح', 'success');
+                } else {
+                    throw new Error('مدير البيانات غير متاح');
+                }
+            } catch (error) {
+                log(`❌ فشل في اختبار مدير البيانات: ${error.message}`, 'error');
+                updateStatus('❌ فشل في اختبار مدير البيانات', 'error');
+            }
+        }
+        
+        function testStorage() {
+            log('بدء اختبار التخزين...', 'info');
+            
+            try {
+                const testData = { test: 'data', timestamp: Date.now() };
+                localStorage.setItem('test_storage', JSON.stringify(testData));
+                const retrieved = JSON.parse(localStorage.getItem('test_storage'));
+                localStorage.removeItem('test_storage');
+                
+                if (retrieved.test === testData.test) {
+                    log('✅ اختبار التخزين ناجح', 'success');
+                    updateStatus('✅ اختبار التخزين ناجح', 'success');
+                } else {
+                    throw new Error('البيانات المسترجعة لا تتطابق');
+                }
+            } catch (error) {
+                log(`❌ فشل في اختبار التخزين: ${error.message}`, 'error');
+                updateStatus('❌ فشل في اختبار التخزين', 'error');
+            }
+        }
+        
+        function testSync() {
+            log('بدء اختبار التزامن...', 'info');
+            
+            try {
+                if (window.BARCELONA_SYNC) {
+                    const stats = window.BARCELONA_SYNC.getStats();
+                    log(`✅ نظام التزامن يعمل - ${stats.total} لاعب`, 'success');
+                    
+                    // اختبار إرسال حدث
+                    window.BARCELONA_SYNC.refreshBroadcast();
+                    log('✅ تم إرسال حدث التحديث', 'success');
+                    
+                    updateStatus('✅ نظام التزامن يعمل بشكل صحيح', 'success');
+                } else {
+                    throw new Error('نظام التزامن غير متاح');
+                }
+            } catch (error) {
+                log(`❌ فشل في اختبار التزامن: ${error.message}`, 'error');
+                updateStatus('❌ فشل في اختبار التزامن', 'error');
+            }
+        }
+        
+        function addTestPlayer() {
+            log('إضافة لاعب تجريبي...', 'info');
+            
+            try {
+                const testPlayer = {
+                    id: `test_${Date.now()}`,
+                    name: `لاعب تجريبي ${Date.now()}`,
+                    position: 'مهاجم',
+                    currentClub: 'نادي تجريبي',
+                    probability: Math.floor(Math.random() * 100),
+                    status: 'rumor',
+                    age: 25,
+                    nationality: 'تجريبي',
+                    image: 'https://via.placeholder.com/150',
+                    transferFee: '€50M',
+                    contractUntil: '2027',
+                    createdAt: new Date().toISOString(),
+                    lastUpdate: new Date().toISOString()
+                };
+                
+                if (window.barcelonaDataManager) {
+                    window.barcelonaDataManager.addPlayer(testPlayer);
+                    log(`✅ تم إضافة لاعب تجريبي: ${testPlayer.name}`, 'success');
+                    updatePlayerDisplay();
+                } else {
+                    throw new Error('مدير البيانات غير متاح');
+                }
+            } catch (error) {
+                log(`❌ فشل في إضافة لاعب تجريبي: ${error.message}`, 'error');
+            }
+        }
+        
+        function deletePlayer(index) {
+            log(`حذف لاعب رقم ${index}...`, 'info');
+            
+            try {
+                if (window.barcelonaDataManager) {
+                    window.barcelonaDataManager.removePlayer(index);
+                    log('✅ تم حذف اللاعب', 'success');
+                    updatePlayerDisplay();
+                } else {
+                    throw new Error('مدير البيانات غير متاح');
+                }
+            } catch (error) {
+                log(`❌ فشل في حذف اللاعب: ${error.message}`, 'error');
+            }
+        }
+        
+        function clearData() {
+            log('مسح جميع البيانات...', 'warning');
+            
+            try {
+                if (window.barcelonaDataManager) {
+                    window.barcelonaDataManager.clearAllData();
+                    log('✅ تم مسح جميع البيانات', 'success');
+                    updatePlayerDisplay();
+                } else {
+                    throw new Error('مدير البيانات غير متاح');
+                }
+            } catch (error) {
+                log(`❌ فشل في مسح البيانات: ${error.message}`, 'error');
+            }
+        }
+        
+        // مراقبة التغييرات
+        function setupMonitoring() {
+            if (window.barcelonaDataManager) {
+                window.barcelonaDataManager.addListener((data) => {
+                    log(`🔄 تحديث تلقائي - ${data.players?.length || 0} لاعب`, 'info');
+                    updatePlayerDisplay();
+                });
+            }
+            
+            window.addEventListener('barcelonaDataUpdated', (event) => {
+                log(`📡 حدث تحديث البيانات - ${event.detail.players?.length || 0} لاعب`, 'success');
+                updatePlayerDisplay();
+            });
+        }
+        
+        function waitForSharedDataAndLoad() {
+            let attempts = 0;
+            const maxAttempts = 20;
+            function tryLoad() {
+                if (window.BARCELONA_SHARED_DATA && Array.isArray(window.BARCELONA_SHARED_DATA.players)) {
+                    loadData();
+                    setupMonitoring();
+                    startPeriodicUpdate();
+                } else if (attempts < maxAttempts) {
+                    attempts++;
+                    setTimeout(tryLoad, 200);
+                } else {
+                    // fallback: حمل بيانات فارغة
+                    loadData();
+                    setupMonitoring();
+                    startPeriodicUpdate();
+                }
+            }
+            tryLoad();
+        }
+        
+        // تهيئة الصفحة
+        document.addEventListener('DOMContentLoaded', function() {
+            logElement = document.getElementById('log');
+            log('🚀 بدء اختبار نظام التزامن...', 'info');
+            
+            // تحميل البيانات الأولية
+            loadData();
+            // إعداد المراقبة
+            setupMonitoring();
+            // بدء التحديث الدوري
+            startPeriodicUpdate();
+            
+            log('✅ تم تهيئة نظام الاختبار', 'success');
+        });
+    </script>
+</body>
+</html> 

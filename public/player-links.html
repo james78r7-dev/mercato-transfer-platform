@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إدارة روابط صفحات اللاعبين - Mercato Tracker</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+            --success-color: #059669;
+            --warning-color: #d97706;
+            --danger-color: #dc2626;
+            --dark-color: #1f2937;
+            --light-color: #f8fafc;
+            --border-radius: 16px;
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+            --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cairo', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .main-container {
+            background: rgba(255, 255, 255, 0.98);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-xl);
+            backdrop-filter: blur(20px);
+            margin: 0 auto;
+            max-width: 1000px;
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--success-color) 0%, #047857 100%);
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="2" fill="rgba(255,255,255,0.1)"/><circle cx="80" cy="80" r="2" fill="rgba(255,255,255,0.1)"/><circle cx="40" cy="60" r="1" fill="rgba(255,255,255,0.1)"/></svg>');
+            animation: float 20s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin: 0;
+            position: relative;
+            z-index: 1;
+        }
+
+        .content-section {
+            padding: 2.5rem;
+        }
+
+        .section-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--dark-color);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .form-control {
+            border-radius: var(--border-radius);
+            border: 2px solid #e5e7eb;
+            padding: 1rem 1.25rem;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: #ffffff;
+            font-family: inherit;
+        }
+
+        .form-control:focus {
+            border-color: var(--success-color);
+            box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.1);
+            outline: none;
+        }
+
+        .form-control::placeholder {
+            color: #9ca3af;
+        }
+
+        .btn {
+            border-radius: var(--border-radius);
+            padding: 0.875rem 1.5rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            font-family: inherit;
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, var(--success-color) 0%, #047857 100%);
+            color: white;
+        }
+
+        .btn-success:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .btn-outline-warning {
+            border: 2px solid var(--warning-color);
+            color: var(--warning-color);
+            background: transparent;
+        }
+
+        .btn-outline-warning:hover {
+            background: var(--warning-color);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .btn-outline-danger {
+            border: 2px solid var(--danger-color);
+            color: var(--danger-color);
+            background: transparent;
+        }
+
+        .btn-outline-danger:hover {
+            background: var(--danger-color);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .add-form-section {
+            background: #f0fdf4;
+            border: 2px solid var(--success-color);
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .stats-section {
+            background: #f8fafc;
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            border: 1px solid #e5e7eb;
+        }
+
+        .table-section {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            border: 1px solid #e5e7eb;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .table {
+            margin-bottom: 0;
+        }
+
+        .table th {
+            background: #f8fafc;
+            border-bottom: 2px solid #e5e7eb;
+            font-weight: 600;
+            color: var(--dark-color);
+        }
+
+        .table td {
+            vertical-align: middle;
+        }
+
+        .badge {
+            font-size: 0.875rem;
+            padding: 0.5rem 0.75rem;
+        }
+
+        .navigation-links {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1rem;
+            background: white;
+            border: 2px solid #e5e7eb;
+            border-radius: var(--border-radius);
+            text-decoration: none;
+            color: var(--dark-color);
+            transition: all 0.3s ease;
+        }
+
+        .nav-link:hover {
+            border-color: var(--primary-color);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+            color: var(--primary-color);
+        }
+
+        .nav-link i {
+            font-size: 1.5rem;
+        }
+
+        .alert {
+            border-radius: var(--border-radius);
+            border: none;
+            padding: 1rem 1.5rem;
+        }
+
+        .alert-success {
+            background: #f0fdf4;
+            color: #166534;
+            border-left: 4px solid var(--success-color);
+        }
+
+        .alert-danger {
+            background: #fef2f2;
+            color: #991b1b;
+            border-left: 4px solid var(--danger-color);
+        }
+
+        .alert-warning {
+            background: #fffbeb;
+            color: #92400e;
+            border-left: 4px solid var(--warning-color);
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            .header {
+                padding: 2rem 1rem;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .content-section {
+                padding: 1.5rem;
+            }
+            
+            .navigation-links {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <div class="header">
+            <h1><i class="fas fa-link"></i> إدارة روابط صفحات اللاعبين</h1>
+            <p>تخزين سريع لروابط صفحات اللاعبين من Transfermarkt لتحسين دقة البحث</p>
+        </div>
+
+        <div class="content-section">
+            <!-- روابط التنقل المحدثة -->
+            <div class="navigation-links">
+                <a href="/" class="nav-link">
+                    <i class="fas fa-search"></i>
+                    <div>
+                        <div class="fw-bold">البحث عن الشائعات</div>
+                        <small class="text-primary">الصفحة الرئيسية - الأساس</small>
+                    </div>
+                </a>
+
+                <a href="/ultimate-studio-v4" class="nav-link">
+                    <i class="fas fa-rocket"></i>
+                    <div>
+                        <div class="fw-bold">Ultimate Studio V4</div>
+                        <small class="text-success">عالمي! إبداعي متقدم!</small>
+                    </div>
+                </a>
+
+                <a href="/pro-studio-v3-enhanced" class="nav-link">
+                    <i class="fas fa-video"></i>
+                    <div>
+                        <div class="fw-bold">الاستوديو المحسن V3</div>
+                        <small class="text-warning">محسن بالكامل!</small>
+                    </div>
+                </a>
+
+                <a href="/pro-studio-v2" class="nav-link">
+                    <i class="fas fa-broadcast-tower"></i>
+                    <div>
+                        <div class="fw-bold">الاستوديو الاحترافي V2</div>
+                        <small class="text-warning">مطور ومحسن!</small>
+                    </div>
+                </a>
+            </div>
+
+            <!-- قسم إضافة رابط جديد -->
+            <div class="add-form-section">
+                <div class="section-title">
+                    <i class="fas fa-plus-circle"></i>
+                    إضافة رابط صفحة لاعب جديد
+                </div>
+                
+                <p class="text-muted mb-4">
+                    <i class="fas fa-info-circle"></i>
+                    أضف رابط صفحة اللاعب من Transfermarkt ليتم التعرف عليه تلقائياً عند البحث
+                </p>
+                
+                <form id="addPlayerPageForm">
+                    <div class="row g-3">
+                        <div class="col-md-4">
+                            <label for="playerPageName" class="form-label">
+                                <i class="fas fa-user"></i> اسم اللاعب (بالعربية)
+                            </label>
+                            <input type="text" class="form-control" id="playerPageName"
+                                   placeholder="مثال: محمد صلاح" required>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="playerPageUrl" class="form-label">
+                                <i class="fas fa-link"></i> رابط صفحة اللاعب
+                            </label>
+                            <input type="url" class="form-control" id="playerPageUrl"
+                                   placeholder="https://www.transfermarkt.com/..." required>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="playerImageUrl" class="form-label">
+                                <i class="fas fa-image"></i> صورة اللاعب (اختياري)
+                            </label>
+                            <input type="url" class="form-control" id="playerImageUrl"
+                                   placeholder="رابط صورة اللاعب">
+                        </div>
+                    </div>
+
+                    <div class="row g-3 mt-2">
+                        <div class="col-md-6">
+                            <label for="currentClub" class="form-label">
+                                <i class="fas fa-shield-alt"></i> النادي الحالي
+                            </label>
+                            <input type="text" class="form-control" id="currentClub"
+                                   placeholder="مثال: ليفربول" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">&nbsp;</label>
+                            <button type="submit" class="btn btn-success w-100">
+                                <i class="fas fa-plus"></i> إضافة اللاعب
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="mt-3">
+                        <small class="text-muted">
+                            <i class="fas fa-info-circle"></i>
+                            النادي الحالي مطلوب. صورة اللاعب اختيارية وستظهر في العروض المتقدمة. يمكن تحديد النادي المطلوب لاحقاً في الاستوديو.
+                        </small>
+                    </div>
+                </form>
+            </div>
+
+            <!-- قسم الإحصائيات -->
+            <div class="stats-section">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h5 class="mb-1">
+                            <i class="fas fa-chart-bar"></i> إحصائيات الروابط المحفوظة
+                        </h5>
+                        <p class="text-muted mb-0">
+                            إجمالي الروابط: <span id="playerPagesCount" class="badge bg-success">0</span>
+                        </p>
+                    </div>
+                    <button class="btn btn-outline-warning" id="clearPlayerPagesBtn">
+                        <i class="fas fa-trash"></i> مسح جميع الروابط
+                    </button>
+                </div>
+            </div>
+
+            <!-- قسم جدول الروابط -->
+            <div class="table-section">
+                <div class="section-title">
+                    <i class="fas fa-table"></i>
+                    جدول الروابط المحفوظة
+                </div>
+                
+                <div class="table-responsive">
+                    <table class="table table-hover" id="playerPagesTable">
+                        <thead>
+                            <tr>
+                                <th width="25%">اسم اللاعب</th>
+                                <th width="20%">النادي الحالي</th>
+                                <th width="15%">صورة</th>
+                                <th width="25%">رابط الصفحة</th>
+                                <th width="15%">إجراءات</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td colspan="5" class="text-center text-muted py-5">
+                                    <i class="fas fa-info-circle fa-2x mb-3 d-block"></i>
+                                    <h6>لا توجد روابط محفوظة</h6>
+                                    <small>ابدأ بإضافة رابط صفحة لاعب من الأعلى</small>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="player-links.js"></script>
+</body>
+</html>

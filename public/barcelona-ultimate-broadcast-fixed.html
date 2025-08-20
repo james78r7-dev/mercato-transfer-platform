@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barcelona Ultimate Broadcast - النسخة المصححة</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            color: #ffffff;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        .broadcast-container {
+            position: fixed;
+            right: 0;
+            top: 0;
+            width: 420px;
+            height: 100vh;
+            background: linear-gradient(135deg, 
+                rgba(10, 10, 30, 0.95) 0%,
+                rgba(20, 20, 50, 0.85) 25%,
+                rgba(30, 30, 70, 0.75) 50%,
+                rgba(40, 40, 90, 0.85) 75%,
+                rgba(10, 10, 30, 0.95) 100%);
+            backdrop-filter: blur(40px) saturate(1.8) contrast(1.2);
+            border-left: 2px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 
+                -20px 0 60px rgba(0, 0, 0, 0.5),
+                inset 1px 0 0 rgba(255, 255, 255, 0.1),
+                0 0 100px rgba(138, 43, 226, 0.2);
+            overflow: hidden;
+            z-index: 1000;
+        }
+
+        .broadcast-header {
+            position: relative;
+            height: 120px;
+            background: linear-gradient(135deg, 
+                rgba(138, 43, 226, 0.9) 0%,
+                rgba(75, 0, 130, 0.8) 50%,
+                rgba(25, 25, 112, 0.9) 100%);
+            border-bottom: 3px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .header-content {
+            text-align: center;
+            z-index: 2;
+            position: relative;
+        }
+
+        .header-title {
+            font-size: 1.8rem;
+            font-weight: 900;
+            background: linear-gradient(45deg, #ffffff, #e0e0ff, #ffffff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 30px rgba(255, 255, 255, 0.5);
+            animation: holographicGlow 3s ease-in-out infinite alternate;
+        }
+
+        .header-subtitle {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin-top: 5px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        @keyframes holographicGlow {
+            0% { 
+                text-shadow: 0 0 30px rgba(255, 255, 255, 0.5), 0 0 60px rgba(138, 43, 226, 0.3);
+                transform: scale(1);
+            }
+            100% { 
+                text-shadow: 0 0 50px rgba(255, 255, 255, 0.8), 0 0 100px rgba(138, 43, 226, 0.6);
+                transform: scale(1.02);
+            }
+        }
+
+        .players-container {
+            height: calc(100vh - 120px);
+            padding: 20px;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .players-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            align-content: start;
+        }
+
+        .player-card {
+            position: relative;
+            background: linear-gradient(135deg, 
+                rgba(255, 255, 255, 0.1) 0%,
+                rgba(255, 255, 255, 0.05) 50%,
+                rgba(255, 255, 255, 0.1) 100%);
+            backdrop-filter: blur(20px) saturate(1.5);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 15px;
+            height: 160px;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 
+                0 8px 32px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2),
+                inset 0 -1px 0 rgba(0, 0, 0, 0.1);
+        }
+
+        .player-card:hover {
+            transform: translateY(-8px) scale(1.05) rotateY(5deg);
+            box-shadow: 
+                0 20px 60px rgba(0, 0, 0, 0.4),
+                0 0 40px rgba(138, 43, 226, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            border-color: rgba(138, 43, 226, 0.5);
+        }
+
+        .player-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin: 0 auto 10px;
+            position: relative;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 
+                0 0 20px rgba(138, 43, 226, 0.4),
+                inset 0 0 20px rgba(255, 255, 255, 0.1);
+        }
+
+        .player-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+
+        .player-card:hover .player-avatar img {
+            transform: scale(1.1);
+        }
+
+        .player-name {
+            font-size: 0.9rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 5px;
+            color: #ffffff;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .player-position {
+            font-size: 0.7rem;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 8px;
+        }
+
+        .player-status {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            margin-bottom: 8px;
+        }
+
+        .status-icon {
+            font-size: 0.8rem;
+        }
+
+        .status-label {
+            font-size: 0.7rem;
+            font-weight: 500;
+        }
+
+        .probability-bar {
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+            overflow: hidden;
+            margin-bottom: 8px;
+        }
+
+        .probability-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #ff4444, #ffaa00, #00ff88);
+            border-radius: 2px;
+            transition: width 0.5s ease;
+        }
+
+        .probability-text {
+            font-size: 0.7rem;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 600;
+        }
+
+        .transfer-fee {
+            font-size: 0.7rem;
+            text-align: center;
+            color: #00ff88;
+            font-weight: 600;
+            margin-top: 5px;
+        }
+
+        .status-official .status-icon { color: #00ff88; }
+        .status-close .status-icon { color: #ffaa00; }
+        .status-negotiating .status-icon { color: #00aaff; }
+        .status-rumor .status-icon { color: #aa00ff; }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .empty-state i {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            opacity: 0.5;
+        }
+
+        .sync-status {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 25px;
+            font-size: 0.8rem;
+            z-index: 1001;
+        }
+
+        .sync-status.connected {
+            background: rgba(0, 255, 136, 0.2);
+            border: 1px solid #00ff88;
+        }
+
+        .sync-status.disconnected {
+            background: rgba(255, 68, 68, 0.2);
+            border: 1px solid #ff4444;
+        }
+    </style>
+</head>
+<body>
+    <div class="sync-status" id="syncStatus">
+        <i class="fas fa-circle"></i> جاري الاتصال...
+    </div>
+
+    <div class="broadcast-container">
+        <div class="broadcast-header">
+            <div class="header-content">
+                <div class="header-title">BARCELONA</div>
+                <div class="header-subtitle">TRANSFER MARKET</div>
+            </div>
+        </div>
+
+        <div class="players-container">
+            <div class="players-grid" id="playersGrid">
+                <div class="empty-state">
+                    <i class="fas fa-users"></i>
+                    <div>لا يوجد لاعبين</div>
+                    <div style="font-size: 0.8rem; margin-top: 10px;">جاري تحميل البيانات...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let players = [];
+        let syncStatusElement;
+
+        // دالة تحديث حالة التزامن
+        function updateSyncStatus(connected) {
+            syncStatusElement.className = `sync-status ${connected ? 'connected' : 'disconnected'}`;
+            syncStatusElement.innerHTML = `
+                <i class="fas fa-circle"></i> 
+                ${connected ? 'متصل' : 'غير متصل'}
+            `;
+        }
+
+        // دالة الحصول على تسمية الحالة
+        function getStatusLabel(status) {
+            const labels = {
+                'official': { icon: '✅', label: 'رسمية' },
+                'close': { icon: '🔥', label: 'قريبة' },
+                'negotiating': { icon: '💬', label: 'تفاوض' },
+                'rumor': { icon: '👁️', label: 'إشاعة' }
+            };
+            return labels[status] || { icon: '❓', label: status };
+        }
+
+        // دالة عرض اللاعبين
+        function renderPlayers() {
+            const playersGrid = document.getElementById('playersGrid');
+            
+            if (players.length === 0) {
+                playersGrid.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-users"></i>
+                        <div>لا يوجد لاعبين</div>
+                        <div style="font-size: 0.8rem; margin-top: 10px;">جاري انتظار البيانات...</div>
+                    </div>
+                `;
+                return;
+            }
+
+            playersGrid.innerHTML = '';
+
+            players.forEach((player, index) => {
+                const statusInfo = getStatusLabel(player.status);
+                const playerCard = document.createElement('div');
+                playerCard.className = `player-card status-${player.status}`;
+                
+                playerCard.innerHTML = `
+                    <div class="player-avatar">
+                        <img src="${player.image || 'https://via.placeholder.com/60x60/333/fff?text=?'}" 
+                             alt="${player.name}" 
+                             onerror="this.src='https://via.placeholder.com/60x60/333/fff?text=?'">
+                    </div>
+                    <div class="player-name">${player.name}</div>
+                    <div class="player-position">${player.position}</div>
+                    <div class="player-status">
+                        <span class="status-icon">${statusInfo.icon}</span>
+                        <span class="status-label">${statusInfo.label}</span>
+                    </div>
+                    <div class="probability-bar">
+                        <div class="probability-fill" style="width: ${player.probability}%"></div>
+                    </div>
+                    <div class="probability-text">${player.probability}%</div>
+                    ${player.transferFee ? `<div class="transfer-fee">${player.transferFee}</div>` : ''}
+                `;
+
+                playersGrid.appendChild(playerCard);
+            });
+        }
+
+        // دالة تحميل البيانات
+        function loadData() {
+            try {
+                // محاولة تحميل من localStorage
+                const stored = localStorage.getItem('barcelona_players');
+                if (stored) {
+                    players = JSON.parse(stored);
+                    console.log(`✅ تم تحميل ${players.length} لاعب من التخزين المحلي`);
+                } else {
+                    players = [];
+                    console.log('⚠️ لا توجد بيانات محفوظة');
+                }
+                
+                renderPlayers();
+                updateSyncStatus(true);
+                
+            } catch (error) {
+                console.error('❌ فشل في تحميل البيانات:', error);
+                players = [];
+                renderPlayers();
+                updateSyncStatus(false);
+            }
+        }
+
+        // دالة تحديث البيانات
+        function updateData(newPlayers) {
+            players = newPlayers || [];
+            renderPlayers();
+            updateSyncStatus(true);
+            console.log(`🔄 تم تحديث البث - ${players.length} لاعب`);
+        }
+
+        // مراقبة التغييرات
+        function setupMonitoring() {
+            // مراقبة الأحداث المخصصة
+            window.addEventListener('barcelonaDataUpdated', (event) => {
+                if (event.detail && event.detail.players) {
+                    updateData(event.detail.players);
+                }
+            });
+
+            // مراقبة تغييرات localStorage
+            window.addEventListener('storage', (event) => {
+                if (event.key === 'barcelona_players') {
+                    try {
+                        const newPlayers = JSON.parse(event.newValue || '[]');
+                        updateData(newPlayers);
+                    } catch (error) {
+                        console.error('فشل في تحليل البيانات من localStorage:', error);
+                    }
+                }
+            });
+
+            // مراقبة الرسائل
+            window.addEventListener('message', (event) => {
+                if (event.data && event.data.type === 'BARCELONA_DATA_UPDATED') {
+                    if (event.data.data && event.data.data.players) {
+                        updateData(event.data.data.players);
+                    }
+                }
+            });
+        }
+
+        // تحديث دوري للبيانات
+        function startPeriodicUpdate() {
+            setInterval(() => {
+                loadData();
+            }, 5000); // كل 5 ثواني
+        }
+
+        // تهيئة الصفحة
+        document.addEventListener('DOMContentLoaded', function() {
+            syncStatusElement = document.getElementById('syncStatus');
+            
+            console.log('🚀 بدء تشغيل البث المصحح...');
+            
+            // تحميل البيانات الأولية
+            loadData();
+            
+            // إعداد المراقبة
+            setupMonitoring();
+            
+            // بدء التحديث الدوري
+            startPeriodicUpdate();
+            
+            // إرسال رسالة تأكيد التحميل
+            setTimeout(() => {
+                if (window.parent !== window) {
+                    window.parent.postMessage({
+                        type: 'BROADCAST_READY',
+                        data: { 
+                            playersCount: players.length,
+                            timestamp: new Date().toISOString()
+                        }
+                    }, '*');
+                }
+            }, 1000);
+            
+            console.log('✅ تم تهيئة البث بنجاح');
+        });
+    </script>
+</body>
+</html> 

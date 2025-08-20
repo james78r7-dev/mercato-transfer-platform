@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎮 لوحة التحكم البسيطة - Transfermarkt 2025</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', 'Tajawal', system-ui, sans-serif;
+            background: linear-gradient(135deg, #0a0a0f 0%, #1a1a2e 50%, #0a0a0f 100%);
+            color: #ffffff;
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .title {
+            font-size: 3rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: #94a3b8;
+        }
+
+        .section {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            backdrop-filter: blur(20px);
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: #667eea;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 1.5rem;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+        }
+
+        .btn-warning {
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+            color: white;
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-label {
+            color: #94a3b8;
+            margin-top: 0.5rem;
+        }
+
+        .textarea {
+            width: 100%;
+            min-height: 200px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 1rem;
+            color: white;
+            font-family: monospace;
+            resize: vertical;
+        }
+
+        .file-input {
+            display: none;
+        }
+
+        .file-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+            color: white;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .file-label:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 1rem 1.5rem;
+            border-radius: 10px;
+            color: white;
+            font-weight: 600;
+            z-index: 10000;
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        .notification.success {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+
+        .notification.error {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+
+        .notification.warning {
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 class="title">🎮 لوحة التحكم البسيطة</h1>
+            <p class="subtitle">إدارة بيانات Transfermarkt 2025</p>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">📊 إحصائيات النظام</h2>
+            <div class="stats">
+                <div class="stat-card">
+                    <div class="stat-value" id="clubsCount">0</div>
+                    <div class="stat-label">الأندية المحفوظة</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="transfermarktCount">0</div>
+                    <div class="stat-label">بيانات Transfermarkt</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="lastUpdate">--</div>
+                    <div class="stat-label">آخر تحديث</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">🔄 إدارة البيانات</h2>
+            <div class="buttons">
+                <button onclick="updateTransfermarktData()" class="btn btn-primary">
+                    <i class="fas fa-sync-alt"></i> تحديث بيانات Transfermarkt
+                </button>
+                <button onclick="exportData()" class="btn btn-success">
+                    <i class="fas fa-download"></i> تصدير البيانات
+                </button>
+                <label for="importFile" class="file-label">
+                    <i class="fas fa-upload"></i> استيراد البيانات
+                </label>
+                <input type="file" id="importFile" class="file-input" accept=".json" onchange="importData(this)">
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">🎨 إدارة الشعارات</h2>
+            <div class="buttons">
+                <a href="club-logo-manager.html" target="_blank" class="btn btn-warning">
+                    <i class="fas fa-images"></i> مدير الشعارات
+                </a>
+                <button onclick="testLogos()" class="btn btn-primary">
+                    <i class="fas fa-test-tube"></i> اختبار الشعارات
+                </button>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">📺 البث المباشر</h2>
+            <div class="buttons">
+                <a href="transfermarkt-live-2025.html" target="_blank" class="btn btn-success">
+                    <i class="fas fa-tv"></i> فتح البث المباشر
+                </a>
+                <button onclick="refreshLiveDisplay()" class="btn btn-primary">
+                    <i class="fas fa-refresh"></i> تحديث البث المباشر
+                </button>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">🛠️ أدوات التشخيص</h2>
+            <div class="buttons">
+                <button onclick="runDiagnostics()" class="btn btn-warning">
+                    <i class="fas fa-stethoscope"></i> تشخيص النظام
+                </button>
+                <button onclick="clearAllData()" class="btn btn-danger">
+                    <i class="fas fa-trash"></i> مسح جميع البيانات
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="data-manager.js"></script>
+    <script>
+        // تهيئة الصفحة
+        document.addEventListener('DOMContentLoaded', async function() {
+            console.log('🎮 تهيئة لوحة التحكم...');
+            
+            // انتظار تحميل نظام البيانات
+            while (!window.dataManager || !window.dataManager.isInitialized) {
+                await new Promise(resolve => setTimeout(resolve, 100));
+            }
+            
+            updateStats();
+            console.log('✅ لوحة التحكم جاهزة');
+        });
+
+        // تحديث الإحصائيات
+        function updateStats() {
+            try {
+                // إحصائيات الشعارات
+                const clubs = window.dataManager.getClubs();
+                document.getElementById('clubsCount').textContent = clubs.length;
+
+                // إحصائيات بيانات Transfermarkt
+                const transfermarktData = localStorage.getItem('transfermarktData');
+                let transfermarktCount = 0;
+                if (transfermarktData) {
+                    const data = JSON.parse(transfermarktData);
+                    transfermarktCount = Array.isArray(data) ? data.length : 0;
+                }
+                document.getElementById('transfermarktCount').textContent = transfermarktCount;
+
+                // آخر تحديث
+                const lastUpdate = localStorage.getItem('lastDataUpdate');
+                if (lastUpdate) {
+                    const date = new Date(lastUpdate).toLocaleString('ar-SA');
+                    document.getElementById('lastUpdate').textContent = date;
+                } else {
+                    document.getElementById('lastUpdate').textContent = 'لا يوجد';
+                }
+            } catch (error) {
+                console.error('❌ خطأ في تحديث الإحصائيات:', error);
+            }
+        }
+
+        // تحديث بيانات Transfermarkt
+        function updateTransfermarktData() {
+            const defaultData = [
+                { rank: 1, name: "Chelsea FC", expenditure: "€285.50m" },
+                { rank: 2, name: "Paris Saint-Germain", expenditure: "€245.80m" },
+                { rank: 3, name: "Real Madrid", expenditure: "€220.40m" },
+                { rank: 4, name: "Arsenal FC", expenditure: "€195.70m" },
+                { rank: 5, name: "Manchester United", expenditure: "€175.90m" },
+                { rank: 6, name: "Bayern Munich", expenditure: "€165.20m" },
+                { rank: 7, name: "Liverpool FC", expenditure: "€158.60m" },
+                { rank: 8, name: "Juventus FC", expenditure: "€142.30m" },
+                { rank: 9, name: "Manchester City", expenditure: "€135.80m" },
+                { rank: 10, name: "Atlético Madrid", expenditure: "€128.40m" }
+            ];
+
+            localStorage.setItem('transfermarktData', JSON.stringify(defaultData));
+            localStorage.setItem('lastDataUpdate', new Date().toISOString());
+            
+            updateStats();
+            showNotification('✅ تم تحديث بيانات Transfermarkt', 'success');
+        }
+
+        // تصدير البيانات
+        function exportData() {
+            try {
+                const clubs = window.dataManager.getClubs();
+                const transfermarktData = localStorage.getItem('transfermarktData');
+                
+                const exportData = {
+                    clubs: clubs,
+                    transfermarktData: transfermarktData ? JSON.parse(transfermarktData) : [],
+                    exportDate: new Date().toISOString(),
+                    version: '2025.2.0'
+                };
+
+                const blob = new Blob([JSON.stringify(exportData, null, 2)], {
+                    type: 'application/json'
+                });
+
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `transfermarkt-backup-${new Date().toISOString().split('T')[0]}.json`;
+                a.click();
+                URL.revokeObjectURL(url);
+
+                showNotification('✅ تم تصدير البيانات', 'success');
+            } catch (error) {
+                console.error('❌ خطأ في التصدير:', error);
+                showNotification('❌ خطأ في تصدير البيانات', 'error');
+            }
+        }
+
+        // استيراد البيانات
+        async function importData(input) {
+            try {
+                const file = input.files[0];
+                if (!file) return;
+
+                const text = await file.text();
+                const data = JSON.parse(text);
+
+                if (data.clubs && Array.isArray(data.clubs)) {
+                    window.dataManager.saveClubs(data.clubs);
+                    showNotification(`✅ تم استيراد ${data.clubs.length} شعار`, 'success');
+                }
+
+                if (data.transfermarktData && Array.isArray(data.transfermarktData)) {
+                    localStorage.setItem('transfermarktData', JSON.stringify(data.transfermarktData));
+                    showNotification(`✅ تم استيراد ${data.transfermarktData.length} نادي`, 'success');
+                }
+
+                updateStats();
+            } catch (error) {
+                console.error('❌ خطأ في الاستيراد:', error);
+                showNotification('❌ خطأ في استيراد البيانات', 'error');
+            }
+        }
+
+        // اختبار الشعارات
+        function testLogos() {
+            const testClubs = ['Chelsea FC', 'Manchester United', 'Manchester City', 'Arsenal FC', 'Liverpool FC'];
+            
+            testClubs.forEach(clubName => {
+                const logo = window.dataManager.getClubLogo(clubName);
+                console.log(`🔍 ${clubName}: ${logo}`);
+            });
+
+            showNotification('✅ تم اختبار الشعارات - تحقق من وحدة التحكم', 'success');
+        }
+
+        // تحديث البث المباشر
+        function refreshLiveDisplay() {
+            localStorage.setItem('refreshLiveDisplay', Date.now().toString());
+            showNotification('✅ تم إشعار البث المباشر بالتحديث', 'success');
+        }
+
+        // تشخيص النظام
+        function runDiagnostics() {
+            const clubs = window.dataManager.getClubs();
+            const transfermarktData = localStorage.getItem('transfermarktData');
+            
+            console.log('🔍 تشخيص النظام:');
+            console.log(`📊 الشعارات: ${clubs.length}`);
+            console.log(`📊 بيانات Transfermarkt: ${transfermarktData ? JSON.parse(transfermarktData).length : 0}`);
+            console.log('📊 الشعارات:', clubs);
+            
+            showNotification('✅ تم تشخيص النظام - تحقق من وحدة التحكم', 'success');
+        }
+
+        // مسح جميع البيانات
+        function clearAllData() {
+            if (confirm('هل أنت متأكد من مسح جميع البيانات؟')) {
+                localStorage.clear();
+                updateStats();
+                showNotification('✅ تم مسح جميع البيانات', 'warning');
+            }
+        }
+
+        // عرض الإشعارات
+        function showNotification(message, type = 'success') {
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.textContent = message;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.classList.add('show');
+            }, 100);
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 300);
+            }, 3000);
+        }
+    </script>
+</body>
+</html>

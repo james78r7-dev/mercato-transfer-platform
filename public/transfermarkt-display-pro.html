@@ -1,0 +1,1159 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🏆 عرض احترافي متطور - أكثر الأندية صرفاً 2025</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', 'Tajawal', system-ui, sans-serif;
+            background: #0a0a0f;
+            color: #ffffff;
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* خلفية متحركة عصرية للبث المباشر */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background:
+                radial-gradient(circle at 15% 25%, rgba(255, 215, 0, 0.12) 0%, transparent 50%),
+                radial-gradient(circle at 85% 75%, rgba(59, 130, 246, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, rgba(139, 92, 246, 0.06) 0%, transparent 50%),
+                radial-gradient(circle at 25% 75%, rgba(16, 185, 129, 0.04) 0%, transparent 50%),
+                linear-gradient(135deg, #0a0a0f 0%, #1a1a2e 30%, #16213e 70%, #0f1419 100%);
+            animation: backgroundFlow 25s ease-in-out infinite;
+            z-index: -2;
+        }
+
+        /* شبكة متحركة */
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(255, 215, 0, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 215, 0, 0.02) 1px, transparent 1px);
+            background-size: 60px 60px;
+            animation: gridFloat 25s linear infinite;
+            z-index: -1;
+        }
+
+        @keyframes backgroundFlow {
+            0%, 100% { transform: scale(1) rotate(0deg); }
+            33% { transform: scale(1.05) rotate(1deg); }
+            66% { transform: scale(0.95) rotate(-1deg); }
+        }
+
+        @keyframes gridFloat {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(60px, 60px); }
+        }
+
+        .container {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            padding: 1.5rem;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            z-index: 10;
+        }
+
+        .title {
+            font-size: 2.8rem;
+            font-weight: 900;
+            background: linear-gradient(45deg, #ffd700, #ffed4e, #ff6b35, #10b981, #ffd700);
+            background-size: 400% 400%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: titleShine 5s ease-in-out infinite;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 0 40px rgba(255, 215, 0, 0.4);
+            position: relative;
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+        }
+
+        .title::before {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(255, 215, 0, 0.1), rgba(59, 130, 246, 0.1));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            z-index: -1;
+            transform: translate(2px, 2px);
+        }
+
+        @keyframes titleShine {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: #94a3b8;
+            font-weight: 600;
+            opacity: 0.9;
+            background: rgba(148, 163, 184, 0.1);
+            padding: 0.5rem 1.5rem;
+            border-radius: 25px;
+            display: inline-block;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .subtitle:hover {
+            background: rgba(148, 163, 184, 0.15);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(148, 163, 184, 0.1);
+        }
+
+        /* تصميم الأشرطة الأفقية الثوري */
+        .clubs-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            overflow: hidden;
+            padding: 0.5rem 0;
+            justify-content: space-between;
+        }
+
+        .club-bar {
+            display: flex;
+            align-items: center;
+            background: rgba(26, 26, 46, 0.25);
+            border: 1px solid rgba(255, 215, 0, 0.15);
+            border-radius: 24px;
+            padding: 0.8rem 1.5rem;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            flex: 1;
+            min-height: 65px;
+            max-height: calc((100vh - 220px) / 10);
+            box-shadow:
+                0 8px 32px rgba(0, 0, 0, 0.12),
+                inset 0 1px 0 rgba(255, 255, 255, 0.05),
+                inset 0 -1px 0 rgba(0, 0, 0, 0.1);
+        }
+
+        .club-bar::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(90deg,
+                rgba(255, 215, 0, 0.15) 0%,
+                rgba(255, 215, 0, 0.08) 30%,
+                rgba(59, 130, 246, 0.06) 70%,
+                transparent 100%);
+            transition: width 2.5s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 1;
+            border-radius: 24px;
+        }
+
+        /* تأثير الضوء المتحرك */
+        .club-bar::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg,
+                transparent 0%,
+                rgba(255, 255, 255, 0.1) 50%,
+                transparent 100%);
+            transition: left 0.8s ease-in-out;
+            z-index: 2;
+            border-radius: 24px;
+        }
+
+        .club-bar:hover::after {
+            left: 100%;
+        }
+
+        .club-bar.animate::before {
+            width: 100%;
+        }
+
+        .club-bar:hover {
+            transform: translateX(15px) scale(1.03);
+            border-color: rgba(255, 215, 0, 0.5);
+            background: rgba(26, 26, 46, 0.4);
+            box-shadow:
+                0 16px 64px rgba(255, 215, 0, 0.2),
+                0 8px 32px rgba(59, 130, 246, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.15),
+                inset 0 -1px 0 rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(25px) saturate(200%);
+        }
+
+        .club-rank {
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: #ffd700;
+            min-width: 50px;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .club-rank.top-3 {
+            background: linear-gradient(45deg, #ffd700, #ffed4e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: rankGlow 2s ease-in-out infinite;
+        }
+
+        @keyframes rankGlow {
+            0%, 100% { filter: drop-shadow(0 0 5px rgba(255, 215, 0, 0.5)); }
+            50% { filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.8)); }
+        }
+
+        .club-logo {
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            margin: 0 1rem;
+            object-fit: contain;
+            background: rgba(255, 255, 255, 0.08);
+            border: 3px solid rgba(255, 215, 0, 0.25);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            z-index: 3;
+            box-shadow:
+                0 8px 25px rgba(0, 0, 0, 0.15),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .club-logo::before {
+            content: '';
+            position: absolute;
+            top: -3px;
+            left: -3px;
+            right: -3px;
+            bottom: -3px;
+            background: linear-gradient(45deg,
+                rgba(255, 215, 0, 0.4) 0%,
+                rgba(59, 130, 246, 0.3) 50%,
+                rgba(255, 215, 0, 0.4) 100%);
+            border-radius: 50%;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .club-bar:hover .club-logo {
+            transform: scale(1.15) rotate(8deg);
+            border-color: rgba(255, 215, 0, 0.8);
+            box-shadow:
+                0 12px 40px rgba(255, 215, 0, 0.3),
+                0 6px 20px rgba(59, 130, 246, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        }
+
+        .club-bar:hover .club-logo::before {
+            opacity: 1;
+        }
+
+        .club-info {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            z-index: 2;
+        }
+
+        .club-details {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .club-name {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: #ffffff;
+            margin-bottom: 0.3rem;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .club-bar:hover .club-name {
+            color: #ffd700;
+            text-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+        }
+
+        .club-league {
+            font-size: 0.85rem;
+            color: #94a3b8;
+            opacity: 0.9;
+            font-weight: 500;
+            background: rgba(59, 130, 246, 0.15);
+            padding: 0.2rem 0.6rem;
+            border-radius: 12px;
+            display: inline-block;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+        }
+
+        .club-stats {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .stat-item {
+            text-align: center;
+            min-width: 100px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 12px;
+            padding: 0.6rem 0.4rem;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg,
+                transparent 0%,
+                rgba(255, 255, 255, 0.1) 50%,
+                transparent 100%);
+            transition: left 0.5s ease;
+        }
+
+        .stat-item:hover {
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-item:hover::before {
+            left: 100%;
+        }
+
+        .stat-value {
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: #3b82f6;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .stat-label {
+            font-size: 0.75rem;
+            color: #94a3b8;
+            margin-top: 0.3rem;
+            font-weight: 500;
+            opacity: 0.9;
+        }
+
+        .expenditure {
+            font-size: 1.6rem;
+            font-weight: 900;
+            color: #ef4444;
+            text-align: center;
+            min-width: 140px;
+            background: rgba(239, 68, 68, 0.1);
+            border: 2px solid rgba(239, 68, 68, 0.3);
+            border-radius: 16px;
+            padding: 0.8rem 1rem;
+            backdrop-filter: blur(10px);
+            text-shadow: 0 2px 8px rgba(239, 68, 68, 0.3);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .expenditure::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg,
+                transparent 0%,
+                rgba(255, 255, 255, 0.1) 50%,
+                transparent 100%);
+            transition: left 0.6s ease;
+        }
+
+        .club-bar:hover .expenditure {
+            color: #ff6b6b;
+            border-color: rgba(239, 68, 68, 0.5);
+            background: rgba(239, 68, 68, 0.15);
+            box-shadow: 0 8px 25px rgba(239, 68, 68, 0.2);
+            transform: scale(1.05);
+        }
+
+        .club-bar:hover .expenditure::before {
+            left: 100%;
+        }
+
+        /* تأثيرات خاصة للأندية الثلاثة الأولى */
+        .club-bar.rank-1 {
+            border: 2px solid rgba(255, 215, 0, 0.4);
+            background: rgba(255, 215, 0, 0.05);
+        }
+
+        .club-bar.rank-2 {
+            border: 2px solid rgba(192, 192, 192, 0.4);
+            background: rgba(192, 192, 192, 0.05);
+        }
+
+        .club-bar.rank-3 {
+            border: 2px solid rgba(205, 127, 50, 0.4);
+            background: rgba(205, 127, 50, 0.05);
+        }
+
+        /* إحصائيات سريعة عصرية */
+        .quick-stats {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 1rem;
+            padding: 1.2rem;
+            background: rgba(26, 26, 46, 0.25);
+            border: 1px solid rgba(255, 215, 0, 0.15);
+            border-radius: 20px;
+            backdrop-filter: blur(20px) saturate(180%);
+            box-shadow:
+                0 8px 32px rgba(0, 0, 0, 0.12),
+                inset 0 1px 0 rgba(255, 255, 255, 0.05);
+        }
+
+        .quick-stat {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 16px;
+            padding: 0.8rem 1.2rem;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            min-width: 140px;
+        }
+
+        .quick-stat::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg,
+                rgba(255, 215, 0, 0.8) 0%,
+                rgba(59, 130, 246, 0.6) 50%,
+                rgba(255, 215, 0, 0.8) 100%);
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+        }
+
+        .quick-stat:hover {
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255, 215, 0, 0.15);
+        }
+
+        .quick-stat:hover::before {
+            transform: scaleX(1);
+        }
+
+        .quick-stat-value {
+            font-size: 1.8rem;
+            font-weight: 900;
+            background: linear-gradient(45deg, #ffd700, #ffed4e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 2px 8px rgba(255, 215, 0, 0.3);
+            margin-bottom: 0.5rem;
+        }
+
+        .quick-stat-label {
+            font-size: 0.9rem;
+            color: #94a3b8;
+            font-weight: 600;
+            opacity: 0.9;
+        }
+
+        /* تحديث يدوي */
+        .manual-update {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+        }
+
+        .update-btn-display {
+            background: rgba(16, 185, 129, 0.2);
+            border: 2px solid rgba(16, 185, 129, 0.4);
+            border-radius: 12px;
+            padding: 0.8rem 1.2rem;
+            font-size: 0.9rem;
+            color: #10b981;
+            backdrop-filter: blur(15px);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .update-btn-display:hover {
+            background: rgba(16, 185, 129, 0.3);
+            border-color: rgba(16, 185, 129, 0.6);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(16, 185, 129, 0.2);
+        }
+
+        .update-btn-display:active {
+            transform: translateY(0);
+        }
+
+        .control-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .sync-logos-btn, .logo-manager-btn, .live-display-btn {
+            background: rgba(59, 130, 246, 0.2);
+            border: 2px solid rgba(59, 130, 246, 0.4);
+            border-radius: 12px;
+            padding: 0.8rem 1.2rem;
+            font-size: 0.9rem;
+            color: #3b82f6;
+            backdrop-filter: blur(15px);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            min-width: 140px;
+        }
+
+        .sync-logos-btn:hover, .logo-manager-btn:hover, .live-display-btn:hover {
+            background: rgba(59, 130, 246, 0.3);
+            border-color: rgba(59, 130, 246, 0.6);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.2);
+        }
+
+        .logo-manager-btn {
+            color: #8b5cf6;
+            background: rgba(139, 92, 246, 0.2);
+            border-color: rgba(139, 92, 246, 0.4);
+        }
+
+        .logo-manager-btn:hover {
+            background: rgba(139, 92, 246, 0.3);
+            border-color: rgba(139, 92, 246, 0.6);
+            box-shadow: 0 8px 25px rgba(139, 92, 246, 0.2);
+        }
+
+        .live-display-btn {
+            color: #ef4444;
+            background: rgba(239, 68, 68, 0.2);
+            border-color: rgba(239, 68, 68, 0.4);
+        }
+
+        .live-display-btn:hover {
+            background: rgba(239, 68, 68, 0.3);
+            border-color: rgba(239, 68, 68, 0.6);
+            box-shadow: 0 8px 25px rgba(239, 68, 68, 0.2);
+        }
+
+        .loading-indicator {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            z-index: 1000;
+        }
+
+        .spinner {
+            width: 60px;
+            height: 60px;
+            border: 4px solid rgba(255, 215, 0, 0.2);
+            border-top: 4px solid #ffd700;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="manual-update">
+        <div class="control-buttons">
+            <button onclick="loadData()" class="update-btn-display">
+                <i class="fas fa-sync-alt"></i> تحديث البيانات
+            </button>
+            <button onclick="syncLogos()" class="sync-logos-btn">
+                <i class="fas fa-images"></i> مزامنة الشعارات
+            </button>
+            <button onclick="openLogoManager()" class="logo-manager-btn">
+                <i class="fas fa-cog"></i> مدير الشعارات
+            </button>
+            <button onclick="openLiveDisplay()" class="live-display-btn">
+                <i class="fas fa-broadcast-tower"></i> البث المباشر
+            </button>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="header">
+            <h1 class="title" data-text="💰 أكثر الأندية صرفاً في سوق الانتقالات 2025">💰 أكثر الأندية صرفاً في سوق الانتقالات 2025</h1>
+            <p class="subtitle">لوحة التحكم والإعدادات - Transfermarkt Pro</p>
+        </div>
+
+        <div class="clubs-container" id="clubsContainer">
+            <!-- سيتم ملء البيانات هنا -->
+        </div>
+
+        <div class="quick-stats" id="quickStats">
+            <div class="quick-stat">
+                <div class="quick-stat-value" id="totalSpending">€0.00m</div>
+                <div class="quick-stat-label">إجمالي الإنفاق</div>
+            </div>
+            <div class="quick-stat">
+                <div class="quick-stat-value" id="totalTransfers">0</div>
+                <div class="quick-stat-label">إجمالي الصفقات</div>
+            </div>
+            <div class="quick-stat">
+                <div class="quick-stat-value" id="avgSpending">€0.00m</div>
+                <div class="quick-stat-label">متوسط الإنفاق</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="loading-indicator" id="loadingIndicator" style="display: none;">
+        <div class="spinner"></div>
+        <p>جاري تحديث البيانات...</p>
+    </div>
+
+    <script>
+        // نظام شعارات متطور مرتبط بمدير الشعارات
+        let clubLogosDatabase = {};
+
+        // تحميل الشعارات من مدير الشعارات - نظام محسن ومطور
+        async function loadClubLogosFromManager() {
+            try {
+                console.log('🔄 تحميل الشعارات من مدير الشعارات...');
+
+                clubLogosDatabase = {};
+
+                // محاولة تحميل البيانات من مدير الشعارات
+                try {
+                    const response = await fetch('/club-logo-manager.html');
+                    if (response.ok) {
+                        console.log('✅ تم الاتصال بمدير الشعارات');
+                    }
+                } catch (e) {
+                    console.log('ℹ️ سيتم التحميل من localStorage');
+                }
+
+                // تحميل البيانات المحفوظة من مدير الشعارات
+                const savedClubsData = localStorage.getItem('clubsData');
+                if (savedClubsData) {
+                    try {
+                        const clubsData = JSON.parse(savedClubsData);
+                        console.log(`📊 تم العثور على ${clubsData.length} نادي في clubsData`);
+
+                        clubsData.forEach(club => {
+                            if (club.logoUrl && club.logoUrl !== 'N/A' && club.logoUrl.startsWith('http')) {
+                                // إضافة بالاسم الإنجليزي
+                                if (club.englishName) {
+                                    clubLogosDatabase[club.englishName] = club.logoUrl;
+                                    clubLogosDatabase[club.englishName.toLowerCase()] = club.logoUrl;
+                                }
+                                // إضافة بالاسم العربي
+                                if (club.arabicName) {
+                                    clubLogosDatabase[club.arabicName] = club.logoUrl;
+                                }
+
+                                console.log(`✅ تم تحميل شعار: ${club.englishName} -> ${club.logoUrl}`);
+                            }
+                        });
+
+                        console.log(`✅ تم تحميل ${Object.keys(clubLogosDatabase).length} شعار من clubsData`);
+                    } catch (error) {
+                        console.error('❌ خطأ في تحليل clubsData:', error);
+                    }
+                }
+
+                // تحميل من verifiedClubs كنسخة احتياطية
+                const verifiedClubs = localStorage.getItem('verifiedClubs');
+                if (verifiedClubs) {
+                    try {
+                        const clubs = JSON.parse(verifiedClubs);
+                        clubs.forEach(club => {
+                            if (club.logoUrl && club.logoUrl !== 'N/A' && club.logoUrl.startsWith('http')) {
+                                if (club.englishName && !clubLogosDatabase[club.englishName]) {
+                                    clubLogosDatabase[club.englishName] = club.logoUrl;
+                                }
+                                if (club.arabicName && !clubLogosDatabase[club.arabicName]) {
+                                    clubLogosDatabase[club.arabicName] = club.logoUrl;
+                                }
+                            }
+                        });
+                        console.log(`✅ تم تحميل إضافي من verifiedClubs`);
+                    } catch (error) {
+                        console.error('❌ خطأ في تحليل verifiedClubs:', error);
+                    }
+                }
+
+                // إضافة شعارات احتياطية عالية الجودة للأندية المهمة
+                const fallbackLogos = {
+                    'Liverpool': 'https://logos-world.net/wp-content/uploads/2020/06/Liverpool-Logo.png',
+                    'Liverpool FC': 'https://logos-world.net/wp-content/uploads/2020/06/Liverpool-Logo.png',
+                    'Chelsea': 'https://logos-world.net/wp-content/uploads/2020/06/Chelsea-Logo.png',
+                    'Chelsea FC': 'https://logos-world.net/wp-content/uploads/2020/06/Chelsea-Logo.png',
+                    'Manchester United': 'https://logos-world.net/wp-content/uploads/2020/06/Manchester-United-Logo.png',
+                    'Manchester City': 'https://logos-world.net/wp-content/uploads/2020/06/Manchester-City-Logo.png',
+                    'Arsenal': 'https://logos-world.net/wp-content/uploads/2020/06/Arsenal-Logo.png',
+                    'Arsenal FC': 'https://logos-world.net/wp-content/uploads/2020/06/Arsenal-Logo.png',
+                    'Tottenham': 'https://logoeps.com/wp-content/uploads/2013/03/tottenham-vector-logo.png',
+                    'Tottenham Hotspur': 'https://logoeps.com/wp-content/uploads/2013/03/tottenham-vector-logo.png',
+                    'Real Madrid': 'https://logos-world.net/wp-content/uploads/2020/06/Real-Madrid-Logo.png',
+                    'Barcelona': 'https://logos-world.net/wp-content/uploads/2020/06/Barcelona-Logo.png',
+                    'FC Barcelona': 'https://logos-world.net/wp-content/uploads/2020/06/Barcelona-Logo.png',
+                    'Atlético Madrid': 'https://logos-world.net/wp-content/uploads/2020/06/Atletico-Madrid-Logo.png',
+                    'Atlético de Madrid': 'https://logos-world.net/wp-content/uploads/2020/06/Atletico-Madrid-Logo.png',
+                    'Bayern Munich': 'https://logos-world.net/wp-content/uploads/2020/06/Bayern-Munich-Logo.png',
+                    'FC Bayern Munich': 'https://logos-world.net/wp-content/uploads/2020/06/Bayern-Munich-Logo.png',
+                    'Juventus': 'https://logos-world.net/wp-content/uploads/2020/06/Juventus-Logo.png',
+                    'Juventus FC': 'https://logos-world.net/wp-content/uploads/2020/06/Juventus-Logo.png',
+                    'Paris Saint-Germain': 'https://logos-world.net/wp-content/uploads/2020/06/Paris-Saint-Germain-PSG-Logo.png',
+                    'PSG': 'https://logos-world.net/wp-content/uploads/2020/06/Paris-Saint-Germain-PSG-Logo.png',
+                    'AC Milan': 'https://logos-world.net/wp-content/uploads/2020/06/AC-Milan-Logo.png',
+                    'Inter Milan': 'https://logos-world.net/wp-content/uploads/2020/06/Inter-Milan-Logo.png',
+                    'Bayer Leverkusen': 'https://logoeps.com/wp-content/uploads/2013/03/bayer-04-leverkusen-vector-logo.png',
+                    'Bayer 04 Leverkusen': 'https://logoeps.com/wp-content/uploads/2013/03/bayer-04-leverkusen-vector-logo.png'
+                };
+
+                // إضافة الشعارات الاحتياطية إذا لم تكن موجودة
+                Object.entries(fallbackLogos).forEach(([name, logo]) => {
+                    if (!clubLogosDatabase[name]) {
+                        clubLogosDatabase[name] = logo;
+                    }
+                });
+
+                console.log(`✅ إجمالي الشعارات المحملة: ${Object.keys(clubLogosDatabase).length}`);
+                console.log('📋 قائمة الشعارات المحملة:', Object.keys(clubLogosDatabase));
+
+            } catch (error) {
+                console.error('❌ خطأ في تحميل الشعارات:', error);
+                // في حالة الخطأ، استخدم قاعدة بيانات احتياطية شاملة
+                clubLogosDatabase = {
+                    'Liverpool': 'https://logos-world.net/wp-content/uploads/2020/06/Liverpool-Logo.png',
+                    'Liverpool FC': 'https://logos-world.net/wp-content/uploads/2020/06/Liverpool-Logo.png',
+                    'Chelsea': 'https://logos-world.net/wp-content/uploads/2020/06/Chelsea-Logo.png',
+                    'Chelsea FC': 'https://logos-world.net/wp-content/uploads/2020/06/Chelsea-Logo.png',
+                    'Manchester United': 'https://logos-world.net/wp-content/uploads/2020/06/Manchester-United-Logo.png',
+                    'Manchester City': 'https://logos-world.net/wp-content/uploads/2020/06/Manchester-City-Logo.png',
+                    'Arsenal': 'https://logos-world.net/wp-content/uploads/2020/06/Arsenal-Logo.png',
+                    'Arsenal FC': 'https://logos-world.net/wp-content/uploads/2020/06/Arsenal-Logo.png'
+                };
+            }
+        }
+
+        // نظام تطابق الأسماء الذكي - حل مشكلة Chelsea vs Chelsea FC
+        function normalizeClubName(name) {
+            return name
+                .replace(/\s*(FC|CF|AC|SC|Club)\s*$/i, '') // إزالة FC, CF, AC, SC من النهاية
+                .replace(/\s+/g, ' ') // توحيد المسافات
+                .trim()
+                .toLowerCase();
+        }
+
+        // دالة ذكية محسنة للحصول على شعار النادي
+        function getClubLogo(clubName) {
+            console.log(`🔍 البحث عن شعار: "${clubName}"`);
+
+            // البحث المباشر بالاسم الكامل
+            if (clubLogosDatabase[clubName]) {
+                console.log(`✅ وجد مباشرة: ${clubName}`);
+                return clubLogosDatabase[clubName];
+            }
+
+            // البحث بالاسم المُطبع (normalized)
+            const normalizedInput = normalizeClubName(clubName);
+            for (const [key, logo] of Object.entries(clubLogosDatabase)) {
+                const normalizedKey = normalizeClubName(key);
+                if (normalizedKey === normalizedInput) {
+                    console.log(`✅ وجد بالتطبيع: "${clubName}" -> "${key}"`);
+                    return logo;
+                }
+            }
+
+            // البحث بالاسم بأحرف صغيرة
+            const lowerName = clubName.toLowerCase();
+            for (const [key, logo] of Object.entries(clubLogosDatabase)) {
+                if (key.toLowerCase() === lowerName) {
+                    console.log(`✅ وجد بالأحرف الصغيرة: ${key}`);
+                    return logo;
+                }
+            }
+
+            // البحث الذكي بالكلمات المفتاحية المحسنة
+            const searchPatterns = [
+                // الأندية الإنجليزية
+                { patterns: ['liverpool'], matches: ['Liverpool', 'Liverpool FC'] },
+                { patterns: ['chelsea'], matches: ['Chelsea', 'Chelsea FC'] },
+                { patterns: ['manchester united', 'man united', 'united'], matches: ['Manchester United'] },
+                { patterns: ['manchester city', 'man city', 'city'], matches: ['Manchester City'] },
+                { patterns: ['arsenal'], matches: ['Arsenal', 'Arsenal FC'] },
+                { patterns: ['tottenham', 'spurs'], matches: ['Tottenham', 'Tottenham Hotspur'] },
+
+                // الأندية الإسبانية
+                { patterns: ['real madrid', 'real'], matches: ['Real Madrid'] },
+                { patterns: ['barcelona', 'barca'], matches: ['Barcelona', 'FC Barcelona'] },
+                { patterns: ['atletico madrid', 'atletico'], matches: ['Atlético Madrid', 'Atlético de Madrid'] },
+
+                // الأندية الألمانية
+                { patterns: ['bayern munich', 'bayern'], matches: ['Bayern Munich', 'FC Bayern Munich'] },
+                { patterns: ['bayer leverkusen', 'leverkusen'], matches: ['Bayer Leverkusen', 'Bayer 04 Leverkusen'] },
+
+                // الأندية الإيطالية
+                { patterns: ['juventus', 'juve'], matches: ['Juventus', 'Juventus FC'] },
+                { patterns: ['ac milan', 'milan'], matches: ['AC Milan'] },
+                { patterns: ['inter milan', 'inter'], matches: ['Inter Milan'] },
+
+                // الأندية الفرنسية
+                { patterns: ['paris saint-germain', 'psg'], matches: ['Paris Saint-Germain', 'PSG'] }
+            ];
+
+            const clubLower = clubName.toLowerCase();
+
+            for (const { patterns, matches } of searchPatterns) {
+                for (const pattern of patterns) {
+                    if (clubLower.includes(pattern)) {
+                        for (const match of matches) {
+                            if (clubLogosDatabase[match]) {
+                                console.log(`✅ وجد بالنمط "${pattern}" -> ${match}`);
+                                return clubLogosDatabase[match];
+                            }
+                        }
+                    }
+                }
+            }
+
+            // البحث بالكلمة الأولى
+            const firstWord = clubName.split(' ')[0];
+            if (firstWord.length > 3) {
+                for (const [key, logo] of Object.entries(clubLogosDatabase)) {
+                    const keyFirstWord = key.split(' ')[0];
+                    if (firstWord.toLowerCase() === keyFirstWord.toLowerCase()) {
+                        console.log(`✅ وجد بالكلمة الأولى: ${key}`);
+                        return logo;
+                    }
+                }
+            }
+
+            // البحث بالتضمين الجزئي
+            for (const [key, logo] of Object.entries(clubLogosDatabase)) {
+                if (key.toLowerCase().includes(clubLower) || clubLower.includes(key.toLowerCase())) {
+                    if (Math.abs(key.length - clubName.length) <= 5) { // تشابه في الطول
+                        console.log(`✅ وجد بالتضمين الجزئي: ${key}`);
+                        return logo;
+                    }
+                }
+            }
+
+            console.log(`❌ لم يوجد شعار لـ: "${clubName}"`);
+            console.log(`📋 الشعارات المتاحة:`, Object.keys(clubLogosDatabase).slice(0, 10));
+
+            // إذا لم نجد الشعار، استخدم placeholder عصري
+            const initials = clubName.split(' ')
+                .map(word => word.charAt(0))
+                .join('')
+                .substring(0, 2)
+                .toUpperCase();
+
+            return `https://ui-avatars.com/api/?name=${encodeURIComponent(initials)}&size=400&background=1a1a2e&color=ffd700&bold=true&format=png&rounded=true`;
+        }
+
+        function getClubLeague(clubName) {
+            const leagues = {
+                'Liverpool': 'Premier League', 'Chelsea': 'Premier League', 'Manchester United': 'Premier League',
+                'Manchester City': 'Premier League', 'Arsenal': 'Premier League', 'Tottenham': 'Premier League',
+                'Real Madrid': 'LaLiga', 'Barcelona': 'LaLiga', 'Atlético Madrid': 'LaLiga',
+                'Bayern Munich': 'Bundesliga', 'Bayer Leverkusen': 'Bundesliga',
+                'Juventus': 'Serie A', 'AC Milan': 'Serie A', 'Inter Milan': 'Serie A',
+                'Paris Saint-Germain': 'Ligue 1'
+            };
+
+            for (const [club, league] of Object.entries(leagues)) {
+                if (clubName.toLowerCase().includes(club.toLowerCase().split(' ')[0])) {
+                    return league;
+                }
+            }
+            return 'الدوري الأوروبي';
+        }
+
+        // حساب عدد الصفقات الإجمالي
+        function calculateTransferCount(club) {
+            const arrivals = club.arrivals || 0;
+            const departures = club.departures || 0;
+            return arrivals + departures;
+        }
+
+        // إنشاء شريط النادي الثوري
+        function createClubBar(club, index) {
+            const bar = document.createElement('div');
+            bar.className = `club-bar rank-${club.rank}`;
+
+            // تأخير الأنيميشن
+            setTimeout(() => {
+                bar.classList.add('animate');
+            }, index * 200);
+
+            // استخدام الاسم الإنجليزي للبحث عن الشعار والدوري
+            const searchName = club.englishName || club.name;
+            const displayName = club.name; // الاسم العربي للعرض
+
+            bar.innerHTML = `
+                <div class="club-rank ${club.rank <= 3 ? 'top-3' : ''}">${club.rank}</div>
+                <img src="${getClubLogo(searchName)}" alt="${displayName}" class="club-logo"
+                     onerror="this.src='${getClubLogo(searchName)}'">
+                <div class="club-info">
+                    <div class="club-details">
+                        <div>
+                            <div class="club-name">${displayName}</div>
+                            <div class="club-league">${getClubLeague(searchName)}</div>
+                        </div>
+                    </div>
+                    <div class="club-stats">
+                        <div class="stat-item">
+                            <div class="stat-value" style="color: #10b981;">${club.income || '€0.00m'}</div>
+                            <div class="stat-label">إيرادات البيع</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value" style="color: ${(club.balance && club.balance.includes('-')) ? '#ef4444' : '#10b981'};">${club.balance || '€0.00m'}</div>
+                            <div class="stat-label">صافي الربح/الخسارة</div>
+                        </div>
+                    </div>
+                    <div class="expenditure">${club.expenditure}</div>
+                </div>
+            `;
+
+            return bar;
+        }
+
+        // عرض البيانات بتصميم الأشرطة
+        function displayClubsAsStrips(clubs) {
+            const container = document.getElementById('clubsContainer');
+            container.innerHTML = '';
+
+            clubs.forEach((club, index) => {
+                const clubBar = createClubBar(club, index);
+                container.appendChild(clubBar);
+            });
+
+            // حساب الإحصائيات السريعة
+            updateQuickStats(clubs);
+        }
+
+        // تحديث الإحصائيات السريعة
+        function updateQuickStats(clubs) {
+            let totalSpending = 0;
+            let totalTransfers = 0;
+
+            clubs.forEach(club => {
+                const spending = parseFloat(club.expenditure.replace(/[€m]/g, '')) || 0;
+                totalSpending += spending;
+                totalTransfers += (club.arrivals || 0) + (club.departures || 0);
+            });
+
+            const avgSpending = totalSpending / clubs.length;
+
+            document.getElementById('totalSpending').textContent = `€${totalSpending.toFixed(1)}m`;
+            document.getElementById('totalTransfers').textContent = totalTransfers;
+            document.getElementById('avgSpending').textContent = `€${avgSpending.toFixed(1)}m`;
+        }
+
+        // تحميل البيانات من localStorage أو الأداة الرئيسية
+        function loadData() {
+            showUpdateIndicator(true);
+
+            setTimeout(() => {
+                const savedData = localStorage.getItem('transfermarktData');
+
+                if (savedData) {
+                    try {
+                        const clubs = JSON.parse(savedData);
+                        if (clubs && clubs.length > 0) {
+                            displayClubsAsStrips(clubs);
+                            showUpdateIndicator(false);
+                            return;
+                        }
+                    } catch (error) {
+                        console.error('خطأ في تحليل البيانات المحفوظة:', error);
+                    }
+                }
+
+                // بيانات افتراضية محسنة للعرض مع أسماء عربية
+                const defaultData = [
+                    { rank: 1, name: "تشيلسي", englishName: "Chelsea FC", expenditure: "€285.50m", arrivals: 15, departures: 8, income: "€95.20m", balance: "€-190.30m" },
+                    { rank: 2, name: "باريس سان جيرمان", englishName: "Paris Saint-Germain", expenditure: "€245.80m", arrivals: 12, departures: 7, income: "€45.60m", balance: "€-200.20m" },
+                    { rank: 3, name: "ريال مدريد", englishName: "Real Madrid", expenditure: "€220.40m", arrivals: 8, departures: 5, income: "€12.30m", balance: "€-208.10m" },
+                    { rank: 4, name: "آرسنال", englishName: "Arsenal FC", expenditure: "€195.70m", arrivals: 11, departures: 7, income: "€28.50m", balance: "€-167.20m" },
+                    { rank: 5, name: "مانشستر يونايتد", englishName: "Manchester United", expenditure: "€175.90m", arrivals: 14, departures: 9, income: "€22.70m", balance: "€-153.20m" },
+                    { rank: 6, name: "بايرن ميونخ", englishName: "Bayern Munich", expenditure: "€165.20m", arrivals: 9, departures: 6, income: "€85.40m", balance: "€-79.80m" },
+                    { rank: 7, name: "ليفربول", englishName: "Liverpool FC", expenditure: "€158.60m", arrivals: 10, departures: 8, income: "€42.70m", balance: "€-115.90m" },
+                    { rank: 8, name: "يوفنتوس", englishName: "Juventus FC", expenditure: "€142.30m", arrivals: 13, departures: 11, income: "€65.80m", balance: "€-76.50m" },
+                    { rank: 9, name: "مانشستر سيتي", englishName: "Manchester City", expenditure: "€135.80m", arrivals: 7, departures: 5, income: "€58.90m", balance: "€-76.90m" },
+                    { rank: 10, name: "أتلتيكو مدريد", englishName: "Atlético Madrid", expenditure: "€128.40m", arrivals: 12, departures: 9, income: "€72.10m", balance: "€-56.30m" }
+                ];
+
+                displayClubsAsStrips(defaultData);
+                showUpdateIndicator(false);
+            }, 1000);
+        }
+
+        // إضافة مؤشر تحديث للزر
+        function showUpdateIndicator(show = true) {
+            const btn = document.querySelector('.update-btn-display');
+            if (show) {
+                btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري التحديث...';
+                btn.disabled = true;
+            } else {
+                btn.innerHTML = '<i class="fas fa-sync-alt"></i> تحديث البيانات';
+                btn.disabled = false;
+            }
+        }
+
+        // دالة لإعادة تحميل الشعارات يدوياً
+        async function reloadLogos() {
+            console.log('🔄 إعادة تحميل الشعارات يدوياً...');
+            await loadClubLogosFromManager();
+            loadData();
+            console.log('✅ تم إعادة تحميل الشعارات');
+        }
+
+        // دوال التحكم الجديدة
+        async function syncLogos() {
+            console.log('🔄 مزامنة الشعارات...');
+            showUpdateIndicator(true);
+
+            try {
+                await loadClubLogosFromManager();
+                loadData();
+                alert('✅ تم مزامنة الشعارات بنجاح!');
+            } catch (error) {
+                console.error('❌ خطأ في مزامنة الشعارات:', error);
+                alert('❌ خطأ في مزامنة الشعارات');
+            } finally {
+                showUpdateIndicator(false);
+            }
+        }
+
+        function openLogoManager() {
+            window.open('/club-logo-manager.html', '_blank');
+        }
+
+        function openLiveDisplay() {
+            window.open('/transfermarkt-live-display.html', '_blank');
+        }
+
+        // إضافة دالة للوحة التحكم (يمكن استدعاؤها من console)
+        window.transfermarktDebug = {
+            reloadLogos: reloadLogos,
+            syncLogos: syncLogos,
+            showLogos: () => console.log('📋 الشعارات المحملة:', clubLogosDatabase),
+            testLogo: (clubName) => {
+                const logo = getClubLogo(clubName);
+                console.log(`🔍 شعار "${clubName}":`, logo);
+                return logo;
+            }
+        };
+
+        // تهيئة الصفحة المحسنة
+        document.addEventListener('DOMContentLoaded', async function() {
+            console.log('🚀 تهيئة العرض الاحترافي المطور...');
+
+            // تحميل الشعارات من مدير الشعارات
+            await loadClubLogosFromManager();
+
+            // تحميل البيانات
+            loadData();
+
+            // مراقبة تغييرات localStorage
+            window.addEventListener('storage', function(e) {
+                console.log(`📡 تغيير في localStorage: ${e.key}`);
+
+                if (e.key === 'transfermarktData' ||
+                    e.key === 'verifiedClubs' ||
+                    e.key === 'ARABIC_MAPPINGS' ||
+                    e.key === 'clubsData') {
+
+                    if (e.key === 'verifiedClubs' ||
+                        e.key === 'ARABIC_MAPPINGS' ||
+                        e.key === 'clubsData') {
+                        console.log('🔄 تحديث الشعارات والبيانات...');
+                        loadClubLogosFromManager().then(() => {
+                            loadData();
+                        });
+                    } else {
+                        console.log('🔄 تحديث البيانات فقط...');
+                        loadData();
+                    }
+                }
+            });
+
+            console.log('✅ تم تهيئة العرض الاحترافي المطور بنجاح');
+        });
+    </script>
+</body>
+</html>

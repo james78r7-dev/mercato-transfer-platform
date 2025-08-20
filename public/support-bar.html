@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SupportBar - شريط الداعمين</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="css/supporters-modern.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', 'Poppins', Arial, sans-serif;
+      background: transparent;
+      overflow: hidden;
+    }
+
+    /* Modern Glassmorphism Support Bar */
+    .support-bar {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 380px;
+      height: 100vh;
+      background: linear-gradient(135deg,
+        rgba(15, 15, 25, 0.85) 0%,
+        rgba(25, 25, 45, 0.9) 50%,
+        rgba(35, 35, 65, 0.85) 100%);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      border-left: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow:
+        -10px 0 30px rgba(0, 0, 0, 0.3),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+      display: flex;
+      flex-direction: column;
+      z-index: 9999;
+      overflow: hidden;
+      animation: slideInRight 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    @keyframes slideInRight {
+      from {
+        transform: translateX(100%);
+        opacity: 0;
+      }
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+
+    /* Animated Header */
+    .support-bar-header {
+      padding: 28px 32px 20px 32px;
+      background: linear-gradient(135deg,
+        rgba(255, 215, 0, 0.15) 0%,
+        rgba(255, 193, 7, 0.1) 100%);
+      border-bottom: 1px solid rgba(255, 215, 0, 0.2);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .support-bar-header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(90deg,
+        transparent 0%,
+        rgba(255, 215, 0, 0.1) 50%,
+        transparent 100%);
+      animation: shimmer 3s infinite;
+    }
+
+    @keyframes shimmer {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
+    }
+
+    .header-content {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .header-icon {
+      width: 48px;
+      height: 48px;
+      background: linear-gradient(135deg, #FFD700, #FFA000);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      color: #1a1a2e;
+      box-shadow:
+        0 8px 32px rgba(255, 215, 0, 0.3),
+        inset 0 2px 4px rgba(255, 255, 255, 0.2);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+
+    .header-text {
+      flex: 1;
+    }
+
+    .header-title {
+      font-size: 1.8rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #FFD700, #FFA000, #FFD700);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 4px;
+      letter-spacing: 0.5px;
+    }
+
+    .header-subtitle {
+      font-size: 0.9rem;
+      color: rgba(255, 255, 255, 0.7);
+      font-weight: 400;
+    }
+
+    /* Modern Supporters List */
+    .supporters-list {
+      flex: 1;
+      overflow-y: auto;
+      padding: 24px 32px;
+      margin: 0;
+      list-style: none;
+      position: relative;
+    }
+
+    .supporters-list::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .supporters-list::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 3px;
+    }
+
+    .supporters-list::-webkit-scrollbar-thumb {
+      background: linear-gradient(180deg, #FFD700, #FFA000);
+      border-radius: 3px;
+    }
+
+    /* Ultra Modern Supporter Cards */
+    .supporter {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: linear-gradient(135deg,
+        rgba(255, 255, 255, 0.08) 0%,
+        rgba(255, 255, 255, 0.05) 100%);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      margin-bottom: 16px;
+      padding: 20px 24px;
+      font-size: 1.1rem;
+      color: #fff;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      box-shadow:
+        0 8px 32px rgba(0, 0, 0, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      opacity: 0;
+      transform: translateY(40px) scale(0.95);
+      animation: cardSlideIn 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+      transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      overflow: hidden;
+    }
+
+    .supporter::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.02) 50%,
+        transparent 100%);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .supporter:hover {
+      transform: translateY(-4px) scale(1.02);
+      box-shadow:
+        0 16px 48px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15);
+      border-color: rgba(255, 215, 0, 0.3);
+    }
+
+    .supporter:hover::before {
+      opacity: 1;
+    }
+
+    @keyframes cardSlideIn {
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    /* Elite Top Supporter */
+    .supporter.top {
+      background: linear-gradient(135deg,
+        rgba(255, 215, 0, 0.2) 0%,
+        rgba(255, 193, 7, 0.15) 50%,
+        rgba(255, 215, 0, 0.1) 100%);
+      border: 2px solid rgba(255, 215, 0, 0.4);
+      box-shadow:
+        0 12px 40px rgba(255, 215, 0, 0.2),
+        inset 0 1px 0 rgba(255, 215, 0, 0.3);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .supporter.top::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(45deg,
+        transparent 30%,
+        rgba(255, 215, 0, 0.1) 50%,
+        transparent 70%);
+      animation: eliteShine 3s infinite;
+    }
+
+    @keyframes eliteShine {
+      0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+      100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+    }
+
+    .supporter.top .supporter-content {
+      color: #FFD700;
+      font-weight: 600;
+      font-size: 1.2rem;
+    }
+
+    .supporter.top .crown {
+      font-size: 1.6rem;
+      color: #FFD700;
+      text-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
+      animation: crownGlow 2s infinite alternate;
+    }
+
+    @keyframes crownGlow {
+      from { text-shadow: 0 0 20px rgba(255, 215, 0, 0.8); }
+      to { text-shadow: 0 0 30px rgba(255, 215, 0, 1); }
+    }
+
+    /* Supporter Content Layout */
+    .supporter-content {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex: 1;
+    }
+
+    .supporter-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      color: white;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+      position: relative;
+    }
+
+    .supporter.top .supporter-avatar {
+      background: linear-gradient(135deg, #FFD700, #FFA000);
+      box-shadow: 0 6px 20px rgba(255, 215, 0, 0.4);
+    }
+
+    .supporter-info {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .supporter-name {
+      font-weight: 600;
+      font-size: 1.1rem;
+      color: #fff;
+    }
+
+    .supporter.top .supporter-name {
+      color: #FFD700;
+      font-weight: 700;
+    }
+
+    .supporter-alias {
+      font-size: 0.9rem;
+      color: rgba(255, 255, 255, 0.7);
+      font-weight: 400;
+    }
+
+    .supporter.top .supporter-alias {
+      color: rgba(255, 215, 0, 0.8);
+    }
+
+    .supporter-amount {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 600;
+      color: #4CAF50;
+      font-size: 1.1rem;
+    }
+
+    .supporter.top .supporter-amount {
+      color: #FFD700;
+      font-size: 1.2rem;
+    }
+
+    .amount-icon {
+      font-size: 1rem;
+      opacity: 0.8;
+    }
+
+    .supporter-message {
+      font-size: 0.9rem;
+      color: rgba(255, 255, 255, 0.8);
+      font-style: italic;
+      margin-top: 4px;
+      line-height: 1.4;
+    }
+
+    .supporter.top .supporter-message {
+      color: rgba(255, 215, 0, 0.9);
+    }
+
+    /* Privacy Options */
+    .supporter.hide-name .supporter-name {
+      visibility: hidden;
+    }
+
+    .supporter.hide-amount .supporter-amount {
+      visibility: hidden;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 480px) {
+      .support-bar {
+        width: 100vw;
+        right: 0;
+      }
+
+      .support-bar-header {
+        padding: 20px 24px 16px 24px;
+      }
+
+      .supporters-list {
+        padding: 16px 24px;
+      }
+
+      .supporter {
+        padding: 16px 20px;
+        margin-bottom: 12px;
+      }
+    }
+
+    /* Loading Animation */
+    .loading {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 200px;
+      color: rgba(255, 255, 255, 0.6);
+      font-size: 1.1rem;
+    }
+
+    .loading-spinner {
+      width: 24px;
+      height: 24px;
+      border: 2px solid rgba(255, 215, 0, 0.3);
+      border-top: 2px solid #FFD700;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin-left: 12px;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* Empty State */
+    .empty-state {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 200px;
+      color: rgba(255, 255, 255, 0.5);
+      text-align: center;
+    }
+
+    .empty-icon {
+      font-size: 3rem;
+      margin-bottom: 16px;
+      opacity: 0.5;
+    }
+
+    .empty-text {
+      font-size: 1.1rem;
+      font-weight: 500;
+    }
+  </style>
+</head>
+<body>
+  <div class="support-bar" id="supportBar">
+    <!-- تدرجات عصرية أعلى وأسفل الشريط -->
+    <div id="barGradientTop" style="display:none; position:absolute;top:0;right:0;width:100%;height:38px;z-index:2;pointer-events:none;background:linear-gradient(to bottom,rgba(30,30,40,0.85),rgba(30,30,40,0.01));"></div>
+    <div id="barGradientBottom" style="display:none; position:absolute;bottom:0;right:0;width:100%;height:38px;z-index:2;pointer-events:none;background:linear-gradient(to top,rgba(30,30,40,0.85),rgba(30,30,40,0.01));"></div>
+    <div class="support-bar-header">
+      <div class="header-content">
+        <div class="header-icon">
+          <i class="fas fa-heart"></i>
+        </div>
+        <div class="header-text">
+          <div class="header-title">الداعمين</div>
+          <div class="header-subtitle">شكراً لجميع الداعمين</div>
+        </div>
+        <button id="settingsBtn" title="إعدادات الشريط" style="background: none; border: none; cursor: pointer; font-size: 1.5rem; color: #FFD700; margin-right: 8px;">
+          <i class="fas fa-cog"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- نافذة الإعدادات المنبثقة -->
+    <div id="supportBarSettings" style="display:none; position: fixed; top: 60px; right: 30px; z-index: 10001; background: rgba(30,30,40,0.98); border-radius: 18px; box-shadow: 0 8px 32px rgba(0,0,0,0.25); padding: 28px 32px 24px 32px; min-width: 320px; max-width: 90vw; color: #fff; border: 1px solid #FFD700;">
+      <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px;">
+        <span style="font-size: 1.2rem; font-weight: 600;">إعدادات الشريط</span>
+        <button id="closeSettingsBtn" style="background: none; border: none; color: #FFD700; font-size: 1.3rem; cursor: pointer;">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div style="margin-bottom: 18px;">
+        <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+          <input type="checkbox" id="autoScrollToggle" style="accent-color: #FFD700; width: 18px; height: 18px;">
+          تفعيل التمرير العمودي التلقائي عند كثرة الداعمين
+        </label>
+      </div>
+      <div style="margin-bottom: 14px;">
+        <label for="scrollTopDuration" style="font-size: 1rem;">مدة التوقف بالأعلى (ثواني):</label>
+        <input type="number" id="scrollTopDuration" min="2" max="60" value="15" style="width: 60px; margin-right: 10px; border-radius: 6px; border: 1px solid #FFD700; padding: 3px 7px; background: #222; color: #FFD700;">
+      </div>
+      <div style="margin-bottom: 14px;">
+        <label for="scrollBottomDuration" style="font-size: 1rem;">مدة التوقف بالأسفل (ثواني):</label>
+        <input type="number" id="scrollBottomDuration" min="2" max="60" value="15" style="width: 60px; margin-right: 10px; border-radius: 6px; border: 1px solid #FFD700; padding: 3px 7px; background: #222; color: #FFD700;">
+      </div>
+      <div style="margin-bottom: 18px;">
+        <label for="scrollMoveDuration" style="font-size: 1rem;">مدة حركة التمرير (ثواني):</label>
+        <input type="number" id="scrollMoveDuration" min="1" max="10" value="3" style="width: 60px; margin-right: 10px; border-radius: 6px; border: 1px solid #FFD700; padding: 3px 7px; background: #222; color: #FFD700;">
+      </div>
+      <div style="text-align: left;">
+        <button id="saveSettingsBtn" style="background: linear-gradient(135deg, #FFD700, #FFA000); color: #222; font-weight: 600; border: none; border-radius: 8px; padding: 8px 22px; font-size: 1rem; cursor: pointer;">حفظ</button>
+      </div>
+    </div>
+
+    <ul class="supporters-list" id="supportersList" style="overflow-y: auto !important; height: 80vh; max-height: 80vh; will-change: scroll-position; -webkit-overflow-scrolling: touch; position: relative;">
+      <li class="loading">
+        <span>جاري التحميل...</span>
+        <span class="loading-spinner"></span>
+      </li>
+    </ul>
+  </div>
+
+  <script src="js/support-bar.js"></script>
+</body>
+</html>

@@ -1,0 +1,2195 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>شريط الداعمين - الإصدار النهائي</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', 'Poppins', Arial, sans-serif;
+      background: transparent;
+      overflow: hidden;
+      width: 380px;
+      height: 100vh;
+    }
+
+    /* الحاوية الرئيسية */
+    .support-bar {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 380px;
+      height: 100vh;
+      background: linear-gradient(135deg,
+        rgba(15, 15, 25, 0.95) 0%,
+        rgba(25, 25, 45, 0.98) 50%,
+        rgba(35, 35, 65, 0.95) 100%);
+      backdrop-filter: blur(25px) saturate(180%);
+      -webkit-backdrop-filter: blur(25px) saturate(180%);
+      border-left: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow:
+        -15px 0 40px rgba(0, 0, 0, 0.4),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+      display: flex;
+      flex-direction: column;
+      z-index: 9999;
+      overflow: hidden;
+      animation: slideInRight 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    @keyframes slideInRight {
+      from {
+        transform: translateX(100%);
+        opacity: 0;
+      }
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+
+    /* الشريط العلوي */
+    .support-bar-header {
+      padding: 25px 30px;
+      background: linear-gradient(135deg,
+        rgba(255, 215, 0, 0.2) 0%,
+        rgba(255, 193, 7, 0.15) 50%,
+        rgba(255, 160, 0, 0.1) 100%);
+      border-bottom: 2px solid rgba(255, 215, 0, 0.3);
+      position: relative;
+      overflow: hidden;
+      backdrop-filter: blur(10px);
+    }
+
+    .support-bar-header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg,
+        transparent 0%,
+        rgba(255, 215, 0, 0.2) 50%,
+        transparent 100%);
+      animation: shimmer 4s infinite;
+    }
+
+    @keyframes shimmer {
+      0% { left: -100%; }
+      100% { left: 100%; }
+    }
+
+    .header-content {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .youtube-logo {
+      width: 35px;
+      height: 35px;
+      background: linear-gradient(135deg, #ff0000, #cc0000);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 6px 20px rgba(255, 0, 0, 0.4);
+      animation: youtubePulse 4s infinite;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+    }
+
+    @keyframes youtubePulse {
+      0%, 100% {
+        transform: scale(1);
+        box-shadow: 0 6px 20px rgba(255, 0, 0, 0.4);
+      }
+      50% {
+        transform: scale(1.05);
+        box-shadow: 0 8px 25px rgba(255, 0, 0, 0.6);
+      }
+    }
+
+    .youtube-logo i {
+      font-size: 18px;
+      color: white;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    }
+
+    .header-icon {
+      width: 50px;
+      height: 50px;
+      background: linear-gradient(135deg, #FFD700, #FFA000);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 8px 20px rgba(255, 215, 0, 0.4);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+
+    .header-icon i {
+      font-size: 24px;
+      color: #000;
+    }
+
+    .header-text {
+      flex: 1;
+    }
+
+    .header-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: #FFD700;
+      margin-bottom: 4px;
+      text-shadow: 0 2px 8px rgba(255, 215, 0, 0.3);
+    }
+
+    .header-subtitle {
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.8);
+      font-weight: 400;
+    }
+
+    /* قائمة الداعمين */
+    .supporters-container {
+      flex: 1;
+      overflow-y: auto;
+      padding: 20px 25px;
+      scroll-behavior: smooth;
+    }
+
+    .supporters-container::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .supporters-container::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 3px;
+    }
+
+    .supporters-container::-webkit-scrollbar-thumb {
+      background: linear-gradient(135deg, #FFD700, #FFA000);
+      border-radius: 3px;
+    }
+
+    .supporter-item {
+      background: linear-gradient(135deg,
+        rgba(255, 255, 255, 0.08) 0%,
+        rgba(255, 255, 255, 0.05) 100%);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      padding: 18px 20px;
+      margin-bottom: 15px;
+      backdrop-filter: blur(10px);
+      transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      position: relative;
+      overflow: hidden;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 0.6s ease forwards;
+    }
+
+    .supporter-item:nth-child(1) { animation-delay: 0.1s; }
+    .supporter-item:nth-child(2) { animation-delay: 0.2s; }
+    .supporter-item:nth-child(3) { animation-delay: 0.3s; }
+    .supporter-item:nth-child(n+4) { animation-delay: 0.4s; }
+
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .supporter-item:hover {
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    /* ألوان المراكز المحسنة - بدون تغطية على النص */
+    .supporter-item.rank-1 {
+      background: linear-gradient(135deg,
+        rgba(255, 215, 0, 0.12) 0%,
+        rgba(255, 193, 7, 0.08) 50%,
+        rgba(255, 160, 0, 0.06) 100%);
+      border: 3px solid #FFD700;
+      box-shadow:
+        0 15px 45px rgba(255, 215, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+      position: relative;
+      transform: scale(1.08);
+    }
+
+    .supporter-item.rank-1::before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      background: linear-gradient(45deg, #FFD700, #FFA000, #FFD700);
+      border-radius: 18px;
+      z-index: -1;
+      animation: goldGlow 3s infinite;
+    }
+
+    @keyframes goldGlow {
+      0%, 100% { opacity: 0.7; }
+      50% { opacity: 1; }
+    }
+
+    .supporter-item.rank-2 {
+      background: linear-gradient(135deg,
+        rgba(192, 192, 192, 0.12) 0%,
+        rgba(169, 169, 169, 0.08) 50%,
+        rgba(128, 128, 128, 0.06) 100%);
+      border: 3px solid #C0C0C0;
+      box-shadow:
+        0 12px 35px rgba(192, 192, 192, 0.25),
+        inset 0 1px 0 rgba(255, 255, 255, 0.25);
+      transform: scale(1.05);
+    }
+
+    .supporter-item.rank-3 {
+      background: linear-gradient(135deg,
+        rgba(205, 127, 50, 0.12) 0%,
+        rgba(184, 115, 51, 0.08) 50%,
+        rgba(160, 82, 45, 0.06) 100%);
+      border: 3px solid #CD7F32;
+      box-shadow:
+        0 10px 30px rgba(205, 127, 50, 0.25),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+      transform: scale(1.03);
+    }
+
+    .rank-badge {
+      position: absolute;
+      top: -10px;
+      right: -10px;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 15px;
+      font-weight: bold;
+      color: #000;
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      z-index: 10;
+    }
+
+    .rank-1 .rank-badge {
+      background: linear-gradient(135deg, #FFD700, #FFA000);
+      color: #000;
+      animation: goldPulse 3s infinite;
+      font-size: 22px;
+      width: 50px;
+      height: 50px;
+      top: -15px;
+      right: -15px;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+      border: 4px solid rgba(255, 255, 255, 0.5);
+    }
+
+    @keyframes goldPulse {
+      0%, 100% {
+        transform: scale(1);
+        box-shadow: 0 10px 25px rgba(255, 215, 0, 0.5);
+      }
+      50% {
+        transform: scale(1.15);
+        box-shadow: 0 15px 35px rgba(255, 215, 0, 0.8);
+      }
+    }
+
+    .rank-2 .rank-badge {
+      background: linear-gradient(135deg, #C0C0C0, #A9A9A9);
+      color: #000;
+      animation: silverShine 4s infinite;
+      font-size: 20px;
+      width: 46px;
+      height: 46px;
+      top: -13px;
+      right: -13px;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+      border: 3px solid rgba(255, 255, 255, 0.4);
+    }
+
+    @keyframes silverShine {
+      0%, 100% { filter: brightness(1); }
+      50% { filter: brightness(1.3); }
+    }
+
+    .rank-3 .rank-badge {
+      background: linear-gradient(135deg, #CD7F32, #B87333);
+      color: #fff;
+      animation: bronzeGlow 5s infinite;
+      font-size: 18px;
+      width: 42px;
+      height: 42px;
+      top: -11px;
+      right: -11px;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+      border: 3px solid rgba(255, 255, 255, 0.3);
+    }
+
+    @keyframes bronzeGlow {
+      0%, 100% { filter: brightness(1); }
+      50% { filter: brightness(1.2); }
+    }
+
+    .supporter-item:not(.rank-1):not(.rank-2):not(.rank-3) .rank-badge {
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: #fff;
+      width: 40px;
+      height: 40px;
+      font-size: 16px;
+      font-weight: 800;
+      top: -12px;
+      right: -12px;
+      border: 3px solid rgba(255, 255, 255, 0.3);
+      text-shadow: 0 3px 6px rgba(0, 0, 0, 0.8);
+      box-shadow: 0 6px 18px rgba(102, 126, 234, 0.4);
+    }
+
+    .supporter-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .supporter-name {
+      font-size: 17px;
+      font-weight: 600;
+      text-shadow: 0 3px 8px rgba(0, 0, 0, 0.8);
+      letter-spacing: 0.3px;
+    }
+
+    .rank-1 .supporter-name {
+      color: #FFFFFF;
+      text-shadow:
+        0 0 12px rgba(255, 215, 0, 0.9),
+        0 3px 8px rgba(0, 0, 0, 0.9);
+      font-weight: 700;
+    }
+
+    .rank-2 .supporter-name {
+      color: #FFFFFF;
+      text-shadow:
+        0 0 10px rgba(192, 192, 192, 0.9),
+        0 3px 8px rgba(0, 0, 0, 0.9);
+      font-weight: 700;
+    }
+
+    .rank-3 .supporter-name {
+      color: #FFFFFF;
+      text-shadow:
+        0 0 10px rgba(205, 127, 50, 0.9),
+        0 3px 8px rgba(0, 0, 0, 0.9);
+      font-weight: 700;
+    }
+
+    .supporter-item:not(.rank-1):not(.rank-2):not(.rank-3) .supporter-name {
+      color: #FFFFFF;
+      text-shadow: 0 3px 8px rgba(0, 0, 0, 0.8);
+    }
+
+    .supporter-amount {
+      font-size: 15px;
+      font-weight: bold;
+      color: #00ff88;
+      background: rgba(0, 255, 136, 0.15);
+      padding: 6px 12px;
+      border-radius: 20px;
+      border: 1px solid rgba(0, 255, 136, 0.3);
+    }
+
+    .supporter-message {
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.85);
+      line-height: 1.5;
+      font-style: italic;
+      margin-top: 8px;
+    }
+
+    /* حالات التحميل والخطأ */
+    .loading, .error, .empty {
+      text-align: center;
+      padding: 60px 20px;
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    .loading {
+      color: #FFD700;
+    }
+
+    .error {
+      color: #ff6b6b;
+    }
+
+    .loading-spinner {
+      width: 40px;
+      height: 40px;
+      border: 3px solid rgba(255, 215, 0, 0.3);
+      border-top: 3px solid #FFD700;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin: 20px auto;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* لوحة الإعدادات المتقدمة */
+    .settings-panel {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      width: 320px;
+      max-height: calc(100vh - 40px);
+      background: linear-gradient(135deg,
+        rgba(15, 15, 25, 0.98) 0%,
+        rgba(25, 25, 45, 0.99) 50%,
+        rgba(35, 35, 65, 0.98) 100%);
+      backdrop-filter: blur(25px) saturate(180%);
+      -webkit-backdrop-filter: blur(25px) saturate(180%);
+      border: 2px solid rgba(255, 215, 0, 0.3);
+      border-radius: 20px;
+      padding: 25px;
+      z-index: 10000;
+      overflow-y: auto;
+      box-shadow:
+        0 20px 60px rgba(0, 0, 0, 0.6),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      transform: translateX(-100%);
+      transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      opacity: 0;
+    }
+
+    .settings-panel.show {
+      transform: translateX(0);
+      opacity: 1;
+    }
+
+    .settings-toggle {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      width: 50px;
+      height: 50px;
+      background: linear-gradient(135deg, rgba(255, 215, 0, 0.9), rgba(255, 160, 0, 0.8));
+      border: 2px solid rgba(255, 215, 0, 0.6);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 10001;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 8px 25px rgba(255, 215, 0, 0.4);
+    }
+
+    .settings-toggle:hover {
+      transform: scale(1.1);
+      box-shadow: 0 12px 35px rgba(255, 215, 0, 0.6);
+    }
+
+    .settings-toggle i {
+      font-size: 20px;
+      color: #000;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    .settings-header {
+      text-align: center;
+      margin-bottom: 25px;
+      padding-bottom: 15px;
+      border-bottom: 2px solid rgba(255, 215, 0, 0.3);
+    }
+
+    .settings-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: #FFD700;
+      margin-bottom: 8px;
+      text-shadow: 0 2px 8px rgba(255, 215, 0, 0.4);
+    }
+
+    .settings-subtitle {
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    .setting-group {
+      margin-bottom: 20px;
+      padding: 15px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .setting-label {
+      display: block;
+      font-size: 14px;
+      font-weight: 600;
+      color: #FFD700;
+      margin-bottom: 8px;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    }
+
+    .setting-input {
+      width: 100%;
+      padding: 12px 15px;
+      border: 2px solid rgba(255, 215, 0, 0.3);
+      border-radius: 10px;
+      background: rgba(0, 0, 0, 0.4);
+      color: white;
+      font-size: 14px;
+      font-weight: 500;
+      transition: all 0.3s ease;
+    }
+
+    .setting-input:focus {
+      border-color: #FFD700;
+      outline: none;
+      box-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
+      background: rgba(0, 0, 0, 0.6);
+    }
+
+    .setting-checkbox {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+      padding: 10px;
+      border-radius: 8px;
+      transition: background 0.3s ease;
+    }
+
+    .setting-checkbox:hover {
+      background: rgba(255, 215, 0, 0.1);
+    }
+
+    .setting-checkbox input[type="checkbox"] {
+      width: 20px;
+      height: 20px;
+      accent-color: #FFD700;
+      cursor: pointer;
+    }
+
+    .setting-checkbox label {
+      font-size: 14px;
+      color: white;
+      cursor: pointer;
+      font-weight: 500;
+    }
+
+    .setting-range {
+      margin-top: 8px;
+    }
+
+    .range-input {
+      width: 100%;
+      height: 6px;
+      border-radius: 3px;
+      background: rgba(255, 255, 255, 0.2);
+      outline: none;
+      -webkit-appearance: none;
+    }
+
+    .range-input::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #FFD700, #FFA000);
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(255, 215, 0, 0.4);
+    }
+
+    .range-value {
+      display: inline-block;
+      background: rgba(255, 215, 0, 0.2);
+      color: #FFD700;
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: bold;
+      margin-top: 5px;
+    }
+
+    .settings-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 25px;
+      padding-top: 20px;
+      border-top: 2px solid rgba(255, 215, 0, 0.3);
+    }
+
+    .btn {
+      flex: 1;
+      padding: 12px 16px;
+      border: none;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #FFD700, #FFA000);
+      color: #000;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(255, 215, 0, 0.4);
+    }
+
+    .btn-secondary {
+      background: linear-gradient(135deg, #666, #444);
+      color: white;
+    }
+
+    .btn-secondary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+    }
+
+    /* إخفاء الإعدادات في وضع الإنتاج */
+    .production-mode .settings-panel,
+    .production-mode .settings-toggle {
+      display: none !important;
+    }
+
+    /* إخفاء معلومات الحالة في وضع الإنتاج */
+    .production-mode .status-info {
+      display: none !important;
+    }
+
+    /* معلومات الحالة - منقولة لليسار */
+    .status-info {
+      position: fixed;
+      bottom: 15px;
+      left: 15px;
+      background: rgba(0, 0, 0, 0.9);
+      padding: 10px 15px;
+      border-radius: 10px;
+      font-size: 12px;
+      color: #00ff88;
+      border: 2px solid rgba(0, 255, 136, 0.4);
+      z-index: 1000;
+      backdrop-filter: blur(15px);
+      transition: opacity 0.3s ease;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
+      max-width: 250px;
+    }
+
+    /* تحسينات الأداء والجودة */
+    .support-bar {
+      will-change: transform;
+      contain: layout style paint;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
+    }
+
+    .supporters-container {
+      contain: layout style paint;
+      transform: translateZ(0); /* تفعيل تسريع الأجهزة */
+      -webkit-overflow-scrolling: touch; /* تحسين التمرير على الأجهزة المحمولة */
+    }
+
+    .supporter-item {
+      will-change: transform, opacity;
+      contain: layout style paint;
+    }
+
+    /* تحسين الرسوم المتحركة للأداء */
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+
+    /* تحسين للشاشات عالية الدقة */
+    @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+      .support-bar {
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+
+      .supporter-name,
+      .supporter-amount {
+        text-rendering: optimizeLegibility;
+      }
+    }
+
+    /* تحسينات للأداء في OBS */
+    @media screen and (max-width: 400px) {
+      .support-bar {
+        transform: translateZ(0);
+        backface-visibility: hidden;
+        perspective: 1000px;
+      }
+
+      .supporter-item {
+        transform: translateZ(0);
+        backface-visibility: hidden;
+      }
+    }
+
+    /* تأثيرات إضافية للمراكز الأولى */
+    .rank-1::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 120%;
+      height: 120%;
+      background: radial-gradient(circle, rgba(255, 215, 0, 0.1) 0%, transparent 70%);
+      transform: translate(-50%, -50%);
+      z-index: -2;
+      animation: goldAura 6s infinite;
+    }
+
+    @keyframes goldAura {
+      0%, 100% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 0.3;
+      }
+      50% {
+        transform: translate(-50%, -50%) scale(1.1);
+        opacity: 0.6;
+      }
+    }
+
+    .rank-2::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 110%;
+      height: 110%;
+      background: radial-gradient(circle, rgba(192, 192, 192, 0.08) 0%, transparent 70%);
+      transform: translate(-50%, -50%);
+      z-index: -2;
+      animation: silverAura 8s infinite;
+    }
+
+    @keyframes silverAura {
+      0%, 100% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 0.2;
+      }
+      50% {
+        transform: translate(-50%, -50%) scale(1.05);
+        opacity: 0.4;
+      }
+    }
+
+    .rank-3::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 105%;
+      height: 105%;
+      background: radial-gradient(circle, rgba(205, 127, 50, 0.06) 0%, transparent 70%);
+      transform: translate(-50%, -50%);
+      z-index: -2;
+      animation: bronzeAura 10s infinite;
+    }
+
+    @keyframes bronzeAura {
+      0%, 100% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 0.15;
+      }
+      50% {
+        transform: translate(-50%, -50%) scale(1.03);
+        opacity: 0.3;
+      }
+    }
+
+    /* تأثيرات عصرية متقدمة */
+    .support-bar::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background:
+        radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 40% 40%, rgba(120, 219, 255, 0.1) 0%, transparent 50%);
+      z-index: -1;
+      animation: backgroundFlow 20s infinite;
+    }
+
+    @keyframes backgroundFlow {
+      0%, 100% { opacity: 0.3; }
+      33% { opacity: 0.5; }
+      66% { opacity: 0.4; }
+    }
+
+    /* تأثير الجسيمات المتحركة */
+    .support-bar::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-image:
+        radial-gradient(2px 2px at 20px 30px, rgba(255, 215, 0, 0.3), transparent),
+        radial-gradient(2px 2px at 40px 70px, rgba(255, 255, 255, 0.2), transparent),
+        radial-gradient(1px 1px at 90px 40px, rgba(255, 215, 0, 0.4), transparent),
+        radial-gradient(1px 1px at 130px 80px, rgba(255, 255, 255, 0.3), transparent);
+      background-repeat: repeat;
+      background-size: 150px 100px;
+      z-index: -1;
+      animation: particles 30s linear infinite;
+    }
+
+    @keyframes particles {
+      0% { transform: translateY(0px); }
+      100% { transform: translateY(-100px); }
+    }
+
+    /* تحسينات الشريط العلوي */
+    .support-bar-header {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .support-bar-header::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(
+        45deg,
+        transparent 30%,
+        rgba(255, 215, 0, 0.1) 50%,
+        transparent 70%
+      );
+      animation: headerSweep 8s infinite;
+    }
+
+    @keyframes headerSweep {
+      0% { transform: translateX(-100%); }
+      50% { transform: translateX(100%); }
+      100% { transform: translateX(-100%); }
+    }
+
+    /* تحسين شعار YouTube */
+    .youtube-logo {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .youtube-logo::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(
+        45deg,
+        transparent 30%,
+        rgba(255, 255, 255, 0.3) 50%,
+        transparent 70%
+      );
+      animation: logoShine 6s infinite;
+    }
+
+    @keyframes logoShine {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* تأثيرات التمرير المحسنة */
+    .supporters-container {
+      position: relative;
+    }
+
+    .supporters-container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 30px;
+      background: linear-gradient(
+        to bottom,
+        rgba(35, 35, 65, 0.8) 0%,
+        transparent 100%
+      );
+      z-index: 10;
+      pointer-events: none;
+    }
+
+    .supporters-container::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 30px;
+      background: linear-gradient(
+        to top,
+        rgba(35, 35, 65, 0.8) 0%,
+        transparent 100%
+      );
+      z-index: 10;
+      pointer-events: none;
+    }
+
+    /* تحسين تأثيرات الداعمين */
+    .supporter-item {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .supporter-item::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.1) 50%,
+        transparent 100%
+      );
+      transition: left 0.6s ease;
+    }
+
+    .supporter-item:hover::before {
+      left: 100%;
+    }
+
+    /* تحسينات الأداء */
+    .supporter-item {
+      will-change: transform;
+      contain: layout style paint;
+    }
+
+    .supporters-container {
+      contain: layout style paint;
+      transform: translateZ(0); /* تفعيل تسريع الأجهزة */
+    }
+
+    /* تحسين الرسوم المتحركة */
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+
+    /* تحسين للشاشات عالية الدقة */
+    @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+      .support-bar {
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- زر الإعدادات -->
+  <div class="settings-toggle" id="settingsToggle" onclick="toggleSettings()">
+    <i class="fas fa-cog"></i>
+  </div>
+
+  <!-- لوحة الإعدادات -->
+  <div class="settings-panel" id="settingsPanel">
+    <div class="settings-header">
+      <div class="settings-title">⚙️ إعدادات التمرير</div>
+      <div class="settings-subtitle">تحكم كامل في سلوك الشريط</div>
+    </div>
+
+    <div class="setting-group">
+      <div class="setting-checkbox">
+        <input type="checkbox" id="autoScroll" checked>
+        <label for="autoScroll">تفعيل التمرير التلقائي</label>
+      </div>
+    </div>
+
+    <div class="setting-group">
+      <label class="setting-label">⏸️ انتظار في الأعلى (ثانية)</label>
+      <input type="range" id="waitTop" class="range-input" min="5" max="60" value="15">
+      <div class="range-value" id="waitTopValue">15 ثانية</div>
+    </div>
+
+    <div class="setting-group">
+      <label class="setting-label">⬇️ مدة النزول (ثانية)</label>
+      <input type="range" id="scrollDown" class="range-input" min="5" max="60" value="15">
+      <div class="range-value" id="scrollDownValue">15 ثانية</div>
+    </div>
+
+    <div class="setting-group">
+      <label class="setting-label">⏸️ انتظار في الأسفل (ثانية)</label>
+      <input type="range" id="waitBottom" class="range-input" min="5" max="60" value="15">
+      <div class="range-value" id="waitBottomValue">15 ثانية</div>
+    </div>
+
+    <div class="setting-group">
+      <label class="setting-label">⬆️ مدة الصعود (ثانية)</label>
+      <input type="range" id="scrollUp" class="range-input" min="5" max="60" value="15">
+      <div class="range-value" id="scrollUpValue">15 ثانية</div>
+    </div>
+
+    <div class="setting-group">
+      <label class="setting-label">🎯 سلاسة التمرير</label>
+      <input type="range" id="smoothness" class="range-input" min="1" max="10" value="5">
+      <div class="range-value" id="smoothnessValue">متوسط</div>
+    </div>
+
+    <div class="setting-group">
+      <label class="setting-label">📏 أحجام النصوص</label>
+
+      <div style="margin-bottom: 10px;">
+        <label style="font-size: 12px; color: rgba(255, 215, 0, 0.8);">عنوان "الداعمين":</label>
+        <input type="range" id="headerTitleSize" class="range-input" min="16" max="32" value="22">
+        <div class="range-value" id="headerTitleSizeValue">22px</div>
+      </div>
+
+      <div style="margin-bottom: 10px;">
+        <label style="font-size: 12px; color: rgba(255, 215, 0, 0.8);">"شكراً لجميع الداعمين":</label>
+        <input type="range" id="headerSubtitleSize" class="range-input" min="10" max="20" value="14">
+        <div class="range-value" id="headerSubtitleSizeValue">14px</div>
+      </div>
+
+      <div style="margin-bottom: 10px;">
+        <label style="font-size: 12px; color: rgba(255, 215, 0, 0.8);">أسماء الداعمين:</label>
+        <input type="range" id="supporterNameSize" class="range-input" min="12" max="24" value="17">
+        <div class="range-value" id="supporterNameSizeValue">17px</div>
+      </div>
+
+      <div style="margin-bottom: 10px;">
+        <label style="font-size: 12px; color: rgba(255, 215, 0, 0.8);">مبالغ الدعم:</label>
+        <input type="range" id="supporterAmountSize" class="range-input" min="12" max="22" value="16">
+        <div class="range-value" id="supporterAmountSizeValue">16px</div>
+      </div>
+
+      <div style="margin-bottom: 10px;">
+        <label style="font-size: 12px; color: rgba(255, 215, 0, 0.8);">رسائل الشكر:</label>
+        <input type="range" id="supporterMessageSize" class="range-input" min="10" max="18" value="14">
+        <div class="range-value" id="supporterMessageSizeValue">14px</div>
+      </div>
+    </div>
+
+    <div class="settings-actions">
+      <button class="btn btn-secondary" onclick="resetSettings()">🔄 إعادة تعيين</button>
+      <button class="btn btn-primary" onclick="generateOBSUrl()">📋 نسخ رابط OBS</button>
+    </div>
+  </div>
+
+  <div class="support-bar">
+    <!-- الشريط العلوي -->
+    <div class="support-bar-header">
+      <div class="header-content">
+        <div class="header-icon">
+          <i class="fas fa-heart"></i>
+        </div>
+        <div class="header-text">
+          <div class="header-title" id="headerTitle">الداعمين</div>
+          <div class="header-subtitle" id="headerSubtitle">شكراً لجميع الداعمين</div>
+        </div>
+        <div class="youtube-logo">
+          <i class="fab fa-youtube"></i>
+        </div>
+      </div>
+    </div>
+
+    <!-- قائمة الداعمين -->
+    <div class="supporters-container" id="supportersContainer">
+      <div class="loading">
+        <div>جاري تحميل الداعمين...</div>
+        <div class="loading-spinner"></div>
+      </div>
+    </div>
+
+    <!-- معلومات الحالة -->
+    <div class="status-info" id="statusInfo">
+      جاري التحميل...
+    </div>
+  </div>
+
+  <script>
+    // إعدادات افتراضية محسنة مع تحكم في الأحجام
+    let settings = {
+      autoScroll: true,
+      waitTop: 15,
+      scrollDown: 15,
+      waitBottom: 15,
+      scrollUp: 15,
+      smoothness: 5,
+      headerTitleSize: 22,
+      headerSubtitleSize: 14,
+      supporterNameSize: 17,
+      supporterAmountSize: 16,
+      supporterMessageSize: 14
+    };
+
+    // متغيرات التمرير
+    let scrollTimer = null;
+    let currentPhase = 'waitTop';
+    let cycleCount = 0;
+    let isScrolling = false;
+
+    // بيانات الداعمين
+    let supporters = [];
+
+    // تحميل الإعدادات من URL مع دعم الإعدادات الجديدة
+    function loadSettingsFromURL() {
+      const params = new URLSearchParams(window.location.search);
+
+      if (params.get('autoScroll') !== null) settings.autoScroll = params.get('autoScroll') === 'true';
+      if (params.get('waitTop')) settings.waitTop = parseInt(params.get('waitTop'));
+      if (params.get('scrollDown')) settings.scrollDown = parseInt(params.get('scrollDown'));
+      if (params.get('waitBottom')) settings.waitBottom = parseInt(params.get('waitBottom'));
+      if (params.get('scrollUp')) settings.scrollUp = parseInt(params.get('scrollUp'));
+      if (params.get('smoothness')) settings.smoothness = parseInt(params.get('smoothness'));
+
+      // تحميل إعدادات أحجام النصوص من URL
+      if (params.get('headerTitleSize')) settings.headerTitleSize = parseInt(params.get('headerTitleSize'));
+      if (params.get('headerSubtitleSize')) settings.headerSubtitleSize = parseInt(params.get('headerSubtitleSize'));
+      if (params.get('supporterNameSize')) settings.supporterNameSize = parseInt(params.get('supporterNameSize'));
+      if (params.get('supporterAmountSize')) settings.supporterAmountSize = parseInt(params.get('supporterAmountSize'));
+      if (params.get('supporterMessageSize')) settings.supporterMessageSize = parseInt(params.get('supporterMessageSize'));
+
+      // إخفاء الإعدادات في وضع الإنتاج
+      if (params.get('production') === 'true') {
+        document.body.classList.add('production-mode');
+      }
+
+      console.log('Settings loaded from URL:', settings);
+      updateSettingsUI();
+    }
+
+    // تحديث واجهة الإعدادات
+    function updateSettingsUI() {
+      document.getElementById('autoScroll').checked = settings.autoScroll;
+      document.getElementById('waitTop').value = settings.waitTop;
+      document.getElementById('scrollDown').value = settings.scrollDown;
+      document.getElementById('waitBottom').value = settings.waitBottom;
+      document.getElementById('scrollUp').value = settings.scrollUp;
+      document.getElementById('smoothness').value = settings.smoothness;
+
+      // تحديث إعدادات أحجام النصوص
+      document.getElementById('headerTitleSize').value = settings.headerTitleSize;
+      document.getElementById('headerSubtitleSize').value = settings.headerSubtitleSize;
+      document.getElementById('supporterNameSize').value = settings.supporterNameSize;
+      document.getElementById('supporterAmountSize').value = settings.supporterAmountSize;
+      document.getElementById('supporterMessageSize').value = settings.supporterMessageSize;
+
+      // تحديث قيم العرض
+      updateRangeValues();
+
+      // تطبيق أحجام النصوص
+      applyTextSizes();
+    }
+
+    // تحديث قيم المنزلقات
+    function updateRangeValues() {
+      document.getElementById('waitTopValue').textContent = `${settings.waitTop} ثانية`;
+      document.getElementById('scrollDownValue').textContent = `${settings.scrollDown} ثانية`;
+      document.getElementById('waitBottomValue').textContent = `${settings.waitBottom} ثانية`;
+      document.getElementById('scrollUpValue').textContent = `${settings.scrollUp} ثانية`;
+
+      const smoothnessLabels = ['بطيء جداً', 'بطيء', 'بطيء قليلاً', 'عادي', 'متوسط', 'سريع قليلاً', 'سريع', 'سريع جداً', 'فائق السرعة', 'أقصى سرعة'];
+      document.getElementById('smoothnessValue').textContent = smoothnessLabels[settings.smoothness - 1] || 'متوسط';
+
+      // تحديث قيم أحجام النصوص
+      document.getElementById('headerTitleSizeValue').textContent = `${settings.headerTitleSize}px`;
+      document.getElementById('headerSubtitleSizeValue').textContent = `${settings.headerSubtitleSize}px`;
+      document.getElementById('supporterNameSizeValue').textContent = `${settings.supporterNameSize}px`;
+      document.getElementById('supporterAmountSizeValue').textContent = `${settings.supporterAmountSize}px`;
+      document.getElementById('supporterMessageSizeValue').textContent = `${settings.supporterMessageSize}px`;
+    }
+
+    // تطبيق أحجام النصوص
+    function applyTextSizes() {
+      // تطبيق أحجام العناوين
+      const headerTitle = document.getElementById('headerTitle');
+      const headerSubtitle = document.getElementById('headerSubtitle');
+
+      if (headerTitle) {
+        headerTitle.style.fontSize = `${settings.headerTitleSize}px`;
+      }
+      if (headerSubtitle) {
+        headerSubtitle.style.fontSize = `${settings.headerSubtitleSize}px`;
+      }
+
+      // تطبيق أحجام نصوص الداعمين
+      const supporterNames = document.querySelectorAll('.supporter-name');
+      const supporterAmounts = document.querySelectorAll('.supporter-amount');
+      const supporterMessages = document.querySelectorAll('.supporter-message');
+
+      supporterNames.forEach(element => {
+        element.style.fontSize = `${settings.supporterNameSize}px`;
+      });
+
+      supporterAmounts.forEach(element => {
+        element.style.fontSize = `${settings.supporterAmountSize}px`;
+      });
+
+      supporterMessages.forEach(element => {
+        element.style.fontSize = `${settings.supporterMessageSize}px`;
+      });
+
+      log(`تم تطبيق أحجام النصوص: العنوان=${settings.headerTitleSize}px، الأسماء=${settings.supporterNameSize}px`, 'success');
+    }
+
+    // تبديل عرض الإعدادات
+    function toggleSettings() {
+      const panel = document.getElementById('settingsPanel');
+      panel.classList.toggle('show');
+    }
+
+    // نظام حفظ متقدم يعمل في جميع البيئات
+    function saveSettingsAuto() {
+      // قراءة القيم من النموذج
+      settings.autoScroll = document.getElementById('autoScroll').checked;
+      settings.waitTop = parseInt(document.getElementById('waitTop').value);
+      settings.scrollDown = parseInt(document.getElementById('scrollDown').value);
+      settings.waitBottom = parseInt(document.getElementById('waitBottom').value);
+      settings.scrollUp = parseInt(document.getElementById('scrollUp').value);
+      settings.smoothness = parseInt(document.getElementById('smoothness').value);
+
+      // قراءة إعدادات أحجام النصوص
+      settings.headerTitleSize = parseInt(document.getElementById('headerTitleSize').value);
+      settings.headerSubtitleSize = parseInt(document.getElementById('headerSubtitleSize').value);
+      settings.supporterNameSize = parseInt(document.getElementById('supporterNameSize').value);
+      settings.supporterAmountSize = parseInt(document.getElementById('supporterAmountSize').value);
+      settings.supporterMessageSize = parseInt(document.getElementById('supporterMessageSize').value);
+
+      // تحديث قيم العرض
+      updateRangeValues();
+
+      // تطبيق أحجام النصوص
+      applyTextSizes();
+
+      // نظام حفظ متعدد المستويات
+      saveSettingsMultiLevel();
+
+      // إعادة تشغيل التمرير بالإعدادات الجديدة
+      if (settings.autoScroll) {
+        restartScrolling();
+      } else {
+        stopScrolling();
+      }
+    }
+
+    // نظام حفظ متعدد المستويات محسن
+    function saveSettingsMultiLevel() {
+      const settingsData = JSON.stringify(settings);
+      let saveSuccess = false;
+
+      // المستوى 1: localStorage (الأفضل)
+      try {
+        localStorage.setItem('supportBarSettings', settingsData);
+        localStorage.setItem('supportBarSettingsBackup', settingsData);
+        localStorage.setItem('supportBarSettingsTimestamp', Date.now().toString());
+        saveSuccess = true;
+        log('تم حفظ الإعدادات في localStorage', 'success');
+      } catch (error) {
+        log('فشل حفظ localStorage: ' + error.message, 'warning');
+      }
+
+      // المستوى 2: sessionStorage (احتياطي)
+      try {
+        sessionStorage.setItem('supportBarSettings', settingsData);
+        sessionStorage.setItem('supportBarSettingsTimestamp', Date.now().toString());
+        if (!saveSuccess) {
+          saveSuccess = true;
+          log('تم حفظ الإعدادات في sessionStorage', 'success');
+        }
+      } catch (error) {
+        log('فشل حفظ sessionStorage: ' + error.message, 'warning');
+      }
+
+      // المستوى 3: متغير عام (احتياطي ثاني)
+      try {
+        window.supportBarSettingsGlobal = settings;
+        window.supportBarSettingsGlobalTimestamp = Date.now();
+        if (!saveSuccess) {
+          saveSuccess = true;
+          log('تم حفظ الإعدادات في متغير عام', 'success');
+        }
+      } catch (error) {
+        log('فشل حفظ المتغير العام: ' + error.message, 'warning');
+      }
+
+      // المستوى 4: التخزين العالمي
+      try {
+        saveToGlobalStorage();
+      } catch (error) {
+        log('فشل الحفظ العالمي: ' + error.message, 'warning');
+      }
+
+      // المستوى 5: URL parameters (للاستمرارية في OBS)
+      try {
+        updateURLWithSettings();
+        if (!saveSuccess) {
+          log('تم حفظ الإعدادات في URL', 'success');
+        }
+      } catch (error) {
+        log('فشل تحديث URL: ' + error.message, 'warning');
+      }
+
+      if (!saveSuccess) {
+        log('فشل في حفظ الإعدادات بجميع الطرق!', 'error');
+      } else {
+        log('تم حفظ الإعدادات بنجاح في مستويات متعددة', 'success');
+      }
+    }
+
+    // تحديث URL بالإعدادات الكاملة
+    function updateURLWithSettings() {
+      const params = new URLSearchParams(window.location.search);
+
+      // إعدادات التمرير
+      params.set('autoScroll', settings.autoScroll);
+      params.set('waitTop', settings.waitTop);
+      params.set('scrollDown', settings.scrollDown);
+      params.set('waitBottom', settings.waitBottom);
+      params.set('scrollUp', settings.scrollUp);
+      params.set('smoothness', settings.smoothness);
+
+      // إعدادات أحجام النصوص
+      params.set('headerTitleSize', settings.headerTitleSize);
+      params.set('headerSubtitleSize', settings.headerSubtitleSize);
+      params.set('supporterNameSize', settings.supporterNameSize);
+      params.set('supporterAmountSize', settings.supporterAmountSize);
+      params.set('supporterMessageSize', settings.supporterMessageSize);
+
+      const newURL = window.location.pathname + '?' + params.toString();
+
+      try {
+        window.history.replaceState({}, '', newURL);
+        log('تم تحديث URL بجميع الإعدادات', 'success');
+      } catch (error) {
+        // في بعض البيئات قد لا يعمل history API
+        log('لا يمكن تحديث URL: ' + error.message, 'warning');
+      }
+    }
+
+    // نظام حفظ عالمي يعمل عبر جميع النوافذ والتبويبات
+    function saveToGlobalStorage() {
+      try {
+        // حفظ في window.name (يبقى عبر التنقل)
+        window.name = JSON.stringify(settings);
+
+        // حفظ في document.title مؤقتاً (للطوارئ)
+        const originalTitle = document.title;
+        document.title = `SupportBar:${JSON.stringify(settings)}`;
+
+        // استعادة العنوان بعد ثانية
+        setTimeout(() => {
+          document.title = originalTitle;
+        }, 1000);
+
+        log('تم الحفظ في التخزين العالمي', 'success');
+      } catch (error) {
+        log('فشل الحفظ العالمي: ' + error.message, 'warning');
+      }
+    }
+
+    // تحميل من التخزين العالمي
+    function loadFromGlobalStorage() {
+      try {
+        // محاولة تحميل من window.name
+        if (window.name && window.name.startsWith('{')) {
+          const savedSettings = JSON.parse(window.name);
+          Object.assign(settings, savedSettings);
+          log('تم تحميل الإعدادات من التخزين العالمي', 'success');
+          return true;
+        }
+      } catch (error) {
+        log('فشل تحميل التخزين العالمي: ' + error.message, 'warning');
+      }
+      return false;
+    }
+
+    // تحميل الإعدادات المحفوظة من مصادر متعددة مع أولوية ذكية
+    function loadSavedSettings() {
+      let loadSuccess = false;
+      let bestSource = null;
+      let bestTimestamp = 0;
+
+      // فحص جميع المصادر وإيجاد الأحدث
+      const sources = [
+        {
+          name: 'localStorage',
+          getData: () => localStorage.getItem('supportBarSettings'),
+          getTimestamp: () => parseInt(localStorage.getItem('supportBarSettingsTimestamp') || '0')
+        },
+        {
+          name: 'sessionStorage',
+          getData: () => sessionStorage.getItem('supportBarSettings'),
+          getTimestamp: () => parseInt(sessionStorage.getItem('supportBarSettingsTimestamp') || '0')
+        },
+        {
+          name: 'globalVariable',
+          getData: () => window.supportBarSettingsGlobal ? JSON.stringify(window.supportBarSettingsGlobal) : null,
+          getTimestamp: () => window.supportBarSettingsGlobalTimestamp || 0
+        },
+        {
+          name: 'globalStorage',
+          getData: () => {
+            try {
+              return loadFromGlobalStorage() ? JSON.stringify(settings) : null;
+            } catch {
+              return null;
+            }
+          },
+          getTimestamp: () => Date.now() - 1000 // أولوية أقل
+        }
+      ];
+
+      // العثور على أحدث إعدادات
+      sources.forEach(source => {
+        try {
+          const data = source.getData();
+          const timestamp = source.getTimestamp();
+
+          if (data && timestamp > bestTimestamp) {
+            bestSource = source;
+            bestTimestamp = timestamp;
+          }
+        } catch (error) {
+          log(`فشل فحص ${source.name}: ${error.message}`, 'warning');
+        }
+      });
+
+      // تحميل أفضل إعدادات متاحة
+      if (bestSource) {
+        try {
+          const data = bestSource.getData();
+          if (data) {
+            const savedSettings = JSON.parse(data);
+            Object.assign(settings, savedSettings);
+            loadSuccess = true;
+            log(`تم تحميل الإعدادات من ${bestSource.name} (${new Date(bestTimestamp).toLocaleString()})`, 'success');
+          }
+        } catch (error) {
+          log(`فشل تحميل من ${bestSource.name}: ${error.message}`, 'error');
+        }
+      }
+
+      // محاولة النسخة الاحتياطية كملاذ أخير
+      if (!loadSuccess) {
+        try {
+          const saved = localStorage.getItem('supportBarSettingsBackup');
+          if (saved) {
+            const savedSettings = JSON.parse(saved);
+            Object.assign(settings, savedSettings);
+            loadSuccess = true;
+            log('تم تحميل الإعدادات من النسخة الاحتياطية', 'success');
+          }
+        } catch (error) {
+          log('فشل تحميل النسخة الاحتياطية: ' + error.message, 'warning');
+        }
+      }
+
+      if (!loadSuccess) {
+        log('لم يتم العثور على إعدادات محفوظة، استخدام الإعدادات الافتراضية', 'info');
+      }
+
+      return loadSuccess;
+    }
+
+    // إعادة تعيين الإعدادات
+    function resetSettings() {
+      settings = {
+        autoScroll: true,
+        waitTop: 15,
+        scrollDown: 15,
+        waitBottom: 15,
+        scrollUp: 15,
+        smoothness: 5,
+        headerTitleSize: 22,
+        headerSubtitleSize: 14,
+        supporterNameSize: 17,
+        supporterAmountSize: 16,
+        supporterMessageSize: 14
+      };
+
+      updateSettingsUI();
+      saveSettingsAuto();
+      log('تم إعادة تعيين جميع الإعدادات', 'success');
+    }
+
+    // إنشاء رابط OBS
+    function generateOBSUrl() {
+      const params = new URLSearchParams();
+      params.set('autoScroll', settings.autoScroll);
+      params.set('waitTop', settings.waitTop);
+      params.set('scrollDown', settings.scrollDown);
+      params.set('waitBottom', settings.waitBottom);
+      params.set('scrollUp', settings.scrollUp);
+      params.set('smoothness', settings.smoothness);
+
+      // إضافة إعدادات أحجام النصوص
+      params.set('headerTitleSize', settings.headerTitleSize);
+      params.set('headerSubtitleSize', settings.headerSubtitleSize);
+      params.set('supporterNameSize', settings.supporterNameSize);
+      params.set('supporterAmountSize', settings.supporterAmountSize);
+      params.set('supporterMessageSize', settings.supporterMessageSize);
+
+      params.set('production', 'true');
+
+      const url = `${window.location.origin}${window.location.pathname}?${params.toString()}`;
+
+      navigator.clipboard.writeText(url).then(() => {
+        alert('تم نسخ رابط OBS للحافظة!\n\nاستخدم هذا الرابط في OBS Browser Source\n\nجميع الإعدادات محفوظة في الرابط!');
+        log('تم نسخ رابط OBS مع جميع الإعدادات', 'success');
+      }).catch(() => {
+        prompt('انسخ هذا الرابط لاستخدامه في OBS:', url);
+      });
+    }
+
+    // نظام التشخيص والتتبع
+    function log(message, type = 'info') {
+      const timestamp = new Date().toLocaleTimeString('ar-SA');
+      const prefix = `[${timestamp}]`;
+      
+      switch (type) {
+        case 'error':
+          console.error(`${prefix} ❌ ${message}`);
+          break;
+        case 'warning':
+          console.warn(`${prefix} ⚠️ ${message}`);
+          break;
+        case 'success':
+          console.log(`${prefix} ✅ ${message}`);
+          break;
+        case 'phase':
+          console.log(`${prefix} 🔄 ${message}`);
+          break;
+        default:
+          console.log(`${prefix} ℹ️ ${message}`);
+      }
+    }
+
+    // تحديث معلومات الحالة
+    function updateStatus(message, type = 'info') {
+      const statusElement = document.getElementById('statusInfo');
+      if (statusElement) {
+        statusElement.textContent = message;
+        
+        switch (type) {
+          case 'error':
+            statusElement.style.color = '#ff6b6b';
+            statusElement.style.borderColor = 'rgba(255, 107, 107, 0.3)';
+            break;
+          case 'warning':
+            statusElement.style.color = '#ffaa00';
+            statusElement.style.borderColor = 'rgba(255, 170, 0, 0.3)';
+            break;
+          case 'success':
+            statusElement.style.color = '#00ff88';
+            statusElement.style.borderColor = 'rgba(0, 255, 136, 0.3)';
+            break;
+          default:
+            statusElement.style.color = '#00ff88';
+            statusElement.style.borderColor = 'rgba(0, 255, 136, 0.3)';
+        }
+      }
+      
+      log(message, type);
+    }
+
+    // تحميل بيانات الداعمين مع التزامن
+    async function loadSupporters(showLoading = true) {
+      try {
+        if (showLoading) {
+          log('بدء تحميل بيانات الداعمين');
+          updateStatus('جاري تحميل البيانات...');
+        }
+
+        // محاولة تحميل من الخادم
+        try {
+          log('محاولة الاتصال بالخادم...');
+          const response = await fetch('/api/supporters?' + new Date().getTime()); // منع التخزين المؤقت
+          if (response.ok) {
+            const data = await response.json();
+            const newSupporters = data.supporters || [];
+
+            // تحقق من وجود تغييرات
+            const hasChanges = JSON.stringify(supporters) !== JSON.stringify(newSupporters);
+
+            if (hasChanges || supporters.length === 0) {
+              supporters = newSupporters;
+              log(`تم تحديث البيانات: ${supporters.length} داعم`, 'success');
+              renderSupporters();
+
+              if (showLoading) {
+                updateStatus(`تم تحميل ${supporters.length} داعم`, 'success');
+              }
+            } else {
+              log('لا توجد تغييرات في البيانات');
+            }
+            return;
+          } else {
+            log(`فشل الاتصال بالخادم: ${response.status}`, 'warning');
+          }
+        } catch (error) {
+          log(`خطأ في الاتصال بالخادم: ${error.message}`, 'warning');
+        }
+
+        // بيانات تجريبية
+        supporters = [
+          { id: 1, name: "Saiftrips", amount: 136, thankMessage: "شكراً لك على الدعم المستمر" },
+          { id: 2, name: "Naser", amount: 50, thankMessage: "أتمنى لك التوفيق" },
+          { id: 3, name: "Ahmed Washington", amount: 25, thankMessage: "" },
+          { id: 4, name: "Ghost", amount: 15, thankMessage: "استمر في العمل الرائع" },
+          { id: 5, name: "Om3ralwan", amount: 10, thankMessage: "" },
+          { id: 6, name: "Syrian", amount: 8, thankMessage: "بالتوفيق" },
+          { id: 7, name: "Messi Cruyff", amount: 6, thankMessage: "" },
+          { id: 8, name: "layth lion", amount: 5, thankMessage: "شكراً لك" },
+          { id: 9, name: "Florentino Perez", amount: 3, thankMessage: "" },
+          { id: 10, name: "Mustafa Ahmed", amount: 2, thankMessage: "" }
+        ];
+
+        log(`تم تحميل ${supporters.length} داعم (بيانات تجريبية)`, 'success');
+        renderSupporters();
+        updateStatus(`تم تحميل ${supporters.length} داعم (بيانات تجريبية)`, 'success');
+
+      } catch (error) {
+        log(`خطأ في تحميل البيانات: ${error.message}`, 'error');
+        document.getElementById('supportersContainer').innerHTML = '<div class="error">خطأ في تحميل البيانات</div>';
+        updateStatus('خطأ في التحميل', 'error');
+      }
+    }
+
+    // عرض الداعمين مع ألوان المراكز
+    function renderSupporters() {
+      const container = document.getElementById('supportersContainer');
+
+      // ترتيب الداعمين حسب المبلغ
+      const sortedSupporters = supporters
+        .filter(s => s.amount > 0)
+        .sort((a, b) => b.amount - a.amount);
+
+      if (sortedSupporters.length === 0) {
+        container.innerHTML = '<div class="empty">لا توجد بيانات داعمين</div>';
+        return;
+      }
+
+      container.innerHTML = '';
+
+      sortedSupporters.forEach((supporter, index) => {
+        const rank = index + 1;
+        const div = document.createElement('div');
+
+        // تحديد فئة المرتبة
+        let rankClass = '';
+        if (rank === 1) rankClass = 'rank-1';
+        else if (rank === 2) rankClass = 'rank-2';
+        else if (rank === 3) rankClass = 'rank-3';
+
+        div.className = `supporter-item ${rankClass}`;
+
+        // إضافة شعارات مميزة للمراكز
+        let rankContent = rank;
+        if (rank === 1) rankContent = '👑'; // شعار الملك
+        else if (rank === 2) rankContent = '🥈'; // بطولة فضية
+        else if (rank === 3) rankContent = '🥉'; // بطولة برونزية
+
+        div.innerHTML = `
+          <div class="rank-badge">${rankContent}</div>
+          <div class="supporter-header">
+            <div class="supporter-name" style="font-size: ${settings.supporterNameSize}px">${supporter.name}</div>
+            <div class="supporter-amount" style="font-size: ${settings.supporterAmountSize}px">$${supporter.amount}</div>
+          </div>
+          ${supporter.thankMessage ? `<div class="supporter-message" style="font-size: ${settings.supporterMessageSize}px">${supporter.thankMessage}</div>` : ''}
+        `;
+
+        container.appendChild(div);
+      });
+
+      log(`تم عرض ${sortedSupporters.length} داعم بنجاح`, 'success');
+    }
+
+    // نظام التمرير البسيط مع تشخيص مفصل
+    function startScrolling() {
+      if (!settings.autoScroll) {
+        log('التمرير التلقائي معطل', 'warning');
+        return;
+      }
+
+      if (isScrolling) {
+        log('التمرير يعمل بالفعل، تجاهل طلب البدء', 'warning');
+        return;
+      }
+
+      isScrolling = true;
+      currentPhase = 'waitTop';
+      cycleCount = 0;
+
+      log('=== بدء نظام التمرير ===', 'phase');
+      log(`الإعدادات: انتظار أعلى=${settings.waitTop}ث، نزول=${settings.scrollDown}ث، انتظار أسفل=${settings.waitBottom}ث، صعود=${settings.scrollUp}ث`);
+
+      executePhase();
+    }
+
+    function stopScrolling() {
+      if (!isScrolling) {
+        log('التمرير متوقف بالفعل', 'warning');
+        return;
+      }
+
+      isScrolling = false;
+      if (scrollTimer) {
+        clearTimeout(scrollTimer);
+        scrollTimer = null;
+        log('تم إلغاء مؤقت التمرير');
+      }
+
+      // إيقاف أي تمرير جاري
+      const container = document.getElementById('supportersContainer');
+      if (container && container._scrollAnimation) {
+        cancelAnimationFrame(container._scrollAnimation);
+        container._scrollAnimation = null;
+        log('تم إلغاء تمرير الحركة');
+      }
+
+      updateStatus('تم إيقاف التمرير', 'warning');
+      log('=== إيقاف نظام التمرير ===', 'phase');
+    }
+
+    function executePhase() {
+      if (!isScrolling || !settings.autoScroll) {
+        log('تم إيقاف تنفيذ المرحلة: التمرير معطل', 'warning');
+        return;
+      }
+
+      const container = document.getElementById('supportersContainer');
+      if (!container) {
+        log('لم يتم العثور على حاوية الداعمين', 'error');
+        return;
+      }
+
+      const maxScroll = container.scrollHeight - container.clientHeight;
+      if (maxScroll <= 0) {
+        log('لا يوجد محتوى قابل للتمرير، إعادة المحاولة خلال 5 ثوان', 'warning');
+        setTimeout(executePhase, 5000);
+        return;
+      }
+
+      log(`تنفيذ المرحلة: ${currentPhase} | الدورة: ${cycleCount + 1} | المحتوى القابل للتمرير: ${maxScroll}px`, 'phase');
+
+      switch (currentPhase) {
+        case 'waitTop':
+          container.scrollTop = 0;
+          log(`⏸️ بدء الانتظار في الأعلى لمدة ${settings.waitTop} ثانية`);
+          updateStatus(`⏸️ انتظار في الأعلى (${settings.waitTop}ث) - دورة ${cycleCount + 1}`);
+
+          scrollTimer = setTimeout(() => {
+            if (isScrolling && settings.autoScroll) {
+              currentPhase = 'scrollDown';
+              executePhase();
+            }
+          }, settings.waitTop * 1000);
+          break;
+
+        case 'scrollDown':
+          log(`⬇️ بدء التمرير للأسفل لمدة ${settings.scrollDown} ثانية`);
+          updateStatus(`⬇️ التمرير للأسفل (${settings.scrollDown}ث) - دورة ${cycleCount + 1}`);
+          smoothScroll(container, maxScroll, settings.scrollDown * 1000);
+
+          scrollTimer = setTimeout(() => {
+            if (isScrolling && settings.autoScroll) {
+              currentPhase = 'waitBottom';
+              executePhase();
+            }
+          }, settings.scrollDown * 1000);
+          break;
+
+        case 'waitBottom':
+          container.scrollTop = maxScroll;
+          log(`⏸️ بدء الانتظار في الأسفل لمدة ${settings.waitBottom} ثانية`);
+          updateStatus(`⏸️ انتظار في الأسفل (${settings.waitBottom}ث) - دورة ${cycleCount + 1}`);
+
+          scrollTimer = setTimeout(() => {
+            if (isScrolling && settings.autoScroll) {
+              currentPhase = 'scrollUp';
+              executePhase();
+            }
+          }, settings.waitBottom * 1000);
+          break;
+
+        case 'scrollUp':
+          log(`⬆️ بدء التمرير للأعلى لمدة ${settings.scrollUp} ثانية`);
+          updateStatus(`⬆️ التمرير للأعلى (${settings.scrollUp}ث) - دورة ${cycleCount + 1}`);
+          smoothScroll(container, 0, settings.scrollUp * 1000);
+
+          scrollTimer = setTimeout(() => {
+            if (isScrolling && settings.autoScroll) {
+              cycleCount++;
+              currentPhase = 'waitTop';
+              log(`✅ اكتملت الدورة ${cycleCount}، بدء دورة جديدة`, 'success');
+              executePhase();
+            }
+          }, settings.scrollUp * 1000);
+          break;
+      }
+    }
+
+    // تمرير سلس محسن مع تحكم في السلاسة
+    function smoothScroll(element, targetPosition, duration) {
+      const startPosition = element.scrollTop;
+      const distance = targetPosition - startPosition;
+      const startTime = performance.now();
+
+      // إيقاف أي تمرير سابق
+      if (element._scrollAnimation) {
+        cancelAnimationFrame(element._scrollAnimation);
+      }
+
+      // حساب منحنى السلاسة بناءً على الإعدادات
+      function getEasingFunction(smoothness) {
+        const easingFunctions = [
+          // 1: بطيء جداً - Linear
+          (t) => t,
+          // 2: بطيء - Ease In
+          (t) => t * t,
+          // 3: بطيء قليلاً - Ease In Quad
+          (t) => t * t * t,
+          // 4: عادي - Ease In Out
+          (t) => t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t,
+          // 5: متوسط - Ease Out Cubic
+          (t) => (--t) * t * t + 1,
+          // 6: سريع قليلاً - Ease In Out Cubic
+          (t) => t < 0.5 ? 4 * t * t * t : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1,
+          // 7: سريع - Ease Out Quart
+          (t) => 1 - (--t) * t * t * t,
+          // 8: سريع جداً - Ease In Out Quart
+          (t) => t < 0.5 ? 8 * t * t * t * t : 1 - 8 * (--t) * t * t * t,
+          // 9: فائق السرعة - Ease Out Quint
+          (t) => 1 + (--t) * t * t * t * t,
+          // 10: أقصى سرعة - Ease In Out Back
+          (t) => t < 0.5 ? 2 * t * t * ((1.7 + 1) * 2 * t - 1.7) : 2 * ((t -= 1) * t * ((1.7 + 1) * t + 1.7) + 1)
+        ];
+
+        return easingFunctions[Math.max(0, Math.min(9, smoothness - 1))] || easingFunctions[4];
+      }
+
+      const easingFunction = getEasingFunction(settings.smoothness);
+
+      function animation(currentTime) {
+        const timeElapsed = currentTime - startTime;
+        const rawProgress = Math.min(timeElapsed / duration, 1);
+
+        // تحقق من أن العنصر ما زال موجوداً
+        if (!element || !element.parentNode) {
+          return;
+        }
+
+        // تطبيق منحنى السلاسة
+        const easedProgress = easingFunction(rawProgress);
+        element.scrollTop = startPosition + distance * easedProgress;
+
+        if (rawProgress < 1 && isScrolling) {
+          element._scrollAnimation = requestAnimationFrame(animation);
+        } else {
+          element._scrollAnimation = null;
+          // تأكد من الوصول للموضع النهائي
+          if (element && element.parentNode) {
+            element.scrollTop = targetPosition;
+          }
+          log(`تم الانتهاء من التمرير إلى الموضع ${targetPosition}`, 'success');
+        }
+      }
+
+      log(`بدء التمرير السلس من ${startPosition} إلى ${targetPosition} خلال ${duration}ms بسلاسة ${settings.smoothness}`);
+      element._scrollAnimation = requestAnimationFrame(animation);
+    }
+
+    // معالجة الأخطاء العامة
+    window.addEventListener('error', (event) => {
+      log(`خطأ JavaScript: ${event.error?.message || event.message}`, 'error');
+      console.error('Error details:', event.error);
+    });
+
+    window.addEventListener('unhandledrejection', (event) => {
+      log(`خطأ Promise غير معالج: ${event.reason}`, 'error');
+      console.error('Promise rejection details:', event.reason);
+    });
+
+    // تهيئة الأداة مع معالجة أخطاء شاملة
+    document.addEventListener('DOMContentLoaded', async () => {
+      try {
+        log('=== تهيئة شريط الداعمين النهائي ===', 'phase');
+
+        // تحميل الإعدادات من URL
+        loadSettingsFromURL();
+
+        // تحميل البيانات
+        await loadSupporters();
+
+        // بدء التمرير إذا كان مفعلاً
+        if (settings.autoScroll) {
+          setTimeout(() => {
+            try {
+              startScrolling();
+            } catch (error) {
+              log(`خطأ في بدء التمرير: ${error.message}`, 'error');
+            }
+          }, 3000); // انتظار 3 ثوان قبل البدء
+        }
+
+        log('=== تم تهيئة الأداة بنجاح ===', 'phase');
+
+        // بدء نظام التحديث التلقائي للبيانات
+        startDataSync();
+
+        // إعداد مستمعي الأحداث للإعدادات
+        setupSettingsListeners();
+
+      } catch (error) {
+        log(`خطأ في تهيئة الأداة: ${error.message}`, 'error');
+        updateStatus('خطأ في تهيئة الأداة', 'error');
+      }
+    });
+
+    // إعداد مستمعي الأحداث للإعدادات
+    function setupSettingsListeners() {
+      // تحميل الإعدادات المحفوظة أولاً
+      loadSavedSettings();
+
+      // مستمعي الأحداث للتحديث التلقائي - جميع الإعدادات
+      const settingsElements = [
+        'autoScroll', 'waitTop', 'scrollDown', 'waitBottom', 'scrollUp', 'smoothness',
+        'headerTitleSize', 'headerSubtitleSize', 'supporterNameSize', 'supporterAmountSize', 'supporterMessageSize'
+      ];
+
+      settingsElements.forEach(id => {
+        const element = document.getElementById(id);
+        if (element) {
+          element.addEventListener('change', saveSettingsAuto);
+          element.addEventListener('input', saveSettingsAuto);
+        }
+      });
+
+      // إغلاق لوحة الإعدادات عند النقر خارجها
+      document.addEventListener('click', (e) => {
+        const panel = document.getElementById('settingsPanel');
+        const toggle = document.getElementById('settingsToggle');
+
+        if (!panel.contains(e.target) && !toggle.contains(e.target)) {
+          panel.classList.remove('show');
+        }
+      });
+
+      log('تم إعداد نظام الإعدادات المتقدم مع تحكم الأحجام', 'success');
+    }
+
+    // تنظيف الموارد عند إغلاق الصفحة
+    window.addEventListener('beforeunload', () => {
+      log('تنظيف الموارد قبل إغلاق الصفحة');
+
+      // إيقاف التمرير
+      stopScrolling();
+
+      // إيقاف التحديث التلقائي
+      if (dataUpdateInterval) {
+        clearInterval(dataUpdateInterval);
+      }
+
+      // إيقاف أي رسوم متحركة
+      const container = document.getElementById('supportersContainer');
+      if (container && container._scrollAnimation) {
+        cancelAnimationFrame(container._scrollAnimation);
+      }
+    });
+
+    // نظام التزامن مع البيانات مع إدارة الذاكرة
+    let dataUpdateInterval = null;
+
+    function startDataSync() {
+      // إيقاف أي تحديث سابق
+      if (dataUpdateInterval) {
+        clearInterval(dataUpdateInterval);
+      }
+
+      // تحديث البيانات كل 30 ثانية
+      dataUpdateInterval = setInterval(async () => {
+        try {
+          // تحقق من أن الصفحة ما زالت نشطة
+          if (document.hidden) {
+            log('الصفحة غير نشطة، تخطي التحديث');
+            return;
+          }
+
+          await loadSupporters(false); // تحديث صامت بدون رسائل تحميل
+        } catch (error) {
+          log(`خطأ في التحديث التلقائي: ${error.message}`, 'error');
+        }
+      }, 30000);
+
+      log('تم تفعيل نظام التحديث التلقائي (كل 30 ثانية)', 'success');
+    }
+
+    // إيقاف التحديث عند إخفاء الصفحة
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) {
+        log('الصفحة مخفية، إيقاف التحديثات');
+        if (dataUpdateInterval) {
+          clearInterval(dataUpdateInterval);
+          dataUpdateInterval = null;
+        }
+      } else {
+        log('الصفحة نشطة، استئناف التحديثات');
+        startDataSync();
+      }
+    });
+
+    // إضافة مستمع للتحديثات الفورية (WebSocket أو Server-Sent Events)
+    function setupRealTimeUpdates() {
+      // محاولة إنشاء اتصال WebSocket للتحديثات الفورية
+      try {
+        const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+        const wsUrl = `${protocol}//${window.location.host}/ws/supporters`;
+
+        const ws = new WebSocket(wsUrl);
+
+        ws.onopen = () => {
+          log('تم تفعيل التحديثات الفورية', 'success');
+        };
+
+        ws.onmessage = (event) => {
+          try {
+            const data = JSON.parse(event.data);
+            if (data.type === 'supporters_update') {
+              log('تم استلام تحديث فوري للداعمين', 'success');
+              supporters = data.supporters || [];
+              renderSupporters();
+            }
+          } catch (error) {
+            log(`خطأ في معالجة التحديث الفوري: ${error.message}`, 'error');
+          }
+        };
+
+        ws.onerror = () => {
+          log('فشل في الاتصال للتحديثات الفورية، سيتم استخدام التحديث الدوري', 'warning');
+        };
+
+        ws.onclose = () => {
+          log('تم قطع الاتصال للتحديثات الفورية', 'warning');
+          // محاولة إعادة الاتصال بعد 5 ثوان
+          setTimeout(setupRealTimeUpdates, 5000);
+        };
+
+      } catch (error) {
+        log(`خطأ في إعداد التحديثات الفورية: ${error.message}`, 'warning');
+      }
+    }
+
+    // تحسين عرض البيانات مع حفظ موضع التمرير
+    function renderSupporters() {
+      const container = document.getElementById('supportersContainer');
+
+      // حفظ موضع التمرير الحالي
+      const currentScrollTop = container.scrollTop;
+      const wasAtTop = currentScrollTop === 0;
+      const wasAtBottom = currentScrollTop >= container.scrollHeight - container.clientHeight - 10;
+
+      // ترتيب الداعمين حسب المبلغ
+      const sortedSupporters = supporters
+        .filter(s => s.amount > 0)
+        .sort((a, b) => b.amount - a.amount);
+
+      if (sortedSupporters.length === 0) {
+        container.innerHTML = '<div class="empty">لا توجد بيانات داعمين</div>';
+        return;
+      }
+
+      container.innerHTML = '';
+
+      sortedSupporters.forEach((supporter, index) => {
+        const rank = index + 1;
+        const div = document.createElement('div');
+
+        // تحديد فئة المرتبة
+        let rankClass = '';
+        if (rank === 1) rankClass = 'rank-1';
+        else if (rank === 2) rankClass = 'rank-2';
+        else if (rank === 3) rankClass = 'rank-3';
+
+        div.className = `supporter-item ${rankClass}`;
+
+        // إضافة شعارات مميزة للمراكز
+        let rankContent = rank;
+        if (rank === 1) rankContent = '👑'; // شعار الملك
+        else if (rank === 2) rankContent = '🥈'; // بطولة فضية
+        else if (rank === 3) rankContent = '🥉'; // بطولة برونزية
+
+        div.innerHTML = `
+          <div class="rank-badge">${rankContent}</div>
+          <div class="supporter-header">
+            <div class="supporter-name" style="font-size: ${settings.supporterNameSize}px">${supporter.name}</div>
+            <div class="supporter-amount" style="font-size: ${settings.supporterAmountSize}px">$${supporter.amount}</div>
+          </div>
+          ${supporter.thankMessage ? `<div class="supporter-message" style="font-size: ${settings.supporterMessageSize}px">${supporter.thankMessage}</div>` : ''}
+        `;
+
+        container.appendChild(div);
+      });
+
+      // استعادة موضع التمرير بذكاء
+      setTimeout(() => {
+        if (wasAtTop) {
+          container.scrollTop = 0;
+        } else if (wasAtBottom) {
+          container.scrollTop = container.scrollHeight - container.clientHeight;
+        } else if (!isScrolling) {
+          // إذا لم يكن التمرير التلقائي يعمل، احتفظ بالموضع
+          container.scrollTop = currentScrollTop;
+        }
+        // إذا كان التمرير التلقائي يعمل، دع النظام يتحكم في الموضع
+      }, 50);
+
+      log(`تم عرض ${sortedSupporters.length} داعم بنجاح`, 'success');
+    }
+  </script>
+</body>
+</html>

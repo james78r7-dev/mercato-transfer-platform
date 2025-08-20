@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>اختبار معالج الأخطاء المتقدم</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .content {
+            padding: 30px;
+        }
+
+        .section {
+            margin-bottom: 40px;
+            padding: 25px;
+            border: 2px solid #f0f0f0;
+            border-radius: 10px;
+            background: #fafafa;
+        }
+
+        .section h2 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #56ab2f 0%, #a8e6cf 100%);
+            color: white;
+        }
+
+        .btn-success:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(86, 171, 47, 0.3);
+        }
+
+        .btn-warning {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+        }
+
+        .btn-warning:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(240, 147, 251, 0.3);
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(255, 107, 107, 0.3);
+        }
+
+        .result-box {
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            max-height: 400px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+        }
+
+        .status {
+            padding: 10px 15px;
+            border-radius: 5px;
+            margin: 10px 0;
+            font-weight: 600;
+        }
+
+        .status.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .status.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .status.info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 10px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .card {
+            background: white;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .card h3 {
+            color: #333;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        .metric {
+            display: flex;
+            justify-content: space-between;
+            margin: 10px 0;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 5px;
+        }
+
+        .metric .label {
+            font-weight: 600;
+            color: #495057;
+        }
+
+        .metric .value {
+            font-weight: 700;
+            color: #667eea;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔧 اختبار معالج الأخطاء المتقدم</h1>
+            <p>نظام شامل لمعالجة الأخطاء مع استراتيجيات الاسترداد الذكية</p>
+        </div>
+
+        <div class="content">
+            <!-- اختبارات أساسية -->
+            <div class="section">
+                <h2>🧪 اختبارات أساسية</h2>
+                <div class="button-group">
+                    <button class="btn btn-primary" onclick="testErrorHandler()">اختبار معالج الأخطاء</button>
+                    <button class="btn btn-success" onclick="getErrorStats()">إحصائيات الأخطاء</button>
+                    <button class="btn btn-warning" onclick="getErrorReport()">تقرير شامل</button>
+                    <button class="btn btn-danger" onclick="cleanupOldLogs()">تنظيف السجلات</button>
+                </div>
+                <div id="basicResults" class="result-box" style="display: none;"></div>
+            </div>
+
+            <!-- اختبارات FotMob -->
+            <div class="section">
+                <h2>🌐 اختبارات FotMob</h2>
+                <div class="button-group">
+                    <button class="btn btn-primary" onclick="testFotMobConnection()">اختبار الاتصال</button>
+                    <button class="btn btn-success" onclick="extractFotMobData()">استخراج البيانات</button>
+                    <button class="btn btn-warning" onclick="clearFotMobCache()">مسح الكاش</button>
+                    <button class="btn btn-danger" onclick="testFotMobError()">محاكاة خطأ</button>
+                </div>
+                <div id="fotmobResults" class="result-box" style="display: none;"></div>
+            </div>
+
+            <!-- إحصائيات النظام -->
+            <div class="section">
+                <h2>📊 إحصائيات النظام</h2>
+                <div class="grid" id="systemStats">
+                    <div class="card">
+                        <h3>🎯 صحة النظام</h3>
+                        <div class="metric">
+                            <span class="label">الحالة:</span>
+                            <span class="value" id="systemHealth">جاري التحميل...</span>
+                        </div>
+                        <div class="metric">
+                            <span class="label">معدل النجاح:</span>
+                            <span class="value" id="successRate">جاري التحميل...</span>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <h3>📈 الأخطاء</h3>
+                        <div class="metric">
+                            <span class="label">إجمالي الأخطاء:</span>
+                            <span class="value" id="totalErrors">جاري التحميل...</span>
+                        </div>
+                        <div class="metric">
+                            <span class="label">محاولات الاسترداد:</span>
+                            <span class="value" id="recoveryAttempts">جاري التحميل...</span>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <h3>🔧 الاسترداد</h3>
+                        <div class="metric">
+                            <span class="label">الاستردادات الناجحة:</span>
+                            <span class="value" id="successfulRecoveries">جاري التحميل...</span>
+                        </div>
+                        <div class="metric">
+                            <span class="label">آخر خطأ:</span>
+                            <span class="value" id="lastError">جاري التحميل...</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- حالة التحميل -->
+            <div id="loading" class="loading">
+                <div class="spinner"></div>
+                <p>جاري المعالجة...</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // دوال المساعدة
+        function showLoading() {
+            document.getElementById('loading').style.display = 'block';
+        }
+
+        function hideLoading() {
+            document.getElementById('loading').style.display = 'none';
+        }
+
+        function showResult(elementId, data, isError = false) {
+            const element = document.getElementById(elementId);
+            element.style.display = 'block';
+            element.textContent = JSON.stringify(data, null, 2);
+            element.style.borderColor = isError ? '#dc3545' : '#28a745';
+        }
+
+        function addStatus(message, type = 'info') {
+            const status = document.createElement('div');
+            status.className = `status ${type}`;
+            status.textContent = message;
+            document.querySelector('.content').insertBefore(status, document.querySelector('.content').firstChild);
+        }
+
+        // اختبار معالج الأخطاء
+        async function testErrorHandler() {
+            showLoading();
+            try {
+                const response = await fetch('/api/error-handler/test', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' }
+                });
+                const result = await response.json();
+                showResult('basicResults', result);
+                addStatus('✅ تم اختبار معالج الأخطاء بنجاح', 'success');
+            } catch (error) {
+                showResult('basicResults', { error: error.message }, true);
+                addStatus('❌ فشل في اختبار معالج الأخطاء', 'error');
+            } finally {
+                hideLoading();
+            }
+        }
+
+        // الحصول على إحصائيات الأخطاء
+        async function getErrorStats() {
+            showLoading();
+            try {
+                const response = await fetch('/api/error-handler/stats');
+                const result = await response.json();
+                showResult('basicResults', result);
+                addStatus('✅ تم جلب إحصائيات الأخطاء', 'success');
+            } catch (error) {
+                showResult('basicResults', { error: error.message }, true);
+                addStatus('❌ فشل في جلب الإحصائيات', 'error');
+            } finally {
+                hideLoading();
+            }
+        }
+
+        // الحصول على تقرير شامل
+        async function getErrorReport() {
+            showLoading();
+            try {
+                const response = await fetch('/api/error-handler/report');
+                const result = await response.json();
+                showResult('basicResults', result);
+                addStatus('✅ تم إنشاء التقرير الشامل', 'success');
+            } catch (error) {
+                showResult('basicResults', { error: error.message }, true);
+                addStatus('❌ فشل في إنشاء التقرير', 'error');
+            } finally {
+                hideLoading();
+            }
+        }
+
+        // تنظيف السجلات القديمة
+        async function cleanupOldLogs() {
+            showLoading();
+            try {
+                const response = await fetch('/api/error-handler/cleanup', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ daysToKeep: 30 })
+                });
+                const result = await response.json();
+                showResult('basicResults', result);
+                addStatus('✅ تم تنظيف السجلات القديمة', 'success');
+            } catch (error) {
+                showResult('basicResults', { error: error.message }, true);
+                addStatus('❌ فشل في تنظيف السجلات', 'error');
+            } finally {
+                hideLoading();
+            }
+        }
+
+        // اختبار الاتصال بـ FotMob
+        async function testFotMobConnection() {
+            showLoading();
+            try {
+                const response = await fetch('/api/test-fotmob-connection');
+                const result = await response.json();
+                showResult('fotmobResults', result);
+                addStatus('✅ تم اختبار الاتصال بـ FotMob', 'success');
+            } catch (error) {
+                showResult('fotmobResults', { error: error.message }, true);
+                addStatus('❌ فشل في اختبار الاتصال', 'error');
+            } finally {
+                hideLoading();
+            }
+        }
+
+        // استخراج بيانات FotMob
+        async function extractFotMobData() {
+            showLoading();
+            try {
+                const response = await fetch('/api/extract-fotmob', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ limit: 10 })
+                });
+                const result = await response.json();
+                showResult('fotmobResults', result);
+                addStatus('✅ تم استخراج بيانات FotMob', 'success');
+            } catch (error) {
+                showResult('fotmobResults', { error: error.message }, true);
+                addStatus('❌ فشل في استخراج البيانات', 'error');
+            } finally {
+                hideLoading();
+            }
+        }
+
+        // مسح كاش FotMob
+        async function clearFotMobCache() {
+            showLoading();
+            try {
+                const response = await fetch('/api/fotmob/clear-cache', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' }
+                });
+                const result = await response.json();
+                showResult('fotmobResults', result);
+                addStatus('✅ تم مسح كاش FotMob', 'success');
+            } catch (error) {
+                showResult('fotmobResults', { error: error.message }, true);
+                addStatus('❌ فشل في مسح الكاش', 'error');
+            } finally {
+                hideLoading();
+            }
+        }
+
+        // محاكاة خطأ FotMob
+        async function testFotMobError() {
+            showLoading();
+            try {
+                const response = await fetch('/api/error-handler/process', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        error: {
+                            message: '❌ فشل في استخراج البيانات الحقيقية من FotMob: فشل في استخراج البيانات من FotMob. تحقق من البنية أو الاتصال.'
+                        },
+                        context: {
+                            service: 'fotmob',
+                            method: 'extractRealData',
+                            timestamp: new Date().toISOString()
+                        }
+                    })
+                });
+                const result = await response.json();
+                showResult('fotmobResults', result);
+                addStatus('✅ تم محاكاة خطأ FotMob', 'success');
+            } catch (error) {
+                showResult('fotmobResults', { error: error.message }, true);
+                addStatus('❌ فشل في محاكاة الخطأ', 'error');
+            } finally {
+                hideLoading();
+            }
+        }
+
+        // تحديث إحصائيات النظام
+        async function updateSystemStats() {
+            try {
+                const response = await fetch('/api/error-handler/stats');
+                const result = await response.json();
+                
+                if (result.success) {
+                    const stats = result.stats;
+                    document.getElementById('totalErrors').textContent = stats.totalErrors || 0;
+                    document.getElementById('recoveryAttempts').textContent = stats.recoveryAttempts || 0;
+                    document.getElementById('successfulRecoveries').textContent = stats.successfulRecoveries || 0;
+                    document.getElementById('successRate').textContent = stats.successRate || '0%';
+                    document.getElementById('lastError').textContent = stats.lastError ? 'نعم' : 'لا';
+                    
+                    // تقييم صحة النظام
+                    const totalErrors = stats.totalErrors || 0;
+                    const successRate = parseFloat(stats.successRate) || 0;
+                    
+                    let health = 'ممتاز';
+                    let healthColor = '#28a745';
+                    
+                    if (totalErrors > 0) {
+                        if (successRate >= 80) {
+                            health = 'جيد';
+                            healthColor = '#28a745';
+                        } else if (successRate >= 60) {
+                            health = 'متوسط';
+                            healthColor = '#ffc107';
+                        } else {
+                            health = 'ضعيف';
+                            healthColor = '#dc3545';
+                        }
+                    }
+                    
+                    document.getElementById('systemHealth').textContent = health;
+                    document.getElementById('systemHealth').style.color = healthColor;
+                }
+            } catch (error) {
+                console.error('فشل في تحديث الإحصائيات:', error);
+            }
+        }
+
+        // تحديث الإحصائيات عند تحميل الصفحة
+        document.addEventListener('DOMContentLoaded', function() {
+            updateSystemStats();
+            addStatus('🚀 تم تحميل صفحة اختبار معالج الأخطاء', 'info');
+        });
+    </script>
+</body>
+</html> 

@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>اختبار API FotMob الجديد</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+            color: white;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #fff;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+        .test-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        .test-button {
+            background: linear-gradient(45deg, #4ecdc4, #44a08d);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            margin: 10px 5px;
+            transition: all 0.3s ease;
+        }
+        .test-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(78, 205, 196, 0.4);
+        }
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(0,0,0,0.3);
+            border-radius: 10px;
+            border-left: 4px solid #4ecdc4;
+            white-space: pre-wrap;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .success {
+            border-left-color: #27ae60;
+            background: rgba(39, 174, 96, 0.1);
+        }
+        .error {
+            border-left-color: #e74c3c;
+            background: rgba(231, 76, 60, 0.1);
+        }
+        .loading {
+            text-align: center;
+            color: #f39c12;
+        }
+        .status {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+        .status.success {
+            background: #27ae60;
+            color: white;
+        }
+        .status.error {
+            background: #e74c3c;
+            color: white;
+        }
+        .status.loading {
+            background: #f39c12;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧪 اختبار API FotMob الجديد</h1>
+        
+        <div class="test-section">
+            <h3>1. اختبار استخراج البيانات الحقيقية من FotMob</h3>
+            <p>اختبار API الجديد الذي يستخدم Puppeteer فقط بدون fallback</p>
+            <button class="test-button" onclick="testExtractFotMob()">استخراج البيانات الحقيقية</button>
+            <div id="extractResult" class="result" style="display: none;"></div>
+        </div>
+
+        <div class="test-section">
+            <h3>2. اختبار الاتصال بـ FotMob</h3>
+            <p>اختبار الاتصال المباشر بـ FotMob</p>
+            <button class="test-button" onclick="testFotMobConnection()">اختبار الاتصال</button>
+            <div id="connectionResult" class="result" style="display: none;"></div>
+        </div>
+
+        <div class="test-section">
+            <h3>3. اختبار تنظيف الكاش</h3>
+            <p>تنظيف الكاش للتأكد من البيانات الجديدة</p>
+            <button class="test-button" onclick="testClearCache()">تنظيف الكاش</button>
+            <div id="cacheResult" class="result" style="display: none;"></div>
+        </div>
+
+        <div class="test-section">
+            <h3>4. اختبار إحصائيات FotMob</h3>
+            <p>عرض إحصائيات الخدمة</p>
+            <button class="test-button" onclick="testFotMobStats()">عرض الإحصائيات</button>
+            <div id="statsResult" class="result" style="display: none;"></div>
+        </div>
+    </div>
+
+    <script>
+        // اختبار استخراج البيانات الحقيقية من FotMob
+        async function testExtractFotMob() {
+            const resultDiv = document.getElementById('extractResult');
+            resultDiv.style.display = 'block';
+            resultDiv.className = 'result loading';
+            resultDiv.innerHTML = '🔄 جاري استخراج البيانات الحقيقية من FotMob...';
+
+            try {
+                const response = await fetch('/api/extract-fotmob', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ limit: 10 })
+                });
+
+                const data = await response.json();
+                
+                if (data.success) {
+                    resultDiv.className = 'result success';
+                    resultDiv.innerHTML = `✅ نجح الاستخراج!\n\n` +
+                        `📊 عدد الصفقات: ${data.count}\n` +
+                        `📅 الوقت: ${data.timestamp}\n` +
+                        `🔗 المصدر: ${data.source}\n\n` +
+                        `📋 البيانات المستخرجة:\n${JSON.stringify(data.transfers, null, 2)}`;
+                } else {
+                    resultDiv.className = 'result error';
+                    resultDiv.innerHTML = `❌ فشل الاستخراج!\n\n` +
+                        `الخطأ: ${data.error || 'خطأ غير معروف'}\n\n` +
+                        `التفاصيل: ${JSON.stringify(data, null, 2)}`;
+                }
+            } catch (error) {
+                resultDiv.className = 'result error';
+                resultDiv.innerHTML = `❌ خطأ في الاتصال!\n\n` +
+                    `الخطأ: ${error.message}\n\n` +
+                    `التفاصيل: ${error.stack}`;
+            }
+        }
+
+        // اختبار الاتصال بـ FotMob
+        async function testFotMobConnection() {
+            const resultDiv = document.getElementById('connectionResult');
+            resultDiv.style.display = 'block';
+            resultDiv.className = 'result loading';
+            resultDiv.innerHTML = '🔄 جاري اختبار الاتصال بـ FotMob...';
+
+            try {
+                const response = await fetch('/api/test-fotmob-connection', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                const data = await response.json();
+                
+                if (data.success) {
+                    resultDiv.className = 'result success';
+                    resultDiv.innerHTML = `✅ نجح الاتصال!\n\n` +
+                        `الرسالة: ${data.message}\n\n` +
+                        `التفاصيل: ${JSON.stringify(data, null, 2)}`;
+                } else {
+                    resultDiv.className = 'result error';
+                    resultDiv.innerHTML = `❌ فشل الاتصال!\n\n` +
+                        `الخطأ: ${data.message}\n\n` +
+                        `التفاصيل: ${JSON.stringify(data, null, 2)}`;
+                }
+            } catch (error) {
+                resultDiv.className = 'result error';
+                resultDiv.innerHTML = `❌ خطأ في الاتصال!\n\n` +
+                    `الخطأ: ${error.message}\n\n` +
+                    `التفاصيل: ${error.stack}`;
+            }
+        }
+
+        // اختبار تنظيف الكاش
+        async function testClearCache() {
+            const resultDiv = document.getElementById('cacheResult');
+            resultDiv.style.display = 'block';
+            resultDiv.className = 'result loading';
+            resultDiv.innerHTML = '🔄 جاري تنظيف الكاش...';
+
+            try {
+                const response = await fetch('/api/fotmob/clear-cache', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                const data = await response.json();
+                
+                if (data.success) {
+                    resultDiv.className = 'result success';
+                    resultDiv.innerHTML = `✅ تم تنظيف الكاش بنجاح!\n\n` +
+                        `الرسالة: ${data.message}\n\n` +
+                        `التفاصيل: ${JSON.stringify(data, null, 2)}`;
+                } else {
+                    resultDiv.className = 'result error';
+                    resultDiv.innerHTML = `❌ فشل تنظيف الكاش!\n\n` +
+                        `الخطأ: ${data.message}\n\n` +
+                        `التفاصيل: ${JSON.stringify(data, null, 2)}`;
+                }
+            } catch (error) {
+                resultDiv.className = 'result error';
+                resultDiv.innerHTML = `❌ خطأ في تنظيف الكاش!\n\n` +
+                    `الخطأ: ${error.message}\n\n` +
+                    `التفاصيل: ${error.stack}`;
+            }
+        }
+
+        // اختبار إحصائيات FotMob
+        async function testFotMobStats() {
+            const resultDiv = document.getElementById('statsResult');
+            resultDiv.style.display = 'block';
+            resultDiv.className = 'result loading';
+            resultDiv.innerHTML = '🔄 جاري جلب الإحصائيات...';
+
+            try {
+                const response = await fetch('/api/fotmob/stats', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                const data = await response.json();
+                
+                if (data.success) {
+                    resultDiv.className = 'result success';
+                    resultDiv.innerHTML = `✅ تم جلب الإحصائيات بنجاح!\n\n` +
+                        `📊 حجم الكاش: ${data.stats.cacheSize}\n` +
+                        `⏰ انتهاء الكاش: ${data.stats.cacheTimeout}ms\n` +
+                        `🕒 آخر تحديث: ${data.stats.lastUpdate}\n` +
+                        `🟢 حالة الخدمة: ${data.stats.serviceStatus}\n\n` +
+                        `التفاصيل الكاملة: ${JSON.stringify(data, null, 2)}`;
+                } else {
+                    resultDiv.className = 'result error';
+                    resultDiv.innerHTML = `❌ فشل جلب الإحصائيات!\n\n` +
+                        `الخطأ: ${data.message}\n\n` +
+                        `التفاصيل: ${JSON.stringify(data, null, 2)}`;
+                }
+            } catch (error) {
+                resultDiv.className = 'result error';
+                resultDiv.innerHTML = `❌ خطأ في جلب الإحصائيات!\n\n` +
+                    `الخطأ: ${error.message}\n\n` +
+                    `التفاصيل: ${error.stack}`;
+            }
+        }
+    </script>
+</body>
+</html> 

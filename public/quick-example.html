@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مثال سريع - Enhanced Scroll Engine</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(45deg, #1e3c72, #2a5298);
+            color: white;
+        }
+        
+        #content {
+            height: 100vh;
+            overflow-y: auto;
+            scroll-behavior: smooth;
+            padding: 20px;
+        }
+        
+        .section {
+            margin-bottom: 50px;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+        }
+        
+        h1 {
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+        
+        h2 {
+            color: #ffd700;
+            font-size: 1.8em;
+            margin-bottom: 15px;
+        }
+        
+        p {
+            font-size: 1.2em;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        
+        .highlight {
+            background: rgba(255, 215, 0, 0.3);
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        
+        .controls {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 15px;
+            border-radius: 10px;
+            z-index: 1000;
+        }
+        
+        .controls button {
+            margin: 5px;
+            padding: 8px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+        
+        .btn-start { background: #28a745; color: white; }
+        .btn-stop { background: #dc3545; color: white; }
+        .btn-reset { background: #ffc107; color: black; }
+        
+        /* مؤشر التمرير */
+        .scroll-indicator {
+            position: fixed;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 4px;
+            height: 200px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 2px;
+            z-index: 1000;
+        }
+        
+        .scroll-progress {
+            width: 100%;
+            background: #ffd700;
+            border-radius: 2px;
+            transition: height 0.3s ease;
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+        }
+        
+        /* شريط التقدم */
+        .progress-bar {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 300px;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 3px;
+            overflow: hidden;
+            z-index: 1000;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #00ff00, #ffd700, #ff0000);
+            border-radius: 3px;
+            transition: width 0.1s ease;
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+        }
+        
+        .status {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 10px;
+            border-radius: 5px;
+            font-family: monospace;
+            font-size: 12px;
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body>
+    <!-- عناصر التحكم -->
+    <div class="controls">
+        <h4 style="margin: 0 0 10px 0; color: #ffd700;">التحكم السريع</h4>
+        <button class="btn-start" onclick="scrollEngine.start()">▶️ تشغيل</button>
+        <button class="btn-stop" onclick="scrollEngine.stop()">⏸️ إيقاف</button>
+        <button class="btn-reset" onclick="scrollEngine.reset()">🔄 إعادة تعيين</button>
+        <div style="margin-top: 10px; font-size: 11px;">
+            <div>الحالة: <span id="status">متوقف</span></div>
+            <div>الاتجاه: <span id="direction">-</span></div>
+        </div>
+    </div>
+    
+    <!-- شريط الحالة -->
+    <div class="status" id="statusBar">
+        Enhanced Scroll Engine: جاهز
+    </div>
+    
+    <!-- مؤشر التمرير -->
+    <div class="scroll-indicator">
+        <div class="scroll-progress" id="scrollProgress"></div>
+    </div>
+    
+    <!-- شريط التقدم -->
+    <div class="progress-bar">
+        <div class="progress-fill" id="progressFill"></div>
+    </div>
+    
+    <!-- المحتوى -->
+    <div id="content">
+        <h1>🚀 مثال سريع للاستخدام</h1>
+        
+        <div class="section">
+            <h2>📖 كيفية الاستخدام</h2>
+            <p>هذا مثال بسيط يوضح كيفية استخدام Enhanced Scroll Engine:</p>
+            <p class="highlight">1. اضغط "تشغيل" لبدء التمرير التلقائي</p>
+            <p class="highlight">2. اضغط "إيقاف" لإيقاف التمرير</p>
+            <p class="highlight">3. اضغط "إعادة تعيين" للعودة للأعلى</p>
+        </div>
+        
+        <div class="section">
+            <h2>⚙️ الإعدادات المستخدمة</h2>
+            <p>• مدة التمرير للأسفل: 10 ثوان</p>
+            <p>• مدة التمرير للأعلى: 10 ثوان</p>
+            <p>• سرعة الانتقال: 2 ثانية</p>
+            <p>• نوع التمرير: سلس</p>
+            <p>• وضع التشغيل: مستمر</p>
+        </div>
+        
+        <div class="section">
+            <h2>🎯 الميزات المرئية</h2>
+            <p>• مؤشر التمرير على اليمين يوضح الموضع الحالي</p>
+            <p>• شريط التقدم في الأسفل يوضح الوقت المتبقي</p>
+            <p>• شريط الحالة يوضح حالة النظام</p>
+            <p>• عناصر التحكم للتشغيل اليدوي</p>
+        </div>
+        
+        <div class="section">
+            <h2>💻 الكود المستخدم</h2>
+            <p>إنشاء المحرك بسيط جداً:</p>
+            <p style="background: rgba(0,0,0,0.3); padding: 10px; border-radius: 5px; font-family: monospace;">
+                const scrollEngine = new EnhancedScrollEngine({<br>
+                &nbsp;&nbsp;container: '#content',<br>
+                &nbsp;&nbsp;scrollDownDuration: 10000,<br>
+                &nbsp;&nbsp;scrollUpDuration: 10000,<br>
+                &nbsp;&nbsp;transitionSpeed: 2000,<br>
+                &nbsp;&nbsp;autoStart: true<br>
+                });
+            </p>
+        </div>
+        
+        <div class="section">
+            <h2>🔧 التخصيص</h2>
+            <p>يمكنك تخصيص جميع الإعدادات:</p>
+            <p>• أوقات التمرير المختلفة</p>
+            <p>• سرعات انتقال متنوعة</p>
+            <p>• أنواع تمرير مختلفة</p>
+            <p>• أوضاع تشغيل متعددة</p>
+        </div>
+        
+        <div class="section">
+            <h2>📱 التوافق</h2>
+            <p>يعمل مع:</p>
+            <p>• جميع المتصفحات الحديثة</p>
+            <p>• OBS Studio Browser Source</p>
+            <p>• أدوات البث المختلفة</p>
+            <p>• الأجهزة المحمولة</p>
+        </div>
+        
+        <div class="section">
+            <h2>🎉 النتيجة</h2>
+            <p>تمرير تلقائي سلس ومخصص بالكامل!</p>
+            <p class="highlight">مثالي للبث المباشر والعروض التقديمية</p>
+        </div>
+    </div>
+    
+    <!-- تحميل المكتبة -->
+    <script src="enhanced-scroll-engine.js"></script>
+    
+    <script>
+        // إنشاء محرك التمرير مع إعدادات مخصصة
+        const scrollEngine = new EnhancedScrollEngine({
+            container: '#content',
+            scrollDownDuration: 10000,  // 10 ثوان للأسفل
+            scrollUpDuration: 10000,    // 10 ثوان للأعلى
+            transitionSpeed: 2000,      // ثانيتان للانتقال
+            scrollType: 'smooth',
+            playMode: 'continuous',
+            autoStart: true,            // بدء تلقائي بعد 3 ثوان
+            
+            // أحداث مخصصة
+            onScrollStart: function(engine) {
+                document.getElementById('status').textContent = 'يعمل';
+                document.getElementById('status').style.color = '#00ff00';
+                document.getElementById('statusBar').textContent = 'Enhanced Scroll Engine: نشط ⚡';
+            },
+            
+            onScrollEnd: function(engine) {
+                document.getElementById('status').textContent = 'متوقف';
+                document.getElementById('status').style.color = '#ff6b6b';
+                document.getElementById('statusBar').textContent = 'Enhanced Scroll Engine: متوقف ⏸️';
+            },
+            
+            onDirectionChange: function(direction, engine) {
+                const directionElement = document.getElementById('direction');
+                if (direction === 1) {
+                    directionElement.textContent = '⬇️ للأسفل';
+                } else {
+                    directionElement.textContent = '⬆️ للأعلى';
+                }
+            }
+        });
+        
+        // اختصارات لوحة المفاتيح
+        document.addEventListener('keydown', function(e) {
+            if (e.ctrlKey) {
+                switch(e.key) {
+                    case ' ':
+                        e.preventDefault();
+                        scrollEngine.toggle();
+                        break;
+                    case 'r':
+                        e.preventDefault();
+                        scrollEngine.reset();
+                        break;
+                }
+            }
+        });
+        
+        // تحديث شريط الحالة عند تحميل المكتبة
+        window.addEventListener('enhancedScrollEngineReady', function(e) {
+            console.log('Enhanced Scroll Engine loaded:', e.detail);
+            document.getElementById('statusBar').textContent = 'Enhanced Scroll Engine: جاهز ✅';
+        });
+    </script>
+</body>
+</html>

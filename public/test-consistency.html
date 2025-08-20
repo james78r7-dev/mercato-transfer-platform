@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>اختبار التناسق - برشلونة</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #004d9f 0%, #a50044 100%);
+            color: white;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .test-section {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            backdrop-filter: blur(10px);
+        }
+        .player-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        .player-card {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 10px;
+            padding: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .player-name {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .player-info {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+        .status {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 15px;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+        .status.official { background: rgba(0, 255, 136, 0.3); }
+        .status.close { background: rgba(255, 170, 0, 0.3); }
+        .status.negotiating { background: rgba(0, 170, 255, 0.3); }
+        .status.rumor { background: rgba(170, 0, 255, 0.3); }
+        .btn {
+            background: #a50044;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        .btn:hover {
+            background: #8b0039;
+        }
+        .links {
+            text-align: center;
+            margin-top: 30px;
+        }
+        .links a {
+            color: #ffeb3b;
+            text-decoration: none;
+            margin: 0 15px;
+            font-size: 18px;
+        }
+        .links a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔍 اختبار التناسق بين الأداتين</h1>
+            <p>هذه الصفحة تختبر البيانات المحلية المحدثة</p>
+        </div>
+
+        <div class="test-section">
+            <h2>📊 البيانات المحلية المحدثة</h2>
+            <button class="btn" onclick="loadTestData()">تحميل البيانات</button>
+            <button class="btn" onclick="clearData()">مسح البيانات</button>
+            <div id="playerCount" style="margin-top: 10px;"></div>
+            <div id="playersContainer" class="player-grid"></div>
+        </div>
+
+        <div class="links">
+            <a href="/barcelona-ultimate-broadcast" target="_blank">🎥 أداة البث</a>
+            <a href="/barcelona-ultimate-control.html" target="_blank">🎮 أداة التحكم</a>
+        </div>
+    </div>
+
+    <script>
+        // البيانات المحلية المحدثة (نفس البيانات في كلا الأداتين)
+        const testPlayers = [
+            {
+                "name": "خوان غارسيا",
+                "position": "حارس مرمى",
+                "currentClub": "برشلونة",
+                "probability": 100,
+                "status": "official",
+                "transferFee": "€25M"
+            },
+            {
+                "name": "Nico Williams",
+                "position": "جناح أيسر",
+                "currentClub": "Athletic Bilbao",
+                "probability": 90,
+                "status": "official",
+                "transferFee": "€60M"
+            },
+            {
+                "name": "Erling Haaland",
+                "position": "مهاجم",
+                "currentClub": "Manchester City",
+                "probability": 85,
+                "status": "close",
+                "transferFee": "€150M"
+            },
+            {
+                "name": "Kylian Mbappé",
+                "position": "جناح أيسر",
+                "currentClub": "Real Madrid",
+                "probability": 25,
+                "status": "rumor",
+                "transferFee": "€200M"
+            },
+            {
+                "name": "Joshua Kimmich",
+                "position": "وسط دفاعي",
+                "currentClub": "Bayern Munich",
+                "probability": 70,
+                "status": "negotiating",
+                "transferFee": "€80M"
+            },
+            {
+                "name": "Alphonso Davies",
+                "position": "ظهير أيسر",
+                "currentClub": "Bayern Munich",
+                "probability": 60,
+                "status": "close",
+                "transferFee": "€70M"
+            },
+            {
+                "name": "Martin Zubimendi",
+                "position": "وسط دفاعي",
+                "currentClub": "Real Sociedad",
+                "probability": 75,
+                "status": "negotiating",
+                "transferFee": "€65M"
+            },
+            {
+                "name": "Jamal Musiala",
+                "position": "وسط مهاجم",
+                "currentClub": "Bayern Munich",
+                "probability": 55,
+                "status": "rumor",
+                "transferFee": "€90M"
+            },
+            {
+                "name": "Florian Wirtz",
+                "position": "وسط مهاجم",
+                "currentClub": "Bayer Leverkusen",
+                "probability": 40,
+                "status": "rumor",
+                "transferFee": "€100M"
+            },
+            {
+                "name": "لويس دياز",
+                "position": "جناح أيسر",
+                "currentClub": "ليفبرول",
+                "probability": 20,
+                "status": "rumor",
+                "transferFee": "€80M"
+            },
+            {
+                "name": "فاندرسون",
+                "position": "ظهير أيمن",
+                "currentClub": "موناكو",
+                "probability": 25,
+                "status": "negotiating",
+                "transferFee": "€25M"
+            },
+            {
+                "name": "راشفورد",
+                "position": "مهاجم",
+                "currentClub": "يونايتد",
+                "probability": 85,
+                "status": "negotiating",
+                "transferFee": "€5M"
+            }
+        ];
+
+        function loadTestData() {
+            const container = document.getElementById('playersContainer');
+            const countElement = document.getElementById('playerCount');
+            
+            countElement.innerHTML = `<strong>✅ تم تحميل ${testPlayers.length} لاعب</strong>`;
+            
+            container.innerHTML = testPlayers.map(player => `
+                <div class="player-card">
+                    <div class="player-name">${player.name}</div>
+                    <div class="player-info">
+                        📍 ${player.position} - ${player.currentClub}<br>
+                        📊 احتمالية: ${player.probability}%<br>
+                        💰 ${player.transferFee}
+                    </div>
+                    <span class="status ${player.status}">${getStatusLabel(player.status)}</span>
+                </div>
+            `).join('');
+        }
+
+        function clearData() {
+            document.getElementById('playersContainer').innerHTML = '';
+            document.getElementById('playerCount').innerHTML = '<strong>🗑️ تم مسح البيانات</strong>';
+        }
+
+        function getStatusLabel(status) {
+            const labels = {
+                'official': '✅ رسمية',
+                'close': '⏳ قريبة',
+                'negotiating': '🤝 تفاوض',
+                'rumor': '🔮 متوقعة'
+            };
+            return labels[status] || status;
+        }
+
+        // تحميل البيانات تلقائياً عند فتح الصفحة
+        window.onload = function() {
+            loadTestData();
+        };
+    </script>
+</body>
+</html>

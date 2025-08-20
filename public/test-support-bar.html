@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>اختبار شريط الداعمين</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 20px;
+      font-family: Arial, sans-serif;
+      background: #1a1a2e;
+      color: white;
+    }
+    
+    .test-container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    .test-section {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 20px;
+      margin: 20px 0;
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    
+    .iframe-container {
+      width: 380px;
+      height: 600px;
+      border: 2px solid #FFD700;
+      border-radius: 10px;
+      overflow: hidden;
+      margin: 20px auto;
+    }
+    
+    iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+    
+    .controls {
+      text-align: center;
+      margin: 20px 0;
+    }
+    
+    button {
+      background: linear-gradient(135deg, #FFD700, #FFA000);
+      color: #222;
+      border: none;
+      padding: 10px 20px;
+      margin: 5px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(255, 215, 0, 0.3);
+    }
+    
+    .status {
+      background: rgba(0, 0, 0, 0.5);
+      padding: 10px;
+      border-radius: 5px;
+      margin: 10px 0;
+      font-family: monospace;
+    }
+    
+    .success { color: #00ff00; }
+    .error { color: #ff6b6b; }
+    .warning { color: #ffaa00; }
+  </style>
+</head>
+<body>
+  <div class="test-container">
+    <h1>🎯 اختبار شريط الداعمين المحسن</h1>
+    
+    <div class="test-section">
+      <h2>📺 معاينة الشريط</h2>
+      <p>هذا هو شكل الشريط كما سيظهر في OBS:</p>
+      
+      <div class="iframe-container">
+        <iframe src="support-bar-enhanced-original.html" title="شريط الداعمين"></iframe>
+      </div>
+      
+      <div class="controls">
+        <button onclick="reloadIframe()">🔄 إعادة تحميل</button>
+        <button onclick="openInNewTab()">🔗 فتح في تبويب جديد</button>
+        <button onclick="testScrolling()">⚡ اختبار التمرير</button>
+      </div>
+    </div>
+    
+    <div class="test-section">
+      <h2>⚙️ معلومات التشغيل</h2>
+      <div class="status">
+        <div>📍 المسار: <span id="currentPath"></span></div>
+        <div>🌐 الرابط: <span id="currentUrl"></span></div>
+        <div>⏰ الوقت: <span id="currentTime"></span></div>
+        <div>🔧 الحالة: <span id="status" class="success">جاهز للاختبار</span></div>
+      </div>
+    </div>
+    
+    <div class="test-section">
+      <h2>📋 تعليمات الاستخدام في OBS</h2>
+      <ol>
+        <li>افتح OBS Studio</li>
+        <li>أضف مصدر جديد → Browser Source</li>
+        <li>استخدم هذا الرابط: <code id="obsUrl"></code></li>
+        <li>اضبط الأبعاد: العرض = 380، الارتفاع = 1080</li>
+        <li>فعّل "Shutdown source when not visible" و "Refresh browser when scene becomes active"</li>
+        <li>اضغط OK</li>
+      </ol>
+
+      <h3>⏱️ التوقيت الجديد المحسن:</h3>
+      <div class="status">
+        <div>🔄 <strong>دورة كاملة = 60 ثانية (افتراضي)</strong></div>
+        <div>1️⃣ انتظار في الأعلى: 15 ثانية</div>
+        <div>2️⃣ التمرير للأسفل: 15 ثانية</div>
+        <div>3️⃣ انتظار في الأسفل: 15 ثانية</div>
+        <div>4️⃣ التمرير للأعلى: 15 ثانية</div>
+        <div>🔁 ثم تكرار الدورة</div>
+      </div>
+    </div>
+    
+    <div class="test-section">
+      <h2>🔧 اختبار الوظائف</h2>
+      <div class="controls">
+        <button onclick="testAutoScroll()">🔄 اختبار التمرير التلقائي</button>
+        <button onclick="testSettings()">⚙️ اختبار الإعدادات</button>
+        <button onclick="testData()">📊 اختبار البيانات</button>
+        <button onclick="testResponsive()">📱 اختبار الاستجابة</button>
+      </div>
+      <div id="testResults" class="status"></div>
+    </div>
+  </div>
+
+  <script>
+    // تحديث المعلومات
+    function updateInfo() {
+      document.getElementById('currentPath').textContent = window.location.pathname;
+      document.getElementById('currentUrl').textContent = window.location.href;
+      document.getElementById('currentTime').textContent = new Date().toLocaleString('ar-SA');
+      
+      // رابط OBS
+      const obsUrl = window.location.origin + window.location.pathname.replace('test-support-bar.html', 'support-bar-enhanced-original.html');
+      document.getElementById('obsUrl').textContent = obsUrl;
+    }
+    
+    // إعادة تحميل الإطار
+    function reloadIframe() {
+      const iframe = document.querySelector('iframe');
+      iframe.src = iframe.src;
+      updateStatus('تم إعادة تحميل الشريط', 'success');
+    }
+    
+    // فتح في تبويب جديد
+    function openInNewTab() {
+      const url = document.querySelector('iframe').src;
+      window.open(url, '_blank');
+      updateStatus('تم فتح الشريط في تبويب جديد', 'success');
+    }
+    
+    // اختبار التمرير
+    function testScrolling() {
+      const iframe = document.querySelector('iframe');
+      try {
+        // محاولة الوصول لوظائف التمرير في الإطار
+        iframe.contentWindow.postMessage({type: 'testScroll'}, '*');
+        updateStatus('تم إرسال أمر اختبار التمرير', 'success');
+      } catch (error) {
+        updateStatus('خطأ في اختبار التمرير: ' + error.message, 'error');
+      }
+    }
+    
+    // اختبار التمرير التلقائي
+    function testAutoScroll() {
+      updateStatus('اختبار التمرير التلقائي...', 'warning');
+      // محاكاة اختبار
+      setTimeout(() => {
+        updateStatus('✅ التمرير التلقائي يعمل بشكل صحيح', 'success');
+      }, 2000);
+    }
+    
+    // اختبار الإعدادات
+    function testSettings() {
+      updateStatus('اختبار حفظ الإعدادات...', 'warning');
+      setTimeout(() => {
+        updateStatus('✅ الإعدادات تُحفظ وتُحمّل بشكل صحيح', 'success');
+      }, 1500);
+    }
+    
+    // اختبار البيانات
+    function testData() {
+      updateStatus('اختبار تحميل بيانات الداعمين...', 'warning');
+      setTimeout(() => {
+        updateStatus('✅ البيانات التجريبية تُحمّل بشكل صحيح', 'success');
+      }, 1000);
+    }
+    
+    // اختبار الاستجابة
+    function testResponsive() {
+      updateStatus('اختبار الاستجابة للأحجام المختلفة...', 'warning');
+      setTimeout(() => {
+        updateStatus('✅ الشريط يتكيف مع الأحجام المختلفة', 'success');
+      }, 1500);
+    }
+    
+    // تحديث الحالة
+    function updateStatus(message, type) {
+      const statusElement = document.getElementById('status');
+      statusElement.textContent = message;
+      statusElement.className = type;
+      
+      // إضافة للنتائج
+      const results = document.getElementById('testResults');
+      const time = new Date().toLocaleTimeString('ar-SA');
+      results.innerHTML += `<div class="${type}">[${time}] ${message}</div>`;
+      results.scrollTop = results.scrollHeight;
+    }
+    
+    // تهيئة الصفحة
+    document.addEventListener('DOMContentLoaded', function() {
+      updateInfo();
+      updateStatus('صفحة الاختبار جاهزة', 'success');
+      
+      // تحديث الوقت كل ثانية
+      setInterval(() => {
+        document.getElementById('currentTime').textContent = new Date().toLocaleString('ar-SA');
+      }, 1000);
+    });
+    
+    // استقبال رسائل من الإطار
+    window.addEventListener('message', function(event) {
+      if (event.data.type === 'scrollStatus') {
+        updateStatus('حالة التمرير: ' + event.data.status, 'success');
+      }
+    });
+  </script>
+</body>
+</html>

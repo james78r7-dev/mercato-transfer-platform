@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>REO SHOW - البث المباشر</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: linear-gradient(135deg, #0a0a0f 0%, #1a0b2e 50%, #2d1b69 100%);
+            color: white;
+            min-height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .overlay-container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .stream-content {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            transition: all 0.8s ease;
+            pointer-events: none;
+        }
+
+        .stream-content > div {
+            pointer-events: auto;
+        }
+
+        .welcome-message {
+            text-align: center;
+            padding: 60px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 30px;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            max-width: 600px;
+        }
+
+        .welcome-message h1 {
+            font-size: 56px;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 900;
+        }
+
+        .welcome-message p {
+            font-size: 24px;
+            opacity: 0.8;
+            margin-bottom: 30px;
+        }
+
+        .welcome-subtitle {
+            font-size: 16px;
+            opacity: 0.6;
+            font-weight: 400;
+        }
+
+        .live-indicator {
+            position: fixed;
+            top: 40px;
+            right: 40px;
+            background: #ff0000;
+            color: white;
+            padding: 15px 30px;
+            border-radius: 30px;
+            font-weight: bold;
+            font-size: 18px;
+            z-index: 1000;
+            display: none;
+            animation: pulse 2s infinite;
+            box-shadow: 0 10px 30px rgba(255, 0, 0, 0.3);
+        }
+
+        .live-indicator.show {
+            display: block;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.05); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        .date-display {
+            position: fixed;
+            bottom: 40px;
+            left: 40px;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 20px 30px;
+            border-radius: 20px;
+            font-size: 18px;
+            font-weight: 600;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .channel-branding {
+            position: fixed;
+            bottom: 40px;
+            right: 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px 30px;
+            border-radius: 20px;
+            font-size: 24px;
+            font-weight: 900;
+            z-index: 1000;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        }
+
+        .hidden {
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(20px);
+        }
+
+        /* Particle background effect */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: float 6s infinite linear;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-10vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Content animations */
+        .stream-content {
+            animation: contentEnter 1s ease-out;
+        }
+
+        @keyframes contentEnter {
+            0% {
+                opacity: 0;
+                transform: translateY(50px) scale(0.9);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Particle Background -->
+    <div class="particles" id="particles"></div>
+
+    <div class="overlay-container">
+        <!-- Live Indicator -->
+        <div id="liveIndicator" class="live-indicator">
+            🔴 LIVE
+        </div>
+
+        <!-- Date Display -->
+        <div id="dateDisplay" class="date-display">
+            <span id="currentDate"></span>
+        </div>
+
+        <!-- Channel Branding -->
+        <div id="channelBranding" class="channel-branding">
+            REO SHOW
+        </div>
+
+        <!-- Welcome Message -->
+        <div id="welcomeMessage" class="welcome-message">
+            <h1>REO SHOW</h1>
+            <p>البث المباشر</p>
+            <div class="welcome-subtitle">
+                في انتظار المحتوى...
+            </div>
+        </div>
+
+        <!-- Stream Content -->
+        <div id="streamContent" class="stream-content">
+            <!-- Content will be inserted here -->
+        </div>
+
+        <!-- Update Status Indicator -->
+        <div id="updateStatus" style="
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 12px;
+            font-family: 'Cairo', sans-serif;
+            z-index: 9999;
+            display: none;
+            border: 1px solid #00ff00;
+            transition: all 0.3s ease;
+        ">
+            🔄 جاري التحديث...
+        </div>
+    </div>
+
+    <script>
+        console.log('🎬 REO SHOW - Clean Stream Overlay');
+
+        // Global variables - Enhanced for OBS stability
+        let lastUpdate = 0;
+        let isContentVisible = false;
+        let contentLocked = false; // Prevent rapid changes
+        let lastContentHash = null; // Track content changes
+        let obsStabilityMode = true; // Special mode for OBS
+        let contentDisplayTimeout = null;
+        let currentContentId = null;
+        let stableContentTimer = null;
+
+        // Create particle effect
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 50;
+
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 6 + 's';
+                particle.style.animationDuration = (Math.random() * 3 + 3) + 's';
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // Update date and time (Gregorian calendar)
+        function updateDateTime() {
+            const now = new Date();
+
+            // Use English locale for Gregorian calendar
+            const dateStr = now.toLocaleDateString('en-US', {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+
+            const timeStr = now.toLocaleTimeString('en-US', {
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                hour12: false
+            });
+
+            const dateDisplay = document.getElementById('currentDate');
+            if (dateDisplay) {
+                dateDisplay.textContent = `${dateStr} - ${timeStr}`;
+            }
+        }
+
+        // Clean content by removing unwanted text
+        function cleanContent(html) {
+            // Remove unwanted text patterns
+            let cleanedHtml = html;
+
+            // Remove "2 لاعب" text
+            cleanedHtml = cleanedHtml.replace(/2\s*لاعب/gi, '');
+
+            // Remove "Ultimate Studio V4" text
+            cleanedHtml = cleanedHtml.replace(/Ultimate\s*Studio\s*V4/gi, '');
+
+            // Remove any remaining unwanted patterns
+            cleanedHtml = cleanedHtml.replace(/عرض\s*اللاعبين\s*المتعدد/gi, '');
+
+            return cleanedHtml;
+        }
+
+        // Show content with OBS-optimized stability
+        function showContent(html) {
+            const streamContent = document.getElementById('streamContent');
+            const welcomeMessage = document.getElementById('welcomeMessage');
+            const liveIndicator = document.getElementById('liveIndicator');
+
+            if (!streamContent || !welcomeMessage || !liveIndicator) {
+                console.error('❌ Required elements not found');
+                return;
+            }
+
+            // Generate content hash to prevent unnecessary updates (safe for Arabic)
+            const contentHash = html.length + '_' + Date.now().toString().slice(-6);
+
+            // Skip if same content is already displayed
+            if (lastContentHash === contentHash && isContentVisible) {
+                console.log('📱 Same content already displayed, skipping update');
+                return;
+            }
+
+            // Prevent rapid changes in OBS mode
+            if (contentLocked && obsStabilityMode) {
+                console.log('🔒 Content locked for OBS stability');
+                return;
+            }
+
+            // Lock content for stability
+            if (obsStabilityMode) {
+                contentLocked = true;
+                setTimeout(() => {
+                    contentLocked = false;
+                }, 2000); // 2 second lock for OBS stability
+            }
+
+            // Clear any existing timeout
+            if (contentDisplayTimeout) {
+                clearTimeout(contentDisplayTimeout);
+            }
+
+            // Clear stable timer
+            if (stableContentTimer) {
+                clearTimeout(stableContentTimer);
+            }
+
+            // Hide welcome message
+            welcomeMessage.classList.add('hidden');
+
+            // Show live indicator
+            liveIndicator.classList.add('show');
+
+            // Clean the content before displaying
+            const cleanedHtml = cleanContent(html);
+
+            // Update content with OBS stability measures
+            streamContent.innerHTML = cleanedHtml;
+            streamContent.style.opacity = '1';
+            streamContent.style.display = 'flex';
+            streamContent.style.visibility = 'visible';
+            streamContent.style.position = 'relative';
+            streamContent.style.zIndex = '1000';
+
+            // Simple OBS refresh
+            obsForceRefresh();
+
+            // Force layout recalculation for OBS
+            streamContent.offsetHeight;
+            streamContent.offsetWidth;
+
+            // Set multiple stability timers for OBS
+            stableContentTimer = setTimeout(() => {
+                console.log('🔒 Content stabilized for OBS (Phase 1)');
+                streamContent.style.opacity = '1';
+                streamContent.style.visibility = 'visible';
+                streamContent.style.display = 'flex';
+            }, 100);
+
+            // Additional stability check
+            setTimeout(() => {
+                console.log('🔒 Content stabilized for OBS (Phase 2)');
+                streamContent.style.opacity = '1';
+                streamContent.style.visibility = 'visible';
+                streamContent.style.display = 'flex';
+            }, 500);
+
+            // Final stability check
+            setTimeout(() => {
+                console.log('🔒 Content stabilized for OBS (Final)');
+                streamContent.style.opacity = '1';
+                streamContent.style.visibility = 'visible';
+                streamContent.style.display = 'flex';
+            }, 1000);
+
+            // Continuous protection - Force visibility every 3 seconds
+            setInterval(() => {
+                if (isContentVisible && streamContent) {
+                    streamContent.style.opacity = '1';
+                    streamContent.style.visibility = 'visible';
+                    streamContent.style.display = 'flex';
+                    console.log('🛡️ Content protection active');
+                }
+            }, 3000);
+
+            isContentVisible = true;
+            lastContentHash = contentHash;
+            currentContentId = contentHash;
+
+            console.log('✅ Content displayed with OBS stability measures');
+        }
+
+        // Hide content with OBS stability - DISABLED FOR OBS
+        function hideContent() {
+            // NEVER HIDE CONTENT IN OBS MODE - Always keep content visible
+            console.log('🔒 Content hide PERMANENTLY BLOCKED for OBS stability');
+            console.log('📺 Content will remain visible for OBS streaming');
+            return;
+
+            const streamContent = document.getElementById('streamContent');
+            const welcomeMessage = document.getElementById('welcomeMessage');
+            const liveIndicator = document.getElementById('liveIndicator');
+
+            if (streamContent && welcomeMessage && liveIndicator) {
+                // Clear timers
+                if (contentDisplayTimeout) {
+                    clearTimeout(contentDisplayTimeout);
+                }
+
+                if (stableContentTimer) {
+                    clearTimeout(stableContentTimer);
+                }
+
+                // Show welcome message
+                welcomeMessage.classList.remove('hidden');
+
+                // Hide live indicator
+                liveIndicator.classList.remove('show');
+
+                // Clear content gradually for OBS
+                streamContent.style.opacity = '0';
+
+                setTimeout(() => {
+                    streamContent.innerHTML = '';
+                    streamContent.style.display = 'flex';
+                }, 200);
+
+                isContentVisible = false;
+                lastContentHash = null;
+                currentContentId = null;
+
+                console.log('✅ Content hidden with OBS stability');
+            }
+        }
+
+        // Check for updates - ULTIMATE ENHANCED VERSION
+        async function checkForUpdates() {
+            try {
+                // Check server API first with enhanced error handling
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 2000); // 2 second timeout
+
+                const response = await fetch('/api/stream-data', {
+                    method: 'GET',
+                    headers: {
+                        'Cache-Control': 'no-cache',
+                        'Pragma': 'no-cache',
+                        'Accept': 'application/json'
+                    },
+                    signal: controller.signal
+                });
+
+                clearTimeout(timeoutId);
+
+                if (response.ok) {
+                    const data = await response.json();
+                    console.log('📡 Server data received:', data);
+
+                    if (data.active && data.content && data.content.html) {
+                        const contentTimestamp = data.content.timestamp || 0;
+                        const contentId = data.content.id || 'unknown';
+
+                        console.log('📡 Server content check:', {
+                            contentTimestamp,
+                            lastUpdate,
+                            contentId,
+                            isNewer: contentTimestamp > lastUpdate
+                        });
+
+                        if (contentTimestamp > lastUpdate) {
+                            console.log('🎬 Showing new content from server');
+                            showContent(data.content.html);
+                            lastUpdate = contentTimestamp;
+                            return true; // Successfully updated from server
+                        }
+                    } else if (!data.active || !data.content) {
+                        // DON'T HIDE CONTENT AUTOMATICALLY - Keep it visible for OBS stability
+                        console.log('📡 Server says inactive but keeping content visible for OBS');
+                        return true; // Successfully processed server response
+                    }
+                } else {
+                    console.log('⚠️ Server response not ok:', response.status);
+                }
+            } catch (error) {
+                if (error.name === 'AbortError') {
+                    console.log('⚠️ Server request timeout, using localStorage');
+                } else {
+                    console.log('⚠️ Server not available, using localStorage:', error.message);
+                }
+            }
+
+            // Enhanced localStorage fallback
+            try {
+                const isActive = localStorage.getItem('directStreamActive') === 'true';
+                const contentData = localStorage.getItem('directStreamContent');
+                const lastUpdateStr = localStorage.getItem('directStreamLastUpdate');
+                const contentChanged = localStorage.getItem('directStreamContentChanged');
+
+                console.log('📱 localStorage check:', {
+                    isActive,
+                    hasContent: !!contentData,
+                    lastUpdateStr,
+                    contentChanged
+                });
+
+                if (isActive && contentData) {
+                    const parsed = JSON.parse(contentData);
+                    const contentTimestamp = parsed.timestamp || 0;
+                    const contentId = parsed.id || 'unknown';
+
+                    console.log('📱 Content timestamp check:', {
+                        contentTimestamp,
+                        lastUpdate,
+                        contentId,
+                        isNewer: contentTimestamp > lastUpdate
+                    });
+
+                    if (contentTimestamp > lastUpdate) {
+                        console.log('🎬 Showing new content from localStorage');
+                        showContent(parsed.html);
+                        lastUpdate = contentTimestamp;
+
+                        // Show success indicator
+                        showUpdateSuccess('✅ تم تحديث المحتوى');
+
+                        // Notify other systems about the update
+                        window.dispatchEvent(new CustomEvent('streamContentUpdated', {
+                            detail: { timestamp: contentTimestamp, source: 'localStorage' }
+                        }));
+
+                        return true;
+                    }
+                } else {
+                    // DON'T HIDE CONTENT AUTOMATICALLY - Keep it visible for OBS stability
+                    console.log('📱 localStorage says inactive but keeping content visible for OBS');
+                }
+            } catch (error) {
+                console.error('❌ Error checking localStorage:', error);
+            }
+
+            return false; // No updates found
+        }
+
+        // Force content to stay visible - OBS Protection
+        function forceContentVisible() {
+            const streamContent = document.getElementById('streamContent');
+            if (streamContent && isContentVisible) {
+                streamContent.style.opacity = '1';
+                streamContent.style.visibility = 'visible';
+                streamContent.style.display = 'flex';
+
+                // OBS FORCE REFRESH - إجبار التحديث لـ OBS
+                obsForceRefresh();
+
+                console.log('🔒 Forced content to stay visible for OBS');
+            }
+        }
+
+        // Simple OBS refresh function
+        function obsForceRefresh() {
+            try {
+                const streamContent = document.getElementById('streamContent');
+
+                if (streamContent && isContentVisible) {
+                    // Simple force refresh
+                    streamContent.style.opacity = '0.999';
+                    streamContent.offsetHeight; // Force layout
+                    streamContent.style.opacity = '1';
+
+                    console.log('🎥 Simple OBS refresh applied');
+                }
+
+            } catch (error) {
+                console.warn('⚠️ OBS refresh error:', error);
+            }
+        }
+
+        // Update Status Indicator Functions
+        function showUpdateStatus(message = '🔄 جاري التحديث...') {
+            const updateStatus = document.getElementById('updateStatus');
+            if (updateStatus) {
+                updateStatus.textContent = message;
+                updateStatus.style.display = 'block';
+                updateStatus.style.borderColor = '#00ff00';
+                updateStatus.style.backgroundColor = 'rgba(0, 100, 0, 0.8)';
+            }
+        }
+
+        function hideUpdateStatus() {
+            const updateStatus = document.getElementById('updateStatus');
+            if (updateStatus) {
+                setTimeout(() => {
+                    updateStatus.style.display = 'none';
+                }, 1000);
+            }
+        }
+
+        function showUpdateSuccess(message = '✅ تم التحديث بنجاح') {
+            const updateStatus = document.getElementById('updateStatus');
+            if (updateStatus) {
+                updateStatus.textContent = message;
+                updateStatus.style.display = 'block';
+                updateStatus.style.borderColor = '#00ff00';
+                updateStatus.style.backgroundColor = 'rgba(0, 150, 0, 0.8)';
+                setTimeout(hideUpdateStatus, 2000);
+            }
+        }
+
+        // Initialize
+        function init() {
+            console.log('🚀 Initializing REO SHOW Clean Stream Overlay');
+
+            // Create particle effect
+            createParticles();
+
+            // Update date/time every second
+            updateDateTime();
+            setInterval(updateDateTime, 1000);
+
+            // OBS-OPTIMIZED UPDATE SYSTEM - Balanced for stability
+            console.log('🚀 Starting OBS-optimized update system...');
+
+            // Initial check
+            checkForUpdates();
+
+            // Primary check every 1000ms for stable response
+            setInterval(checkForUpdates, 1000);
+
+            // Simple localStorage monitoring
+            let lastContentCheck = '';
+
+            function simpleStorageMonitor() {
+                try {
+                    const currentContent = localStorage.getItem('directStreamContent');
+                    if (currentContent && currentContent !== lastContentCheck) {
+                        console.log('🔍 Content change detected');
+                        lastContentCheck = currentContent;
+                        checkForUpdates();
+                    }
+                } catch (error) {
+                    console.warn('⚠️ Storage monitor error:', error);
+                }
+            }
+
+            // Run simple monitor every 500ms
+            setInterval(simpleStorageMonitor, 500);
+
+            // Secondary check every 2 seconds for reliability
+            setInterval(function() {
+                console.log('🔄 OBS reliability check');
+                checkForUpdates();
+            }, 2000);
+
+            // Backup check every 5 seconds for safety
+            setInterval(function() {
+                console.log('🔄 OBS backup check');
+                checkForUpdates();
+            }, 5000);
+
+            // Force content visibility every 2 seconds for OBS protection
+            setInterval(function() {
+                forceContentVisible();
+            }, 2000);
+
+            // Simple OBS monitoring
+            setInterval(function() {
+                obsForceRefresh();
+            }, 5000);
+
+            // Listen for storage events (cross-tab communication) - ENHANCED
+            window.addEventListener('storage', function(e) {
+                console.log('📡 Storage event received:', e.key, e.newValue);
+                if (e.key === 'directStreamContent' ||
+                    e.key === 'directStreamContentChanged' ||
+                    e.key === 'currentPlayer' ||
+                    e.key === 'playerChanged') {
+                    console.log('🔄 Stream-related storage change detected');
+                    showUpdateStatus('📡 تحديث من التخزين...');
+                    setTimeout(checkForUpdates, 100);
+                }
+            });
+
+            // Listen for custom events - ENHANCED
+            window.addEventListener('directStreamUpdate', function(e) {
+                console.log('📡 Direct stream update event received:', e.detail);
+                setTimeout(checkForUpdates, 5);
+                setTimeout(checkForUpdates, 50);
+                setTimeout(checkForUpdates, 200);
+            });
+
+            // Listen for club data updates
+            window.addEventListener('clubsDataUpdated', function(e) {
+                console.log('📡 Clubs data updated event received:', e.detail);
+                setTimeout(checkForUpdates, 5);
+            });
+
+            // Listen for player data updates
+            window.addEventListener('playerDataUpdated', function(e) {
+                console.log('📡 Player data updated event received:', e.detail);
+                setTimeout(checkForUpdates, 5);
+            });
+
+            // Listen for focus events (when OBS refreshes the browser source)
+            window.addEventListener('focus', function() {
+                console.log('🎯 Window focused, immediate check');
+                setTimeout(checkForUpdates, 5);
+                setTimeout(checkForUpdates, 50);
+            });
+
+            // Listen for Pro Studio notifications
+            window.addEventListener('message', function(e) {
+                if (e.data && e.data.type === 'STREAM_UPDATE') {
+                    console.log('📨 Message from Pro Studio:', e.data);
+                    setTimeout(checkForUpdates, 5);
+                }
+            });
+
+            // Listen for broadcast channel messages (cross-tab communication)
+            if (typeof BroadcastChannel !== 'undefined') {
+                const streamChannel = new BroadcastChannel('stream-updates');
+                streamChannel.addEventListener('message', function(e) {
+                    console.log('📡 Broadcast channel message:', e.data);
+                    if (e.data.type === 'PLAYER_CREATED' || e.data.type === 'CONTENT_UPDATED') {
+                        showUpdateStatus('📡 تحديث من القناة...');
+                        setTimeout(checkForUpdates, 5);
+                        setTimeout(() => obsForceRefresh(), 10);
+                    }
+                });
+
+                // Listen for OBS force refresh messages
+                const obsChannel = new BroadcastChannel('obs-force-refresh');
+                obsChannel.addEventListener('message', function(e) {
+                    console.log('🎥 OBS Force Refresh message received:', e.data);
+                    if (e.data.type === 'OBS_FORCE_REFRESH') {
+                        showUpdateStatus('🎥 إجبار تحديث OBS...');
+                        setTimeout(checkForUpdates, 5);
+                        setTimeout(() => obsForceRefresh(), 10);
+                        setTimeout(() => obsForceRefresh(), 100);
+                        setTimeout(() => obsForceRefresh(), 300);
+                    }
+                });
+            }
+
+            // Listen for visibility change (when tab becomes visible)
+            document.addEventListener('visibilitychange', function() {
+                if (!document.hidden) {
+                    console.log('👁️ Page became visible, immediate check');
+                    setTimeout(checkForUpdates, 10);
+                }
+            });
+
+            // Listen for page load events
+            window.addEventListener('load', function() {
+                console.log('🌐 Page loaded, checking for content');
+                setTimeout(checkForUpdates, 100);
+            });
+
+            // Listen for DOM content loaded
+            document.addEventListener('DOMContentLoaded', function() {
+                console.log('📄 DOM loaded, checking for content');
+                setTimeout(checkForUpdates, 50);
+            });
+
+            // Heartbeat system - check if we're still receiving updates
+            let lastHeartbeat = Date.now();
+            setInterval(function() {
+                const now = Date.now();
+                if (now - lastHeartbeat > 10000) { // 10 seconds without update
+                    console.log('💓 Heartbeat check - forcing update');
+                    checkForUpdates();
+                    lastHeartbeat = now;
+                }
+            }, 5000);
+
+            console.log('✅ Ultimate update system initialized');
+
+            console.log('✅ REO SHOW Stream Overlay Ready');
+        }
+
+        // Start when page loads
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', init);
+        } else {
+            init();
+        }
+
+        // Global test functions (for development only)
+        window.testOverlay = function() {
+            const testContent = {
+                html: `
+                    <div style="
+                        background: linear-gradient(135deg, #1e3c72, #2a5298);
+                        border: 3px solid #00d4ff;
+                        border-radius: 25px;
+                        padding: 40px;
+                        color: white;
+                        text-align: center;
+                        width: 450px;
+                        box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8);
+                    ">
+                        <h2 style="font-size: 36px; margin-bottom: 20px;">محمد صلاح</h2>
+                        <div style="margin: 30px 0;">
+                            <div style="display: flex; align-items: center; justify-content: center; gap: 20px;">
+                                <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 15px;">ليفربول</div>
+                                <div style="font-size: 24px; color: #00d4ff;">→</div>
+                                <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 15px;">ريال مدريد</div>
+                            </div>
+                        </div>
+                        <div style="margin: 40px 0; background: rgba(16, 185, 129, 0.2); border: 2px solid rgba(16, 185, 129, 0.3); border-radius: 20px; padding: 20px;">
+                            <div style="font-size: 48px; font-weight: 900; color: #10b981;">85%</div>
+                            <div style="font-size: 18px; opacity: 0.8;">احتمالية الانتقال</div>
+                        </div>
+                    </div>
+                `,
+                timestamp: Date.now(),
+                source: 'Single Player Test'
+            };
+
+            localStorage.setItem('directStreamActive', 'true');
+            localStorage.setItem('directStreamContent', JSON.stringify(testContent));
+        };
+
+        // Test multiple players
+        window.testMultiPlayers = function() {
+            const testContent = {
+                html: `
+                    <div style="display: flex; gap: 30px; align-items: center; justify-content: center; flex-wrap: wrap;">
+                        <div style="
+                            background: linear-gradient(135deg, #1e3c72, #2a5298);
+                            border: 3px solid #00d4ff;
+                            border-radius: 25px;
+                            padding: 30px;
+                            color: white;
+                            text-align: center;
+                            width: 350px;
+                            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8);
+                        ">
+                            <h3 style="font-size: 28px; margin-bottom: 15px;">محمد صلاح</h3>
+                            <div style="margin: 20px 0;">
+                                <div style="display: flex; align-items: center; justify-content: center; gap: 15px; font-size: 14px;">
+                                    <span>ليفربول</span>
+                                    <span style="color: #00d4ff;">→</span>
+                                    <span>ريال مدريد</span>
+                                </div>
+                            </div>
+                            <div style="background: rgba(16, 185, 129, 0.2); border: 2px solid rgba(16, 185, 129, 0.3); border-radius: 15px; padding: 15px;">
+                                <div style="font-size: 36px; font-weight: 900; color: #10b981;">85%</div>
+                            </div>
+                        </div>
+
+                        <div style="
+                            background: linear-gradient(135deg, #2d1b69, #1a0b2e);
+                            border: 3px solid #ff6b6b;
+                            border-radius: 25px;
+                            padding: 30px;
+                            color: white;
+                            text-align: center;
+                            width: 350px;
+                            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8);
+                        ">
+                            <h3 style="font-size: 28px; margin-bottom: 15px;">كيليان مبابي</h3>
+                            <div style="margin: 20px 0;">
+                                <div style="display: flex; align-items: center; justify-content: center; gap: 15px; font-size: 14px;">
+                                    <span>باريس سان جيرمان</span>
+                                    <span style="color: #ff6b6b;">→</span>
+                                    <span>ريال مدريد</span>
+                                </div>
+                            </div>
+                            <div style="background: rgba(255, 107, 107, 0.2); border: 2px solid rgba(255, 107, 107, 0.3); border-radius: 15px; padding: 15px;">
+                                <div style="font-size: 36px; font-weight: 900; color: #ff6b6b;">92%</div>
+                            </div>
+                        </div>
+                    </div>
+                `,
+                timestamp: Date.now(),
+                source: 'Multi Players Test'
+            };
+
+            localStorage.setItem('directStreamActive', 'true');
+            localStorage.setItem('directStreamContent', JSON.stringify(testContent));
+        };
+    </script>
+</body>
+</html>

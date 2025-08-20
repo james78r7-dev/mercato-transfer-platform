@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>⚽ Football Design Studio Pro 2025 - مثل Canva تماماً</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    <style>
+        * { font-family: 'Cairo', sans-serif; }
+        
+        .canva-container {
+            height: 100vh;
+            display: grid;
+            grid-template-areas: 
+                "header header header"
+                "sidebar canvas properties";
+            grid-template-rows: 60px 1fr;
+            grid-template-columns: 300px 1fr 280px;
+            gap: 0;
+        }
+        
+        .header { grid-area: header; }
+        .sidebar { grid-area: sidebar; }
+        .canvas-area { grid-area: canvas; }
+        .properties { grid-area: properties; }
+        
+        .template-card {
+            aspect-ratio: 16/9;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.2s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .template-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+        
+        .template-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0,0,0,0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+        
+        .template-card:hover .template-overlay {
+            opacity: 1;
+        }
+        
+        .design-canvas {
+            width: 800px;
+            height: 600px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            position: relative;
+            margin: auto;
+            overflow: hidden;
+        }
+        
+        .canvas-element {
+            position: absolute;
+            cursor: move;
+            user-select: none;
+        }
+        
+        .canvas-element.selected {
+            outline: 2px solid #667eea;
+            outline-offset: 2px;
+        }
+        
+        .canvas-element.text-element {
+            padding: 8px;
+            min-width: 100px;
+            min-height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .canvas-element.image-element {
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .asset-item {
+            cursor: grab;
+            transition: transform 0.2s;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .asset-item:hover {
+            transform: scale(1.05);
+        }
+        
+        .asset-item:active {
+            cursor: grabbing;
+        }
+        
+        .color-picker-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 8px;
+        }
+        
+        .color-swatch {
+            width: 32px;
+            height: 32px;
+            border-radius: 6px;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: border-color 0.2s;
+        }
+        
+        .color-swatch:hover {
+            border-color: #667eea;
+        }
+        
+        .font-option {
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        
+        .font-option:hover {
+            background-color: #f3f4f6;
+        }
+        
+        .font-option.selected {
+            background-color: #667eea;
+            color: white;
+        }
+        
+        /* Success Message */
+        .success-banner {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            padding: 12px;
+            text-align: center;
+            font-weight: bold;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    
+    <!-- Success Banner -->
+    <div class="success-banner">
+        🎉 Football Design Studio Pro يعمل الآن على البورت 8201! - النسخة الاحترافية مثل Canva تماماً
+    </div>
+    
+    <div class="canva-container" style="margin-top: 48px;">
+        
+        <!-- Header -->
+        <header class="header bg-white border-b border-gray-200 flex items-center justify-between px-6">
+            <div class="flex items-center space-x-4 space-x-reverse">
+                <h1 class="text-xl font-bold text-gray-800">⚽ Football Design Studio Pro 2025</h1>
+                <span class="text-sm text-gray-500">النسخة الاحترافية - مثل Canva تماماً</span>
+            </div>
+            
+            <div class="flex items-center space-x-3 space-x-reverse">
+                <button id="undoBtn" class="p-2 hover:bg-gray-100 rounded-lg" title="تراجع">
+                    <i class="fas fa-undo text-gray-600"></i>
+                </button>
+                <button id="redoBtn" class="p-2 hover:bg-gray-100 rounded-lg" title="إعادة">
+                    <i class="fas fa-redo text-gray-600"></i>
+                </button>
+                <button id="saveBtn" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">
+                    <i class="fas fa-save mr-2"></i>حفظ
+                </button>
+                <button id="exportBtn" class="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600">
+                    <i class="fas fa-download mr-2"></i>تصدير
+                </button>
+            </div>
+        </header>
+        
+        <!-- Left Sidebar -->
+        <div class="sidebar bg-white border-r border-gray-200 overflow-y-auto">
+            
+            <!-- Templates Section -->
+            <div class="p-4">
+                <h3 class="font-bold text-gray-800 mb-4">🎨 القوالب</h3>
+                <div class="grid grid-cols-2 gap-3">
+                    <div class="template-card" data-template="transfer">
+                        <div class="template-overlay">انتقال</div>
+                    </div>
+                    <div class="template-card" data-template="goal">
+                        <div class="template-overlay">هدف</div>
+                    </div>
+                    <div class="template-card" data-template="match">
+                        <div class="template-overlay">مباراة</div>
+                    </div>
+                    <div class="template-card" data-template="news">
+                        <div class="template-overlay">خبر</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Text Section -->
+            <div class="p-4 border-t border-gray-100">
+                <h3 class="font-bold text-gray-800 mb-4">📝 النصوص</h3>
+                <div class="space-y-2">
+                    <div class="asset-item bg-gray-100 p-3 text-center" draggable="true" data-type="text" data-content="عنوان رئيسي" data-style="font-size: 24px; font-weight: bold;">
+                        عنوان رئيسي
+                    </div>
+                    <div class="asset-item bg-gray-100 p-3 text-center" draggable="true" data-type="text" data-content="عنوان فرعي" data-style="font-size: 18px;">
+                        عنوان فرعي
+                    </div>
+                    <div class="asset-item bg-gray-100 p-3 text-center" draggable="true" data-type="text" data-content="نص عادي" data-style="font-size: 14px;">
+                        نص عادي
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Images Section -->
+            <div class="p-4 border-t border-gray-100">
+                <h3 class="font-bold text-gray-800 mb-4">🖼️ الصور</h3>
+                <div class="grid grid-cols-2 gap-2">
+                    <div class="asset-item bg-gradient-to-br from-blue-400 to-purple-500 aspect-square rounded-lg flex items-center justify-center text-white font-bold" 
+                         draggable="true" data-type="image" data-src="player1">
+                        ميسي
+                    </div>
+                    <div class="asset-item bg-gradient-to-br from-red-400 to-pink-500 aspect-square rounded-lg flex items-center justify-center text-white font-bold" 
+                         draggable="true" data-type="image" data-src="player2">
+                        رونالدو
+                    </div>
+                    <div class="asset-item bg-gradient-to-br from-green-400 to-blue-500 aspect-square rounded-lg flex items-center justify-center text-white font-bold" 
+                         draggable="true" data-type="image" data-src="club1">
+                        ريال مدريد
+                    </div>
+                    <div class="asset-item bg-gradient-to-br from-purple-400 to-red-500 aspect-square rounded-lg flex items-center justify-center text-white font-bold" 
+                         draggable="true" data-type="image" data-src="club2">
+                        برشلونة
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Shapes Section -->
+            <div class="p-4 border-t border-gray-100">
+                <h3 class="font-bold text-gray-800 mb-4">🔷 الأشكال</h3>
+                <div class="grid grid-cols-3 gap-2">
+                    <div class="asset-item bg-blue-500 aspect-square rounded-lg" draggable="true" data-type="shape" data-shape="rectangle"></div>
+                    <div class="asset-item bg-green-500 aspect-square rounded-full" draggable="true" data-type="shape" data-shape="circle"></div>
+                    <div class="asset-item bg-red-500 aspect-square rounded-lg" draggable="true" data-type="shape" data-shape="triangle" style="clip-path: polygon(50% 0%, 0% 100%, 100% 100%);"></div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Canvas Area -->
+        <div class="canvas-area bg-gray-100 flex items-center justify-center p-8">
+            <div id="designCanvas" class="design-canvas" ondrop="drop(event)" ondragover="allowDrop(event)">
+                <!-- Canvas elements will be added here -->
+            </div>
+        </div>
+        
+        <!-- Right Properties Panel -->
+        <div class="properties bg-white border-l border-gray-200 overflow-y-auto">
+            <div class="p-4">
+                <h3 class="font-bold text-gray-800 mb-4">⚙️ الخصائص</h3>
+                
+                <!-- Element Properties -->
+                <div id="elementProperties" class="hidden">
+                    
+                    <!-- Text Properties -->
+                    <div id="textProperties" class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">الخط</label>
+                            <div class="space-y-1">
+                                <div class="font-option selected" data-font="Cairo">Cairo</div>
+                                <div class="font-option" data-font="Arial">Arial</div>
+                                <div class="font-option" data-font="Helvetica">Helvetica</div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">حجم الخط</label>
+                            <input type="range" id="fontSizeSlider" min="12" max="72" value="24" class="w-full">
+                            <div class="text-sm text-gray-500 text-center mt-1">
+                                <span id="fontSizeValue">24</span>px
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">اللون</label>
+                            <div class="color-picker-grid">
+                                <div class="color-swatch" style="background-color: #000000;" data-color="#000000"></div>
+                                <div class="color-swatch" style="background-color: #667eea;" data-color="#667eea"></div>
+                                <div class="color-swatch" style="background-color: #764ba2;" data-color="#764ba2"></div>
+                                <div class="color-swatch" style="background-color: #f093fb;" data-color="#f093fb"></div>
+                                <div class="color-swatch" style="background-color: #f5576c;" data-color="#f5576c"></div>
+                                <div class="color-swatch" style="background-color: #4facfe;" data-color="#4facfe"></div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">محاذاة</label>
+                            <div class="flex space-x-2 space-x-reverse">
+                                <button class="flex-1 p-2 border rounded hover:bg-gray-50" data-align="right">
+                                    <i class="fas fa-align-right"></i>
+                                </button>
+                                <button class="flex-1 p-2 border rounded hover:bg-gray-50" data-align="center">
+                                    <i class="fas fa-align-center"></i>
+                                </button>
+                                <button class="flex-1 p-2 border rounded hover:bg-gray-50" data-align="left">
+                                    <i class="fas fa-align-left"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Image Properties -->
+                    <div id="imageProperties" class="space-y-4 hidden">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">الشفافية</label>
+                            <input type="range" id="opacitySlider" min="0" max="100" value="100" class="w-full">
+                            <div class="text-sm text-gray-500 text-center mt-1">
+                                <span id="opacityValue">100</span>%
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">الحدود</label>
+                            <input type="range" id="borderRadiusSlider" min="0" max="50" value="0" class="w-full">
+                            <div class="text-sm text-gray-500 text-center mt-1">
+                                <span id="borderRadiusValue">0</span>px
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Default State -->
+                <div id="defaultProperties">
+                    <div class="text-center text-gray-500 py-8">
+                        <i class="fas fa-mouse-pointer text-3xl mb-4"></i>
+                        <p>اختر عنصراً لتحرير خصائصه</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="../football-ai-studio/js/canva-like-prototype.js"></script>
+    
+    <script>
+        // Hide success banner after 5 seconds
+        setTimeout(() => {
+            const banner = document.querySelector('.success-banner');
+            if (banner) {
+                banner.style.opacity = '0';
+                banner.style.transition = 'opacity 0.5s';
+                setTimeout(() => banner.remove(), 500);
+            }
+        }, 5000);
+    </script>
+</body>
+</html>

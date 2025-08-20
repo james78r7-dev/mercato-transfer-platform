@@ -1,0 +1,1552 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SupportBar - شريط الداعمين</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="css/supporters-modern.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', 'Poppins', Arial, sans-serif;
+      background: transparent;
+      overflow: hidden;
+    }
+
+    /* Modern Glassmorphism Support Bar */
+    .support-bar {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 380px;
+      height: 100vh;
+      background: linear-gradient(135deg,
+        rgba(15, 15, 25, 0.85) 0%,
+        rgba(25, 25, 45, 0.9) 50%,
+        rgba(35, 35, 65, 0.85) 100%);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      border-left: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow:
+        -10px 0 30px rgba(0, 0, 0, 0.3),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+      display: flex;
+      flex-direction: column;
+      z-index: 9999;
+      overflow: hidden;
+      animation: slideInRight 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    @keyframes slideInRight {
+      from {
+        transform: translateX(100%);
+        opacity: 0;
+      }
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+
+    /* Animated Header */
+    .support-bar-header {
+      padding: 28px 32px 20px 32px;
+      background: linear-gradient(135deg,
+        rgba(255, 215, 0, 0.15) 0%,
+        rgba(255, 193, 7, 0.1) 100%);
+      border-bottom: 1px solid rgba(255, 215, 0, 0.2);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .support-bar-header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(90deg,
+        transparent 0%,
+        rgba(255, 215, 0, 0.1) 50%,
+        transparent 100%);
+      animation: shimmer 3s infinite;
+    }
+
+    @keyframes shimmer {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
+    }
+
+    .header-content {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .header-icon {
+      width: 48px;
+      height: 48px;
+      background: linear-gradient(135deg, #FFD700, #FFA000);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      color: #1a1a2e;
+      box-shadow:
+        0 8px 32px rgba(255, 215, 0, 0.3),
+        inset 0 2px 4px rgba(255, 255, 255, 0.2);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+
+    .header-text {
+      flex: 1;
+    }
+
+    .header-title {
+      font-size: 1.8rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #FFD700, #FFA000, #FFD700);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 4px;
+      letter-spacing: 0.5px;
+    }
+
+    .header-subtitle {
+      font-size: 0.9rem;
+      color: rgba(255, 255, 255, 0.7);
+      font-weight: 400;
+    }
+
+    /* Modern Supporters List */
+    .supporters-list {
+      flex: 1;
+      overflow-y: auto;
+      padding: 24px 32px;
+      margin: 0;
+      list-style: none;
+      position: relative;
+      /* تحسينات الأداء للتمرير المحسنة */
+      scroll-behavior: auto; /* تغيير من smooth لتجنب التداخل */
+      will-change: scroll-position;
+      transform: translateZ(0);
+      backface-visibility: hidden;
+      /* إضافات لمنع الجلتشات */
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: thin;
+      contain: layout style paint;
+    }
+
+    .supporters-list::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .supporters-list::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 3px;
+    }
+
+    .supporters-list::-webkit-scrollbar-thumb {
+      background: linear-gradient(180deg, #FFD700, #FFA000);
+      border-radius: 3px;
+    }
+
+    /* Ultra Modern Supporter Cards */
+    .supporter {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: linear-gradient(135deg,
+        rgba(255, 255, 255, 0.08) 0%,
+        rgba(255, 255, 255, 0.05) 100%);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      margin-bottom: 16px;
+      padding: 20px 24px;
+      font-size: 1.1rem;
+      color: #fff;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      box-shadow:
+        0 8px 32px rgba(0, 0, 0, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      opacity: 0;
+      transform: translateY(40px) scale(0.95);
+      animation: cardSlideIn 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+      transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      overflow: hidden;
+    }
+
+    .supporter::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.02) 50%,
+        transparent 100%);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .supporter:hover {
+      transform: translateY(-4px) scale(1.02);
+      box-shadow:
+        0 16px 48px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15);
+      border-color: rgba(255, 215, 0, 0.3);
+    }
+
+    .supporter:hover::before {
+      opacity: 1;
+    }
+
+    @keyframes cardSlideIn {
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    /* Elite Top Supporter */
+    .supporter.top {
+      background: linear-gradient(135deg,
+        rgba(255, 215, 0, 0.2) 0%,
+        rgba(255, 193, 7, 0.15) 50%,
+        rgba(255, 215, 0, 0.1) 100%);
+      border: 2px solid rgba(255, 215, 0, 0.4);
+      box-shadow:
+        0 12px 40px rgba(255, 215, 0, 0.2),
+        inset 0 1px 0 rgba(255, 215, 0, 0.3);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .supporter.top::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(45deg,
+        transparent 30%,
+        rgba(255, 215, 0, 0.1) 50%,
+        transparent 70%);
+      animation: eliteShine 3s infinite;
+    }
+
+    @keyframes eliteShine {
+      0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+      100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+    }
+
+    .supporter.top .supporter-content {
+      color: #FFD700;
+      font-weight: 600;
+      font-size: 1.2rem;
+    }
+
+    .supporter.top .crown {
+      font-size: 1.6rem;
+      color: #FFD700;
+      text-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
+      animation: crownGlow 2s infinite alternate;
+    }
+
+    @keyframes crownGlow {
+      from { text-shadow: 0 0 20px rgba(255, 215, 0, 0.8); }
+      to { text-shadow: 0 0 30px rgba(255, 215, 0, 1); }
+    }
+
+    /* Supporter Content Layout */
+    .supporter-content {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex: 1;
+    }
+
+    .supporter-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      color: white;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+      position: relative;
+    }
+
+    .supporter.top .supporter-avatar {
+      background: linear-gradient(135deg, #FFD700, #FFA000);
+      box-shadow: 0 6px 20px rgba(255, 215, 0, 0.4);
+    }
+
+    .supporter-info {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .supporter-name {
+      font-weight: 600;
+      font-size: 1.1rem;
+      color: #fff;
+    }
+
+    .supporter.top .supporter-name {
+      color: #FFD700;
+      font-weight: 700;
+    }
+
+    .supporter-alias {
+      font-size: 0.9rem;
+      color: rgba(255, 255, 255, 0.7);
+      font-weight: 400;
+    }
+
+    .supporter.top .supporter-alias {
+      color: rgba(255, 215, 0, 0.8);
+    }
+
+    .supporter-amount {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 600;
+      color: #4CAF50;
+      font-size: 1.1rem;
+    }
+
+    .supporter.top .supporter-amount {
+      color: #FFD700;
+      font-size: 1.2rem;
+    }
+
+    .amount-icon {
+      font-size: 1rem;
+      opacity: 0.8;
+    }
+
+    .supporter-message {
+      font-size: 0.9rem;
+      color: rgba(255, 255, 255, 0.8);
+      font-style: italic;
+      margin-top: 4px;
+      line-height: 1.4;
+    }
+
+    .supporter.top .supporter-message {
+      color: rgba(255, 215, 0, 0.9);
+    }
+
+    /* Privacy Options */
+    .supporter.hide-name .supporter-name {
+      visibility: hidden;
+    }
+
+    .supporter.hide-amount .supporter-amount {
+      visibility: hidden;
+    }
+
+    /* Enhanced Settings Panel */
+    #supportBarSettings {
+      background: linear-gradient(135deg,
+        rgba(15, 15, 25, 0.95) 0%,
+        rgba(25, 25, 45, 0.98) 100%);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      border: 2px solid rgba(255, 215, 0, 0.3);
+      box-shadow: 
+        0 20px 60px rgba(0, 0, 0, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    }
+
+    .settings-group {
+      margin-bottom: 20px;
+      padding: 16px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .settings-group label {
+      display: block;
+      margin-bottom: 8px;
+      color: #FFD700;
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+
+    .settings-group input[type="number"], .settings-group select {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid rgba(255, 215, 0, 0.3);
+      border-radius: 8px;
+      background: rgba(0, 0, 0, 0.3);
+      color: #FFD700;
+      font-size: 0.95rem;
+      transition: all 0.3s ease;
+    }
+
+    .settings-group input[type="number"]:focus, .settings-group select:focus {
+      outline: none;
+      border-color: #FFD700;
+      box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.2);
+    }
+
+    .settings-status {
+      position: fixed;
+      bottom: 20px;
+      left: 20px; /* تغيير من right إلى left */
+      background: rgba(0, 0, 0, 0.9);
+      color: #00ff00;
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-family: monospace;
+      font-size: 11px;
+      z-index: 10000;
+      border: 1px solid rgba(0, 255, 0, 0.3);
+      backdrop-filter: blur(10px);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+      max-width: 300px; /* تحديد عرض أقصى */
+    }
+
+    .settings-status.show {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 480px) {
+      .support-bar {
+        width: 100vw;
+        right: 0;
+      }
+
+      .support-bar-header {
+        padding: 20px 24px 16px 24px;
+      }
+
+      .supporters-list {
+        padding: 16px 24px;
+      }
+
+      .supporter {
+        padding: 16px 20px;
+        margin-bottom: 12px;
+      }
+
+      #supportBarSettings {
+        right: 10px;
+        left: 10px;
+        max-width: none;
+      }
+    }
+
+    /* Loading Animation */
+    .loading {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 200px;
+      color: rgba(255, 255, 255, 0.6);
+      font-size: 1.1rem;
+    }
+
+    .loading-spinner {
+      width: 24px;
+      height: 24px;
+      border: 2px solid rgba(255, 215, 0, 0.3);
+      border-top: 2px solid #FFD700;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin-left: 12px;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* Empty State */
+    .empty-state {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 200px;
+      color: rgba(255, 255, 255, 0.5);
+      text-align: center;
+    }
+
+    .empty-icon {
+      font-size: 3rem;
+      margin-bottom: 16px;
+      opacity: 0.5;
+    }
+
+    .empty-text {
+      font-size: 1.1rem;
+      font-weight: 500;
+    }
+  </style>
+</head>
+<body>
+  <div class="support-bar" id="supportBar">
+    <!-- تدرجات عصرية أعلى وأسفل الشريط -->
+    <div id="barGradientTop" style="display:none; position:absolute;top:0;right:0;width:100%;height:38px;z-index:2;pointer-events:none;background:linear-gradient(to bottom,rgba(30,30,40,0.85),rgba(30,30,40,0.01));"></div>
+    <div id="barGradientBottom" style="display:none; position:absolute;bottom:0;right:0;width:100%;height:38px;z-index:2;pointer-events:none;background:linear-gradient(to top,rgba(30,30,40,0.85),rgba(30,30,40,0.01));"></div>
+    
+    <div class="support-bar-header">
+      <div class="header-content">
+        <div class="header-icon">
+          <i class="fas fa-heart"></i>
+        </div>
+        <div class="header-text">
+          <div class="header-title">الداعمين</div>
+          <div class="header-subtitle">شكراً لجميع الداعمين</div>
+        </div>
+        <button id="settingsBtn" title="إعدادات الشريط" style="background: none; border: none; cursor: pointer; font-size: 1.5rem; color: #FFD700; margin-right: 8px; transition: all 0.3s ease;">
+          <i class="fas fa-cog"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- نافذة الإعدادات المحسنة -->
+    <div id="supportBarSettings" style="display:none; position: fixed; top: 80px; right: 30px; z-index: 10001; border-radius: 18px; padding: 28px 32px 24px 32px; min-width: 380px; max-width: 90vw; color: #fff;">
+      <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px;">
+        <span style="font-size: 1.4rem; font-weight: 700; color: #FFD700;">⚙️ إعدادات التمرير المتقدمة</span>
+        <button id="closeSettingsBtn" style="background: none; border: none; color: #FFD700; font-size: 1.4rem; cursor: pointer; transition: all 0.3s ease;">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      
+      <!-- تفعيل التمرير التلقائي -->
+      <div class="settings-group">
+        <label style="display: flex; align-items: center; gap: 12px; cursor: pointer; font-size: 1.1rem;">
+          <input type="checkbox" id="autoScrollToggle" style="accent-color: #FFD700; width: 20px; height: 20px; cursor: pointer;">
+          <span>🔄 تفعيل التمرير التلقائي المحسن</span>
+        </label>
+        <div style="font-size: 0.85rem; color: rgba(255, 255, 255, 0.7); margin-top: 6px; margin-right: 32px;">
+          تمرير سلس ومخصص مع تحكم كامل في الأوقات
+        </div>
+      </div>
+
+      <!-- إعدادات الأوقات -->
+      <div class="settings-group">
+        <label for="waitTopDuration">⏸️ مدة الانتظار في الأعلى (ثانية):</label>
+        <input type="number" id="waitTopDuration" min="5" max="120" value="15" step="1">
+        <div style="font-size: 0.8rem; color: rgba(255, 255, 255, 0.6); margin-top: 4px;">
+          كم ثانية البقاء ثابت في الأعلى قبل النزول
+        </div>
+      </div>
+
+      <div class="settings-group">
+        <label for="scrollDownDuration">⬇️ مدة التمرير للأسفل (ثانية):</label>
+        <input type="number" id="scrollDownDuration" min="5" max="120" value="15" step="1">
+        <div style="font-size: 0.8rem; color: rgba(255, 255, 255, 0.6); margin-top: 4px;">
+          كم ثانية يستغرق التمرير للأسفل
+        </div>
+      </div>
+
+      <div class="settings-group">
+        <label for="waitBottomDuration">⏸️ مدة الانتظار في الأسفل (ثانية):</label>
+        <input type="number" id="waitBottomDuration" min="5" max="120" value="15" step="1">
+        <div style="font-size: 0.8rem; color: rgba(255, 255, 255, 0.6); margin-top: 4px;">
+          كم ثانية البقاء ثابت في الأسفل قبل الصعود
+        </div>
+      </div>
+
+      <div class="settings-group">
+        <label for="scrollUpDuration">⬆️ مدة التمرير للأعلى (ثانية):</label>
+        <input type="number" id="scrollUpDuration" min="5" max="120" value="15" step="1">
+        <div style="font-size: 0.8rem; color: rgba(255, 255, 255, 0.6); margin-top: 4px;">
+          كم ثانية يستغرق التمرير للأعلى
+        </div>
+      </div>
+
+      <div class="settings-group">
+        <label for="transitionSpeed">⚡ سرعة الانتقال (ثانية):</label>
+        <input type="number" id="transitionSpeed" min="0.5" max="10" value="3" step="0.5">
+        <div style="font-size: 0.8rem; color: rgba(255, 255, 255, 0.6); margin-top: 4px;">
+          مدة الحركة الفعلية للتمرير (أقل = أسرع)
+        </div>
+      </div>
+
+      <!-- نوع التمرير -->
+      <div class="settings-group">
+        <label for="scrollType">🎯 نوع التمرير:</label>
+        <select id="scrollType">
+          <option value="smooth">سلس (Smooth) - مستحسن</option>
+          <option value="auto">تلقائي (Auto)</option>
+          <option value="instant">فوري (Instant)</option>
+        </select>
+      </div>
+
+      <!-- وضع التشغيل -->
+      <div class="settings-group">
+        <label for="playMode">🎮 وضع التشغيل:</label>
+        <select id="playMode">
+          <option value="continuous">مستمر - للبث المباشر</option>
+          <option value="once">مرة واحدة فقط</option>
+          <option value="manual">يدوي - تحكم كامل</option>
+        </select>
+      </div>
+
+      <!-- أزرار التحكم -->
+      <div style="display: flex; gap: 12px; margin-top: 24px;">
+        <button id="startScrollBtn" style="flex: 1; background: linear-gradient(135deg, #28a745, #20c997); color: white; font-weight: 600; border: none; border-radius: 8px; padding: 12px; font-size: 1rem; cursor: pointer; transition: all 0.3s ease;">
+          ▶️ تشغيل
+        </button>
+        <button id="stopScrollBtn" style="flex: 1; background: linear-gradient(135deg, #dc3545, #e74c3c); color: white; font-weight: 600; border: none; border-radius: 8px; padding: 12px; font-size: 1rem; cursor: pointer; transition: all 0.3s ease;">
+          ⏸️ إيقاف
+        </button>
+        <button id="resetScrollBtn" style="flex: 1; background: linear-gradient(135deg, #ffc107, #ffb300); color: #222; font-weight: 600; border: none; border-radius: 8px; padding: 12px; font-size: 1rem; cursor: pointer; transition: all 0.3s ease;">
+          🔄 إعادة تعيين
+        </button>
+      </div>
+
+      <!-- حفظ الإعدادات -->
+      <div style="text-align: center; margin-top: 20px;">
+        <button id="saveSettingsBtn" style="background: linear-gradient(135deg, #FFD700, #FFA000); color: #222; font-weight: 700; border: none; border-radius: 10px; padding: 12px 32px; font-size: 1.1rem; cursor: pointer; transition: all 0.3s ease;">
+          💾 حفظ الإعدادات
+        </button>
+      </div>
+
+      <!-- معلومات الحالة -->
+      <div style="margin-top: 20px; padding: 12px; background: rgba(0, 0, 0, 0.3); border-radius: 8px; border: 1px solid rgba(255, 215, 0, 0.2);">
+        <div style="font-size: 0.9rem; color: #FFD700; margin-bottom: 6px;">📊 حالة التمرير:</div>
+        <div style="display: flex; justify-content: space-between; font-size: 0.85rem;">
+          <span>الحالة: <span id="scrollStatus" style="color: #ff6b6b;">متوقف</span></span>
+          <span>المرحلة: <span id="scrollDirection">-</span></span>
+        </div>
+        <div style="display: flex; justify-content: space-between; font-size: 0.85rem; margin-top: 4px;">
+          <span>الوقت المتبقي: <span id="timeRemaining">-</span></span>
+          <span>الدورة: <span id="cycleInfo">-</span></span>
+        </div>
+      </div>
+    </div>
+
+    <ul class="supporters-list" id="supportersList">
+      <li class="loading">
+        <span>جاري التحميل...</span>
+        <span class="loading-spinner"></span>
+      </li>
+    </ul>
+  </div>
+
+  <!-- شريط الحالة -->
+  <div class="settings-status" id="settingsStatus">
+    Enhanced Scroll: جاري التحميل...
+  </div>
+
+  <!-- تحميل مكتبة التمرير المحسن -->
+  <script src="enhanced-scroll-engine.js"></script>
+  <script src="js/support-bar.js"></script>
+  
+  <script>
+    // Enhanced Scroll Integration
+    let enhancedScrollEngine = null;
+    let scrollSettings = {
+      enabled: true, // تفعيل افتراضي للبث المباشر
+      scrollDownDuration: 15000, // مدة التمرير للأسفل
+      scrollUpDuration: 15000,   // مدة التمرير للأعلى
+      waitTopDuration: 15000,    // مدة الانتظار في الأعلى
+      waitBottomDuration: 15000, // مدة الانتظار في الأسفل
+      transitionSpeed: 3000,     // سرعة الحركة الفعلية
+      scrollType: 'smooth',
+      playMode: 'continuous'
+    };
+
+    // تهيئة النظام
+    document.addEventListener('DOMContentLoaded', function() {
+      loadScrollSettings();
+      initializeScrollEngine();
+      setupEventListeners();
+      updateUI();
+
+      // إخفاء شريط الحالة في البداية
+      document.getElementById('settingsStatus').classList.remove('show');
+
+      // بدء التمرير التلقائي بعد تحميل البيانات
+      setTimeout(() => {
+        console.log('=== AUTO-START CHECK ===');
+        console.log('Scroll enabled:', scrollSettings.enabled);
+
+        if (scrollSettings.enabled) {
+          console.log('Auto-scroll is enabled, starting in 2 seconds...');
+          setTimeout(() => {
+            startScrolling();
+          }, 2000);
+        } else {
+          console.log('Auto-scroll is disabled');
+        }
+      }, 3000); // انتظار 3 ثوانِ لضمان تحميل البيانات
+    });
+
+    // تهيئة محرك التمرير
+    function initializeScrollEngine() {
+      console.log('Initializing scroll engine...');
+
+      if (typeof EnhancedScrollEngine !== 'undefined') {
+        try {
+          enhancedScrollEngine = new EnhancedScrollEngine({
+            container: '#supportersList',
+            scrollDownDuration: scrollSettings.scrollDownDuration,
+            scrollUpDuration: scrollSettings.scrollUpDuration,
+            transitionSpeed: scrollSettings.transitionSpeed,
+            scrollType: scrollSettings.scrollType,
+            playMode: scrollSettings.playMode,
+            autoStart: false,
+            enableIndicators: false,
+            enableProgressBar: false,
+
+            onScrollStart: function(engine) {
+              updateScrollStatus('يعمل', '#00ff00');
+              showStatusTemporary('Enhanced Scroll: نشط ⚡');
+            },
+
+            onScrollEnd: function(engine) {
+              updateScrollStatus('متوقف', '#ff6b6b');
+              showStatusTemporary('Enhanced Scroll: متوقف ⏸️');
+            },
+
+            onDirectionChange: function(direction, engine) {
+              const directionElement = document.getElementById('scrollDirection');
+              if (directionElement) {
+                if (direction === 1) {
+                  directionElement.textContent = '⬇️ للأسفل';
+                  showStatusTemporary('التمرير للأسفل...');
+                } else {
+                  directionElement.textContent = '⬆️ للأعلى';
+                  showStatusTemporary('التمرير للأعلى...');
+                }
+              }
+            }
+          });
+
+          console.log('Enhanced Scroll Engine initialized successfully');
+        } catch (error) {
+          console.warn('Failed to initialize Enhanced Scroll Engine:', error);
+          initializeCustomScrollEngine();
+        }
+      } else {
+        console.warn('Enhanced Scroll Engine not loaded, using custom fallback');
+        initializeCustomScrollEngine();
+      }
+    }
+
+    // إعداد مستمعي الأحداث
+    function setupEventListeners() {
+      // أزرار الإعدادات
+      document.getElementById('settingsBtn').addEventListener('click', toggleSettings);
+      document.getElementById('closeSettingsBtn').addEventListener('click', closeSettings);
+      
+      // أزرار التحكم
+      document.getElementById('startScrollBtn').addEventListener('click', startScrolling);
+      document.getElementById('stopScrollBtn').addEventListener('click', stopScrolling);
+      document.getElementById('resetScrollBtn').addEventListener('click', resetScrolling);
+      document.getElementById('saveSettingsBtn').addEventListener('click', saveScrollSettings);
+      
+      // تحديث الإعدادات عند التغيير
+      ['autoScrollToggle', 'waitTopDuration', 'scrollDownDuration', 'waitBottomDuration', 'scrollUpDuration', 'transitionSpeed', 'scrollType', 'playMode'].forEach(id => {
+        const element = document.getElementById(id);
+        if (element) {
+          element.addEventListener('change', () => {
+            updateScrollSettings();
+            // حفظ فوري عند التغيير
+            saveScrollSettings();
+          });
+          // حفظ عند فقدان التركيز أيضاً
+          element.addEventListener('blur', () => {
+            updateScrollSettings();
+            saveScrollSettings();
+          });
+        }
+      });
+      
+      // إغلاق الإعدادات عند النقر خارجها
+      document.addEventListener('click', function(e) {
+        const settingsPanel = document.getElementById('supportBarSettings');
+        const settingsBtn = document.getElementById('settingsBtn');
+        
+        if (settingsPanel.style.display === 'block' && 
+            !settingsPanel.contains(e.target) && 
+            !settingsBtn.contains(e.target)) {
+          closeSettings();
+        }
+      });
+      
+      // اختصارات لوحة المفاتيح
+      document.addEventListener('keydown', function(e) {
+        if (e.ctrlKey) {
+          switch(e.key) {
+            case ' ':
+              e.preventDefault();
+              toggleScrolling();
+              break;
+            case 'r':
+              e.preventDefault();
+              resetScrolling();
+              break;
+            case 's':
+              e.preventDefault();
+              saveScrollSettings();
+              break;
+          }
+        }
+      });
+    }
+
+    // تبديل نافذة الإعدادات
+    function toggleSettings() {
+      const settingsPanel = document.getElementById('supportBarSettings');
+      const isVisible = settingsPanel.style.display === 'block';
+      
+      if (isVisible) {
+        closeSettings();
+      } else {
+        settingsPanel.style.display = 'block';
+        settingsPanel.style.animation = 'fadeIn 0.3s ease';
+      }
+    }
+
+    // إغلاق نافذة الإعدادات
+    function closeSettings() {
+      const settingsPanel = document.getElementById('supportBarSettings');
+      settingsPanel.style.animation = 'fadeOut 0.3s ease';
+      setTimeout(() => {
+        settingsPanel.style.display = 'none';
+      }, 300);
+    }
+
+    // بدء التمرير
+    function startScrolling() {
+      console.log('=== START SCROLLING REQUESTED ===');
+      console.log('Scroll enabled:', scrollSettings.enabled);
+
+      if (!scrollSettings.enabled) {
+        console.log('Scroll is disabled, not starting');
+        return;
+      }
+
+      // إيقاف أي تمرير جاري أولاً
+      stopScrolling();
+
+      // انتظار قصير ثم البدء
+      setTimeout(() => {
+        if (enhancedScrollEngine) {
+          console.log('Using Enhanced Scroll Engine');
+          enhancedScrollEngine.start();
+        } else if (window.customScrollEngine) {
+          console.log('Using Custom Scroll Engine');
+          window.customScrollEngine.start();
+        } else {
+          console.log('No scroll engine available, initializing custom engine');
+          initializeCustomScrollEngine();
+          if (window.customScrollEngine) {
+            window.customScrollEngine.start();
+          }
+        }
+      }, 100);
+    }
+
+    // إيقاف التمرير
+    function stopScrolling() {
+      console.log('=== STOP SCROLLING REQUESTED ===');
+
+      if (enhancedScrollEngine) {
+        console.log('Stopping Enhanced Scroll Engine');
+        enhancedScrollEngine.stop();
+      } else if (window.customScrollEngine) {
+        console.log('Stopping Custom Scroll Engine');
+        window.customScrollEngine.stop();
+      }
+    }
+
+    // إعادة تعيين التمرير
+    function resetScrolling() {
+      console.log('=== RESET SCROLLING REQUESTED ===');
+
+      stopScrolling();
+
+      setTimeout(() => {
+        const container = document.getElementById('supportersList');
+        if (container) {
+          container.scrollTop = 0;
+          console.log('Container reset to top');
+        }
+
+        if (enhancedScrollEngine) {
+          console.log('Resetting Enhanced Scroll Engine');
+          enhancedScrollEngine.reset();
+        } else if (window.customScrollEngine) {
+          console.log('Resetting Custom Scroll Engine');
+          window.customScrollEngine.reset();
+        }
+
+        // إعادة تشغيل إذا كان مفعلاً
+        if (scrollSettings.enabled) {
+          setTimeout(() => {
+            startScrolling();
+          }, 1000);
+        }
+      }, 500);
+    }
+
+    // تبديل حالة التمرير
+    function toggleScrolling() {
+      if (enhancedScrollEngine) {
+        enhancedScrollEngine.toggle();
+      } else if (window.customScrollEngine) {
+        const isRunning = window.customScrollEngine.isRunning();
+        if (isRunning) {
+          window.customScrollEngine.stop();
+        } else {
+          window.customScrollEngine.start();
+        }
+      }
+    }
+
+    // تحديث إعدادات التمرير
+    function updateScrollSettings() {
+      console.log('Updating scroll settings...');
+
+      // قراءة القيم من النموذج
+      const autoScrollToggle = document.getElementById('autoScrollToggle');
+      const waitTopDuration = document.getElementById('waitTopDuration');
+      const scrollDownDuration = document.getElementById('scrollDownDuration');
+      const waitBottomDuration = document.getElementById('waitBottomDuration');
+      const scrollUpDuration = document.getElementById('scrollUpDuration');
+      const transitionSpeed = document.getElementById('transitionSpeed');
+      const scrollType = document.getElementById('scrollType');
+      const playMode = document.getElementById('playMode');
+
+      const wasEnabled = scrollSettings.enabled;
+
+      if (autoScrollToggle) scrollSettings.enabled = autoScrollToggle.checked;
+      if (waitTopDuration) scrollSettings.waitTopDuration = parseInt(waitTopDuration.value) * 1000;
+      if (scrollDownDuration) scrollSettings.scrollDownDuration = parseInt(scrollDownDuration.value) * 1000;
+      if (waitBottomDuration) scrollSettings.waitBottomDuration = parseInt(waitBottomDuration.value) * 1000;
+      if (scrollUpDuration) scrollSettings.scrollUpDuration = parseInt(scrollUpDuration.value) * 1000;
+      if (transitionSpeed) scrollSettings.transitionSpeed = parseFloat(transitionSpeed.value) * 1000;
+      if (scrollType) scrollSettings.scrollType = scrollType.value;
+      if (playMode) scrollSettings.playMode = playMode.value;
+
+      console.log('New settings:', scrollSettings);
+
+      // إعادة تشغيل التمرير إذا كان مفعلاً وتغيرت الإعدادات
+      if (scrollSettings.enabled && wasEnabled) {
+        console.log('Settings changed while scrolling, restarting...');
+        stopScrolling();
+        setTimeout(() => {
+          startScrolling();
+        }, 500);
+      } else if (scrollSettings.enabled && !wasEnabled) {
+        console.log('Scroll enabled, starting...');
+        startScrolling();
+      } else if (!scrollSettings.enabled && wasEnabled) {
+        console.log('Scroll disabled, stopping...');
+        stopScrolling();
+      }
+      
+      // تحديث المحرك
+      if (enhancedScrollEngine) {
+        enhancedScrollEngine.updateSettings({
+          scrollDownDuration: scrollSettings.scrollDownDuration,
+          scrollUpDuration: scrollSettings.scrollUpDuration,
+          transitionSpeed: scrollSettings.transitionSpeed,
+          scrollType: scrollSettings.scrollType,
+          playMode: scrollSettings.playMode
+        });
+      }
+      
+      // بدء تلقائي إذا كان مفعلاً
+      if (scrollSettings.enabled) {
+        console.log('Auto-scroll enabled, starting engines...');
+        if (enhancedScrollEngine && !enhancedScrollEngine.isRunning) {
+          setTimeout(() => {
+            if (scrollSettings.enabled) { // تحقق مرة أخرى
+              enhancedScrollEngine.start();
+            }
+          }, 2000);
+        } else if (window.customScrollEngine && !window.customScrollEngine.isRunning()) {
+          setTimeout(() => {
+            if (scrollSettings.enabled) { // تحقق مرة أخرى
+              window.customScrollEngine.start();
+            }
+          }, 2000);
+        }
+      } else {
+        console.log('Auto-scroll disabled, stopping engines...');
+        if (enhancedScrollEngine) {
+          enhancedScrollEngine.stop();
+        } else if (window.customScrollEngine) {
+          window.customScrollEngine.stop();
+        }
+      }
+      
+      updateUI();
+    }
+
+    // تحديث واجهة المستخدم
+    function updateUI() {
+      // تحديث قيم النموذج
+      const autoScrollToggle = document.getElementById('autoScrollToggle');
+      const waitTopDuration = document.getElementById('waitTopDuration');
+      const scrollDownDuration = document.getElementById('scrollDownDuration');
+      const waitBottomDuration = document.getElementById('waitBottomDuration');
+      const scrollUpDuration = document.getElementById('scrollUpDuration');
+      const transitionSpeed = document.getElementById('transitionSpeed');
+      const scrollType = document.getElementById('scrollType');
+      const playMode = document.getElementById('playMode');
+
+      if (autoScrollToggle) autoScrollToggle.checked = scrollSettings.enabled;
+      if (waitTopDuration) waitTopDuration.value = (scrollSettings.waitTopDuration || 15000) / 1000;
+      if (scrollDownDuration) scrollDownDuration.value = scrollSettings.scrollDownDuration / 1000;
+      if (waitBottomDuration) waitBottomDuration.value = (scrollSettings.waitBottomDuration || 15000) / 1000;
+      if (scrollUpDuration) scrollUpDuration.value = scrollSettings.scrollUpDuration / 1000;
+      if (transitionSpeed) transitionSpeed.value = scrollSettings.transitionSpeed / 1000;
+      if (scrollType) scrollType.value = scrollSettings.scrollType;
+      if (playMode) playMode.value = scrollSettings.playMode;
+
+      // تحديث حالة الأزرار
+      const startBtn = document.getElementById('startScrollBtn');
+      const stopBtn = document.getElementById('stopScrollBtn');
+
+      if (startBtn && stopBtn) {
+        if (scrollSettings.enabled) {
+          startBtn.style.opacity = '1';
+          stopBtn.style.opacity = '1';
+          startBtn.disabled = false;
+          stopBtn.disabled = false;
+        } else {
+          startBtn.style.opacity = '0.5';
+          stopBtn.style.opacity = '0.5';
+          startBtn.disabled = true;
+          stopBtn.disabled = true;
+        }
+      }
+
+      console.log('UI updated with settings:', scrollSettings);
+    }
+
+    // نظام التمرير المخصص المحسن
+    function initializeCustomScrollEngine() {
+      let isScrolling = false;
+      let scrollTimer = null;
+      let currentPhase = 'waitTop'; // waitTop, scrollDown, waitBottom, scrollUp
+      let cycleCount = 0; // عداد الدورات
+      let phaseStartTime = 0; // وقت بداية المرحلة الحالية
+
+      function performScrollCycle() {
+        if (!scrollSettings.enabled) {
+          console.log('Scroll disabled, stopping cycle');
+          return;
+        }
+
+        const container = document.getElementById('supportersList');
+        if (!container) {
+          console.log('Container not found');
+          return;
+        }
+
+        // التحقق من وجود محتوى قابل للتمرير
+        const maxScroll = container.scrollHeight - container.clientHeight;
+        if (maxScroll <= 0) {
+          console.log('No scrollable content available, retrying in 5 seconds...');
+          setTimeout(performScrollCycle, 5000);
+          return;
+        }
+
+        console.log(`Phase: ${currentPhase}, Cycle: ${cycleCount}`);
+        updateScrollStatus('يعمل', '#00ff00');
+        phaseStartTime = Date.now();
+
+        // إلغاء أي مؤقت سابق
+        if (scrollTimer) {
+          clearTimeout(scrollTimer);
+          scrollTimer = null;
+        }
+
+        switch (currentPhase) {
+          case 'waitTop':
+            // المرحلة 1: الانتظار في الأعلى
+            console.log('Phase 1: Waiting at top for', scrollSettings.waitTopDuration / 1000, 'seconds');
+            container.scrollTop = 0; // التأكد من أننا في الأعلى
+
+            const directionElement1 = document.getElementById('scrollDirection');
+            if (directionElement1) directionElement1.textContent = '⏸️ انتظار في الأعلى';
+
+            showStatusTemporary(`انتظار في الأعلى (${scrollSettings.waitTopDuration / 1000}ث)`, 2000);
+            startWaitTimer(scrollSettings.waitTopDuration);
+
+            scrollTimer = setTimeout(() => {
+              if (scrollSettings.enabled) {
+                currentPhase = 'scrollDown';
+                performScrollCycle();
+              }
+            }, scrollSettings.waitTopDuration);
+            break;
+
+          case 'scrollDown':
+            // المرحلة 2: التمرير للأسفل
+            console.log('Phase 2: Scrolling down for', scrollSettings.scrollDownDuration / 1000, 'seconds');
+
+            const directionElement2 = document.getElementById('scrollDirection');
+            if (directionElement2) directionElement2.textContent = '⬇️ التمرير للأسفل';
+
+            showStatusTemporary(`التمرير للأسفل (${scrollSettings.scrollDownDuration / 1000}ث)`, 2000);
+
+            // استخدام مدة التمرير المحددة في الإعدادات
+            smoothScrollToPosition(container, maxScroll, scrollSettings.scrollDownDuration);
+
+            scrollTimer = setTimeout(() => {
+              if (scrollSettings.enabled) {
+                currentPhase = 'waitBottom';
+                performScrollCycle();
+              }
+            }, scrollSettings.scrollDownDuration);
+            break;
+
+          case 'waitBottom':
+            // المرحلة 3: الانتظار في الأسفل
+            console.log('Phase 3: Waiting at bottom for', scrollSettings.waitBottomDuration / 1000, 'seconds');
+            container.scrollTop = maxScroll; // التأكد من أننا في الأسفل
+
+            const directionElement3 = document.getElementById('scrollDirection');
+            if (directionElement3) directionElement3.textContent = '⏸️ انتظار في الأسفل';
+
+            showStatusTemporary(`انتظار في الأسفل (${scrollSettings.waitBottomDuration / 1000}ث)`, 2000);
+            startWaitTimer(scrollSettings.waitBottomDuration);
+
+            scrollTimer = setTimeout(() => {
+              if (scrollSettings.enabled) {
+                currentPhase = 'scrollUp';
+                performScrollCycle();
+              }
+            }, scrollSettings.waitBottomDuration);
+            break;
+
+          case 'scrollUp':
+            // المرحلة 4: التمرير للأعلى
+            console.log('Phase 4: Scrolling up for', scrollSettings.scrollUpDuration / 1000, 'seconds');
+
+            const directionElement4 = document.getElementById('scrollDirection');
+            if (directionElement4) directionElement4.textContent = '⬆️ التمرير للأعلى';
+
+            showStatusTemporary(`التمرير للأعلى (${scrollSettings.scrollUpDuration / 1000}ث)`, 2000);
+
+            // استخدام مدة التمرير المحددة في الإعدادات
+            smoothScrollToPosition(container, 0, scrollSettings.scrollUpDuration);
+
+            scrollTimer = setTimeout(() => {
+              if (scrollSettings.enabled) {
+                if (scrollSettings.playMode === 'continuous') {
+                  cycleCount++; // زيادة عداد الدورات
+                  currentPhase = 'waitTop'; // العودة للبداية
+                  updateCycleInfo();
+                  console.log('Cycle', cycleCount, 'completed, starting new cycle');
+                  performScrollCycle();
+                } else if (scrollSettings.playMode === 'once') {
+                  console.log('Single cycle completed, stopping');
+                  stopCustomScrolling();
+                }
+              }
+            }, scrollSettings.scrollUpDuration);
+            break;
+
+          default:
+            console.log('Unknown phase:', currentPhase, 'resetting to waitTop');
+            currentPhase = 'waitTop';
+            performScrollCycle();
+            break;
+        }
+      }
+
+      function smoothScrollToPosition(element, targetPosition, duration) {
+        const startPosition = element.scrollTop;
+        const distance = targetPosition - startPosition;
+        const startTime = performance.now();
+        let animationId = null;
+
+        console.log(`Smooth scroll: from ${startPosition} to ${targetPosition} in ${duration}ms`);
+
+        // إلغاء أي تمرير سابق
+        if (element._currentAnimation) {
+          cancelAnimationFrame(element._currentAnimation);
+          element._currentAnimation = null;
+        }
+
+        // إذا كانت المسافة صغيرة جداً، انتقل مباشرة
+        if (Math.abs(distance) < 5) {
+          element.scrollTop = targetPosition;
+          console.log('Distance too small, jumping directly');
+          return;
+        }
+
+        function animation(currentTime) {
+          const timeElapsed = currentTime - startTime;
+          const progress = Math.min(timeElapsed / duration, 1);
+
+          // منحنى تسارع خطي للحصول على حركة ثابتة
+          const linearProgress = progress;
+
+          const newPosition = startPosition + distance * linearProgress;
+
+          // تحقق من صحة الموضع
+          const maxScroll = element.scrollHeight - element.clientHeight;
+          const clampedPosition = Math.max(0, Math.min(newPosition, maxScroll));
+
+          element.scrollTop = Math.round(clampedPosition);
+
+          if (progress < 1) {
+            animationId = requestAnimationFrame(animation);
+            element._currentAnimation = animationId;
+          } else {
+            element._currentAnimation = null;
+            // تأكد من الوصول للموضع النهائي بدقة
+            element.scrollTop = targetPosition;
+            console.log(`Scroll completed: final position ${element.scrollTop}`);
+          }
+        }
+
+        animationId = requestAnimationFrame(animation);
+        element._currentAnimation = animationId;
+      }
+
+      function startCustomScrolling() {
+        if (!scrollSettings.enabled) {
+          console.log('Scroll is disabled, cannot start');
+          return;
+        }
+
+        if (isScrolling) {
+          console.log('Already scrolling, ignoring start request');
+          return;
+        }
+
+        console.log('=== STARTING CUSTOM SCROLL ENGINE ===');
+        console.log('Settings:', {
+          waitTop: scrollSettings.waitTopDuration / 1000 + 's',
+          scrollDown: scrollSettings.scrollDownDuration / 1000 + 's',
+          waitBottom: scrollSettings.waitBottomDuration / 1000 + 's',
+          scrollUp: scrollSettings.scrollUpDuration / 1000 + 's',
+          playMode: scrollSettings.playMode
+        });
+
+        isScrolling = true;
+        currentPhase = 'waitTop'; // البدء بالانتظار في الأعلى
+        cycleCount = 0; // إعادة تعيين عداد الدورات
+
+        updateScrollStatus('بدء التشغيل...', '#ffaa00');
+        updateCycleInfo();
+
+        // التأكد من أننا في الأعلى قبل البدء
+        const container = document.getElementById('supportersList');
+        if (container) {
+          container.scrollTop = 0;
+          console.log('Container reset to top, starting cycle in 1 second...');
+        }
+
+        // بدء الدورة بعد ثانية واحدة
+        setTimeout(() => {
+          if (scrollSettings.enabled && isScrolling) {
+            performScrollCycle();
+          }
+        }, 1000);
+      }
+
+      function stopCustomScrolling() {
+        console.log('=== STOPPING CUSTOM SCROLL ENGINE ===');
+
+        isScrolling = false;
+        currentPhase = 'waitTop'; // إعادة تعيين المرحلة
+
+        // إيقاف جميع المؤقتات
+        if (scrollTimer) {
+          clearTimeout(scrollTimer);
+          scrollTimer = null;
+          console.log('Scroll timer cleared');
+        }
+
+        // إيقاف أي تمرير جاري
+        const container = document.getElementById('supportersList');
+        if (container && container._currentAnimation) {
+          cancelAnimationFrame(container._currentAnimation);
+          container._currentAnimation = null;
+          console.log('Animation cancelled');
+        }
+
+        updateScrollStatus('متوقف', '#ff6b6b');
+        showStatusTemporary('تم إيقاف التمرير', 2000);
+
+        // إعادة تعيين واجهة المستخدم
+        const directionElement = document.getElementById('scrollDirection');
+        if (directionElement) {
+          directionElement.textContent = '-';
+        }
+
+        const timeElement = document.getElementById('timeRemaining');
+        if (timeElement) {
+          timeElement.textContent = '-';
+        }
+
+        updateCycleInfo();
+        console.log('Scroll engine stopped successfully');
+      }
+
+      function resetCustomScrolling() {
+        stopCustomScrolling();
+
+        const container = document.getElementById('supportersList');
+        if (container) {
+          // إعادة تعيين سلسة للأعلى
+          showStatusTemporary('إعادة تعيين...', 1500);
+          smoothScrollToPosition(container, 0, 1500);
+
+          // إعادة تعيين المرحلة والاتجاه
+          setTimeout(() => {
+            currentPhase = 'waitTop';
+            scrollDirection = 1;
+          }, 1600);
+        }
+      }
+
+      // دالة تحديث معلومات الدورة
+      function updateCycleInfo() {
+        const cycleElement = document.getElementById('cycleInfo');
+        if (cycleElement) {
+          cycleElement.textContent = `دورة ${cycleCount}`;
+        }
+      }
+
+      // ربط الوظائف بالنطاق العام
+      window.customScrollEngine = {
+        start: startCustomScrolling,
+        stop: stopCustomScrolling,
+        reset: resetCustomScrolling,
+        isRunning: () => isScrolling
+      };
+
+      // ربط الوظائف الأساسية بالنطاق العام للوصول إليها من أي مكان
+      window.startScrolling = startScrolling;
+      window.stopScrolling = stopScrolling;
+      window.resetScrolling = resetScrolling;
+      window.updateScrollSettings = updateScrollSettings;
+      window.scrollSettings = scrollSettings;
+    }
+
+    // تحديث حالة التمرير
+    function updateScrollStatus(status, color) {
+      const statusElement = document.getElementById('scrollStatus');
+      if (statusElement) {
+        statusElement.textContent = status;
+        statusElement.style.color = color;
+      }
+    }
+
+    // إظهار شريط الحالة مؤقتاً
+    function showStatusTemporary(message, duration = 3000) {
+      const statusBar = document.getElementById('settingsStatus');
+      if (statusBar) {
+        statusBar.textContent = message;
+        statusBar.classList.add('show');
+
+        // تأكد من أن الإشعار على اليسار وليس في منطقة الشريط
+        statusBar.style.left = '20px';
+        statusBar.style.right = 'auto';
+        statusBar.style.bottom = '20px';
+        statusBar.style.zIndex = '10000';
+        statusBar.style.maxWidth = '300px';
+
+        setTimeout(() => {
+          statusBar.classList.remove('show');
+        }, duration);
+      }
+    }
+
+    // حفظ الإعدادات
+    function saveScrollSettings() {
+      updateScrollSettings();
+
+      // حفظ في localStorage مع معالجة أخطاء OBS
+      try {
+        localStorage.setItem('supportBarScrollSettings', JSON.stringify(scrollSettings));
+        console.log('Settings saved to localStorage:', scrollSettings);
+      } catch (error) {
+        console.warn('localStorage not available, using sessionStorage:', error);
+        try {
+          sessionStorage.setItem('supportBarScrollSettings', JSON.stringify(scrollSettings));
+        } catch (sessionError) {
+          console.warn('sessionStorage also not available:', sessionError);
+          // حفظ في متغير عام كحل أخير
+          window.supportBarScrollSettings = scrollSettings;
+        }
+      }
+
+      // إشعار بصري
+      showStatusTemporary('تم حفظ الإعدادات ✅', 2000);
+    }
+
+    // تحميل الإعدادات
+    function loadScrollSettings() {
+      let saved = null;
+
+      // محاولة تحميل من localStorage أولاً
+      try {
+        saved = localStorage.getItem('supportBarScrollSettings');
+      } catch (error) {
+        console.warn('localStorage not available, trying sessionStorage:', error);
+        try {
+          saved = sessionStorage.getItem('supportBarScrollSettings');
+        } catch (sessionError) {
+          console.warn('sessionStorage not available, trying global variable:', sessionError);
+          // محاولة تحميل من متغير عام
+          if (window.supportBarScrollSettings) {
+            saved = JSON.stringify(window.supportBarScrollSettings);
+          }
+        }
+      }
+
+      if (saved) {
+        try {
+          const settings = JSON.parse(saved);
+          scrollSettings = Object.assign(scrollSettings, settings);
+          console.log('Settings loaded:', scrollSettings);
+        } catch (e) {
+          console.warn('Failed to parse scroll settings:', e);
+        }
+      } else {
+        // إعدادات افتراضية للبث المباشر
+        scrollSettings.enabled = true;
+        scrollSettings.waitTopDuration = 15000;
+        scrollSettings.waitBottomDuration = 15000;
+        console.log('Using default settings for streaming');
+      }
+    }
+
+    // متغيرات لتتبع الوقت المتبقي
+    let waitStartTime = 0;
+    let waitDurationMs = 0;
+    let waitTimer = null;
+
+    // وظيفة لبدء عداد الانتظار
+    function startWaitTimer(duration) {
+      waitStartTime = Date.now();
+      waitDurationMs = duration;
+
+      if (waitTimer) {
+        clearInterval(waitTimer);
+      }
+
+      waitTimer = setInterval(() => {
+        const elapsed = Date.now() - waitStartTime;
+        const remaining = Math.max(0, Math.ceil((waitDurationMs - elapsed) / 1000));
+
+        const timeElement = document.getElementById('timeRemaining');
+        if (timeElement) {
+          timeElement.textContent = remaining > 0 ? remaining + 'ث' : '-';
+        }
+
+        if (remaining <= 0) {
+          clearInterval(waitTimer);
+          waitTimer = null;
+        }
+      }, 1000);
+    }
+
+    // تحديث دوري للوقت المتبقي
+    setInterval(() => {
+      if (enhancedScrollEngine) {
+        const status = enhancedScrollEngine.getStatus();
+        const timeElement = document.getElementById('timeRemaining');
+        if (timeElement && status.timeRemaining > 0) {
+          timeElement.textContent = status.timeRemaining + 'ث';
+        } else if (timeElement && !waitTimer) {
+          timeElement.textContent = '-';
+        }
+      }
+    }, 1000);
+
+    // CSS للتأثيرات
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(-10px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      
+      @keyframes fadeOut {
+        from { opacity: 1; transform: translateY(0); }
+        to { opacity: 0; transform: translateY(-10px); }
+      }
+      
+      #settingsBtn:hover {
+        transform: rotate(90deg);
+        color: #FFA000 !important;
+      }
+
+      .settings-group button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      }
+
+      /* تحسينات إضافية لمنع الجلتشات */
+      .supporters-list * {
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        text-rendering: optimizeLegibility;
+      }
+
+      .supporter {
+        /* منع التحرك أثناء التمرير */
+        transform: translateZ(0);
+        will-change: auto;
+      }
+
+      /* تحسين الأداء للعناصر المتحركة */
+      .support-bar {
+        contain: layout style paint;
+        isolation: isolate;
+      }
+
+      /* منع التداخل في التأثيرات */
+      .supporter::before,
+      .supporter::after {
+        will-change: auto;
+      }
+    `;
+    document.head.appendChild(style);
+  </script>
+</body>
+</html>

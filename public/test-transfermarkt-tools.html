@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🧪 اختبار أدوات Transfermarkt</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0a0a0f 0%, #1a1a2e 50%, #16213e 100%);
+            color: #f8fafc;
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(26, 26, 46, 0.9);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .title {
+            font-size: 2.5rem;
+            font-weight: 900;
+            background: linear-gradient(45deg, #ffd700, #ffed4e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+        }
+
+        .subtitle {
+            color: #94a3b8;
+            font-size: 1.2rem;
+        }
+
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .tool-card {
+            background: rgba(59, 130, 246, 0.1);
+            border: 2px solid #3b82f6;
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .tool-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(59, 130, 246, 0.3);
+        }
+
+        .tool-icon {
+            font-size: 3rem;
+            color: #3b82f6;
+            margin-bottom: 1rem;
+        }
+
+        .tool-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #f8fafc;
+        }
+
+        .tool-desc {
+            color: #94a3b8;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .tool-btn {
+            background: linear-gradient(45deg, #3b82f6, #2563eb);
+            border: none;
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .tool-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.4);
+        }
+
+        .status-section {
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid #10b981;
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .status-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #10b981;
+            margin-bottom: 1rem;
+        }
+
+        .status-list {
+            list-style: none;
+            text-align: right;
+        }
+
+        .status-item {
+            padding: 0.5rem 0;
+            color: #94a3b8;
+        }
+
+        .status-item i {
+            color: #10b981;
+            margin-left: 0.5rem;
+        }
+
+        .instructions {
+            background: rgba(255, 215, 0, 0.1);
+            border: 1px solid #ffd700;
+            border-radius: 15px;
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+
+        .instructions h3 {
+            color: #ffd700;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .instructions p {
+            color: #94a3b8;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .code-block {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            padding: 1rem;
+            font-family: monospace;
+            color: #ffd700;
+            margin: 1rem 0;
+            direction: ltr;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 class="title">🧪 اختبار أدوات Transfermarkt</h1>
+            <p class="subtitle">تحقق من أن جميع الأدوات تعمل بشكل صحيح</p>
+        </div>
+
+        <div class="tools-grid">
+            <div class="tool-card">
+                <div class="tool-icon">
+                    <i class="fas fa-money-bill-wave"></i>
+                </div>
+                <div class="tool-name">الأداة الرئيسية</div>
+                <div class="tool-desc">أداة استخراج وإدارة بيانات أكثر الأندية صرفاً مع تحديث مباشر وتصدير البيانات</div>
+                <a href="transfermarkt-top-spenders-2025.html" class="tool-btn" target="_blank">
+                    <i class="fas fa-external-link-alt"></i>
+                    فتح الأداة
+                </a>
+            </div>
+
+            <div class="tool-card">
+                <div class="tool-icon">
+                    <i class="fas fa-trophy"></i>
+                </div>
+                <div class="tool-name">العرض الاحترافي</div>
+                <div class="tool-desc">صفحة عرض جميلة ومتناسقة باللغة العربية مع تأثيرات بصرية متقدمة</div>
+                <a href="transfermarkt-display-pro.html" class="tool-btn" target="_blank">
+                    <i class="fas fa-external-link-alt"></i>
+                    فتح العرض
+                </a>
+            </div>
+        </div>
+
+        <div class="status-section">
+            <div class="status-title">✅ حالة الأدوات</div>
+            <ul class="status-list">
+                <li class="status-item"><i class="fas fa-check"></i> تم إنشاء الأداة الرئيسية بنجاح</li>
+                <li class="status-item"><i class="fas fa-check"></i> تم إنشاء صفحة العرض الاحترافية</li>
+                <li class="status-item"><i class="fas fa-check"></i> تم إضافة الأدوات للنظام الرئيسي</li>
+                <li class="status-item"><i class="fas fa-check"></i> تم نقل الملفات إلى مجلد public</li>
+                <li class="status-item"><i class="fas fa-check"></i> جميع الميزات متاحة وجاهزة للاستخدام</li>
+            </ul>
+        </div>
+
+        <div class="instructions">
+            <h3>📋 تعليمات الاستخدام</h3>
+            <p><strong>1. للاستخدام في OBS Studio:</strong></p>
+            <div class="code-block">
+Source Type: Browser Source
+URL: http://localhost:8201/transfermarkt-top-spenders-2025.html
+Width: 1920
+Height: 1080
+            </div>
+
+            <p><strong>2. للعرض الاحترافي:</strong></p>
+            <div class="code-block">
+URL: http://localhost:8201/transfermarkt-display-pro.html
+Width: 1920
+Height: 1080
+            </div>
+
+            <p><strong>3. الميزات المتاحة:</strong></p>
+            <ul style="color: #94a3b8; margin-right: 2rem;">
+                <li>تحديث مباشر من Transfermarkt</li>
+                <li>تحديث تلقائي كل 10 دقائق</li>
+                <li>تصدير البيانات بصيغة JSON</li>
+                <li>واجهة عربية احترافية</li>
+                <li>تأثيرات بصرية متقدمة</li>
+            </ul>
+
+            <p><strong>4. اختصارات لوحة المفاتيح:</strong></p>
+            <ul style="color: #94a3b8; margin-right: 2rem;">
+                <li>Ctrl + R: تحديث البيانات</li>
+                <li>Ctrl + E: تصدير البيانات</li>
+            </ul>
+
+            <p><strong>5. تشغيل الخادم:</strong></p>
+            <div class="code-block">
+# استخدم ULTIMATE-START.bat لتشغيل الخادم
+# أو استخدم الأمر:
+npm start
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // تحقق من حالة الأدوات
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🧪 اختبار أدوات Transfermarkt');
+            console.log('✅ جميع الأدوات جاهزة للاستخدام');
+            
+            // إضافة تأثير تحميل للبطاقات
+            const cards = document.querySelectorAll('.tool-card');
+            cards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(30px)';
+                
+                setTimeout(() => {
+                    card.style.transition = 'all 0.5s ease';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, index * 200);
+            });
+        });
+    </script>
+</body>
+</html>

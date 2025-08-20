@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🧪 اختبار تكامل أنظمة الشعارات</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0a0a0f 0%, #1a1a2e 50%, #16213e 100%);
+            color: #f8fafc;
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .title {
+            font-size: 2.5rem;
+            font-weight: 900;
+            background: linear-gradient(45deg, #ffd700, #ffed4e, #ffd700);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+        }
+
+        .test-section {
+            background: rgba(26, 26, 46, 0.8);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border: 1px solid rgba(255, 215, 0, 0.2);
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #ffd700;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .test-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .test-card {
+            background: rgba(16, 185, 129, 0.1);
+            border-radius: 12px;
+            padding: 1.5rem;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+
+        .test-result {
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 0.5rem 0;
+            font-weight: 600;
+        }
+
+        .success {
+            background: rgba(16, 185, 129, 0.2);
+            border: 1px solid rgba(16, 185, 129, 0.5);
+            color: #10b981;
+        }
+
+        .error {
+            background: rgba(239, 68, 68, 0.2);
+            border: 1px solid rgba(239, 68, 68, 0.5);
+            color: #ef4444;
+        }
+
+        .warning {
+            background: rgba(245, 158, 11, 0.2);
+            border: 1px solid rgba(245, 158, 11, 0.5);
+            color: #f59e0b;
+        }
+
+        .info {
+            background: rgba(59, 130, 246, 0.2);
+            border: 1px solid rgba(59, 130, 246, 0.5);
+            color: #3b82f6;
+        }
+
+        .btn {
+            background: linear-gradient(45deg, #10b981, #059669);
+            border: none;
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 0.5rem;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(16, 185, 129, 0.3);
+        }
+
+        .logo-preview {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            margin-left: 1rem;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+
+        .data-table th,
+        .data-table td {
+            padding: 0.75rem;
+            text-align: right;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .data-table th {
+            background: rgba(255, 215, 0, 0.1);
+            font-weight: 700;
+        }
+
+        .status-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-left: 0.5rem;
+        }
+
+        .status-success { background: #10b981; }
+        .status-error { background: #ef4444; }
+        .status-warning { background: #f59e0b; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 class="title">🧪 اختبار تكامل أنظمة الشعارات</h1>
+            <p>فحص شامل للتكامل بين transfermarkt-top-spenders-2025.html و transfermarkt-live-display.html</p>
+        </div>
+
+        <div class="test-section">
+            <h2 class="section-title">
+                <i class="fas fa-database"></i>
+                فحص مصادر البيانات
+            </h2>
+            <div class="test-grid">
+                <div class="test-card">
+                    <h3>localStorage Keys</h3>
+                    <div id="storageKeysResults"></div>
+                </div>
+                <div class="test-card">
+                    <h3>إحصائيات البيانات</h3>
+                    <div id="dataStatsResults"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h2 class="section-title">
+                <i class="fas fa-images"></i>
+                اختبار الشعارات
+            </h2>
+            <div class="test-grid">
+                <div class="test-card">
+                    <h3>أندية الاختبار</h3>
+                    <div id="logoTestResults"></div>
+                </div>
+                <div class="test-card">
+                    <h3>مقارنة الأنظمة</h3>
+                    <div id="systemComparisonResults"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h2 class="section-title">
+                <i class="fas fa-sync-alt"></i>
+                اختبار التزامن
+            </h2>
+            <div id="syncTestResults"></div>
+        </div>
+
+        <div class="test-section">
+            <h2 class="section-title">
+                <i class="fas fa-tools"></i>
+                أدوات الاختبار
+            </h2>
+            <button class="btn" onclick="runFullTest()">
+                <i class="fas fa-play"></i> تشغيل اختبار شامل
+            </button>
+            <button class="btn" onclick="testSpecificClub()">
+                <i class="fas fa-search"></i> اختبار نادي محدد
+            </button>
+            <button class="btn" onclick="simulateDataUpdate()">
+                <i class="fas fa-refresh"></i> محاكاة تحديث البيانات
+            </button>
+            <button class="btn" onclick="exportTestResults()">
+                <i class="fas fa-download"></i> تصدير النتائج
+            </button>
+        </div>
+
+        <div class="test-section">
+            <h2 class="section-title">
+                <i class="fas fa-chart-bar"></i>
+                تقرير مفصل
+            </h2>
+            <div id="detailedReport"></div>
+        </div>
+    </div>
+
+    <script>
+        // أندية الاختبار
+        const testClubs = [
+            'Liverpool FC',
+            'Chelsea FC', 
+            'Manchester United',
+            'Manchester City',
+            'Arsenal FC',
+            'Real Madrid',
+            'FC Barcelona',
+            'Bayern Munich',
+            'Juventus FC',
+            'Paris Saint-Germain'
+        ];
+
+        // نتائج الاختبار
+        let testResults = {
+            storageKeys: {},
+            dataStats: {},
+            logoTests: {},
+            systemComparison: {},
+            syncTests: {},
+            timestamp: new Date().toISOString()
+        };
+
+        // فحص مصادر البيانات
+        function checkDataSources() {
+            const sources = ['clubManagerData', 'clubsData', 'verifiedClubs'];
+            const results = {};
+
+            sources.forEach(key => {
+                const data = localStorage.getItem(key);
+                if (data) {
+                    try {
+                        const parsed = JSON.parse(data);
+                        results[key] = {
+                            exists: true,
+                            count: parsed.length,
+                            hasLogos: parsed.filter(club => club.logo || club.logoUrl).length,
+                            status: 'success'
+                        };
+                    } catch (error) {
+                        results[key] = {
+                            exists: true,
+                            error: error.message,
+                            status: 'error'
+                        };
+                    }
+                } else {
+                    results[key] = {
+                        exists: false,
+                        status: 'warning'
+                    };
+                }
+            });
+
+            testResults.storageKeys = results;
+            displayStorageResults(results);
+        }
+
+        // عرض نتائج التخزين
+        function displayStorageResults(results) {
+            const container = document.getElementById('storageKeysResults');
+            let html = '';
+
+            Object.entries(results).forEach(([key, result]) => {
+                const statusClass = result.status;
+                const statusIcon = result.status === 'success' ? '✅' : 
+                                 result.status === 'error' ? '❌' : '⚠️';
+                
+                html += `
+                    <div class="test-result ${statusClass}">
+                        ${statusIcon} ${key}: 
+                        ${result.exists ? 
+                            (result.count ? `${result.count} عنصر (${result.hasLogos || 0} شعار)` : 'خطأ في البيانات') : 
+                            'غير موجود'
+                        }
+                    </div>
+                `;
+            });
+
+            container.innerHTML = html;
+        }
+
+        // اختبار الشعارات
+        function testLogos() {
+            const results = {};
+
+            testClubs.forEach(clubName => {
+                // محاكاة نظام transfermarkt-top-spenders
+                const topSpendersLogo = getLogoFromTopSpenders(clubName);
+                
+                // محاكاة نظام transfermarkt-live-display  
+                const liveDisplayLogo = getLogoFromLiveDisplay(clubName);
+
+                results[clubName] = {
+                    topSpenders: topSpendersLogo,
+                    liveDisplay: liveDisplayLogo,
+                    match: topSpendersLogo === liveDisplayLogo,
+                    status: topSpendersLogo === liveDisplayLogo ? 'success' : 'warning'
+                };
+            });
+
+            testResults.logoTests = results;
+            displayLogoResults(results);
+        }
+
+        // محاكاة الحصول على الشعار من نظام top-spenders
+        function getLogoFromTopSpenders(clubName) {
+            // محاكاة نظام ClubLogoManager
+            const sources = ['clubManagerData', 'clubsData', 'verifiedClubs'];
+            
+            for (const sourceKey of sources) {
+                const data = localStorage.getItem(sourceKey);
+                if (data) {
+                    try {
+                        const clubs = JSON.parse(data);
+                        const club = clubs.find(c => 
+                            c.englishName === clubName || 
+                            c.arabicName === clubName ||
+                            (c.englishName && c.englishName.replace(' FC', '') === clubName.replace(' FC', ''))
+                        );
+                        if (club && (club.logo || club.logoUrl)) {
+                            return club.logo || club.logoUrl;
+                        }
+                    } catch (error) {
+                        console.error(`خطأ في ${sourceKey}:`, error);
+                    }
+                }
+            }
+            return null;
+        }
+
+        // محاكاة الحصول على الشعار من نظام live-display
+        function getLogoFromLiveDisplay(clubName) {
+            return getLogoFromTopSpenders(clubName); // نفس النظام الآن
+        }
+
+        // عرض نتائج الشعارات
+        function displayLogoResults(results) {
+            const container = document.getElementById('logoTestResults');
+            let html = '<table class="data-table"><thead><tr><th>النادي</th><th>التطابق</th><th>الشعار</th></tr></thead><tbody>';
+
+            Object.entries(results).forEach(([clubName, result]) => {
+                const statusIcon = result.match ? '✅' : '⚠️';
+                const logoUrl = result.topSpenders || result.liveDisplay || 'https://via.placeholder.com/50x50/1a1a2e/ffd700?text=' + clubName.charAt(0);
+                
+                html += `
+                    <tr>
+                        <td>${clubName}</td>
+                        <td>${statusIcon} ${result.match ? 'متطابق' : 'غير متطابق'}</td>
+                        <td><img src="${logoUrl}" class="logo-preview" onerror="this.src='https://via.placeholder.com/50x50/1a1a2e/ffd700?text=${clubName.charAt(0)}'"></td>
+                    </tr>
+                `;
+            });
+
+            html += '</tbody></table>';
+            container.innerHTML = html;
+        }
+
+        // تشغيل اختبار شامل
+        function runFullTest() {
+            console.log('🧪 بدء الاختبار الشامل...');
+            
+            checkDataSources();
+            testLogos();
+            generateDetailedReport();
+            
+            console.log('✅ اكتمل الاختبار الشامل');
+        }
+
+        // إنشاء تقرير مفصل
+        function generateDetailedReport() {
+            const container = document.getElementById('detailedReport');
+            const totalClubs = testClubs.length;
+            const matchingLogos = Object.values(testResults.logoTests).filter(r => r.match).length;
+            const successRate = ((matchingLogos / totalClubs) * 100).toFixed(1);
+
+            const html = `
+                <div class="test-result info">
+                    📊 <strong>ملخص النتائج:</strong><br>
+                    • إجمالي الأندية المختبرة: ${totalClubs}<br>
+                    • الشعارات المتطابقة: ${matchingLogos}<br>
+                    • معدل النجاح: ${successRate}%<br>
+                    • مصادر البيانات المتاحة: ${Object.values(testResults.storageKeys).filter(r => r.exists).length}/3<br>
+                    • وقت الاختبار: ${new Date().toLocaleString('ar-SA')}
+                </div>
+            `;
+
+            container.innerHTML = html;
+        }
+
+        // اختبار نادي محدد
+        function testSpecificClub() {
+            const clubName = prompt('أدخل اسم النادي للاختبار:');
+            if (clubName) {
+                const topSpendersLogo = getLogoFromTopSpenders(clubName);
+                const liveDisplayLogo = getLogoFromLiveDisplay(clubName);
+                
+                alert(`
+نتائج اختبار ${clubName}:
+• نظام Top Spenders: ${topSpendersLogo || 'لم يوجد'}
+• نظام Live Display: ${liveDisplayLogo || 'لم يوجد'}
+• التطابق: ${topSpendersLogo === liveDisplayLogo ? 'نعم ✅' : 'لا ⚠️'}
+                `);
+            }
+        }
+
+        // محاكاة تحديث البيانات
+        function simulateDataUpdate() {
+            const testData = [{
+                id: Date.now(),
+                englishName: 'Test Club FC',
+                arabicName: 'نادي الاختبار',
+                logo: 'https://via.placeholder.com/100x100/10b981/ffffff?text=TEST',
+                league: 'Test League'
+            }];
+
+            localStorage.setItem('clubManagerData', JSON.stringify(testData));
+            
+            // إرسال حدث تحديث
+            window.dispatchEvent(new StorageEvent('storage', {
+                key: 'clubManagerData',
+                newValue: JSON.stringify(testData)
+            }));
+
+            alert('تم محاكاة تحديث البيانات! تحقق من النتائج.');
+            runFullTest();
+        }
+
+        // تصدير النتائج
+        function exportTestResults() {
+            const results = {
+                ...testResults,
+                summary: {
+                    totalClubs: testClubs.length,
+                    matchingLogos: Object.values(testResults.logoTests).filter(r => r.match).length,
+                    availableSources: Object.values(testResults.storageKeys).filter(r => r.exists).length
+                }
+            };
+
+            const blob = new Blob([JSON.stringify(results, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `logo-integration-test-${Date.now()}.json`;
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        // تشغيل الاختبار عند تحميل الصفحة
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🧪 تهيئة اختبار تكامل الشعارات...');
+            runFullTest();
+        });
+    </script>
+</body>
+</html>

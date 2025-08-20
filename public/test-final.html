@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>اختبار شريط الداعمين النهائي</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 20px;
+      font-family: 'Inter', Arial, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      min-height: 100vh;
+    }
+    
+    .test-container {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+    
+    .header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    
+    .header h1 {
+      font-size: 2.5em;
+      margin-bottom: 10px;
+      background: linear-gradient(135deg, #FFD700, #FFA000);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .test-grid {
+      display: grid;
+      grid-template-columns: 380px 1fr;
+      gap: 30px;
+      align-items: start;
+    }
+    
+    .preview-container {
+      position: sticky;
+      top: 20px;
+    }
+    
+    .iframe-container {
+      width: 380px;
+      height: 600px;
+      border: 3px solid #FFD700;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+      background: #000;
+    }
+    
+    iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+    
+    .controls-panel {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(20px);
+      border-radius: 15px;
+      padding: 25px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    
+    .section {
+      margin-bottom: 30px;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .section h3 {
+      color: #FFD700;
+      margin-bottom: 15px;
+      font-size: 1.3em;
+    }
+    
+    .url-box {
+      background: rgba(0, 0, 0, 0.3);
+      padding: 15px;
+      border-radius: 8px;
+      margin: 10px 0;
+      border: 1px solid rgba(255, 215, 0, 0.3);
+    }
+    
+    .url-text {
+      font-family: monospace;
+      font-size: 12px;
+      color: #FFD700;
+      word-break: break-all;
+      background: rgba(0, 0, 0, 0.5);
+      padding: 8px;
+      border-radius: 5px;
+      margin: 8px 0;
+    }
+    
+    button {
+      background: linear-gradient(135deg, #FFD700, #FFA000);
+      color: #000;
+      border: none;
+      padding: 10px 20px;
+      margin: 5px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: all 0.3s ease;
+    }
+    
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(255, 215, 0, 0.4);
+    }
+    
+    .feature-list {
+      list-style: none;
+      padding: 0;
+    }
+    
+    .feature-list li {
+      padding: 8px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      align-items: center;
+    }
+    
+    .feature-list li:before {
+      content: "✅";
+      margin-left: 10px;
+      font-size: 1.2em;
+    }
+    
+    .settings-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+      margin: 15px 0;
+    }
+    
+    .setting-item {
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .setting-item label {
+      color: #FFD700;
+      margin-bottom: 5px;
+      font-size: 0.9em;
+    }
+    
+    .setting-item input {
+      padding: 8px;
+      border: 1px solid rgba(255, 215, 0, 0.3);
+      border-radius: 5px;
+      background: rgba(0, 0, 0, 0.3);
+      color: white;
+    }
+    
+    .status-indicator {
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      margin-left: 8px;
+    }
+    
+    .status-online { background: #00ff00; }
+    .status-offline { background: #ff0000; }
+    .status-warning { background: #ffaa00; }
+    
+    .comparison-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 15px 0;
+    }
+    
+    .comparison-table th,
+    .comparison-table td {
+      padding: 10px;
+      text-align: center;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    
+    .comparison-table th {
+      background: rgba(255, 215, 0, 0.2);
+      color: #FFD700;
+    }
+    
+    .rank-demo {
+      display: flex;
+      gap: 10px;
+      margin: 15px 0;
+    }
+    
+    .rank-item {
+      padding: 10px 15px;
+      border-radius: 8px;
+      text-align: center;
+      font-weight: bold;
+      position: relative;
+    }
+    
+    .rank-1 {
+      background: linear-gradient(135deg, rgba(255, 215, 0, 0.3), rgba(255, 193, 7, 0.2));
+      border: 2px solid #FFD700;
+      color: #FFD700;
+    }
+    
+    .rank-2 {
+      background: linear-gradient(135deg, rgba(192, 192, 192, 0.3), rgba(169, 169, 169, 0.2));
+      border: 2px solid #C0C0C0;
+      color: #C0C0C0;
+    }
+    
+    .rank-3 {
+      background: linear-gradient(135deg, rgba(205, 127, 50, 0.3), rgba(184, 115, 51, 0.2));
+      border: 2px solid #CD7F32;
+      color: #CD7F32;
+    }
+  </style>
+</head>
+<body>
+  <div class="test-container">
+    <div class="header">
+      <h1>🎯 اختبار شريط الداعمين النهائي</h1>
+      <p>الإصدار المطور بالكامل مع جميع المتطلبات</p>
+    </div>
+    
+    <div class="test-grid">
+      <!-- معاينة الشريط -->
+      <div class="preview-container">
+        <h3 style="color: #FFD700; text-align: center; margin-bottom: 15px;">📺 معاينة مباشرة</h3>
+        <div class="iframe-container">
+          <iframe src="support-bar-final.html" title="شريط الداعمين النهائي"></iframe>
+        </div>
+        <div style="text-align: center; margin-top: 15px;">
+          <button onclick="reloadPreview()">🔄 إعادة تحميل</button>
+          <button onclick="openFullscreen()">🔗 فتح كامل</button>
+        </div>
+      </div>
+      
+      <!-- لوحة التحكم -->
+      <div class="controls-panel">
+        <!-- الميزات الجديدة -->
+        <div class="section">
+          <h3>🆕 الميزات الجديدة</h3>
+          <ul class="feature-list">
+            <li>شريط علوي مع عنوان "الداعمين" و "شكراً لجميع الداعمين"</li>
+            <li>تصميم عصري مع تأثيرات Glassmorphism</li>
+            <li>ألوان المراكز: 👑 ذهبي، 🥈 فضي، 🥉 برونزي</li>
+            <li>تزامن مع نظام إدارة الداعمين</li>
+            <li>تحديث تلقائي كل 30 ثانية</li>
+            <li>تأثيرات بصرية متقدمة</li>
+            <li>نظام تشخيص مفصل</li>
+          </ul>
+        </div>
+        
+        <!-- عرض المراكز -->
+        <div class="section">
+          <h3>🏆 عرض المراكز</h3>
+          <div class="rank-demo">
+            <div class="rank-item rank-1">👑 المركز الأول</div>
+            <div class="rank-item rank-2">🥈 المركز الثاني</div>
+            <div class="rank-item rank-3">🥉 المركز الثالث</div>
+          </div>
+        </div>
+        
+        <!-- روابط OBS -->
+        <div class="section">
+          <h3>🔗 روابط للاستخدام في OBS</h3>
+          
+          <h4>الرابط الأساسي:</h4>
+          <div class="url-box">
+            <div class="url-text" id="basicUrl">جاري التحميل...</div>
+            <button onclick="copyUrl('basicUrl')">📋 نسخ</button>
+          </div>
+          
+          <h4>إعدادات مخصصة:</h4>
+          <div class="settings-grid">
+            <div class="setting-item">
+              <label>انتظار أعلى (ثانية):</label>
+              <input type="number" id="waitTop" value="15" min="5" max="60">
+            </div>
+            <div class="setting-item">
+              <label>مدة النزول (ثانية):</label>
+              <input type="number" id="scrollDown" value="15" min="5" max="60">
+            </div>
+            <div class="setting-item">
+              <label>انتظار أسفل (ثانية):</label>
+              <input type="number" id="waitBottom" value="15" min="5" max="60">
+            </div>
+            <div class="setting-item">
+              <label>مدة الصعود (ثانية):</label>
+              <input type="number" id="scrollUp" value="15" min="5" max="60">
+            </div>
+          </div>
+          
+          <div class="url-box">
+            <div class="url-text" id="customUrl">اضغط "إنشاء رابط مخصص"</div>
+            <button onclick="generateCustomUrl()">⚙️ إنشاء رابط مخصص</button>
+            <button onclick="copyUrl('customUrl')">📋 نسخ</button>
+          </div>
+        </div>
+        
+        <!-- إعدادات OBS -->
+        <div class="section">
+          <h3>⚙️ إعدادات OBS الصحيحة</h3>
+          <table class="comparison-table">
+            <tr>
+              <th>الإعداد</th>
+              <th>القيمة</th>
+            </tr>
+            <tr>
+              <td>العرض (Width)</td>
+              <td>380</td>
+            </tr>
+            <tr>
+              <td>الارتفاع (Height)</td>
+              <td>1080</td>
+            </tr>
+            <tr>
+              <td>Refresh browser when scene becomes active</td>
+              <td>✅ مفعل</td>
+            </tr>
+            <tr>
+              <td>Shutdown source when not visible</td>
+              <td>✅ مفعل</td>
+            </tr>
+            <tr>
+              <td>Use hardware acceleration</td>
+              <td>✅ مفعل</td>
+            </tr>
+          </table>
+        </div>
+        
+        <!-- حالة النظام -->
+        <div class="section">
+          <h3>📊 حالة النظام</h3>
+          <div>
+            <span>🌐 الخادم:</span>
+            <span class="status-indicator" id="serverStatus"></span>
+            <span id="serverStatusText">جاري الفحص...</span>
+          </div>
+          <div style="margin-top: 10px;">
+            <span>📡 API الداعمين:</span>
+            <span class="status-indicator" id="apiStatus"></span>
+            <span id="apiStatusText">جاري الفحص...</span>
+          </div>
+          <div style="margin-top: 10px;">
+            <span>⚙️ لوحة الإدارة:</span>
+            <button onclick="openAdmin()" style="padding: 5px 10px; font-size: 0.9em;">فتح لوحة الإدارة</button>
+          </div>
+        </div>
+        
+        <!-- مقارنة الإصدارات -->
+        <div class="section">
+          <h3>📈 مقارنة الإصدارات</h3>
+          <table class="comparison-table">
+            <tr>
+              <th>الميزة</th>
+              <th>الإصدار القديم</th>
+              <th>الإصدار النهائي</th>
+            </tr>
+            <tr>
+              <td>الشريط العلوي</td>
+              <td>❌</td>
+              <td>✅</td>
+            </tr>
+            <tr>
+              <td>ألوان المراكز</td>
+              <td>❌</td>
+              <td>✅</td>
+            </tr>
+            <tr>
+              <td>التزامن مع الإدارة</td>
+              <td>❌</td>
+              <td>✅</td>
+            </tr>
+            <tr>
+              <td>التحديث التلقائي</td>
+              <td>❌</td>
+              <td>✅</td>
+            </tr>
+            <tr>
+              <td>التأثيرات البصرية</td>
+              <td>⚠️ بسيط</td>
+              <td>✅ متقدم</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // تحديث المعلومات
+    function updateInfo() {
+      const basicUrl = `${window.location.origin}/support-bar-final.html?autoScroll=true&waitTop=15&scrollDown=15&waitBottom=15&scrollUp=15&production=true`;
+      document.getElementById('basicUrl').textContent = basicUrl;
+    }
+    
+    // فحص حالة النظام
+    async function checkSystemStatus() {
+      // فحص الخادم
+      try {
+        const response = await fetch('/api/supporters');
+        if (response.ok) {
+          document.getElementById('serverStatus').className = 'status-indicator status-online';
+          document.getElementById('serverStatusText').textContent = 'متصل';
+          
+          document.getElementById('apiStatus').className = 'status-indicator status-online';
+          document.getElementById('apiStatusText').textContent = 'يعمل بشكل طبيعي';
+        } else {
+          throw new Error('Server error');
+        }
+      } catch (error) {
+        document.getElementById('serverStatus').className = 'status-indicator status-offline';
+        document.getElementById('serverStatusText').textContent = 'غير متصل';
+        
+        document.getElementById('apiStatus').className = 'status-indicator status-offline';
+        document.getElementById('apiStatusText').textContent = 'غير متاح';
+      }
+    }
+    
+    // إعادة تحميل المعاينة
+    function reloadPreview() {
+      const iframe = document.querySelector('iframe');
+      iframe.src = iframe.src;
+    }
+    
+    // فتح في نافذة كاملة
+    function openFullscreen() {
+      window.open('support-bar-final.html', '_blank');
+    }
+    
+    // فتح لوحة الإدارة
+    function openAdmin() {
+      window.open('supporters-admin.html', '_blank');
+    }
+    
+    // إنشاء رابط مخصص
+    function generateCustomUrl() {
+      const waitTop = document.getElementById('waitTop').value;
+      const scrollDown = document.getElementById('scrollDown').value;
+      const waitBottom = document.getElementById('waitBottom').value;
+      const scrollUp = document.getElementById('scrollUp').value;
+      
+      const customUrl = `${window.location.origin}/support-bar-final.html?autoScroll=true&waitTop=${waitTop}&scrollDown=${scrollDown}&waitBottom=${waitBottom}&scrollUp=${scrollUp}&production=true`;
+      document.getElementById('customUrl').textContent = customUrl;
+    }
+    
+    // نسخ الرابط
+    function copyUrl(elementId) {
+      const url = document.getElementById(elementId).textContent;
+      navigator.clipboard.writeText(url).then(() => {
+        alert('تم نسخ الرابط للحافظة!');
+      });
+    }
+    
+    // تهيئة الصفحة
+    document.addEventListener('DOMContentLoaded', function() {
+      updateInfo();
+      checkSystemStatus();
+      
+      // تحديث حالة النظام كل 30 ثانية
+      setInterval(checkSystemStatus, 30000);
+    });
+  </script>
+</body>
+</html>

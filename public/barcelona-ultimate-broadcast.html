@@ -1,0 +1,2710 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barcelona Ultimate Broadcast - Transfer Market</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;900&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <!-- ملف البيانات المشترك -->
+    <script src="shared-data.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background: transparent;
+            overflow: hidden;
+            height: 100vh;
+            position: relative;
+        }
+
+        /* Advanced 3D Background with Particles */
+        #particle-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.3;
+        }
+
+        /* Main Container with Glass Morphism */
+        .ultimate-broadcast-container {
+            position: fixed;
+            right: 0;
+            top: 0;
+            width: 420px;
+            height: 100vh;
+            background: linear-gradient(135deg, 
+                rgba(10, 10, 30, 0.95) 0%,
+                rgba(20, 20, 50, 0.85) 25%,
+                rgba(30, 30, 70, 0.75) 50%,
+                rgba(40, 40, 90, 0.85) 75%,
+                rgba(10, 10, 30, 0.95) 100%);
+            backdrop-filter: blur(40px) saturate(1.8) contrast(1.2);
+            border-left: 2px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 
+                -20px 0 60px rgba(0, 0, 0, 0.5),
+                inset 1px 0 0 rgba(255, 255, 255, 0.1),
+                0 0 100px rgba(138, 43, 226, 0.2);
+            overflow: hidden;
+            z-index: 1000;
+        }
+
+        /* Animated Header with Holographic Effect */
+        .broadcast-header {
+            position: relative;
+            height: 120px;
+            background: linear-gradient(135deg, 
+                rgba(138, 43, 226, 0.9) 0%,
+                rgba(75, 0, 130, 0.8) 50%,
+                rgba(25, 25, 112, 0.9) 100%);
+            border-bottom: 3px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .header-content {
+            text-align: center;
+            z-index: 2;
+            position: relative;
+        }
+
+        .header-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 1.8rem;
+            font-weight: 900;
+            background: linear-gradient(45deg, #ffffff, #e0e0ff, #ffffff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 30px rgba(255, 255, 255, 0.5);
+            animation: holographicGlow 3s ease-in-out infinite alternate;
+        }
+
+        .header-subtitle {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin-top: 5px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        /* Holographic Animation */
+        @keyframes holographicGlow {
+            0% { 
+                text-shadow: 0 0 30px rgba(255, 255, 255, 0.5), 0 0 60px rgba(138, 43, 226, 0.3);
+                transform: scale(1);
+            }
+            100% { 
+                text-shadow: 0 0 50px rgba(255, 255, 255, 0.8), 0 0 100px rgba(138, 43, 226, 0.6);
+                transform: scale(1.02);
+            }
+        }
+
+        /* Dynamic Background Pattern */
+        .header-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(138, 43, 226, 0.2) 0%, transparent 50%),
+                linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.05) 50%, transparent 70%);
+            animation: patternMove 8s linear infinite;
+        }
+
+        @keyframes patternMove {
+            0% { transform: translateX(-100px) rotate(0deg); }
+            100% { transform: translateX(100px) rotate(360deg); }
+        }
+
+        /* Players Container with Advanced Layout */
+        .players-container {
+            height: calc(100vh - 120px);
+            padding: 20px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Dynamic Grid Layout */
+        .players-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            height: 100%;
+            align-content: start;
+        }
+
+        /* Player Card with Neumorphism and Glass Effects */
+        .player-card {
+            position: relative;
+            background: linear-gradient(135deg, 
+                rgba(255, 255, 255, 0.1) 0%,
+                rgba(255, 255, 255, 0.05) 50%,
+                rgba(255, 255, 255, 0.1) 100%);
+            backdrop-filter: blur(20px) saturate(1.5);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 15px;
+            height: 160px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 
+                0 8px 32px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2),
+                inset 0 -1px 0 rgba(0, 0, 0, 0.1);
+        }
+
+        .player-card:hover {
+            transform: translateY(-8px) scale(1.05) rotateY(5deg);
+            box-shadow: 
+                0 20px 60px rgba(0, 0, 0, 0.4),
+                0 0 40px rgba(138, 43, 226, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            border-color: rgba(138, 43, 226, 0.5);
+        }
+
+        /* Player Avatar with 3D Effect */
+        .player-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin: 0 auto 10px;
+            position: relative;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 
+                0 0 20px rgba(138, 43, 226, 0.4),
+                inset 0 0 20px rgba(255, 255, 255, 0.1);
+        }
+
+        .player-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+
+        .player-card:hover .player-avatar img {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        /* Player Info with Advanced Typography */
+        .player-name {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: #ffffff;
+            text-align: center;
+            margin-bottom: 5px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .player-position {
+            font-size: 0.7rem;
+            color: rgba(255, 255, 255, 0.7);
+            text-align: center;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Status Indicator with Dynamic Colors */
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 5px;
+        }
+
+        /* Status Colors with Glow Effects */
+        .status-confirmed {
+            background: linear-gradient(135deg, rgba(34, 197, 94, 0.8), rgba(22, 163, 74, 0.6));
+            color: #ffffff;
+            box-shadow: 0 0 20px rgba(34, 197, 94, 0.4);
+            animation: confirmPulse 2s ease-in-out infinite;
+        }
+
+        .status-negotiating {
+            background: linear-gradient(135deg, rgba(251, 146, 60, 0.8), rgba(249, 115, 22, 0.6));
+            color: #ffffff;
+            box-shadow: 0 0 20px rgba(251, 146, 60, 0.4);
+            animation: negotiatingBlink 1.5s ease-in-out infinite;
+        }
+
+        .status-interested {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.8), rgba(37, 99, 235, 0.6));
+            color: #ffffff;
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.4);
+        }
+
+        .status-rumor {
+            background: linear-gradient(135deg, rgba(156, 163, 175, 0.8), rgba(107, 114, 128, 0.6));
+            color: #ffffff;
+            box-shadow: 0 0 20px rgba(156, 163, 175, 0.3);
+        }
+
+        /* New Advanced Status Styles */
+        .status-official {
+            background: linear-gradient(135deg, rgba(34, 197, 94, 0.9), rgba(22, 163, 74, 0.7));
+            color: #ffffff;
+            box-shadow: 0 0 25px rgba(34, 197, 94, 0.5);
+            animation: officialGlow 2s ease-in-out infinite;
+        }
+
+        .status-close {
+            background: linear-gradient(135deg, rgba(251, 146, 60, 0.9), rgba(249, 115, 22, 0.7));
+            color: #ffffff;
+            box-shadow: 0 0 25px rgba(251, 146, 60, 0.5);
+            animation: fireFlicker 1.5s ease-in-out infinite;
+        }
+
+        .status-rejected {
+            background: linear-gradient(135deg, rgba(220, 53, 69, 0.8), rgba(185, 28, 28, 0.6));
+            color: #ffffff;
+            box-shadow: 0 0 20px rgba(220, 53, 69, 0.4);
+            position: relative;
+        }
+
+        .status-rejected::after {
+            content: '❌';
+            position: absolute;
+            right: -5px;
+            top: -5px;
+            font-size: 0.8rem;
+            animation: shake 0.5s ease-in-out infinite;
+        }
+
+        .status-failed {
+            background: linear-gradient(135deg, rgba(108, 117, 125, 0.8), rgba(52, 58, 64, 0.6));
+            color: #ffffff;
+            box-shadow: 0 0 20px rgba(108, 117, 125, 0.4);
+            filter: grayscale(50%);
+            position: relative;
+            opacity: 0.8;
+        }
+
+        .status-failed::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            animation: shimmer 2s infinite;
+        }
+
+        /* Enhanced Animations */
+        @keyframes officialGlow {
+            0%, 100% {
+                box-shadow: 0 0 25px rgba(34, 197, 94, 0.5);
+                transform: scale(1);
+            }
+            50% {
+                box-shadow: 0 0 35px rgba(34, 197, 94, 0.8);
+                transform: scale(1.02);
+            }
+        }
+
+        @keyframes fireFlicker {
+            0%, 100% {
+                box-shadow: 0 0 25px rgba(251, 146, 60, 0.5);
+                transform: scale(1) rotate(0deg);
+            }
+            25% {
+                box-shadow: 0 0 30px rgba(251, 146, 60, 0.7);
+                transform: scale(1.01) rotate(-0.5deg);
+            }
+            75% {
+                box-shadow: 0 0 20px rgba(251, 146, 60, 0.6);
+                transform: scale(0.99) rotate(0.5deg);
+            }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-2px); }
+            75% { transform: translateX(2px); }
+        }
+
+        @keyframes shimmer {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        /* Player Card Status Effects */
+        .player-card.status-failed {
+            filter: grayscale(80%) contrast(1.1);
+            opacity: 0.7;
+            position: relative;
+        }
+
+        .player-card.status-failed::after {
+            content: '💔';
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 1.5rem;
+            z-index: 10;
+            animation: heartBreak 2s infinite;
+        }
+
+        @keyframes heartBreak {
+            0%, 100% {
+                opacity: 0.8;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.1);
+            }
+        }
+
+        @keyframes confirmPulse {
+            0%, 100% { box-shadow: 0 0 20px rgba(34, 197, 94, 0.4); }
+            50% { box-shadow: 0 0 40px rgba(34, 197, 94, 0.8); }
+        }
+
+        @keyframes negotiatingBlink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; }
+        }
+
+        /* Price Display with Holographic Effect */
+        .player-price {
+            font-family: 'Orbitron', monospace;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-align: center;
+            background: linear-gradient(45deg, #ffd700, #ffed4e, #ffd700);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+        }
+
+        /* Advanced Layout Variations */
+        .layout-circular .players-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            padding: 40px 20px;
+        }
+
+        .layout-circular .player-card {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .layout-wave .players-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 15px;
+            align-items: start;
+        }
+
+        .layout-wave .player-card:nth-child(even) {
+            transform: translateY(20px);
+        }
+
+        .layout-pyramid .players-grid {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .layout-pyramid .player-row {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .layout-pyramid .player-row:nth-child(1) { width: 100%; justify-content: center; }
+        .layout-pyramid .player-row:nth-child(2) { width: 80%; }
+        .layout-pyramid .player-row:nth-child(3) { width: 60%; }
+
+        /* Hexagonal Layout */
+        .layout-hexagon .players-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            padding: 30px;
+        }
+
+        .layout-hexagon .player-card {
+            width: 120px;
+            height: 120px;
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Dynamic Floating Animation */
+        .floating-animation {
+            animation: floatingMove 6s ease-in-out infinite;
+        }
+
+        @keyframes floatingMove {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            25% { transform: translateY(-10px) rotate(1deg); }
+            50% { transform: translateY(-5px) rotate(-1deg); }
+            75% { transform: translateY(-15px) rotate(0.5deg); }
+        }
+
+        /* Probability-based Visual Effects */
+        .probability-high {
+            box-shadow: 0 0 30px rgba(34, 197, 94, 0.6) !important;
+            border-color: rgba(34, 197, 94, 0.8) !important;
+        }
+
+        .probability-medium {
+            box-shadow: 0 0 30px rgba(251, 146, 60, 0.6) !important;
+            border-color: rgba(251, 146, 60, 0.8) !important;
+        }
+
+        .probability-low {
+            box-shadow: 0 0 30px rgba(156, 163, 175, 0.6) !important;
+            border-color: rgba(156, 163, 175, 0.8) !important;
+            filter: grayscale(0.3);
+        }
+
+        /* Advanced Hover Effects */
+        .player-card:hover {
+            transform: translateY(-8px) scale(1.05) rotateY(5deg);
+            box-shadow:
+                0 20px 60px rgba(0, 0, 0, 0.4),
+                0 0 40px rgba(138, 43, 226, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            border-color: rgba(138, 43, 226, 0.5);
+        }
+
+        .player-card:hover::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg,
+                rgba(138, 43, 226, 0.8),
+                rgba(75, 0, 130, 0.6),
+                rgba(138, 43, 226, 0.8));
+            border-radius: 22px;
+            z-index: -1;
+            animation: borderGlow 2s linear infinite;
+        }
+
+        @keyframes borderGlow {
+            0% { opacity: 0.5; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.02); }
+            100% { opacity: 0.5; transform: scale(1); }
+        }
+
+        /* Responsive Design for Different Screen Sizes */
+        @media (max-width: 768px) {
+            .ultimate-broadcast-container {
+                width: 100vw;
+                right: 0;
+            }
+
+            .players-grid {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+
+            .player-card {
+                height: 120px;
+            }
+        }
+
+        /* Loading Animation */
+        .loading-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(10, 10, 30, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+
+        .loading-spinner {
+            width: 60px;
+            height: 60px;
+            border: 3px solid rgba(138, 43, 226, 0.3);
+            border-top: 3px solid rgba(138, 43, 226, 1);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Modal Styles for Player Details */
+        .player-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg,
+                rgba(255, 255, 255, 0.15) 0%,
+                rgba(255, 255, 255, 0.1) 50%,
+                rgba(255, 255, 255, 0.15) 100%);
+            backdrop-filter: blur(30px) saturate(1.8);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 30px;
+            max-width: 400px;
+            width: 90%;
+            box-shadow:
+                0 20px 60px rgba(0, 0, 0, 0.5),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            border-bottom: 2px solid rgba(138, 43, 226, 0.5);
+            padding-bottom: 15px;
+        }
+
+        .modal-header h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin: 0;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 5px;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .close-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+            transform: scale(1.1);
+        }
+
+        .modal-body {
+            text-align: center;
+        }
+
+        .modal-body img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 15px;
+            border: 3px solid rgba(138, 43, 226, 0.6);
+            box-shadow: 0 0 20px rgba(138, 43, 226, 0.4);
+        }
+
+        .modal-body p {
+            margin: 10px 0;
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .modal-body strong {
+            color: #ffffff;
+            font-weight: 600;
+        }
+
+        /* Ripple Effect */
+        @keyframes ripple {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+
+        /* Advanced Neumorphism Effects */
+        .neumorphism {
+            background: linear-gradient(145deg, #2a2a3e, #1a1a2e);
+            box-shadow:
+                20px 20px 60px #0f0f1a,
+                -20px -20px 60px #353552;
+        }
+
+        .neumorphism-inset {
+            background: linear-gradient(145deg, #1a1a2e, #2a2a3e);
+            box-shadow:
+                inset 20px 20px 60px #0f0f1a,
+                inset -20px -20px 60px #353552;
+        }
+
+        /* Glass Morphism Advanced */
+        .glass-morphism-advanced {
+            background: linear-gradient(135deg,
+                rgba(255, 255, 255, 0.1) 0%,
+                rgba(255, 255, 255, 0.05) 25%,
+                rgba(255, 255, 255, 0.1) 50%,
+                rgba(255, 255, 255, 0.05) 75%,
+                rgba(255, 255, 255, 0.1) 100%);
+            backdrop-filter: blur(40px) saturate(2) contrast(1.2) brightness(1.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow:
+                0 8px 32px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2),
+                inset 0 -1px 0 rgba(0, 0, 0, 0.1);
+        }
+
+        /* Holographic Effects */
+        .holographic {
+            background: linear-gradient(45deg,
+                rgba(255, 0, 150, 0.3) 0%,
+                rgba(0, 255, 255, 0.3) 25%,
+                rgba(255, 255, 0, 0.3) 50%,
+                rgba(255, 0, 255, 0.3) 75%,
+                rgba(0, 255, 150, 0.3) 100%);
+            background-size: 400% 400%;
+            animation: holographicShift 4s ease-in-out infinite;
+        }
+
+        @keyframes holographicShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        /* Neon Glow Effects */
+        .neon-glow {
+            text-shadow:
+                0 0 5px currentColor,
+                0 0 10px currentColor,
+                0 0 15px currentColor,
+                0 0 20px #ff00ff,
+                0 0 35px #ff00ff,
+                0 0 40px #ff00ff;
+            animation: neonFlicker 2s infinite alternate;
+        }
+
+        @keyframes neonFlicker {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+
+        /* 3D Transform Effects */
+        .transform-3d {
+            transform-style: preserve-3d;
+            perspective: 1000px;
+        }
+
+        .card-3d {
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+
+        .card-3d:hover {
+            transform: rotateY(180deg);
+        }
+
+        .card-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 20px;
+        }
+
+        .card-back {
+            transform: rotateY(180deg);
+            background: linear-gradient(135deg,
+                rgba(138, 43, 226, 0.9) 0%,
+                rgba(75, 0, 130, 0.8) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        /* Particle System Enhancements */
+        .particle-trail {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: radial-gradient(circle, rgba(138, 43, 226, 0.8) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            animation: particleFloat 3s linear infinite;
+        }
+
+        @keyframes particleFloat {
+            0% {
+                transform: translateY(0) scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) scale(0);
+                opacity: 0;
+            }
+        }
+
+        /* Dynamic Lighting Effects */
+        .dynamic-lighting {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .dynamic-lighting::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(
+                from 0deg,
+                transparent 0deg,
+                rgba(138, 43, 226, 0.1) 45deg,
+                rgba(255, 255, 255, 0.1) 90deg,
+                rgba(138, 43, 226, 0.1) 135deg,
+                transparent 180deg,
+                transparent 360deg
+            );
+            animation: rotateLighting 8s linear infinite;
+            pointer-events: none;
+        }
+
+        @keyframes rotateLighting {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Advanced Gradient Animations */
+        .gradient-animation {
+            background: linear-gradient(-45deg,
+                #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #ffeaa7, #dda0dd);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Morphing Shapes */
+        .morphing-shape {
+            clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+            animation: morphShape 6s ease-in-out infinite;
+        }
+
+        @keyframes morphShape {
+            0%, 100% { clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%); }
+            25% { clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%); }
+            50% { clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%); }
+            75% { clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%); }
+        }
+
+        /* Liquid Motion Effects */
+        .liquid-motion {
+            background: linear-gradient(45deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50% 20% 80% 30%;
+            animation: liquidMove 8s ease-in-out infinite;
+        }
+
+        @keyframes liquidMove {
+            0%, 100% { border-radius: 50% 20% 80% 30%; }
+            25% { border-radius: 30% 60% 40% 70%; }
+            50% { border-radius: 80% 30% 50% 20%; }
+            75% { border-radius: 40% 70% 30% 60%; }
+        }
+
+        /* Additional Advanced Animations */
+        @keyframes holographicScan {
+            0% { transform: translateX(-100%) skewX(-15deg); }
+            100% { transform: translateX(100vw) skewX(-15deg); }
+        }
+
+        @keyframes backgroundPulse {
+            0%, 100% {
+                transform: scale(1) rotate(0deg);
+                opacity: 0.3;
+            }
+            50% {
+                transform: scale(1.1) rotate(180deg);
+                opacity: 0.6;
+            }
+        }
+
+        @keyframes ambientShift {
+            0% {
+                background-position: 0% 0%, 100% 100%;
+                filter: hue-rotate(0deg);
+            }
+            100% {
+                background-position: 100% 100%, 0% 0%;
+                filter: hue-rotate(360deg);
+            }
+        }
+
+        /* Theme Variations */
+        .theme-cyberpunk {
+            background: linear-gradient(135deg,
+                rgba(0, 255, 255, 0.1) 0%,
+                rgba(255, 0, 255, 0.1) 50%,
+                rgba(255, 255, 0, 0.1) 100%) !important;
+        }
+
+        .theme-cyberpunk .player-card {
+            border: 1px solid rgba(0, 255, 255, 0.5);
+            box-shadow:
+                0 0 20px rgba(0, 255, 255, 0.3),
+                inset 0 0 20px rgba(255, 0, 255, 0.1);
+        }
+
+        .theme-matrix {
+            background: linear-gradient(135deg,
+                rgba(0, 255, 0, 0.1) 0%,
+                rgba(0, 100, 0, 0.1) 100%) !important;
+        }
+
+        .theme-matrix .player-card {
+            border: 1px solid rgba(0, 255, 0, 0.5);
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
+            font-family: 'Courier New', monospace;
+        }
+
+        .theme-neon {
+            background: linear-gradient(135deg,
+                rgba(255, 20, 147, 0.1) 0%,
+                rgba(0, 191, 255, 0.1) 100%) !important;
+        }
+
+        .theme-neon .player-card {
+            border: 2px solid rgba(255, 20, 147, 0.6);
+            box-shadow:
+                0 0 30px rgba(255, 20, 147, 0.4),
+                inset 0 0 30px rgba(0, 191, 255, 0.2);
+        }
+
+        /* Effect Mode Classes */
+        .glow-effects .player-card {
+            animation: cardGlow 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes cardGlow {
+            0% { box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3); }
+            100% { box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 0 0 40px rgba(138, 43, 226, 0.6); }
+        }
+
+        .floating-effects .player-card {
+            animation: floatingMove 6s ease-in-out infinite;
+        }
+
+        .holographic-mode .player-card {
+            background: linear-gradient(45deg,
+                rgba(255, 0, 150, 0.2) 0%,
+                rgba(0, 255, 255, 0.2) 25%,
+                rgba(255, 255, 0, 0.2) 50%,
+                rgba(255, 0, 255, 0.2) 75%,
+                rgba(0, 255, 150, 0.2) 100%);
+            background-size: 400% 400%;
+            animation: holographicShift 4s ease-in-out infinite;
+        }
+
+        .neon-mode .player-name {
+            color: #ff00ff;
+            text-shadow:
+                0 0 5px #ff00ff,
+                0 0 10px #ff00ff,
+                0 0 15px #ff00ff,
+                0 0 20px #ff00ff;
+            animation: neonFlicker 2s infinite alternate;
+        }
+
+        /* Advanced Hover States */
+        .player-card:hover .player-avatar {
+            animation: avatarSpin 1s ease-in-out;
+        }
+
+        @keyframes avatarSpin {
+            0% { transform: rotateY(0deg) scale(1); }
+            50% { transform: rotateY(180deg) scale(1.1); }
+            100% { transform: rotateY(360deg) scale(1); }
+        }
+
+        /* Mystery Candidates Styles */
+        .mystery-candidate {
+            position: relative;
+            background: linear-gradient(135deg, rgba(138, 43, 226, 0.2), rgba(75, 0, 130, 0.2)) !important;
+            border: 2px dashed rgba(138, 43, 226, 0.5) !important;
+            overflow: hidden;
+        }
+
+        .mystery-candidate::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: repeating-linear-gradient(
+                45deg,
+                transparent,
+                transparent 10px,
+                rgba(138, 43, 226, 0.1) 10px,
+                rgba(138, 43, 226, 0.1) 20px
+            );
+            border-radius: inherit;
+            pointer-events: none;
+            animation: mysteryShimmer 3s infinite;
+        }
+
+        @keyframes mysteryShimmer {
+            0% { opacity: 0.3; }
+            50% { opacity: 0.7; }
+            100% { opacity: 0.3; }
+        }
+
+        .mystery-avatar {
+            background: linear-gradient(135deg, #8a2be2, #4b0082) !important;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .mystery-question-mark {
+            color: white;
+            font-size: 2rem;
+            animation: mysteryRotate 4s linear infinite;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+
+        @keyframes mysteryRotate {
+            0% { transform: rotate(0deg) scale(1); }
+            25% { transform: rotate(90deg) scale(1.1); }
+            50% { transform: rotate(180deg) scale(1); }
+            75% { transform: rotate(270deg) scale(1.1); }
+            100% { transform: rotate(360deg) scale(1); }
+        }
+
+        .mystery-overlay {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.7rem;
+            font-weight: bold;
+            z-index: 10;
+            animation: mysteryFloat 3s ease-in-out infinite;
+            white-space: nowrap;
+        }
+
+        @keyframes mysteryFloat {
+            0%, 100% { transform: translateX(-50%) translateY(0px); }
+            50% { transform: translateX(-50%) translateY(-3px); }
+        }
+
+        .mystery-revealed {
+            position: relative;
+            background: linear-gradient(135deg, rgba(0, 255, 0, 0.1), rgba(0, 200, 0, 0.1)) !important;
+            border: 2px solid rgba(0, 255, 0, 0.3) !important;
+            animation: revealGlow 2s ease-in-out;
+        }
+
+        @keyframes revealGlow {
+            0% {
+                box-shadow: 0 0 0 rgba(0, 255, 0, 0.5);
+                transform: scale(1);
+            }
+            50% {
+                box-shadow: 0 0 20px rgba(0, 255, 0, 0.8);
+                transform: scale(1.05);
+            }
+            100% {
+                box-shadow: 0 0 10px rgba(0, 255, 0, 0.3);
+                transform: scale(1);
+            }
+        }
+
+        .mystery-revealed::after {
+            content: '🎉';
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            font-size: 1.5rem;
+            animation: celebrationBounce 1s ease-in-out infinite;
+        }
+
+        @keyframes celebrationBounce {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-5px) rotate(10deg); }
+        }
+
+        /* Combined Mystery Card Styles */
+        .mystery-combined-card {
+            min-height: 300px;
+            padding: 20px;
+            background: linear-gradient(135deg, rgba(138, 43, 226, 0.15), rgba(75, 0, 130, 0.15)) !important;
+            border: 2px dashed rgba(138, 43, 226, 0.4) !important;
+            border-radius: 15px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .mystery-combined-card.mystery-revealed {
+            background: linear-gradient(135deg, rgba(34, 197, 94, 0.15), rgba(22, 163, 74, 0.15)) !important;
+            border: 2px solid rgba(34, 197, 94, 0.5) !important;
+        }
+
+        .mystery-card-header {
+            text-align: center;
+            margin-bottom: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            padding-bottom: 10px;
+        }
+
+        .mystery-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: rgba(138, 43, 226, 0.9);
+            margin-bottom: 5px;
+        }
+
+        .mystery-subtitle {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.7);
+            font-style: italic;
+        }
+
+        .mystery-candidates-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+
+        .mystery-candidate-item {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .mystery-candidate-item.revealed {
+            background: rgba(34, 197, 94, 0.1);
+            border-color: rgba(34, 197, 94, 0.3);
+        }
+
+        .mystery-candidate-item.hidden {
+            animation: mysteryPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes mysteryPulse {
+            0%, 100% { opacity: 0.7; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.02); }
+        }
+
+        .mystery-candidate-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-left: 10px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .mystery-candidate-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .mystery-candidate-avatar .mystery-question-mark {
+            font-size: 20px;
+            color: rgba(138, 43, 226, 0.8);
+            font-weight: bold;
+            animation: mysteryRotate 4s linear infinite;
+        }
+
+        .mystery-candidate-info {
+            flex: 1;
+        }
+
+        .mystery-candidate-name {
+            font-size: 14px;
+            font-weight: bold;
+            color: white;
+            margin-bottom: 3px;
+        }
+
+        .mystery-candidate-details {
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .mystery-candidate-details .position {
+            margin-left: 5px;
+        }
+
+        .mystery-candidate-details .club {
+            margin-right: 5px;
+        }
+
+        .hidden-text {
+            color: rgba(138, 43, 226, 0.6);
+            font-style: italic;
+        }
+
+        .mystery-card-footer {
+            text-align: center;
+            padding-top: 10px;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .mystery-status {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 5px;
+        }
+
+        .mystery-probability {
+            font-size: 11px;
+            color: rgba(138, 43, 226, 0.8);
+            font-weight: bold;
+        }
+
+        /* Responsive Enhancements */
+        @media (max-width: 480px) {
+            .ultimate-broadcast-container {
+                width: 100vw;
+                height: 100vh;
+            }
+
+            .players-grid {
+                grid-template-columns: 1fr;
+                gap: 8px;
+                padding: 10px;
+            }
+
+            .player-card {
+                height: 100px;
+                padding: 10px;
+            }
+
+            .player-avatar {
+                width: 40px;
+                height: 40px;
+            }
+
+            .player-name {
+                font-size: 0.8rem;
+            }
+
+            .player-price {
+                font-size: 0.7rem;
+            }
+        }
+
+        /* Performance Optimizations */
+        .player-card {
+            will-change: transform, opacity;
+            contain: layout style paint;
+        }
+
+        .player-avatar img {
+            will-change: transform;
+        }
+
+        /* Accessibility Enhancements */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        /* High Contrast Mode */
+        @media (prefers-contrast: high) {
+            .player-card {
+                border: 2px solid #ffffff;
+                background: rgba(0, 0, 0, 0.9);
+            }
+
+            .player-name, .player-position, .player-price {
+                color: #ffffff;
+                text-shadow: 1px 1px 2px #000000;
+            }
+        }
+
+        /* Print Styles */
+        @media print {
+            .ultimate-broadcast-container {
+                background: white;
+                color: black;
+                box-shadow: none;
+                border: 1px solid black;
+            }
+
+            .player-card {
+                background: white;
+                border: 1px solid black;
+                box-shadow: none;
+            }
+
+            .broadcast-header {
+                background: white;
+                color: black;
+            }
+        }
+
+        /* Display Modes */
+        .display-compact .player-card {
+            transform: scale(0.8);
+            margin: 5px;
+        }
+
+        .display-compact .player-name {
+            font-size: 0.9rem;
+        }
+
+        .display-detailed .player-card {
+            transform: scale(1.1);
+            margin: 15px;
+        }
+
+        .display-detailed .player-club {
+            display: block;
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.7);
+            margin-top: 5px;
+        }
+
+        /* Theme Variations */
+        .theme-modern {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .theme-modern .broadcast-header {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.9), rgba(118, 75, 162, 0.8));
+        }
+
+        .theme-dark {
+            background: linear-gradient(135deg, #0c0c0c 0%, #1a1a1a 50%, #2d2d2d 100%);
+        }
+
+        .theme-dark .player-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.1));
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .theme-neon {
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a0a1a 50%, #2a0a2a 100%);
+        }
+
+        .theme-neon .player-card {
+            background: linear-gradient(135deg, rgba(255, 0, 255, 0.1), rgba(0, 255, 255, 0.1));
+            border: 1px solid rgba(255, 0, 255, 0.3);
+            box-shadow: 0 0 20px rgba(255, 0, 255, 0.2);
+        }
+
+        .theme-neon .header-title {
+            color: #ff00ff;
+            text-shadow: 0 0 20px #ff00ff;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="particle-canvas"></canvas>
+    
+    <div class="ultimate-broadcast-container" id="ultimateBroadcast">
+        <div class="broadcast-header">
+            <div class="header-pattern"></div>
+            <div class="header-content">
+                <div class="header-title">TRANSFER MARKET</div>
+                <div class="header-subtitle">FC Barcelona</div>
+            </div>
+        </div>
+        
+        <div class="players-container">
+            <div class="players-grid" id="playersGrid">
+                <!-- Players will be dynamically loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        class UltimateBroadcastSystem {
+            constructor() {
+                this.players = [];
+                this.mysteryCandidates = [];
+                this.config = {};
+                this.currentLayout = 'grid';
+                this.animationSpeed = 1;
+                this.mysteryCardEnabled = false; // حالة تفعيل البطاقة الغامضة
+
+                this.initializeParticleSystem();
+                this.loadRealData(); // Load real data first, fallback to demo if fails
+                this.setupBroadcastChannel();
+                this.startAnimationLoop();
+            }
+
+            // Initialize 3D Particle System
+            initializeParticleSystem() {
+                const canvas = document.getElementById('particle-canvas');
+                const scene = new THREE.Scene();
+                const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+                const renderer = new THREE.WebGLRenderer({ canvas, alpha: true });
+                
+                renderer.setSize(window.innerWidth, window.innerHeight);
+                
+                // Create particle geometry
+                const particleCount = 100;
+                const particles = new THREE.BufferGeometry();
+                const positions = new Float32Array(particleCount * 3);
+                
+                for (let i = 0; i < particleCount * 3; i++) {
+                    positions[i] = (Math.random() - 0.5) * 10;
+                }
+                
+                particles.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+                
+                const particleMaterial = new THREE.PointsMaterial({
+                    color: 0x8a2be2,
+                    size: 0.02,
+                    transparent: true,
+                    opacity: 0.6
+                });
+                
+                const particleSystem = new THREE.Points(particles, particleMaterial);
+                scene.add(particleSystem);
+                
+                camera.position.z = 5;
+                
+                // Animation loop for particles
+                const animate = () => {
+                    requestAnimationFrame(animate);
+                    particleSystem.rotation.x += 0.001;
+                    particleSystem.rotation.y += 0.002;
+                    renderer.render(scene, camera);
+                };
+                animate();
+                
+                this.particleSystem = particleSystem;
+            }
+
+            // Load data from shared file (no API)
+            loadRealData() {
+                console.log('🔄 جاري تحميل البيانات من الملف المشترك...');
+
+                try {
+                    // انتظار تحميل البيانات
+                    let attempts = 0;
+                    const maxAttempts = 10;
+                    
+                    const tryLoadData = () => {
+                        if (window.BARCELONA_SHARED_DATA) {
+                            this.players = window.BARCELONA_SHARED_DATA.players || [];
+                            this.statusConfig = window.BARCELONA_SHARED_DATA.statusConfig || {};
+                            this.advancedConfig = window.BARCELONA_SHARED_DATA.settings || {};
+                            
+                            console.log(`✅ تم تحميل ${this.players.length} لاعب من الملف المشترك`);
+
+                            // إعداد مراقبة التغييرات
+                            this.setupDataSync();
+
+                            // Apply advanced config to the display
+                            this.applyAdvancedConfig();
+                            this.renderPlayers();
+
+                            // إرسال تأكيد التحميل
+                            if (window.parent !== window) {
+                                window.parent.postMessage({
+                                    type: 'BROADCAST_LOADED',
+                                    data: { playersCount: this.players.length }
+                                }, '*');
+                            }
+                        } else if (attempts < maxAttempts) {
+                            attempts++;
+                            console.log(`🔄 محاولة تحميل البيانات ${attempts}/${maxAttempts}...`);
+                            setTimeout(tryLoadData, 500);
+                        } else {
+                            console.warn('⚠️ لم يتم العثور على البيانات المشتركة، سيتم استخدام مصفوفة فارغة');
+                            this.players = [];
+                            this.renderPlayers();
+                        }
+                    };
+                    
+                    tryLoadData();
+
+                } catch (error) {
+                    console.error('❌ خطأ في تحميل البيانات:', error);
+                    // Fallback to empty state
+                    this.players = [];
+                    this.renderPlayers();
+                }
+            }
+
+            // إعداد نظام التزامن المتقدم
+            setupDataSync() {
+                // مراقبة التغييرات في البيانات
+                if (window.BARCELONA_SYNC) {
+                    window.BARCELONA_SYNC.watchChanges((data) => {
+                        if (data.players) {
+                            this.players = data.players;
+                            this.renderPlayers();
+                            console.log('🔄 تم تحديث البث من أداة التحكم');
+                        }
+                    });
+                }
+
+                // مراقبة الأحداث المخصصة
+                window.addEventListener('barcelonaDataUpdated', (event) => {
+                    if (event.detail.players) {
+                        this.players = event.detail.players;
+                        this.renderPlayers();
+                        console.log('🔄 تم تحديث البث عبر الأحداث المخصصة');
+                    }
+                });
+
+                // مراقبة الرسائل من أداة التحكم
+                window.addEventListener('message', (event) => {
+                    if (event.data.type === 'DATA_UPDATE' || event.data.type === 'BARCELONA_DATA_UPDATED') {
+                        if (event.data.data && event.data.data.players) {
+                            this.players = event.data.data.players;
+                            this.renderPlayers();
+                            console.log('🔄 تم تحديث البث عبر الرسائل');
+                        }
+                    }
+                });
+
+                // مراقبة تغييرات localStorage
+                window.addEventListener('storage', (event) => {
+                    if (event.key === 'barcelona_shared_data') {
+                        try {
+                            const data = JSON.parse(event.newValue);
+                            if (data && data.players) {
+                                this.players = data.players;
+                                this.renderPlayers();
+                                console.log('🔄 تم تحديث البث من localStorage');
+                            }
+                        } catch (error) {
+                            console.warn('فشل في تحليل البيانات من localStorage:', error);
+                        }
+                    }
+                });
+
+                // طلب البيانات الأولية
+                if (window.parent !== window) {
+                    window.parent.postMessage({ type: 'REQUEST_DATA' }, '*');
+                }
+
+                // تحديث دوري للبيانات
+                setInterval(() => {
+                    if (window.BARCELONA_SHARED_DATA && window.BARCELONA_SHARED_DATA.players) {
+                        const currentPlayers = window.BARCELONA_SHARED_DATA.players;
+                        if (JSON.stringify(this.players) !== JSON.stringify(currentPlayers)) {
+                            this.players = currentPlayers;
+                            this.renderPlayers();
+                            console.log('🔄 تم تحديث البث من التحديث الدوري');
+                        }
+                    }
+                }, 5000); // كل 5 ثواني
+            }
+
+            // Apply advanced configuration settings
+            applyAdvancedConfig() {
+                if (!this.advancedConfig) return;
+
+                const container = document.getElementById('ultimateBroadcast');
+                const header = document.querySelector('.broadcast-header');
+
+                // Apply theme settings
+                if (this.advancedConfig.theme) {
+                    const theme = this.advancedConfig.theme;
+
+                    // Apply background colors
+                    if (theme.backgroundColor) {
+                        document.body.style.background = theme.backgroundColor;
+                    }
+
+                    // Apply header colors
+                    if (theme.headerColor && header) {
+                        header.style.background = theme.headerColor;
+                    }
+
+                    // Apply text colors
+                    if (theme.textColor) {
+                        container.style.color = theme.textColor;
+                    }
+                }
+
+                // Apply layout settings
+                if (this.advancedConfig.layout) {
+                    const layout = this.advancedConfig.layout;
+
+                    // Apply player count limit
+                    if (layout.maxPlayers && this.players.length > layout.maxPlayers) {
+                        this.players = this.players.slice(0, layout.maxPlayers);
+                    }
+
+                    // Apply spacing
+                    if (layout.spacing) {
+                        const playersGrid = document.getElementById('playersGrid');
+                        if (playersGrid) {
+                            playersGrid.style.gap = layout.spacing + 'px';
+                        }
+                    }
+                }
+
+                // Apply animation settings
+                if (this.advancedConfig.animations) {
+                    const animations = this.advancedConfig.animations;
+
+                    if (animations.speed) {
+                        this.animationSpeed = animations.speed;
+                    }
+
+                    if (animations.enabled === false) {
+                        // Disable animations
+                        document.querySelectorAll('.floating-animation').forEach(el => {
+                            el.style.animation = 'none';
+                        });
+                    }
+                }
+
+                console.log('✅ تم تطبيق الإعدادات المتقدمة');
+            }
+
+            // Change display mode
+            changeDisplayMode(mode) {
+                const container = document.getElementById('ultimateBroadcast');
+
+                // Remove existing mode classes
+                container.classList.remove('display-compact', 'display-normal', 'display-detailed');
+
+                // Add new mode class
+                container.classList.add(`display-${mode}`);
+
+                console.log(`✅ تم تغيير وضع العرض إلى: ${mode}`);
+            }
+
+            // Change theme
+            changeTheme(theme) {
+                const container = document.getElementById('ultimateBroadcast');
+
+                // Remove existing theme classes
+                container.classList.remove('theme-classic', 'theme-modern', 'theme-dark', 'theme-neon');
+
+                // Add new theme class
+                container.classList.add(`theme-${theme}`);
+
+                console.log(`✅ تم تغيير الثيم إلى: ${theme}`);
+            }
+
+            // Reset to defaults
+            resetToDefaults() {
+                this.currentLayout = 'grid';
+                this.animationSpeed = 1;
+
+                const container = document.getElementById('ultimateBroadcast');
+
+                // Reset classes
+                container.className = 'ultimate-broadcast-container layout-grid display-normal theme-classic';
+
+                // Re-render with defaults
+                this.renderPlayers();
+
+                console.log('✅ تم إعادة تعيين جميع الإعدادات');
+            }
+
+            // Load demo data with advanced properties (fallback)
+            loadDemoData() {
+                this.players = [
+                    {
+                        name: "إرلينغ هالاند",
+                        position: "مهاجم",
+                        status: "confirmed",
+                        price: "€150M",
+                        probability: 95,
+                        image: "https://img.a.transfermarkt.technology/portrait/big/418560-1667830243.jpg?lm=1"
+                    },
+                    {
+                        name: "كيليان مبابي", 
+                        position: "جناح أيمن",
+                        status: "negotiating",
+                        price: "€200M",
+                        probability: 75,
+                        image: "https://img.a.transfermarkt.technology/portrait/big/342229-1673861758.jpg?lm=1"
+                    },
+                    {
+                        name: "جود بيلينغهام",
+                        position: "وسط",
+                        status: "interested", 
+                        price: "€120M",
+                        probability: 45,
+                        image: "https://img.a.transfermarkt.technology/portrait/big/581678-1668426238.jpg?lm=1"
+                    },
+                    {
+                        name: "فيكتور أوسيمين",
+                        position: "مهاجم",
+                        status: "rumor",
+                        price: "€100M", 
+                        probability: 20,
+                        image: "https://img.a.transfermarkt.technology/portrait/big/404090-1667830819.jpg?lm=1"
+                    }
+                ];
+                
+                this.renderPlayers();
+            }
+
+            // Render players with advanced animations and mystery mode support
+            renderPlayers() {
+                const container = document.getElementById('playersGrid');
+                const displayMode = this.config.displayMode || 'normal';
+
+                // إذا كانت البطاقة الغامضة مفعلة، اعرض الوضع المختلط
+                if (this.mysteryCardEnabled) {
+                    this.renderMixedMode(container);
+                } else if (displayMode === 'mystery') {
+                    this.renderMysteryMode(container);
+                } else if (displayMode === 'mixed') {
+                    this.renderMixedMode(container);
+                } else {
+                    this.renderNormalMode(container);
+                }
+            }
+
+            renderNormalMode(container) {
+                container.innerHTML = this.players.map((player, index) => {
+                    // Handle both old format (probability/price) and new format (percentage/value)
+                    const percentage = player.percentage || player.probability || 0;
+                    const value = player.value || player.price || 'غير محدد';
+                    const probabilityClass = this.getProbabilityClass(percentage);
+
+                    return `
+                    <div class="player-card floating-animation ${probabilityClass}" data-index="${index}" style="animation-delay: ${index * 0.1}s">
+                        <div class="player-avatar">
+                            <img src="${player.image || player.photo || ''}" alt="${player.name}" onerror="this.style.display='none'">
+                        </div>
+                        <div class="player-name">${player.name}</div>
+                        <div class="player-position">${player.position}</div>
+                        <div class="status-indicator status-${player.status}">
+                            <i class="fas fa-circle" style="font-size: 6px;"></i>
+                            ${this.getStatusText(player.status)}
+                            <span style="margin-right: 4px;">${percentage}%</span>
+                        </div>
+                        <div class="player-price">${value}</div>
+                        ${player.club ? `<div class="player-club">${player.club}</div>` : ''}
+                    </div>
+                `;
+                }).join('');
+            }
+
+            renderMysteryMode(container) {
+                // Create a single combined card with 3 mystery candidates
+                const mysteryToShow = this.mysteryCandidates.slice(0, 3);
+
+                // Ensure we have at least 3 candidates, fill with defaults if needed
+                while (mysteryToShow.length < 3) {
+                    mysteryToShow.push({
+                        id: `default-${mysteryToShow.length}`,
+                        name: `مرشح ${mysteryToShow.length + 1}`,
+                        position: 'غير محدد',
+                        currentClub: 'غير محدد',
+                        image: '',
+                        revealed: false,
+                        hint: 'لاعب محتمل'
+                    });
+                }
+
+                const allRevealed = mysteryToShow.every(c => c.revealed);
+                const revealedCount = mysteryToShow.filter(c => c.revealed).length;
+
+                container.innerHTML = `
+                    <div class="player-card mystery-combined-card ${allRevealed ? 'mystery-revealed' : 'mystery-candidate'} floating-animation">
+                        <div class="mystery-card-header">
+                            <div class="mystery-title">🎯 صفقة محتملة</div>
+                            <div class="mystery-subtitle">3 مرشحين متوقعين</div>
+                        </div>
+
+                        <div class="mystery-candidates-grid">
+                            ${mysteryToShow.map((candidate, index) => {
+                                const isRevealed = candidate.revealed;
+                                return `
+                                    <div class="mystery-candidate-item ${isRevealed ? 'revealed' : 'hidden'}">
+                                        <div class="mystery-candidate-avatar">
+                                            ${isRevealed ?
+                                                `<img src="${candidate.image || '/images/default-player.png'}" alt="${candidate.name}" onerror="this.src='/images/default-player.png'">` :
+                                                `<div class="mystery-question-mark">?</div>`
+                                            }
+                                        </div>
+                                        <div class="mystery-candidate-info">
+                                            <div class="mystery-candidate-name">
+                                                ${isRevealed ? candidate.name : `مرشح ${index + 1}`}
+                                            </div>
+                                            <div class="mystery-candidate-details">
+                                                ${isRevealed ?
+                                                    `<span class="position">${candidate.position || '???'}</span>
+                                                     <span class="club">${candidate.currentClub || '???'}</span>` :
+                                                    `<span class="hidden-text">??? • ???</span>`
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                `;
+                            }).join('')}
+                        </div>
+
+                        <div class="mystery-card-footer">
+                            <div class="mystery-status">
+                                ${allRevealed ?
+                                    '🎉 تم الكشف عن جميع المرشحين' :
+                                    `🔮 ${3 - revealedCount} مرشحين غامضين • ${revealedCount} مكشوف`
+                                }
+                            </div>
+                            <div class="mystery-probability">
+                                احتمالية الانتقال: ${allRevealed ? '85%' : '???'}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            renderMixedMode(container) {
+                const normalPlayers = this.players.slice(0, 3);
+                const mysteryToShow = this.mysteryCandidates.slice(0, 3);
+
+                let html = '';
+
+                // Add normal players
+                normalPlayers.forEach((player, index) => {
+                    const percentage = player.percentage || player.probability || 0;
+                    const value = player.value || player.price || 'غير محدد';
+                    const probabilityClass = this.getProbabilityClass(percentage);
+
+                    html += `
+                    <div class="player-card floating-animation ${probabilityClass}" data-index="${index}" style="animation-delay: ${index * 0.1}s">
+                        <div class="player-avatar">
+                            <img src="${player.image || player.photo || ''}" alt="${player.name}" onerror="this.style.display='none'">
+                        </div>
+                        <div class="player-name">${player.name}</div>
+                        <div class="player-position">${player.position}</div>
+                        <div class="status-indicator status-${player.status}">
+                            <i class="fas fa-circle" style="font-size: 6px;"></i>
+                            ${this.getStatusText(player.status)}
+                            <span style="margin-right: 4px;">${percentage}%</span>
+                        </div>
+                        <div class="player-price">${value}</div>
+                        ${player.club ? `<div class="player-club">${player.club}</div>` : ''}
+                    </div>
+                    `;
+                });
+
+                // Add combined mystery card if we have mystery candidates
+                if (mysteryToShow.length > 0) {
+                    // Ensure we have at least 3 candidates, fill with defaults if needed
+                    while (mysteryToShow.length < 3) {
+                        mysteryToShow.push({
+                            id: `default-${mysteryToShow.length}`,
+                            name: `مرشح ${mysteryToShow.length + 1}`,
+                            position: 'غير محدد',
+                            currentClub: 'غير محدد',
+                            image: '',
+                            revealed: false,
+                            hint: 'لاعب محتمل'
+                        });
+                    }
+
+                    const allRevealed = mysteryToShow.every(c => c.revealed);
+                    const revealedCount = mysteryToShow.filter(c => c.revealed).length;
+
+                    html += `
+                        <div class="player-card mystery-combined-card ${allRevealed ? 'mystery-revealed' : 'mystery-candidate'} floating-animation">
+                            <div class="mystery-card-header">
+                                <div class="mystery-title">🎯 صفقة محتملة</div>
+                                <div class="mystery-subtitle">3 مرشحين متوقعين</div>
+                            </div>
+
+                            <div class="mystery-candidates-grid">
+                                ${mysteryToShow.map((candidate, index) => {
+                                    const isRevealed = candidate.revealed;
+                                    return `
+                                        <div class="mystery-candidate-item ${isRevealed ? 'revealed' : 'hidden'}">
+                                            <div class="mystery-candidate-avatar">
+                                                ${isRevealed ?
+                                                    `<img src="${candidate.image || '/images/default-player.png'}" alt="${candidate.name}" onerror="this.src='/images/default-player.png'">` :
+                                                    `<div class="mystery-question-mark">?</div>`
+                                                }
+                                            </div>
+                                            <div class="mystery-candidate-info">
+                                                <div class="mystery-candidate-name">
+                                                    ${isRevealed ? candidate.name : `مرشح ${index + 1}`}
+                                                </div>
+                                                <div class="mystery-candidate-details">
+                                                    ${isRevealed ?
+                                                        `<span class="position">${candidate.position || '???'}</span>
+                                                         <span class="club">${candidate.currentClub || '???'}</span>` :
+                                                        `<span class="hidden-text">??? • ???</span>`
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                    `;
+                                }).join('')}
+                            </div>
+
+                            <div class="mystery-card-footer">
+                                <div class="mystery-status">
+                                    ${allRevealed ?
+                                        '🎉 تم الكشف عن جميع المرشحين' :
+                                        `🔮 ${3 - revealedCount} مرشحين غامضين • ${revealedCount} مكشوف`
+                                    }
+                                </div>
+                                <div class="mystery-probability">
+                                    احتمالية الانتقال: ${allRevealed ? '85%' : '???'}
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }
+
+                container.innerHTML = html;
+
+                // Animate cards entrance
+                this.animateCardsEntrance();
+                this.setupCardInteractions();
+            }
+
+            // Get probability-based CSS class
+            getProbabilityClass(probability) {
+                if (probability >= 70) return 'probability-high';
+                if (probability >= 40) return 'probability-medium';
+                return 'probability-low';
+            }
+
+            // Setup advanced card interactions
+            setupCardInteractions() {
+                const cards = document.querySelectorAll('.player-card');
+
+                cards.forEach((card, index) => {
+                    card.addEventListener('mouseenter', () => {
+                        this.onCardHover(card, index);
+                    });
+
+                    card.addEventListener('mouseleave', () => {
+                        this.onCardLeave(card, index);
+                    });
+
+                    card.addEventListener('click', () => {
+                        this.onCardClick(card, index);
+                    });
+                });
+            }
+
+            // Card hover effect
+            onCardHover(card, index) {
+                // Pause floating animation
+                card.style.animationPlayState = 'paused';
+
+                // Add dynamic glow effect
+                gsap.to(card, {
+                    boxShadow: '0 20px 60px rgba(138, 43, 226, 0.6), 0 0 40px rgba(255, 255, 255, 0.2)',
+                    scale: 1.05,
+                    rotationY: 5,
+                    duration: 0.3,
+                    ease: 'power2.out'
+                });
+
+                // Animate other cards to fade slightly
+                const otherCards = document.querySelectorAll('.player-card:not([data-index="' + index + '"])');
+                gsap.to(otherCards, {
+                    opacity: 0.6,
+                    scale: 0.95,
+                    duration: 0.3
+                });
+            }
+
+            // Card leave effect
+            onCardLeave(card, index) {
+                // Resume floating animation
+                card.style.animationPlayState = 'running';
+
+                // Reset card transform
+                gsap.to(card, {
+                    boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3)',
+                    scale: 1,
+                    rotationY: 0,
+                    duration: 0.3,
+                    ease: 'power2.out'
+                });
+
+                // Reset other cards
+                const otherCards = document.querySelectorAll('.player-card');
+                gsap.to(otherCards, {
+                    opacity: 1,
+                    scale: 1,
+                    duration: 0.3
+                });
+            }
+
+            // Card click effect
+            onCardClick(card, index) {
+                const player = this.players[index];
+
+                // Create ripple effect
+                this.createRippleEffect(card);
+
+                // Show player details with animation
+                this.showPlayerDetails(player);
+
+                // Broadcast click event
+                this.channel.postMessage({
+                    type: 'playerClick',
+                    player: player,
+                    index: index
+                });
+            }
+
+            // Create ripple effect on click
+            createRippleEffect(card) {
+                const ripple = document.createElement('div');
+                ripple.style.cssText = `
+                    position: absolute;
+                    border-radius: 50%;
+                    background: rgba(138, 43, 226, 0.6);
+                    transform: scale(0);
+                    animation: ripple 0.6s linear;
+                    pointer-events: none;
+                    top: 50%;
+                    left: 50%;
+                    width: 20px;
+                    height: 20px;
+                    margin-top: -10px;
+                    margin-left: -10px;
+                `;
+
+                card.appendChild(ripple);
+
+                setTimeout(() => {
+                    ripple.remove();
+                }, 600);
+            }
+
+            // Show player details modal
+            showPlayerDetails(player) {
+                // Create modal overlay
+                const modal = document.createElement('div');
+                modal.className = 'player-modal';
+                modal.innerHTML = `
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h2>${player.name}</h2>
+                            <button class="close-btn">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                            <img src="${player.image}" alt="${player.name}">
+                            <p><strong>المركز:</strong> ${player.position}</p>
+                            <p><strong>الحالة:</strong> ${this.getStatusText(player.status)}</p>
+                            <p><strong>القيمة:</strong> ${player.price}</p>
+                            <p><strong>احتمالية الانتقال:</strong> ${player.probability}%</p>
+                        </div>
+                    </div>
+                `;
+
+                document.body.appendChild(modal);
+
+                // Animate modal entrance
+                gsap.fromTo(modal,
+                    { opacity: 0, scale: 0.8 },
+                    { opacity: 1, scale: 1, duration: 0.3, ease: 'back.out(1.7)' }
+                );
+
+                // Close modal functionality
+                modal.querySelector('.close-btn').addEventListener('click', () => {
+                    gsap.to(modal, {
+                        opacity: 0,
+                        scale: 0.8,
+                        duration: 0.3,
+                        onComplete: () => modal.remove()
+                    });
+                });
+
+                modal.addEventListener('click', (e) => {
+                    if (e.target === modal) {
+                        gsap.to(modal, {
+                            opacity: 0,
+                            scale: 0.8,
+                            duration: 0.3,
+                            onComplete: () => modal.remove()
+                        });
+                    }
+                });
+            }
+
+            // Get status text in Arabic
+            getStatusText(status) {
+                const statusMap = {
+                    'official': '✅ رسمي',
+                    'close': '🔥 قريب',
+                    'negotiating': '💬 تفاوض',
+                    'rumor': '👁️ إشاعة',
+                    'rejected': '❌ مرفوض',
+                    'failed': '💔 فاشل',
+                    // Legacy support
+                    'confirmed': '✅ مؤكد',
+                    'interested': '👁️ اهتمام'
+                };
+                return statusMap[status] || '❓ غير محدد';
+            }
+
+            // Animate cards entrance with GSAP
+            animateCardsEntrance() {
+                const cards = document.querySelectorAll('.player-card');
+                
+                gsap.fromTo(cards, 
+                    {
+                        opacity: 0,
+                        y: 50,
+                        rotationY: -90,
+                        scale: 0.8
+                    },
+                    {
+                        opacity: 1,
+                        y: 0,
+                        rotationY: 0,
+                        scale: 1,
+                        duration: 0.8,
+                        ease: "back.out(1.7)",
+                        stagger: 0.1
+                    }
+                );
+            }
+
+            // Setup broadcast channel for real-time updates
+            setupBroadcastChannel() {
+                try {
+                    // Use the same channel as Ultimate Control for synchronization
+                    this.channel = new BroadcastChannel('barcelona_obs_sync');
+                    this.channel.addEventListener('message', (event) => {
+                        console.log('📡 رسالة واردة من Ultimate Control:', event.data);
+                        this.handleMessage(event.data);
+                    });
+                    console.log('✅ تم ربط قناة التزامن مع Ultimate Control');
+                } catch (error) {
+                    console.warn('❌ فشل في ربط قناة التزامن:', error);
+                }
+            }
+
+            // Handle incoming messages
+            handleMessage(data) {
+                if (data.type === 'dataUpdate') {
+                    this.loadRealData(); // Load real data when updated
+                } else if (data.type === 'layoutChange') {
+                    this.changeLayout(data.layout);
+                } else if (data.type === 'reload') {
+                    this.loadRealData(); // Handle reload message from Ultimate Control
+                } else if (data.type === 'configUpdate') {
+                    // Handle advanced config updates
+                    if (data.config) {
+                        this.advancedConfig = data.config;
+                        this.applyAdvancedConfig();
+                        this.renderPlayers();
+                    }
+                } else if (data.type === 'displayMode' || data.type === 'displayModeUpdate') {
+                    this.changeDisplayMode(data.mode);
+                } else if (data.type === 'mysteryCardToggle') {
+                    this.mysteryCardEnabled = data.enabled;
+                    this.renderPlayers();
+                    console.log('🎯 تم تحديث حالة البطاقة الغامضة:', data.enabled);
+                } else if (data.type === 'themeChange') {
+                    this.changeTheme(data.theme);
+                } else if (data.type === 'reset') {
+                    this.resetToDefaults();
+                }
+            }
+
+            // Change layout dynamically with advanced animations
+            changeLayout(layout) {
+                this.currentLayout = layout;
+                const container = document.getElementById('playersGrid');
+                const broadcastContainer = document.getElementById('ultimateBroadcast');
+
+                // Remove existing layout classes
+                broadcastContainer.classList.remove('layout-grid', 'layout-circular', 'layout-wave', 'layout-pyramid', 'layout-hexagon');
+
+                // Add new layout class
+                broadcastContainer.classList.add(`layout-${layout}`);
+
+                // Animate layout transition
+                gsap.to(container.children, {
+                    opacity: 0,
+                    scale: 0.8,
+                    duration: 0.3,
+                    stagger: 0.05,
+                    onComplete: () => {
+                        this.applyLayoutStructure(layout, container);
+                        this.animateCardsEntrance();
+                    }
+                });
+            }
+
+            // Change display mode dynamically
+            changeDisplayMode(mode) {
+                this.config.displayMode = mode;
+                console.log(`🎭 تم تغيير وضع العرض إلى: ${mode}`);
+                this.renderPlayers();
+            }
+
+            // Apply specific layout structure
+            applyLayoutStructure(layout, container) {
+                const cards = Array.from(container.children);
+
+                switch(layout) {
+                    case 'circular':
+                        this.arrangeCircularLayout(cards, container);
+                        break;
+                    case 'wave':
+                        this.arrangeWaveLayout(cards, container);
+                        break;
+                    case 'pyramid':
+                        this.arrangePyramidLayout(cards, container);
+                        break;
+                    case 'hexagon':
+                        this.arrangeHexagonLayout(cards, container);
+                        break;
+                    case 'spiral':
+                        this.arrangeSpiralLayout(cards, container);
+                        break;
+                    default:
+                        this.arrangeGridLayout(cards, container);
+                }
+            }
+
+            // Circular layout arrangement
+            arrangeCircularLayout(cards, container) {
+                const radius = 120;
+                const centerX = container.offsetWidth / 2;
+                const centerY = container.offsetHeight / 2;
+
+                cards.forEach((card, index) => {
+                    const angle = (index / cards.length) * 2 * Math.PI;
+                    const x = centerX + radius * Math.cos(angle) - card.offsetWidth / 2;
+                    const y = centerY + radius * Math.sin(angle) - card.offsetHeight / 2;
+
+                    card.style.position = 'absolute';
+                    card.style.left = `${x}px`;
+                    card.style.top = `${y}px`;
+                });
+            }
+
+            // Wave layout arrangement
+            arrangeWaveLayout(cards, container) {
+                cards.forEach((card, index) => {
+                    card.style.position = 'relative';
+                    card.style.transform = `translateY(${Math.sin(index * 0.5) * 20}px)`;
+                });
+            }
+
+            // Pyramid layout arrangement
+            arrangePyramidLayout(cards, container) {
+                container.innerHTML = '';
+                const rows = Math.ceil(Math.sqrt(cards.length));
+
+                for (let row = 0; row < rows; row++) {
+                    const rowDiv = document.createElement('div');
+                    rowDiv.className = 'player-row';
+
+                    const cardsInRow = Math.min(row + 1, cards.length - row * (row + 1) / 2);
+                    for (let col = 0; col < cardsInRow && cards.length > 0; col++) {
+                        rowDiv.appendChild(cards.shift());
+                    }
+
+                    container.appendChild(rowDiv);
+                }
+            }
+
+            // Hexagon layout arrangement
+            arrangeHexagonLayout(cards, container) {
+                const hexRadius = 100;
+                const centerX = container.offsetWidth / 2;
+                const centerY = container.offsetHeight / 2;
+
+                // Center card
+                if (cards[0]) {
+                    cards[0].style.position = 'absolute';
+                    cards[0].style.left = `${centerX - cards[0].offsetWidth / 2}px`;
+                    cards[0].style.top = `${centerY - cards[0].offsetHeight / 2}px`;
+                }
+
+                // Surrounding cards in hexagon pattern
+                for (let i = 1; i < cards.length; i++) {
+                    const angle = ((i - 1) / (cards.length - 1)) * 2 * Math.PI;
+                    const x = centerX + hexRadius * Math.cos(angle) - cards[i].offsetWidth / 2;
+                    const y = centerY + hexRadius * Math.sin(angle) - cards[i].offsetHeight / 2;
+
+                    cards[i].style.position = 'absolute';
+                    cards[i].style.left = `${x}px`;
+                    cards[i].style.top = `${y}px`;
+                }
+            }
+
+            // Spiral layout arrangement
+            arrangeSpiralLayout(cards, container) {
+                const spiralRadius = 80;
+                const centerX = container.offsetWidth / 2;
+                const centerY = container.offsetHeight / 2;
+
+                cards.forEach((card, index) => {
+                    const angle = index * 0.8;
+                    const radius = spiralRadius + index * 10;
+                    const x = centerX + radius * Math.cos(angle) - card.offsetWidth / 2;
+                    const y = centerY + radius * Math.sin(angle) - card.offsetHeight / 2;
+
+                    card.style.position = 'absolute';
+                    card.style.left = `${x}px`;
+                    card.style.top = `${y}px`;
+                    card.style.transform = `rotate(${angle * 10}deg)`;
+                });
+            }
+
+            // Grid layout arrangement (default)
+            arrangeGridLayout(cards, container) {
+                cards.forEach(card => {
+                    card.style.position = 'relative';
+                    card.style.transform = 'none';
+                    card.style.left = 'auto';
+                    card.style.top = 'auto';
+                });
+            }
+
+            // Start main animation loop
+            startAnimationLoop() {
+                setInterval(() => {
+                    this.updateDynamicEffects();
+                }, 100);
+            }
+
+            // Update dynamic visual effects
+            updateDynamicEffects() {
+                // Update particle system
+                if (this.particleSystem) {
+                    this.particleSystem.rotation.y += 0.001;
+                    this.particleSystem.rotation.x += 0.0005;
+                }
+
+                // Update holographic effects
+                const header = document.querySelector('.header-title');
+                if (header) {
+                    const time = Date.now() * 0.001;
+                    const intensity = Math.sin(time) * 0.5 + 0.5;
+                    header.style.textShadow = `0 0 ${30 + intensity * 20}px rgba(255, 255, 255, ${0.5 + intensity * 0.3})`;
+                }
+
+                // Create floating particles
+                this.createFloatingParticles();
+
+                // Update dynamic lighting
+                this.updateDynamicLighting();
+
+                // Update morphing effects
+                this.updateMorphingEffects();
+            }
+
+            // Create floating particles effect
+            createFloatingParticles() {
+                if (Math.random() < 0.1) { // 10% chance each frame
+                    const particle = document.createElement('div');
+                    particle.className = 'particle-trail';
+
+                    // Random position
+                    particle.style.left = Math.random() * window.innerWidth + 'px';
+                    particle.style.top = window.innerHeight + 'px';
+
+                    // Random color
+                    const colors = ['#8a2be2', '#4b0082', '#9370db', '#ba55d3'];
+                    const color = colors[Math.floor(Math.random() * colors.length)];
+                    particle.style.background = `radial-gradient(circle, ${color} 0%, transparent 70%)`;
+
+                    document.body.appendChild(particle);
+
+                    // Remove after animation
+                    setTimeout(() => {
+                        if (particle.parentNode) {
+                            particle.parentNode.removeChild(particle);
+                        }
+                    }, 3000);
+                }
+            }
+
+            // Update dynamic lighting effects
+            updateDynamicLighting() {
+                const cards = document.querySelectorAll('.player-card');
+                const time = Date.now() * 0.002;
+
+                cards.forEach((card, index) => {
+                    const offset = index * 0.5;
+                    const intensity = Math.sin(time + offset) * 0.3 + 0.7;
+                    const hue = (time * 50 + index * 60) % 360;
+
+                    card.style.boxShadow = `
+                        0 8px 32px rgba(0, 0, 0, 0.3),
+                        0 0 ${20 * intensity}px hsla(${hue}, 70%, 60%, 0.4),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.2)
+                    `;
+                });
+            }
+
+            // Update morphing effects
+            updateMorphingEffects() {
+                const avatars = document.querySelectorAll('.player-avatar');
+                const time = Date.now() * 0.001;
+
+                avatars.forEach((avatar, index) => {
+                    const offset = index * 0.8;
+                    const scale = 1 + Math.sin(time + offset) * 0.05;
+                    const rotation = Math.sin(time * 0.5 + offset) * 2;
+
+                    avatar.style.transform = `scale(${scale}) rotate(${rotation}deg)`;
+                });
+            }
+
+            // Advanced theme switching with transitions
+            switchTheme(themeName) {
+                const container = document.getElementById('ultimateBroadcast');
+
+                // Fade out
+                gsap.to(container, {
+                    opacity: 0.3,
+                    duration: 0.3,
+                    onComplete: () => {
+                        // Apply new theme
+                        container.className = `ultimate-broadcast-container theme-${themeName}`;
+
+                        // Fade in
+                        gsap.to(container, {
+                            opacity: 1,
+                            duration: 0.5,
+                            ease: 'power2.out'
+                        });
+                    }
+                });
+            }
+
+            // Advanced layout transitions
+            transitionToLayout(newLayout) {
+                const cards = document.querySelectorAll('.player-card');
+
+                // Create transition timeline
+                const tl = gsap.timeline();
+
+                // Phase 1: Scatter cards
+                tl.to(cards, {
+                    x: () => (Math.random() - 0.5) * 200,
+                    y: () => (Math.random() - 0.5) * 200,
+                    rotation: () => (Math.random() - 0.5) * 180,
+                    scale: 0.8,
+                    opacity: 0.5,
+                    duration: 0.5,
+                    stagger: 0.05,
+                    ease: 'power2.in'
+                });
+
+                // Phase 2: Apply new layout
+                tl.call(() => {
+                    this.changeLayout(newLayout);
+                });
+
+                // Phase 3: Animate to new positions
+                tl.to(cards, {
+                    x: 0,
+                    y: 0,
+                    rotation: 0,
+                    scale: 1,
+                    opacity: 1,
+                    duration: 0.8,
+                    stagger: 0.1,
+                    ease: 'back.out(1.7)'
+                });
+            }
+
+            // Create advanced visual effects
+            createAdvancedEffects() {
+                // Holographic overlay
+                this.createHolographicOverlay();
+
+                // Dynamic background
+                this.createDynamicBackground();
+
+                // Ambient lighting
+                this.createAmbientLighting();
+            }
+
+            // Create holographic overlay effect
+            createHolographicOverlay() {
+                const overlay = document.createElement('div');
+                overlay.className = 'holographic-overlay';
+                overlay.style.cssText = `
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    pointer-events: none;
+                    z-index: 1;
+                    background: linear-gradient(45deg,
+                        transparent 30%,
+                        rgba(138, 43, 226, 0.05) 50%,
+                        transparent 70%);
+                    animation: holographicScan 8s linear infinite;
+                `;
+
+                document.body.appendChild(overlay);
+            }
+
+            // Create dynamic background
+            createDynamicBackground() {
+                const background = document.createElement('div');
+                background.className = 'dynamic-background';
+                background.style.cssText = `
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    z-index: -2;
+                    background: radial-gradient(circle at 20% 20%, rgba(138, 43, 226, 0.1) 0%, transparent 50%),
+                                radial-gradient(circle at 80% 80%, rgba(75, 0, 130, 0.1) 0%, transparent 50%),
+                                radial-gradient(circle at 50% 50%, rgba(25, 25, 112, 0.05) 0%, transparent 70%);
+                    animation: backgroundPulse 12s ease-in-out infinite;
+                `;
+
+                document.body.appendChild(background);
+            }
+
+            // Create ambient lighting
+            createAmbientLighting() {
+                const lighting = document.createElement('div');
+                lighting.className = 'ambient-lighting';
+                lighting.style.cssText = `
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    pointer-events: none;
+                    z-index: 0;
+                    background:
+                        radial-gradient(ellipse at top left, rgba(138, 43, 226, 0.1) 0%, transparent 50%),
+                        radial-gradient(ellipse at bottom right, rgba(75, 0, 130, 0.1) 0%, transparent 50%);
+                    animation: ambientShift 15s ease-in-out infinite alternate;
+                `;
+
+                document.body.appendChild(lighting);
+            }
+
+            // Handle real-time data updates
+            handleRealTimeUpdate(data) {
+                if (data.type === 'playerUpdate') {
+                    this.updatePlayerData(data.player, data.index);
+                } else if (data.type === 'themeChange') {
+                    this.switchTheme(data.theme);
+                } else if (data.type === 'effectToggle') {
+                    this.toggleEffect(data.effect, data.enabled);
+                }
+            }
+
+            // Update individual player data
+            updatePlayerData(playerData, index) {
+                const card = document.querySelector(`[data-index="${index}"]`);
+                if (card) {
+                    // Animate update
+                    gsap.to(card, {
+                        scale: 1.1,
+                        duration: 0.2,
+                        yoyo: true,
+                        repeat: 1,
+                        onComplete: () => {
+                            // Update content
+                            this.renderPlayerCard(card, playerData, index);
+                        }
+                    });
+                }
+            }
+
+            // Toggle visual effects
+            toggleEffect(effectName, enabled) {
+                switch(effectName) {
+                    case 'particles':
+                        this.particleSystem.visible = enabled;
+                        break;
+                    case 'glow':
+                        document.body.classList.toggle('glow-effects', enabled);
+                        break;
+                    case 'floating':
+                        document.body.classList.toggle('floating-effects', enabled);
+                        break;
+                    case 'hologram':
+                        document.body.classList.toggle('holographic-mode', enabled);
+                        break;
+                    case 'neon':
+                        document.body.classList.toggle('neon-mode', enabled);
+                        break;
+                }
+            }
+        }
+
+        // Initialize the system when DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            const system = new UltimateBroadcastSystem();
+
+            // Add advanced effects after initialization
+            setTimeout(() => {
+                system.createAdvancedEffects();
+            }, 1000);
+
+            // Handle URL parameters
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('layout')) {
+                system.changeLayout(urlParams.get('layout'));
+            }
+            if (urlParams.get('theme')) {
+                system.switchTheme(urlParams.get('theme'));
+            }
+
+            // إضافة زر تحديث مخفي (يمكن الوصول إليه بـ Ctrl+R)
+            document.addEventListener('keydown', (e) => {
+                if (e.ctrlKey && e.key === 'r') {
+                    e.preventDefault();
+                    console.log('🔄 تحديث يدوي للبيانات...');
+                    system.loadRealData();
+                }
+            });
+
+            // إضافة تحديث دوري كل 10 ثانية
+            setInterval(() => {
+                console.log('🔄 تحديث دوري للبيانات...');
+                system.loadRealData();
+            }, 10000);
+
+            // إرسال رسالة تأكيد التحميل
+            setTimeout(() => {
+                if (window.parent !== window) {
+                    window.parent.postMessage({
+                        type: 'BROADCAST_READY',
+                        data: { 
+                            playersCount: system.players.length,
+                            timestamp: new Date().toISOString()
+                        }
+                    }, '*');
+                }
+            }, 2000);
+        });
+
+        // Add global CSS animations
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes dataStream {
+                0% { transform: translateY(100vh) scale(0); opacity: 0; }
+                10% { opacity: 1; }
+                90% { opacity: 1; }
+                100% { transform: translateY(-100vh) scale(1); opacity: 0; }
+            }
+
+            @keyframes energyPulse {
+                0%, 100% {
+                    box-shadow: 0 0 20px rgba(138, 43, 226, 0.3);
+                    transform: scale(1);
+                }
+                50% {
+                    box-shadow: 0 0 40px rgba(138, 43, 226, 0.8);
+                    transform: scale(1.02);
+                }
+            }
+
+            @keyframes quantumFlicker {
+                0%, 100% { opacity: 1; filter: brightness(1); }
+                25% { opacity: 0.8; filter: brightness(1.2); }
+                50% { opacity: 0.9; filter: brightness(0.8); }
+                75% { opacity: 0.7; filter: brightness(1.1); }
+            }
+
+            .data-stream {
+                animation: dataStream 4s linear infinite;
+            }
+
+            .energy-pulse {
+                animation: energyPulse 2s ease-in-out infinite;
+            }
+
+            .quantum-flicker {
+                animation: quantumFlicker 3s ease-in-out infinite;
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
+

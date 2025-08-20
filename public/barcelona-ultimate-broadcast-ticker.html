@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>شريط داعمي برشلونة المتحرك</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: transparent;
+      overflow: hidden;
+      font-family: 'Tajawal', 'Inter', Arial, sans-serif;
+    }
+    .ticker-container {
+      width: 100vw;
+      height: 90px;
+      background: linear-gradient(90deg, #002D62 0%, #A50044 100%);
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      border-radius: 22px;
+      box-shadow: 0 4px 32px rgba(0,0,0,0.18);
+      border: 3px solid #FDB913;
+      position: fixed;
+      top: 24px;
+      right: 0;
+      left: 0;
+      z-index: 9999;
+    }
+    .ticker {
+      display: flex;
+      align-items: center;
+      white-space: nowrap;
+      animation: ticker-move 32s linear infinite;
+      font-size: 2.4em;
+      font-weight: 700;
+      color: #fff;
+      gap: 56px;
+      padding-right: 100vw;
+    }
+    .supporter {
+      display: inline-flex;
+      align-items: center;
+      background: rgba(255,255,255,0.10);
+      border-radius: 14px;
+      padding: 10px 30px;
+      margin: 0 10px;
+      color: #FDB913;
+      font-size: 1em;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+      border: 2px solid #A50044;
+      letter-spacing: 1px;
+    }
+    .supporter i {
+      margin-left: 12px;
+      color: #A50044;
+      font-size: 1.3em;
+    }
+    .barca-logo {
+      width: 48px;
+      height: 48px;
+      margin-left: 18px;
+      vertical-align: middle;
+    }
+    @keyframes ticker-move {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+  </style>
+</head>
+<body>
+  <div class="ticker-container">
+    <div class="ticker" id="barcaSupportersTicker">
+      <img src="https://upload.wikimedia.org/wikipedia/en/4/47/FC_Barcelona_%28crest%29.svg" class="barca-logo" alt="Barca Logo">
+      <span class="supporter"><i>💙❤️</i> ميسي</span>
+      <span class="supporter"><i>💙❤️</i> تشافي</span>
+      <span class="supporter"><i>💙❤️</i> إنييستا</span>
+      <span class="supporter"><i>💙❤️</i> بوسكيتس</span>
+      <span class="supporter"><i>💙❤️</i> بيكيه</span>
+      <span class="supporter"><i>💙❤️</i> سواريز</span>
+      <span class="supporter"><i>💙❤️</i> داني ألفيش</span>
+      <span class="supporter"><i>💙❤️</i> بيدري</span>
+      <span class="supporter"><i>💙❤️</i> لامين يامال</span>
+      <span class="supporter"><i>💙❤️</i> ليفاندوفسكي</span>
+      <!-- كرر نفس الأسماء لجعل الحركة مستمرة بدون توقف -->
+      <img src="https://upload.wikimedia.org/wikipedia/en/4/47/FC_Barcelona_%28crest%29.svg" class="barca-logo" alt="Barca Logo">
+      <span class="supporter"><i>💙❤️</i> ميسي</span>
+      <span class="supporter"><i>💙❤️</i> تشافي</span>
+      <span class="supporter"><i>💙❤️</i> إنييستا</span>
+      <span class="supporter"><i>💙❤️</i> بوسكيتس</span>
+      <span class="supporter"><i>💙❤️</i> بيكيه</span>
+      <span class="supporter"><i>💙❤️</i> سواريز</span>
+      <span class="supporter"><i>💙❤️</i> داني ألفيش</span>
+      <span class="supporter"><i>💙❤️</i> بيدري</span>
+      <span class="supporter"><i>💙❤️</i> لامين يامال</span>
+      <span class="supporter"><i>💙❤️</i> ليفاندوفسكي</span>
+    </div>
+  </div>
+</body>
+</html> 

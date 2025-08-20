@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enhanced Support Bar - Pro Version</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background: transparent;
+            overflow: hidden;
+        }
+        
+        #support-bar {
+            width: 100%;
+            height: 100vh;
+            overflow-y: auto;
+            scroll-behavior: smooth;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            box-sizing: border-box;
+            
+            /* تحسينات الأداء */
+            will-change: scroll-position;
+            transform: translateZ(0);
+            backface-visibility: hidden;
+        }
+        
+        .content {
+            min-height: 200vh; /* محتوى طويل للتمرير */
+            padding: 20px;
+        }
+        
+        .section {
+            margin-bottom: 50px;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            text-align: center;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        h2 {
+            font-size: 1.8em;
+            margin-bottom: 15px;
+            color: #ffd700;
+        }
+        
+        p {
+            font-size: 1.2em;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        
+        .highlight {
+            background: rgba(255, 215, 0, 0.3);
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        
+        .status {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background: rgba(0, 0, 0, 0.7);
+            color: #00ff00;
+            padding: 10px;
+            border-radius: 5px;
+            font-family: monospace;
+            font-size: 12px;
+            z-index: 1000;
+        }
+        
+        /* تأثيرات بصرية */
+        .floating {
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+    </style>
+</head>
+<body>
+    <div class="status" id="status">
+        Enhanced Browser Source: Loading...
+    </div>
+    
+    <div id="support-bar" data-auto-scroll="true">
+        <div class="content">
+            <h1 class="floating">🎯 Enhanced Support Bar</h1>
+            
+            <div class="section">
+                <h2>📺 مرحباً بكم في البث المباشر</h2>
+                <p>هذا شريط الدعم المحسن الذي يعمل بشكل مثالي في OBS Studio!</p>
+                <p class="highlight">التمرير التلقائي يعمل الآن بسلاسة تامة</p>
+            </div>
+            
+            <div class="section pulse">
+                <h2>🚀 الميزات الجديدة</h2>
+                <p>✅ تمرير تلقائي سلس كل 15 ثانية</p>
+                <p>✅ تحسين الأداء في OBS</p>
+                <p>✅ إصلاح مشاكل JavaScript timers</p>
+                <p>✅ تحسين استهلاك الذاكرة</p>
+            </div>
+            
+            <div class="section">
+                <h2>💎 دعم القناة</h2>
+                <p>شكراً لكم على الدعم المستمر!</p>
+                <p>تابعونا للمزيد من المحتوى الرائع</p>
+            </div>
+            
+            <div class="section floating">
+                <h2>🎮 آخر الأخبار</h2>
+                <p>تحديثات جديدة قادمة قريباً...</p>
+                <p>ترقبوا المفاجآت!</p>
+            </div>
+            
+            <div class="section">
+                <h2>📊 إحصائيات البث</h2>
+                <p>المشاهدون: <span class="highlight">متصلون الآن</span></p>
+                <p>وقت البث: <span id="stream-time">00:00:00</span></p>
+            </div>
+            
+            <div class="section pulse">
+                <h2>🔔 تنبيهات</h2>
+                <p>شكراً للمتابعين الجدد!</p>
+                <p>شكراً للمشتركين!</p>
+            </div>
+            
+            <div class="section">
+                <h2>🌟 رسائل المشاهدين</h2>
+                <p>"بث رائع! استمر" - مشاهد</p>
+                <p>"محتوى ممتاز" - متابع</p>
+            </div>
+            
+            <div class="section floating">
+                <h2>🎯 الهدف التالي</h2>
+                <p>الوصول إلى 1000 متابع!</p>
+                <p class="highlight">نحن في الطريق الصحيح</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- تحميل إصلاحات التمرير -->
+    <script src="auto-scroll-fix.js"></script>
+    
+    <script>
+        // كود التمرير التلقائي الأصلي - سيتم تحسينه تلقائياً
+        let scrollDirection = 1; // 1 للأسفل، -1 للأعلى
+        let isScrolling = false;
+        
+        function autoScroll() {
+            if (isScrolling) return;
+            
+            const container = document.getElementById('support-bar');
+            const maxScroll = container.scrollHeight - container.clientHeight;
+            
+            isScrolling = true;
+            
+            if (scrollDirection === 1) {
+                // التمرير للأسفل
+                container.scrollTo({
+                    top: maxScroll,
+                    behavior: 'smooth'
+                });
+            } else {
+                // التمرير للأعلى
+                container.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            }
+            
+            // تغيير الاتجاه بعد 15 ثانية
+            setTimeout(() => {
+                scrollDirection *= -1;
+                isScrolling = false;
+            }, 15000);
+        }
+        
+        // بدء التمرير التلقائي بعد تحميل الصفحة
+        window.addEventListener('load', function() {
+            // انتظار ثانيتين ثم بدء التمرير
+            setTimeout(autoScroll, 2000);
+            
+            // تكرار التمرير كل 30 ثانية (15 للأسفل + 15 للأعلى)
+            setInterval(autoScroll, 30000);
+            
+            // تحديث الحالة
+            document.getElementById('status').textContent = 'Enhanced Browser Source: Active ✅';
+        });
+        
+        // تحديث وقت البث
+        let streamStartTime = Date.now();
+        setInterval(() => {
+            const elapsed = Date.now() - streamStartTime;
+            const hours = Math.floor(elapsed / 3600000);
+            const minutes = Math.floor((elapsed % 3600000) / 60000);
+            const seconds = Math.floor((elapsed % 60000) / 1000);
+            
+            document.getElementById('stream-time').textContent = 
+                `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }, 1000);
+        
+        // إشعار عند تحميل التحسينات
+        document.addEventListener('obsEnhancedReady', function(e) {
+            console.log('Enhanced Browser Source loaded with features:', e.detail.features);
+            document.getElementById('status').textContent = 'Enhanced Browser Source: Optimized ⚡';
+        });
+    </script>
+</body>
+</html>

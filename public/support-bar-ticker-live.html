@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>شريط الداعمين المتحرك (مباشر)</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: transparent;
+      overflow: hidden;
+      font-family: 'Tajawal', 'Inter', Arial, sans-serif;
+    }
+    .ticker-container {
+      width: 100vw;
+      height: 80px;
+      background: linear-gradient(90deg, #222 0%, #FFD700 100%);
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      border-radius: 18px;
+      box-shadow: 0 4px 32px rgba(0,0,0,0.18);
+      border: 2px solid #FFD700;
+      position: fixed;
+      top: 20px;
+      right: 0;
+      left: 0;
+      z-index: 9999;
+    }
+    .ticker {
+      display: flex;
+      align-items: center;
+      white-space: nowrap;
+      font-size: 2.2em;
+      font-weight: 700;
+      color: #fff;
+      gap: 48px;
+      padding-right: 100vw;
+      animation: ticker-move 30s linear infinite;
+    }
+    .supporter {
+      display: inline-flex;
+      align-items: center;
+      background: rgba(255,255,255,0.08);
+      border-radius: 12px;
+      padding: 8px 24px;
+      margin: 0 8px;
+      color: #FFD700;
+      font-size: 1em;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      border: 1px solid rgba(255,255,255,0.12);
+    }
+    .supporter i {
+      margin-left: 10px;
+      color: #FFD700;
+      font-size: 1.2em;
+    }
+    .loading {
+      color: #FFD700;
+      font-size: 1.3em;
+      padding: 0 32px;
+    }
+    @keyframes ticker-move {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+  </style>
+</head>
+<body>
+  <div class="ticker-container">
+    <div class="ticker" id="supportersTicker">
+      <span class="loading">جاري تحميل الداعمين...</span>
+    </div>
+  </div>
+  <script>
+    async function fetchSupporters() {
+      try {
+        const res = await fetch('/api/supporters');
+        const data = await res.json();
+        console.log('بيانات الداعمين:', data);
+        let supporters = (data.supporters || []);
+        // إذا لم يوجد مبلغ، اعرض الجميع
+        if (supporters.length && supporters[0].amount !== undefined) {
+          supporters = supporters.filter(s => !s.amount || s.amount > 0);
+        }
+        supporters.sort((a, b) => (b.amount || 0) - (a.amount || 0));
+        return supporters;
+      } catch (e) {
+        console.error('خطأ في جلب الداعمين:', e);
+        return null;
+      }
+    }
+
+    function createTickerHTML(supporters) {
+      if (!supporters || !supporters.length) {
+        return '<span class="loading">⚠️ لا يوجد بيانات داعمين أو حدث خطأ في التحميل</span>';
+      }
+      // كرر القائمة مرتين لجعل الحركة مستمرة
+      let html = '';
+      for (let repeat = 0; repeat < 2; repeat++) {
+        for (const s of supporters) {
+          html += `<span class="supporter"><i>💛</i> ${s.alias || s.name || 'داعم'}</span>`;
+        }
+      }
+      return html;
+    }
+
+    async function updateTicker() {
+      const ticker = document.getElementById('supportersTicker');
+      ticker.innerHTML = '<span class="loading">جاري تحميل الداعمين...</span>';
+      const supporters = await fetchSupporters();
+      ticker.innerHTML = createTickerHTML(supporters);
+      // إعادة تشغيل الأنيميشن
+      ticker.style.animation = 'none';
+      void ticker.offsetWidth;
+      ticker.style.animation = null;
+    }
+
+    updateTicker();
+    setInterval(updateTicker, 30000); // تحديث كل 30 ثانية
+  </script>
+</body>
+</html> 

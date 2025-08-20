@@ -1,0 +1,1430 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🚀 Mercato Pro System 2025 - لوحة التحكم المتطورة</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 25%, #334155 50%, #475569 75%, #64748b 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 20s ease infinite;
+            color: #f1f5f9;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="75" cy="75" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="50" cy="10" r="0.5" fill="rgba(255,255,255,0.05)"/><circle cx="10" cy="60" r="0.5" fill="rgba(255,255,255,0.05)"/><circle cx="90" cy="40" r="0.5" fill="rgba(255,255,255,0.05)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .main-container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 2.5rem;
+            position: relative;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 4rem;
+            position: relative;
+        }
+
+        .main-title {
+            font-size: 4rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 25%, #06b6d4 50%, #10b981 75%, #f59e0b 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 0 30px rgba(59, 130, 246, 0.3);
+            animation: titleGlow 4s ease-in-out infinite alternate;
+        }
+
+        @keyframes titleGlow {
+            0% { filter: drop-shadow(0 0 20px rgba(59, 130, 246, 0.3)); }
+            100% { filter: drop-shadow(0 0 40px rgba(59, 130, 246, 0.6)); }
+        }
+
+        .subtitle {
+            font-size: 1.4rem;
+            color: #94a3b8;
+            font-weight: 400;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            animation: subtitleFade 4s ease-in-out infinite alternate;
+        }
+
+        @keyframes subtitleFade {
+            0% { opacity: 0.7; }
+            100% { opacity: 1; }
+        }
+
+        .controls-section {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.8) 0%, rgba(15, 23, 42, 0.6) 100%);
+            backdrop-filter: blur(25px);
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            border-radius: 25px;
+            padding: 2.5rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .controls-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #3b82f6, #8b5cf6, #06b6d4, #10b981, #f59e0b);
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+        }
+
+        .controls-section:hover::before {
+            transform: scaleX(1);
+        }
+
+        .controls-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .control-btn {
+            background: linear-gradient(135deg, rgba(51, 65, 85, 0.8) 0%, rgba(30, 41, 59, 0.6) 100%);
+            border: 1px solid rgba(148, 163, 184, 0.3);
+            border-radius: 15px;
+            padding: 1.2rem 1.8rem;
+            color: #f1f5f9;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.8rem;
+            backdrop-filter: blur(15px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .control-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(148, 163, 184, 0.2), transparent);
+            transition: left 0.6s;
+        }
+
+        .control-btn:hover::before {
+            left: 100%;
+        }
+
+        .control-btn:hover {
+            transform: translateY(-4px) scale(1.05);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+            border-color: rgba(148, 163, 184, 0.6);
+        }
+
+        .control-btn:active {
+            transform: translateY(-2px) scale(1.02);
+        }
+
+        .control-btn.primary {
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            border-color: #3b82f6;
+        }
+
+        .control-btn.primary:hover {
+            background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+        }
+
+        .control-btn.success {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            border-color: #10b981;
+        }
+
+        .control-btn.success:hover {
+            background: linear-gradient(135deg, #059669 0%, #047857 100%);
+        }
+
+        .control-btn.warning {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            border-color: #f59e0b;
+        }
+
+        .control-btn.warning:hover {
+            background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
+        }
+
+        .control-btn.info {
+            background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%);
+            border-color: #06b6d4;
+        }
+
+        .control-btn.info:hover {
+            background: linear-gradient(135deg, #0891b2 0%, #0e7490 100%);
+        }
+
+        .groups-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+            gap: 2.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .group-card {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.8) 0%, rgba(15, 23, 42, 0.6) 100%);
+            backdrop-filter: blur(25px);
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            border-radius: 25px;
+            padding: 2rem;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .group-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #3b82f6, #8b5cf6, #06b6d4, #10b981, #f59e0b);
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+        }
+
+        .group-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .group-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 35px 70px rgba(0, 0, 0, 0.6);
+            border-color: rgba(148, 163, 184, 0.4);
+        }
+
+        .group-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+        }
+
+        .group-header-left {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .group-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .group-btn {
+            background: linear-gradient(135deg, rgba(51, 65, 85, 0.8) 0%, rgba(30, 41, 59, 0.6) 100%);
+            border: 1px solid rgba(148, 163, 184, 0.3);
+            border-radius: 10px;
+            padding: 0.5rem;
+            color: #f1f5f9;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .group-btn:hover {
+            transform: translateY(-2px) scale(1.1);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+        }
+
+        .group-btn.edit {
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            border-color: #3b82f6;
+        }
+
+        .group-btn.delete {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            border-color: #ef4444;
+        }
+
+        .group-title {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: #f1f5f9;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .group-count {
+            background: linear-gradient(135deg, rgba(51, 65, 85, 0.8) 0%, rgba(30, 41, 59, 0.6) 100%);
+            border: 1px solid rgba(148, 163, 184, 0.3);
+            border-radius: 25px;
+            padding: 0.4rem 1rem;
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: #f1f5f9;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .tools-container {
+            min-height: 120px;
+            border-radius: 20px;
+            padding: 1.5rem;
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.3) 0%, rgba(15, 23, 42, 0.2) 100%);
+            border: 2px dashed rgba(148, 163, 184, 0.3);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(10px);
+        }
+
+        .tools-container.drag-over {
+            border-color: #3b82f6;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(59, 130, 246, 0.05) 100%);
+            transform: scale(1.03);
+            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.2);
+        }
+
+        .tool-item {
+            background: linear-gradient(135deg, rgba(51, 65, 85, 0.8) 0%, rgba(30, 41, 59, 0.6) 100%);
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            border-radius: 16px;
+            padding: 1.2rem;
+            margin-bottom: 1rem;
+            cursor: grab;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            backdrop-filter: blur(15px);
+            overflow: hidden;
+        }
+
+        .tool-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(148, 163, 184, 0.1), transparent);
+            transition: left 0.6s;
+        }
+
+        .tool-item:hover::before {
+            left: 100%;
+        }
+
+        .tool-item:hover {
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            border-color: rgba(148, 163, 184, 0.4);
+        }
+
+        .tool-item:active {
+            cursor: grabbing;
+            transform: scale(0.98);
+        }
+
+        .tool-item.sortable-ghost {
+            opacity: 0.3;
+            transform: rotate(8deg) scale(0.95);
+        }
+
+        .tool-item.sortable-chosen {
+            transform: rotate(5deg) scale(1.08);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
+            z-index: 1000;
+        }
+
+        .tool-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 0.8rem;
+        }
+
+        .tool-name {
+            font-weight: 700;
+            color: #f1f5f9;
+            font-size: 1.1rem;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .tool-actions {
+            display: flex;
+            gap: 0.6rem;
+        }
+
+        .tool-btn {
+            background: linear-gradient(135deg, rgba(51, 65, 85, 0.8) 0%, rgba(30, 41, 59, 0.6) 100%);
+            border: 1px solid rgba(148, 163, 184, 0.3);
+            border-radius: 10px;
+            padding: 0.5rem;
+            color: #f1f5f9;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            font-size: 0.9rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .tool-btn:hover {
+            background: linear-gradient(135deg, rgba(71, 85, 105, 0.9) 0%, rgba(51, 65, 85, 0.7) 100%);
+            transform: translateY(-2px) scale(1.1);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+        }
+
+        .tool-btn.open {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            border-color: #10b981;
+            padding: 0.6rem 1rem;
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .tool-btn.open:hover {
+            background: linear-gradient(135deg, #059669 0%, #047857 100%);
+            transform: translateY(-2px) scale(1.1);
+            box-shadow: 0 8px 16px rgba(16, 185, 129, 0.3);
+        }
+
+        .tool-btn.edit {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            border-color: #3b82f6;
+        }
+
+        .tool-btn.edit:hover {
+            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+        }
+
+        .tool-btn.delete {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            border-color: #ef4444;
+        }
+
+        .tool-btn.delete:hover {
+            background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+        }
+
+        .tool-description {
+            color: #94a3b8;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            opacity: 0.9;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 4rem;
+            color: #94a3b8;
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.5) 0%, rgba(15, 23, 42, 0.3) 100%);
+            border-radius: 20px;
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            backdrop-filter: blur(15px);
+        }
+
+        .empty-state i {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            opacity: 0.6;
+            animation: emptyStatePulse 2s ease-in-out infinite;
+        }
+
+        @keyframes emptyStatePulse {
+            0%, 100% { transform: scale(1); opacity: 0.6; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+
+        .add-group-btn {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            border: none;
+            border-radius: 20px;
+            padding: 1.2rem 2.5rem;
+            color: #ffffff;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            margin: 0 auto;
+            backdrop-filter: blur(15px);
+            box-shadow: 0 10px 30px rgba(16, 185, 129, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .add-group-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.6s;
+        }
+
+        .add-group-btn:hover::before {
+            left: 100%;
+        }
+
+        .add-group-btn:hover {
+            transform: translateY(-4px) scale(1.05);
+            box-shadow: 0 20px 40px rgba(16, 185, 129, 0.4);
+        }
+
+        .add-group-btn:active {
+            transform: translateY(-2px) scale(1.02);
+        }
+
+        /* Modal Styles */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            backdrop-filter: blur(10px);
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.9) 0%, rgba(15, 23, 42, 0.8) 100%);
+            backdrop-filter: blur(30px);
+            border: 1px solid rgba(148, 163, 184, 0.3);
+            border-radius: 25px;
+            padding: 2.5rem;
+            max-width: 550px;
+            width: 90%;
+            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.7);
+        }
+
+        .modal-title {
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            color: #f1f5f9;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .modal-input {
+            width: 100%;
+            background: linear-gradient(135deg, rgba(51, 65, 85, 0.8) 0%, rgba(30, 41, 59, 0.6) 100%);
+            border: 1px solid rgba(148, 163, 184, 0.3);
+            border-radius: 15px;
+            padding: 1.2rem;
+            color: #f1f5f9;
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .modal-input:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+            transform: scale(1.02);
+        }
+
+        .modal-input::placeholder {
+            color: #a8b2d1;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: flex-end;
+            margin-top: 2rem;
+        }
+
+        .modal-btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 15px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(10px);
+        }
+
+        .modal-btn:hover {
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .modal-btn.primary {
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            color: #ffffff;
+            border: 1px solid #3b82f6;
+        }
+
+        .modal-btn.primary:hover {
+            background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+        }
+
+        .modal-btn.secondary {
+            background: linear-gradient(135deg, rgba(51, 65, 85, 0.8) 0%, rgba(30, 41, 59, 0.6) 100%);
+            color: #f1f5f9;
+            border: 1px solid rgba(148, 163, 184, 0.3);
+        }
+
+        .modal-btn.secondary:hover {
+            background: linear-gradient(135deg, rgba(71, 85, 105, 0.9) 0%, rgba(51, 65, 85, 0.7) 100%);
+        }
+
+        /* Notification Styles */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.9) 0%, rgba(15, 23, 42, 0.8) 100%);
+            backdrop-filter: blur(25px);
+            border: 1px solid rgba(148, 163, 184, 0.3);
+            border-radius: 20px;
+            padding: 1.2rem 1.8rem;
+            color: #f1f5f9;
+            font-weight: 700;
+            font-size: 1rem;
+            z-index: 10001;
+            transform: translateX(100%);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        .notification.success {
+            border-color: #10b981;
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.15) 0%, rgba(16, 185, 129, 0.05) 100%);
+        }
+
+        .notification.error {
+            border-color: #ef4444;
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.15) 0%, rgba(239, 68, 68, 0.05) 100%);
+        }
+
+        .notification.warning {
+            border-color: #f59e0b;
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.15) 0%, rgba(245, 158, 11, 0.05) 100%);
+        }
+
+        /* Loading Indicator */
+        .loading {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.9) 0%, rgba(15, 23, 42, 0.8) 100%);
+            backdrop-filter: blur(25px);
+            border: 1px solid rgba(148, 163, 184, 0.3);
+            border-radius: 20px;
+            padding: 2.5rem;
+            color: #f1f5f9;
+            z-index: 10002;
+            display: none;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid rgba(148, 163, 184, 0.2);
+            border-top: 4px solid #3b82f6;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1.5rem;
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .main-container {
+                padding: 1rem;
+            }
+            
+            .main-title {
+                font-size: 2rem;
+            }
+            
+            .controls-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .groups-section {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <!-- Header -->
+        <div class="header">
+            <h1 class="main-title">🚀 Mercato Pro System 2025</h1>
+            <p class="subtitle">✨ لوحة التحكم المتطورة لإدارة الأدوات والمجموعات ✨</p>
+        </div>
+
+        <!-- Controls Section -->
+        <div class="controls-section">
+            <div class="controls-grid">
+                <button class="control-btn primary" id="addGroupBtn">
+                    <i class="fas fa-plus-circle"></i>
+                    إضافة مجموعة جديدة
+                </button>
+                <button class="control-btn success" id="saveBtn">
+                    <i class="fas fa-save"></i>
+                    حفظ الإعدادات
+                </button>
+                <button class="control-btn info" id="loadBtn">
+                    <i class="fas fa-folder-open"></i>
+                    تحميل الإعدادات
+                </button>
+                <button class="control-btn warning" id="exportBtn">
+                    <i class="fas fa-download"></i>
+                    تصدير الإعدادات
+                </button>
+                <button class="control-btn" id="importBtn">
+                    <i class="fas fa-upload"></i>
+                    استيراد الإعدادات
+                </button>
+            </div>
+        </div>
+
+        <!-- Groups Section -->
+        <div id="groupsContainer" class="groups-section">
+            <!-- Groups will be dynamically added here -->
+        </div>
+
+        <!-- Add Group Button -->
+        <div style="text-align: center;">
+            <button class="add-group-btn" id="addGroupBtnBottom">
+                <i class="fas fa-plus-circle"></i>
+                إضافة مجموعة جديدة
+            </button>
+        </div>
+    </div>
+
+    <!-- Modals -->
+    <div class="modal" id="groupModal">
+        <div class="modal-content">
+            <h3 class="modal-title">إضافة مجموعة جديدة</h3>
+            <input type="text" class="modal-input" id="groupNameInput" placeholder="اسم المجموعة">
+            <div class="modal-buttons">
+                <button class="modal-btn secondary" id="cancelGroupBtn">إلغاء</button>
+                <button class="modal-btn primary" id="confirmGroupBtn">إضافة</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="editModal">
+        <div class="modal-content">
+            <h3 class="modal-title">تعديل الأداة</h3>
+            <input type="text" class="modal-input" id="toolNameInput" placeholder="اسم الأداة">
+            <textarea class="modal-input" id="toolDescInput" placeholder="وصف الأداة" rows="3"></textarea>
+            <div class="modal-buttons">
+                <button class="modal-btn secondary" id="cancelEditBtn">إلغاء</button>
+                <button class="modal-btn primary" id="confirmEditBtn">حفظ</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="confirmModal">
+        <div class="modal-content">
+            <h3 class="modal-title">تأكيد الحذف</h3>
+            <p style="color: #94a3b8; margin-bottom: 1.5rem; font-size: 1.1rem; line-height: 1.6;">هل أنت متأكد من أنك تريد حذف هذا العنصر؟ لا يمكن التراجع عن هذا الإجراء.</p>
+            <div class="modal-buttons">
+                <button class="modal-btn secondary" id="cancelDeleteBtn">إلغاء</button>
+                <button class="modal-btn primary" id="confirmDeleteBtn" style="background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);">حذف</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="editGroupModal">
+        <div class="modal-content">
+            <h3 class="modal-title">تعديل المجموعة</h3>
+            <input type="text" class="modal-input" id="editGroupNameInput" placeholder="اسم المجموعة الجديد">
+            <div class="modal-buttons">
+                <button class="modal-btn secondary" id="cancelEditGroupBtn">إلغاء</button>
+                <button class="modal-btn primary" id="confirmEditGroupBtn">حفظ التغييرات</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hidden file input -->
+    <input type="file" id="importFile" accept=".json" style="display: none;">
+
+    <!-- Loading Indicator -->
+    <div class="loading" id="loadingIndicator">
+        <div class="loading-spinner"></div>
+        جاري المعالجة...
+    </div>
+
+    <script>
+        // ========== البيانات الأساسية ==========
+        let currentData = {
+            groups: [
+                {
+                    id: 1,
+                    name: "🚀 الأدوات الأساسية",
+                    tools: [
+                        {
+                            tool: "transfermarkt-control-2025.html",
+                            customName: "لوحة التحكم المتطورة 2025",
+                            desc: "مركز إدارة النظام الشامل مع إحصائيات مباشرة وأدوات تشخيص متقدمة"
+                        },
+                        {
+                            tool: "transfermarkt-live-2025.html",
+                            customName: "البث المباشر الثوري 2025",
+                            desc: "تصميم Glass Morphism عصري مع تأثيرات بصرية متقدمة"
+                        }
+                    ]
+                },
+                {
+                    id: 2,
+                    name: "🎯 أدوات الداعمين",
+                    tools: [
+                        {
+                            tool: "support-bar.html",
+                            customName: "شريط الداعمين الأساسي",
+                            desc: "عرض أنيق للداعمين مع تأثيرات بصرية حديثة"
+                        }
+                    ]
+                }
+            ]
+        };
+
+        // ========== دوال إدارة البيانات ==========
+        function loadData() {
+            const saved = localStorage.getItem('homeToolsData');
+            if (saved) {
+                try {
+                    currentData = JSON.parse(saved);
+                } catch (error) {
+                    console.error('خطأ في تحميل البيانات:', error);
+                }
+            }
+        }
+
+        function saveData() {
+            localStorage.setItem('homeToolsData', JSON.stringify(currentData));
+            showNotification('تم حفظ البيانات بنجاح!', 'success');
+        }
+
+        function saveDataToProject() {
+            // حفظ في مجلد المشروع
+            const data = {
+                timestamp: new Date().toISOString(),
+                data: currentData
+            };
+            
+            // استخدام fetch لإرسال البيانات
+            fetch('/save_handler.py', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    action: 'save',
+                    data: data
+                })
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(result => {
+                if (result.success) {
+                    showNotification('تم حفظ البيانات في مجلد المشروع بنجاح!', 'success');
+                } else {
+                    showNotification('خطأ في حفظ البيانات في مجلد المشروع', 'error');
+                }
+            })
+            .catch(error => {
+                console.error('خطأ في الاتصال:', error);
+                // محاولة الحفظ في localStorage كبديل
+                localStorage.setItem('homeToolsData', JSON.stringify(currentData));
+                showNotification('تم الحفظ في المتصفح (خطأ في الاتصال بالخادم)', 'warning');
+            });
+        }
+
+        function openTool(toolName) {
+            const url = `http://localhost:8201/${toolName}`;
+            window.open(url, '_blank');
+            showNotification(`تم فتح ${toolName} في تبويب جديد`, 'success');
+        }
+
+        // ========== دوال واجهة المستخدم ==========
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => notification.classList.add('show'), 100);
+            setTimeout(() => {
+                notification.classList.remove('show');
+                setTimeout(() => notification.remove(), 300);
+            }, 3000);
+        }
+
+        function showModal(modalId) {
+            document.getElementById(modalId).style.display = 'flex';
+        }
+
+        function hideModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+
+        function showLoading(show) {
+            document.getElementById('loadingIndicator').style.display = show ? 'block' : 'none';
+        }
+
+        // ========== دوال إدارة المجموعات ==========
+        function addGroup(name) {
+            const newId = Math.max(...currentData.groups.map(g => g.id), 0) + 1;
+            currentData.groups.push({
+                id: newId,
+                name: name,
+                tools: []
+            });
+            saveData();
+            renderGroups();
+        }
+
+        function deleteGroup(groupId) {
+            currentData.groups = currentData.groups.filter(g => g.id !== groupId);
+            saveData();
+            renderGroups();
+        }
+
+        function addToolToGroup(groupId, toolData) {
+            const group = currentData.groups.find(g => g.id === groupId);
+            if (group) {
+                // التحقق من عدم وجود الأداة في أي مجموعة
+                const toolExists = currentData.groups.some(g => 
+                    g.tools.some(t => t.tool === toolData.tool)
+                );
+                
+                if (!toolExists) {
+                    group.tools.push(toolData);
+                    saveData();
+                    renderGroups();
+                    showNotification(`تم إضافة الأداة إلى ${group.name} بنجاح!`, 'success');
+                    return true;
+                } else {
+                    showNotification('الأداة موجودة مسبقاً في إحدى المجموعات', 'warning');
+                    return false;
+                }
+            }
+            return false;
+        }
+
+        function deleteTool(groupId, toolName) {
+            const group = currentData.groups.find(g => g.id === groupId);
+            if (group) {
+                group.tools = group.tools.filter(t => t.tool !== toolName);
+                saveData();
+                renderGroups();
+                showNotification('تم حذف الأداة بنجاح!', 'success');
+            }
+        }
+
+        function editTool(groupId, toolName, newName, newDesc) {
+            const group = currentData.groups.find(g => g.id === groupId);
+            if (group) {
+                const tool = group.tools.find(t => t.tool === toolName);
+                if (tool) {
+                    tool.customName = newName;
+                    tool.desc = newDesc;
+                    saveData();
+                    renderGroups();
+                    showNotification('تم تحديث الأداة بنجاح!', 'success');
+                }
+            }
+        }
+
+        function editGroup(groupId, newName) {
+            const group = currentData.groups.find(g => g.id === groupId);
+            if (group) {
+                group.name = newName;
+                saveData();
+                renderGroups();
+                showNotification('تم تحديث المجموعة بنجاح!', 'success');
+            }
+        }
+
+        function deleteGroup(groupId) {
+            currentData.groups = currentData.groups.filter(g => g.id !== groupId);
+            saveData();
+            renderGroups();
+            showNotification('تم حذف المجموعة بنجاح!', 'success');
+        }
+
+        // ========== دوال العرض ==========
+        function renderGroups() {
+            const container = document.getElementById('groupsContainer');
+            container.innerHTML = '';
+
+            if (currentData.groups.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-folder-open"></i>
+                        <h3>لا توجد مجموعات</h3>
+                        <p>ابدأ بإنشاء مجموعة جديدة لإضافة الأدوات</p>
+                    </div>
+                `;
+                return;
+            }
+
+            currentData.groups.forEach(group => {
+                const groupElement = createGroupElement(group);
+                container.appendChild(groupElement);
+            });
+
+            // إعداد السحب والإفلات
+            setupSortable();
+        }
+
+        function createGroupElement(group) {
+            const groupDiv = document.createElement('div');
+            groupDiv.className = 'group-card';
+            groupDiv.innerHTML = `
+                <div class="group-header">
+                    <div class="group-header-left">
+                        <h3 class="group-title">
+                            <i class="fas fa-folder"></i>
+                            ${group.name}
+                        </h3>
+                        <span class="group-count">${group.tools.length} أداة</span>
+                    </div>
+                    <div class="group-actions">
+                        <button class="group-btn edit" onclick="editGroupModal(${group.id})" title="تعديل المجموعة">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="group-btn delete" onclick="confirmDeleteGroup(${group.id})" title="حذف المجموعة">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="tools-container" data-group-id="${group.id}">
+                    ${group.tools.map(tool => createToolElement(tool, group.id)).join('')}
+                </div>
+            `;
+            return groupDiv;
+        }
+
+        function createToolElement(tool, groupId) {
+            return `
+                <div class="tool-item" data-tool="${tool.tool}" data-group="${groupId}">
+                    <div class="tool-header">
+                        <span class="tool-name">${tool.customName || tool.tool}</span>
+                        <div class="tool-actions">
+                            <button class="tool-btn open" onclick="openTool('${tool.tool}')" title="فتح الأداة">
+                                <i class="fas fa-external-link-alt"></i>
+                                فتح
+                            </button>
+                            <button class="tool-btn edit" onclick="editToolModal('${tool.tool}', ${groupId})" title="تعديل">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="tool-btn delete" onclick="confirmDeleteTool('${tool.tool}', ${groupId})" title="حذف">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="tool-description">${tool.desc || 'لا يوجد وصف'}</div>
+                </div>
+            `;
+        }
+
+        // ========== إعداد السحب والإفلات ==========
+        function setupSortable() {
+            const containers = document.querySelectorAll('.tools-container');
+            
+            containers.forEach(container => {
+                new Sortable(container, {
+                    group: 'shared',
+                    animation: 300,
+                    ghostClass: 'sortable-ghost',
+                    chosenClass: 'sortable-chosen',
+                    dragClass: 'sortable-drag',
+                    onStart: function(evt) {
+                        evt.item.style.zIndex = '1000';
+                    },
+                    onEnd: function(evt) {
+                        evt.item.style.zIndex = '';
+                        handleToolMove(evt);
+                    },
+                    onMove: function(evt) {
+                        const targetContainer = evt.to;
+                        targetContainer.classList.add('drag-over');
+                        setTimeout(() => targetContainer.classList.remove('drag-over'), 300);
+                    }
+                });
+            });
+        }
+
+        function handleToolMove(evt) {
+            const toolElement = evt.item;
+            const toolName = toolElement.getAttribute('data-tool');
+            const fromGroupId = parseInt(evt.from.getAttribute('data-group-id'));
+            const toGroupId = parseInt(evt.to.getAttribute('data-group-id'));
+
+            if (fromGroupId !== toGroupId) {
+                // نقل الأداة بين المجموعات
+                const fromGroup = currentData.groups.find(g => g.id === fromGroupId);
+                const toGroup = currentData.groups.find(g => g.id === toGroupId);
+                
+                if (fromGroup && toGroup) {
+                    const tool = fromGroup.tools.find(t => t.tool === toolName);
+                    if (tool) {
+                        fromGroup.tools = fromGroup.tools.filter(t => t.tool !== toolName);
+                        toGroup.tools.push(tool);
+                        saveData();
+                        showNotification(`تم نقل الأداة إلى ${toGroup.name} بنجاح!`, 'success');
+                    }
+                }
+            } else {
+                // إعادة ترتيب في نفس المجموعة
+                const group = currentData.groups.find(g => g.id === fromGroupId);
+                if (group) {
+                    const tool = group.tools.find(t => t.tool === toolName);
+                    if (tool) {
+                        group.tools.splice(evt.oldIndex, 1);
+                        group.tools.splice(evt.newIndex, 0, tool);
+                        saveData();
+                    }
+                }
+            }
+        }
+
+        // ========== دوال النوافذ المنبثقة ==========
+        function editToolModal(toolName, groupId) {
+            const group = currentData.groups.find(g => g.id === groupId);
+            const tool = group.tools.find(t => t.tool === toolName);
+            
+            document.getElementById('toolNameInput').value = tool.customName || tool.tool;
+            document.getElementById('toolDescInput').value = tool.desc || '';
+            
+            document.getElementById('confirmEditBtn').onclick = () => {
+                const newName = document.getElementById('toolNameInput').value.trim();
+                const newDesc = document.getElementById('toolDescInput').value.trim();
+                
+                if (newName) {
+                    editTool(groupId, toolName, newName, newDesc);
+                    hideModal('editModal');
+                } else {
+                    showNotification('يرجى إدخال اسم الأداة', 'error');
+                }
+            };
+            
+            showModal('editModal');
+        }
+
+        function confirmDeleteTool(toolName, groupId) {
+            const group = currentData.groups.find(g => g.id === groupId);
+            const tool = group.tools.find(t => t.tool === toolName);
+            
+            document.getElementById('confirmDeleteBtn').onclick = () => {
+                deleteTool(groupId, toolName);
+                hideModal('confirmModal');
+            };
+            
+            showModal('confirmModal');
+        }
+
+        function editGroupModal(groupId) {
+            const group = currentData.groups.find(g => g.id === groupId);
+            
+            document.getElementById('editGroupNameInput').value = group.name;
+            document.getElementById('editGroupNameInput').setAttribute('data-group-id', groupId);
+            
+            showModal('editGroupModal');
+        }
+
+        function confirmDeleteGroup(groupId) {
+            const group = currentData.groups.find(g => g.id === groupId);
+            
+            document.getElementById('confirmDeleteBtn').onclick = () => {
+                deleteGroup(groupId);
+                hideModal('confirmModal');
+            };
+            
+            showModal('confirmModal');
+        }
+
+        // ========== معالجة الأدوات من all-tools.html ==========
+        function processToolsFromAllTools() {
+            const selectedTools = localStorage.getItem('selectedTools');
+            const pendingGroup = localStorage.getItem('pendingGroupSelection');
+            
+            if (selectedTools && pendingGroup) {
+                try {
+                    const tools = JSON.parse(selectedTools);
+                    const groupId = parseInt(pendingGroup);
+                    
+                    let addedCount = 0;
+                    tools.forEach(toolName => {
+                        const toolData = {
+                            tool: toolName,
+                            customName: getToolDisplayName(toolName),
+                            desc: getToolDescription(toolName)
+                        };
+                        
+                        if (addToolToGroup(groupId, toolData)) {
+                            addedCount++;
+                        }
+                    });
+                    
+                    // تنظيف البيانات المؤقتة
+                    localStorage.removeItem('selectedTools');
+                    localStorage.removeItem('pendingGroupSelection');
+                    
+                    if (addedCount > 0) {
+                        showNotification(`تم إضافة ${addedCount} أداة بنجاح!`, 'success');
+                    }
+                    
+                } catch (error) {
+                    console.error('خطأ في معالجة الأدوات:', error);
+                    showNotification('خطأ في معالجة الأدوات المضافة', 'error');
+                }
+            }
+        }
+
+        function getToolDisplayName(toolName) {
+            const toolDescriptions = {
+                'transfermarkt-control-2025.html': 'لوحة التحكم المتطورة 2025',
+                'transfermarkt-live-2025.html': 'البث المباشر الثوري 2025',
+                'club-logo-manager.html': 'مدير الشعارات المحسن',
+                'support-bar.html': 'شريط الداعمين الأساسي',
+                'support-bar-enhanced-original.html': 'شريط الداعمين المحسن',
+                'supporters-admin.html': 'لوحة إدارة الداعمين',
+                'test-supporters.html': 'اختبار أدوات الداعمين'
+            };
+            return toolDescriptions[toolName] || toolName.replace('.html', '');
+        }
+
+        function getToolDescription(toolName) {
+            const toolDescriptions = {
+                'transfermarkt-control-2025.html': 'مركز إدارة النظام الشامل مع إحصائيات مباشرة وأدوات تشخيص متقدمة',
+                'transfermarkt-live-2025.html': 'تصميم Glass Morphism عصري مع تأثيرات بصرية متقدمة',
+                'club-logo-manager.html': 'إدارة شاملة لشعارات الأندية مع مزامنة تلقائية',
+                'support-bar.html': 'عرض أنيق للداعمين مع تأثيرات بصرية حديثة',
+                'support-bar-enhanced-original.html': 'نفس التصميم الأصلي مع تمرير تلقائي متقدم',
+                'supporters-admin.html': 'إدارة شاملة للداعمين والمساهمين مع إحصائيات متقدمة',
+                'test-supporters.html': 'صفحة اختبار شاملة لجميع وظائف الداعمين'
+            };
+            return toolDescriptions[toolName] || '';
+        }
+
+        // ========== دوال التصدير والاستيراد ==========
+        function exportData() {
+            const dataStr = JSON.stringify(currentData, null, 2);
+            const blob = new Blob([dataStr], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `mercato-settings-${new Date().toISOString().split('T')[0]}.json`;
+            a.click();
+            URL.revokeObjectURL(url);
+            showNotification('تم تصدير الإعدادات بنجاح!', 'success');
+        }
+
+        function importData() {
+            document.getElementById('importFile').click();
+        }
+
+        function handleFileImport(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    try {
+                        const data = JSON.parse(e.target.result);
+                        if (data.groups && Array.isArray(data.groups)) {
+                            currentData = data;
+                            saveData();
+                            renderGroups();
+                            showNotification('تم استيراد الإعدادات بنجاح!', 'success');
+                        } else {
+                            showNotification('ملف غير صالح', 'error');
+                        }
+                    } catch (error) {
+                        showNotification('خطأ في قراءة الملف', 'error');
+                    }
+                };
+                reader.readAsText(file);
+            }
+        }
+
+        // ========== إعداد الأحداث ==========
+        document.addEventListener('DOMContentLoaded', function() {
+            loadData();
+            renderGroups();
+            
+            // معالجة الأدوات من all-tools.html
+            processToolsFromAllTools();
+            
+            // إعداد الأحداث
+            setupEventListeners();
+        });
+
+        function setupEventListeners() {
+            // أزرار المجموعات
+            document.getElementById('addGroupBtn').addEventListener('click', () => showModal('groupModal'));
+            document.getElementById('addGroupBtnBottom').addEventListener('click', () => showModal('groupModal'));
+            
+            // أزرار النوافذ المنبثقة
+            document.getElementById('confirmGroupBtn').addEventListener('click', () => {
+                const name = document.getElementById('groupNameInput').value.trim();
+                if (name) {
+                    addGroup(name);
+                    hideModal('groupModal');
+                    document.getElementById('groupNameInput').value = '';
+                } else {
+                    showNotification('يرجى إدخال اسم المجموعة', 'error');
+                }
+            });
+            
+            document.getElementById('cancelGroupBtn').addEventListener('click', () => hideModal('groupModal'));
+            document.getElementById('cancelEditBtn').addEventListener('click', () => hideModal('editModal'));
+            document.getElementById('cancelDeleteBtn').addEventListener('click', () => hideModal('confirmModal'));
+            document.getElementById('cancelEditGroupBtn').addEventListener('click', () => hideModal('editGroupModal'));
+            document.getElementById('confirmEditGroupBtn').addEventListener('click', () => {
+                const groupId = parseInt(document.getElementById('editGroupNameInput').getAttribute('data-group-id'));
+                const newName = document.getElementById('editGroupNameInput').value.trim();
+                
+                if (newName) {
+                    editGroup(groupId, newName);
+                    hideModal('editGroupModal');
+                } else {
+                    showNotification('يرجى إدخال اسم المجموعة', 'error');
+                }
+            });
+            
+            // أزرار التحكم
+            document.getElementById('saveBtn').addEventListener('click', saveDataToProject);
+            document.getElementById('loadBtn').addEventListener('click', () => {
+                showLoading(true);
+                // تحميل من مجلد المشروع
+                fetch('/save_handler.py', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ action: 'load' })
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(result => {
+                    showLoading(false);
+                    if (result.success && result.data) {
+                        currentData = result.data;
+                        saveData();
+                        renderGroups();
+                        showNotification('تم تحميل البيانات من مجلد المشروع بنجاح!', 'success');
+                    } else {
+                        showNotification('لا توجد بيانات محفوظة في مجلد المشروع', 'warning');
+                    }
+                })
+                .catch(error => {
+                    showLoading(false);
+                    console.error('خطأ في التحميل:', error);
+                    // محاولة التحميل من localStorage كبديل
+                    const savedData = localStorage.getItem('homeToolsData');
+                    if (savedData) {
+                        try {
+                            currentData = JSON.parse(savedData);
+                            renderGroups();
+                            showNotification('تم التحميل من المتصفح (خطأ في الاتصال بالخادم)', 'warning');
+                        } catch (e) {
+                            showNotification('خطأ في تحميل البيانات', 'error');
+                        }
+                    } else {
+                        showNotification('لا توجد بيانات محفوظة', 'error');
+                    }
+                });
+            });
+            
+            document.getElementById('exportBtn').addEventListener('click', exportData);
+            document.getElementById('importBtn').addEventListener('click', importData);
+            document.getElementById('importFile').addEventListener('change', handleFileImport);
+            
+            // إغلاق النوافذ المنبثقة عند النقر خارجها
+            document.querySelectorAll('.modal').forEach(modal => {
+                modal.addEventListener('click', (e) => {
+                    if (e.target === modal) {
+                        hideModal(modal.id);
+                    }
+                });
+            });
+        }
+
+        // معالجة الأدوات كل 2 ثانية للتأكد
+        setInterval(processToolsFromAllTools, 2000);
+    </script>
+</body>
+</html>

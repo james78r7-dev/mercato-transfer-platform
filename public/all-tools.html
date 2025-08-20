@@ -1,0 +1,4196 @@
+
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔧 جميع الأدوات (60+) - Mercato Professional System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0a0a0f 60%, #3b82f6 100%);
+            color: #f8fafc;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: rgba(26,26,46,0.97);
+            border-radius: 24px;
+            box-shadow: 0 8px 32px #0005;
+            padding: 2rem;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .main-title {
+            font-size: 2.5rem;
+            font-weight: 900;
+            background: linear-gradient(90deg,#3b82f6,#8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: #94a3b8;
+            margin-bottom: 1rem;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            background: rgba(59,130,246,0.1);
+            border: 1px solid #3b82f6;
+            border-radius: 12px;
+            padding: 1rem 1.5rem;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: #3b82f6;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: #94a3b8;
+            margin-top: 0.25rem;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            background: linear-gradient(45deg, #3b82f6, #8b5cf6);
+            border: none;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.3);
+        }
+
+        .btn-success {
+            background: linear-gradient(45deg, #10b981, #059669);
+        }
+
+        .btn-warning {
+            background: linear-gradient(45deg, #f59e0b, #d97706);
+        }
+
+        .btn-danger {
+            background: linear-gradient(45deg, #ef4444, #dc2626);
+        }
+
+        .search-box {
+            width: 100%;
+            max-width: 400px;
+            padding: 0.75rem 1rem;
+            border: 2px solid #3b82f6;
+            border-radius: 12px;
+            background: rgba(59,130,246,0.1);
+            color: #f8fafc;
+            font-size: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .search-box::placeholder {
+            color: #94a3b8;
+        }
+
+        .search-box:focus {
+            outline: none;
+            border-color: #8b5cf6;
+            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+        }
+
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .tool-card {
+            background: rgba(59,130,246,0.07);
+            border: 1px solid #3b82f6;
+            border-radius: 16px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .tool-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(59, 130, 246, 0.2);
+            border-color: #8b5cf6;
+        }
+
+        .tool-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .tool-icon {
+            font-size: 2rem;
+            color: #3b82f6;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(59,130,246,0.1);
+            border-radius: 12px;
+        }
+
+        .tool-info {
+            flex: 1;
+        }
+
+        .tool-name {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #f8fafc;
+            margin-bottom: 0.25rem;
+        }
+
+        .tool-filename {
+            font-size: 0.9rem;
+            color: #94a3b8;
+            font-family: monospace;
+        }
+
+        .tool-description {
+            color: #cbd5e1;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+            min-height: 3rem;
+        }
+
+        .tool-actions {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+
+        .action-btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: #3b82f6;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #2563eb;
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background: rgba(59,130,246,0.1);
+            color: #3b82f6;
+            border: 1px solid #3b82f6;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(59,130,246,0.2);
+        }
+
+        .btn-success {
+            background: #10b981;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #059669;
+        }
+
+        .category-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .category-broadcast {
+            background: rgba(59,130,246,0.2);
+            color: #3b82f6;
+        }
+
+        .category-design {
+            background: rgba(139,92,246,0.2);
+            color: #8b5cf6;
+        }
+
+        .category-admin {
+            background: rgba(16,185,129,0.2);
+            color: #10b981;
+        }
+
+        .category-test {
+            background: rgba(245,158,11,0.2);
+            color: #f59e0b;
+        }
+
+        .category-transfer {
+            background: rgba(239,68,68,0.2);
+            color: #ef4444;
+        }
+
+        .category-utility {
+            background: rgba(107,114,128,0.2);
+            color: #6b7280;
+        }
+
+        .category-obs {
+            background: rgba(168,85,247,0.2);
+            color: #a855f7;
+        }
+
+        .category-local {
+            background: rgba(34,197,94,0.2);
+            color: #22c55e;
+        }
+
+        .category-final {
+            background: linear-gradient(45deg, rgba(255,215,0,0.3), rgba(255,165,0,0.3));
+            color: #ffd700;
+            border: 1px solid rgba(255,215,0,0.5);
+            box-shadow: 0 0 10px rgba(255,215,0,0.3);
+            animation: finalGlow 2s infinite alternate;
+        }
+
+        .category-enhanced {
+            background: linear-gradient(45deg, rgba(147,51,234,0.3), rgba(168,85,247,0.3));
+            color: #a855f7;
+            border: 1px solid rgba(147,51,234,0.5);
+            box-shadow: 0 0 10px rgba(147,51,234,0.3);
+            animation: enhancedGlow 2s infinite alternate;
+        }
+
+        @keyframes enhancedGlow {
+            0% { box-shadow: 0 0 10px rgba(147,51,234,0.3); }
+            100% { box-shadow: 0 0 20px rgba(147,51,234,0.6); }
+        }
+
+        @keyframes finalGlow {
+            0% { box-shadow: 0 0 10px rgba(255,215,0,0.3); }
+            100% { box-shadow: 0 0 20px rgba(255,215,0,0.6); }
+        }
+
+        .footer {
+            text-align: center;
+            color: #94a3b8;
+            font-size: 0.95rem;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(59,130,246,0.2);
+        }
+
+        .selected-count {
+            background: rgba(16,185,129,0.1);
+            border: 1px solid #10b981;
+            border-radius: 8px;
+            padding: 0.5rem 1rem;
+            color: #10b981;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .tools-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats {
+                gap: 1rem;
+            }
+            
+            .controls {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
+        .loading {
+            text-align: center;
+            padding: 3rem;
+            color: #94a3b8;
+        }
+
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(59,130,246,0.1);
+            border-top: 4px solid #3b82f6;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 class="main-title">🔧 جميع الأدوات (1000+)</h1>
+            <p class="subtitle">استكشف وإدارة جميع أدوات Mercato Professional System - أكثر من 1000 أداة متاحة مع أدوات Transfermarkt المتطورة وأدوات OBS المحسنة وخدمات البيانات المتقدمة وملفات التصميم والتقارير الشاملة وملفات الاختبار وملفات C++ للإضافات وملفات اللغات وسكريبتات البناء والتثبيت وملفات الموقع وملفات المحاكاة ومشاريع البناء وملفات الوصفات ومشاريع البناء النهائية والبسيطة وOBS والتبعيات وملفات الرأس والمكتبات وملفات CEF والمكتبات المبنية وملفات الربط وملفات CMake وملفات المترجم ومعرفات المترجم وملفات التصحيح</p>
+            
+            <div class="stats">
+                <div class="stat-item">
+                    <div class="stat-value" id="totalTools">0</div>
+                    <div class="stat-label">إجمالي الأدوات</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="selectedTools">0</div>
+                    <div class="stat-label">الأدوات المحددة</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="categories">0</div>
+                    <div class="stat-label">الفئات</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="controls">
+            <input type="text" class="search-box" id="searchBox" placeholder="🔍 ابحث في الأدوات...">
+            <button class="btn btn-success" onclick="selectAllTools()">
+                <i class="fas fa-check-double"></i>
+                تحديد الكل
+            </button>
+            <button class="btn btn-warning" onclick="deselectAllTools()">
+                <i class="fas fa-times"></i>
+                إلغاء التحديد
+            </button>
+            <button class="btn" onclick="addSelectedToHome()">
+                <i class="fas fa-home"></i>
+                إضافة للمنزل
+            </button>
+            <button class="btn btn-danger" onclick="clearHomeTools()">
+                <i class="fas fa-trash"></i>
+                مسح المنزل
+            </button>
+        </div>
+
+        <div id="selectedCount" class="selected-count" style="display: none;">
+            تم تحديد <span id="selectedCountValue">0</span> أداة
+        </div>
+
+        <div id="toolsGrid" class="tools-grid">
+            <div class="loading">
+                <div class="loading-spinner"></div>
+                جاري تحميل الأدوات...
+            </div>
+        </div>
+
+        <div class="footer">
+            جميع الحقوق محفوظة © 2025 - Mercato Professional System
+        </div>
+    </div>
+
+    <script>
+        // بيانات الأدوات مع الأوصاف والفئات
+        const toolsData = [
+            {
+                filename: 'index.html',
+                name: 'الصفحة الرئيسية الأصلية',
+                description: 'الصفحة الرئيسية الأصلية للنظام',
+                category: 'admin',
+                icon: 'fas fa-home'
+            },
+            {
+                filename: 'index-new.html',
+                name: 'الصفحة الرئيسية الجديدة',
+                description: 'الصفحة الرئيسية المحدثة للنظام مع إدارة المجموعات والأدوات',
+                category: 'admin',
+                icon: 'fas fa-home'
+            },
+            {
+                filename: 'top-transfers-2025.html',
+                name: 'أغلى 15 صفقة في صيف 2025',
+                description: 'عرض احترافي للصفقات الأعلى قيمة من FotMob مع تصميم كامل الشاشة',
+                category: 'transfer',
+                icon: 'fas fa-trophy'
+            },
+            {
+                filename: 'fotmob-extractor.html',
+                name: 'FotMob Data Extractor',
+                description: 'أداة استخراج البيانات الحقيقية من FotMob مع تحديث يومي تلقائي',
+                category: 'utility',
+                icon: 'fas fa-database'
+            },
+            {
+                filename: 'fotmob-monitoring-dashboard.html',
+                name: 'لوحة مراقبة FotMob',
+                description: 'لوحة تحكم متقدمة لمراقبة وإدارة بيانات FotMob',
+                category: 'utility',
+                icon: 'fas fa-chart-line'
+            },
+            {
+                filename: 'fotmob-real-data-test.html',
+                name: 'اختبار بيانات FotMob الحقيقية',
+                description: 'صفحة اختبار للتحقق من صحة البيانات المستخرجة من FotMob',
+                category: 'test',
+                icon: 'fas fa-vial'
+            },
+            {
+                filename: 'test-top-transfers.html',
+                name: 'اختبار API أغلى الصفقات',
+                description: 'صفحة اختبار شاملة لـ API استخراج أغلى الصفقات من FotMob',
+                category: 'test',
+                icon: 'fas fa-vial'
+            },
+            {
+                filename: 'test-fotmob-api.html',
+                name: 'اختبار FotMob API',
+                description: 'اختبار شامل لجميع وظائف FotMob API',
+                category: 'test',
+                icon: 'fas fa-code'
+            },
+            {
+                filename: 'test-new-fotmob-system.html',
+                name: 'اختبار نظام FotMob الجديد',
+                description: 'اختبار النظام المحدث لاستخراج بيانات FotMob',
+                category: 'test',
+                icon: 'fas fa-rocket'
+            },
+            {
+                filename: 'barcelona-ultimate-control.html',
+                name: 'لوحة التحكم النهائية لبرشلونة',
+                description: 'إدارة شاملة للانتقالات والإعدادات مع واجهة متقدمة',
+                category: 'admin',
+                icon: 'fas fa-crown'
+            },
+            {
+                filename: 'barcelona-ultimate-control-fixed.html',
+                name: 'لوحة التحكم النهائية لبرشلونة (محدثة)',
+                description: 'النسخة المحدثة والمحسنة من لوحة التحكم النهائية لبرشلونة',
+                category: 'admin',
+                icon: 'fas fa-crown'
+            },
+            {
+                filename: 'barcelona-ultimate-control-pro.html',
+                name: 'لوحة التحكم الاحترافية لبرشلونة',
+                description: 'النسخة الاحترافية المتقدمة من لوحة التحكم لبرشلونة',
+                category: 'admin',
+                icon: 'fas fa-crown'
+            },
+            {
+                filename: 'barcelona-ultimate-broadcast.html',
+                name: 'أداة البث النهائية لبرشلونة',
+                description: 'عرض احترافي للانتقالات والأخبار مع تأثيرات بصرية متقدمة',
+                category: 'broadcast',
+                icon: 'fas fa-tv'
+            },
+            {
+                filename: 'barcelona-ultimate-broadcast-fixed.html',
+                name: 'أداة البث النهائية لبرشلونة (محدثة)',
+                description: 'النسخة المحدثة والمحسنة من أداة البث النهائية لبرشلونة',
+                category: 'broadcast',
+                icon: 'fas fa-tv'
+            },
+            {
+                filename: 'barcelona-ultimate-broadcast-pro.html',
+                name: 'أداة البث الاحترافية لبرشلونة',
+                description: 'النسخة الاحترافية المتقدمة من أداة البث لبرشلونة',
+                category: 'broadcast',
+                icon: 'fas fa-tv'
+            },
+            {
+                filename: 'barcelona-broadcast-control.html',
+                name: 'لوحة التحكم في البث لبرشلونة',
+                description: 'تحكم متقدم في عرض الانتقالات مع إعدادات مفصلة',
+                category: 'broadcast',
+                icon: 'fas fa-video'
+            },
+            {
+                filename: 'test-barcelona-control.html',
+                name: 'اختبار لوحة تحكم برشلونة',
+                description: 'صفحة اختبار لوحة التحكم النهائية لبرشلونة',
+                category: 'test',
+                icon: 'fas fa-vial'
+            },
+            {
+                filename: 'test-barcelona-sync.html',
+                name: 'اختبار مزامنة برشلونة',
+                description: 'اختبار مزامنة البيانات والإعدادات لبرشلونة',
+                category: 'test',
+                icon: 'fas fa-sync'
+            },
+            {
+                filename: 'pro-studio-v4-ultimate.html',
+                name: 'الاستوديو الاحترافي v4 النهائي',
+                description: 'أقوى استوديو تصميم احترافي متكامل لجميع احتياجاتك الإبداعية',
+                category: 'design',
+                icon: 'fas fa-magic'
+            },
+            {
+                filename: 'football-pro-studio.html',
+                name: 'الستوديو الاحترافي للكرة',
+                description: 'مجموعة شاملة من أدوات التصميم الرياضي المتقدمة',
+                category: 'design',
+                icon: 'fas fa-futbol'
+            },
+            {
+                filename: 'football-design-studio-pro.html',
+                name: 'ستوديو التصميم الاحترافي للكرة',
+                description: 'أدوات تصميم متقدمة للمحتوى الرياضي مع قوالب احترافية',
+                category: 'design',
+                icon: 'fas fa-paint-brush'
+            },
+            {
+                filename: 'club-logo-manager.html',
+                name: 'إدارة شعارات الأندية',
+                description: 'نظام متقدم لإدارة شعارات الأندية والفرق مع قاعدة بيانات شاملة',
+                category: 'admin',
+                icon: 'fas fa-shield-alt'
+            },
+            {
+                filename: 'stream-clean.html',
+                name: 'أداة تنظيف البث',
+                description: 'واجهة نظيفة ومبسطة للبث المباشر مع تصميم عصري',
+                category: 'broadcast',
+                icon: 'fas fa-broom'
+            },
+            {
+                filename: 'player-links.html',
+                name: 'روابط اللاعبين',
+                description: 'إدارة وتنظيم روابط صفحات اللاعبين مع قاعدة بيانات متقدمة',
+                category: 'admin',
+                icon: 'fas fa-link'
+            },
+            {
+                filename: 'supporters-admin.html',
+                name: 'لوحة تحكم الداعمين',
+                description: 'إدارة شاملة للداعمين والمساهمين مع إحصائيات متقدمة',
+                category: 'admin',
+                icon: 'fas fa-user-cog'
+            },
+            {
+                filename: 'support-bar.html',
+                name: 'شريط الداعمين للبث',
+                description: 'عرض أنيق للداعمين مع تأثيرات بصرية حديثة للبث المباشر',
+                category: 'broadcast',
+                icon: 'fas fa-heart'
+            },
+            {
+                filename: 'test-supporters.html',
+                name: 'اختبار نظام الداعمين',
+                description: 'صفحة اختبار شاملة لجميع وظائف نظام الداعمين',
+                category: 'test',
+                icon: 'fas fa-vial'
+            },
+            {
+                filename: 'add-supporters-tools.html',
+                name: 'إضافة أدوات الداعمين',
+                description: 'أدوات إضافية لإدارة وتطوير نظام الداعمين',
+                category: 'admin',
+                icon: 'fas fa-tools'
+            },
+            {
+                filename: 'test-data.html',
+                name: 'اختبار البيانات',
+                description: 'صفحة اختبار لجميع أنواع البيانات في النظام',
+                category: 'test',
+                icon: 'fas fa-database'
+            },
+            {
+                filename: 'test-consistency.html',
+                name: 'اختبار الاتساق',
+                description: 'اختبار اتساق البيانات والوظائف في النظام',
+                category: 'test',
+                icon: 'fas fa-check-circle'
+            },
+            {
+                filename: 'final-test.html',
+                name: 'الاختبار النهائي',
+                description: 'صفحة الاختبار النهائية الشاملة لجميع الميزات',
+                category: 'test',
+                icon: 'fas fa-flag-checkered'
+            },
+            {
+                filename: 'quick-test.html',
+                name: 'الاختبار السريع',
+                description: 'صفحة اختبار سريعة للوظائف الأساسية',
+                category: 'test',
+                icon: 'fas fa-bolt'
+            },
+            {
+                filename: 'simple-test.html',
+                name: 'الاختبار البسيط',
+                description: 'صفحة اختبار بسيطة للوظائف الأساسية',
+                category: 'test',
+                icon: 'fas fa-play'
+            },
+            {
+                filename: 'error-handler-test.html',
+                name: 'اختبار معالج الأخطاء',
+                description: 'صفحة اختبار لنظام معالجة الأخطاء والاستثناءات',
+                category: 'test',
+                icon: 'fas fa-bug'
+            },
+            {
+                filename: 'support-bar-enhanced-original.html',
+                name: 'شريط الداعمين المحسن',
+                description: 'نفس التصميم الأصلي مع تمرير تلقائي متقدم وقابل للتخصيص - الإصدار المحسن',
+                category: 'broadcast',
+                icon: 'fas fa-heart-pulse'
+            },
+            {
+                filename: 'support-bar-enhanced.html',
+                name: 'شريط الداعمين المحسن (تجريبي)',
+                description: 'نسخة تجريبية محسنة من شريط الداعمين مع ميزات إضافية',
+                category: 'broadcast',
+                icon: 'fas fa-heart'
+            },
+            {
+                filename: 'support-bar-pro.html',
+                name: 'شريط الداعمين الاحترافي',
+                description: 'النسخة الاحترافية من شريط الداعمين مع تحكم متقدم',
+                category: 'broadcast',
+                icon: 'fas fa-heart'
+            },
+            {
+                filename: 'support-bar-ticker-live.html',
+                name: 'شريط الداعمين المباشر',
+                description: 'شريط داعمين مع عرض مباشر ومتحرك للأسماء',
+                category: 'broadcast',
+                icon: 'fas fa-heart'
+            },
+            {
+                filename: 'support-bar-ticker.html',
+                name: 'شريط الداعمين المتحرك',
+                description: 'شريط داعمين بسيط مع نص متحرك',
+                category: 'broadcast',
+                icon: 'fas fa-heart'
+            },
+            {
+                filename: 'barcelona-ultimate-broadcast-ticker.html',
+                name: 'شريط أخبار برشلونة المتحرك',
+                description: 'شريط أخبار متحرك مخصص لبرشلونة مع تحديثات مباشرة',
+                category: 'broadcast',
+                icon: 'fas fa-tv'
+            },
+            {
+                filename: 'quick-example.html',
+                name: 'مثال سريع',
+                description: 'صفحة مثال سريع لعرض الوظائف الأساسية',
+                category: 'test',
+                icon: 'fas fa-rocket'
+            },
+            {
+                filename: 'transfermarkt-top-spenders-2025.html',
+                name: 'أكثر 10 أندية صرفاً في سوق الانتقالات 2025',
+                description: 'أداة احترافية لاستخراج وعرض أكثر الأندية صرفاً للأموال في سوق الانتقالات الصيفي 2025 من Transfermarkt مع تحديث مباشر',
+                category: 'transfer',
+                icon: 'fas fa-money-bill-wave'
+            },
+            {
+                filename: 'transfermarkt-display-pro.html',
+                name: 'العرض الاحترافي لأكثر الأندية صرفاً 2025',
+                description: 'صفحة عرض احترافية وجميلة لأكثر الأندية صرفاً في سوق الانتقالات مع تصميم متناسق وعصري باللغة العربية',
+                category: 'transfer',
+                icon: 'fas fa-trophy'
+            },
+            {
+                filename: 'test-transfermarkt-tools.html',
+                name: 'اختبار أدوات Transfermarkt',
+                description: 'صفحة اختبار شاملة للتحقق من أن جميع أدوات Transfermarkt تعمل بشكل صحيح مع تعليمات الاستخدام',
+                category: 'test',
+                icon: 'fas fa-vial'
+            },
+            // أدوات Transfermarkt الإضافية
+            {
+                filename: 'transfermarkt-control-2025.html',
+                name: 'لوحة تحكم Transfermarkt 2025',
+                description: 'لوحة تحكم متقدمة لإدارة بيانات Transfermarkt مع ميزات 2025',
+                category: 'transfer',
+                icon: 'fas fa-cogs'
+            },
+            {
+                filename: 'transfermarkt-control-simple.html',
+                name: 'لوحة تحكم Transfermarkt البسيطة',
+                description: 'واجهة تحكم مبسطة لإدارة بيانات Transfermarkt',
+                category: 'transfer',
+                icon: 'fas fa-sliders-h'
+            },
+            {
+                filename: 'transfermarkt-live-2025.html',
+                name: 'Transfermarkt المباشر 2025',
+                description: 'عرض مباشر لبيانات Transfermarkt مع تحديثات فورية',
+                category: 'transfer',
+                icon: 'fas fa-broadcast-tower'
+            },
+            {
+                filename: 'transfermarkt-live-display.html',
+                name: 'شاشة Transfermarkt المباشرة',
+                description: 'شاشة عرض مباشرة لبيانات الانتقالات من Transfermarkt',
+                category: 'transfer',
+                icon: 'fas fa-tv'
+            },
+            // أدوات All Tools الإضافية
+            {
+                filename: 'all-tools-backup.html',
+                name: 'نسخة احتياطية من جميع الأدوات',
+                description: 'نسخة احتياطية من صفحة جميع الأدوات مع جميع الميزات',
+                category: 'admin',
+                icon: 'fas fa-save'
+            }
+        ];
+
+        // إضافة المزيد من الأدوات
+        toolsData.push(
+            // أدوات OBS المحلية
+            {
+                filename: 'obs-new-tols/club-logo-manager-enhanced.html',
+                name: 'مدير شعارات الأندية المحسن (OBS)',
+                description: 'نسخة محسنة من مدير شعارات الأندية مخصصة لـ OBS Studio',
+                category: 'obs',
+                icon: 'fas fa-shield-alt'
+            },
+            {
+                filename: 'obs-new-tols/transfermarkt-display-pro.html',
+                name: 'عرض Transfermarkt الاحترافي (OBS)',
+                description: 'عرض احترافي لبيانات Transfermarkt مُحسن لـ OBS Studio',
+                category: 'obs',
+                icon: 'fas fa-trophy'
+            },
+            {
+                filename: 'obs-new-tols/transfermarkt-top-spenders-2025.html',
+                name: 'أكبر المنفقين 2025 (OBS)',
+                description: 'عرض أكبر المنفقين في سوق الانتقالات مُحسن لـ OBS',
+                category: 'obs',
+                icon: 'fas fa-money-bill-wave'
+            },
+            {
+                filename: 'obs-new-tols/all-tools-temp.html',
+                name: 'جميع الأدوات المؤقتة (OBS)',
+                description: 'صفحة مؤقتة لجميع أدوات OBS',
+                category: 'obs',
+                icon: 'fas fa-tools'
+            },
+            // أدوات التمرير المحلية
+            {
+                filename: 'scroll-bar/support-bar-enhanced.html',
+                name: 'شريط الداعمين المحسن (محلي)',
+                description: 'نسخة محلية محسنة من شريط الداعمين مع تأثيرات متقدمة',
+                category: 'local',
+                icon: 'fas fa-heart-pulse'
+            },
+            {
+                filename: 'scroll-bar/support-bar-pro.html',
+                name: 'شريط الداعمين الاحترافي (محلي)',
+                description: 'نسخة محلية احترافية من شريط الداعمين',
+                category: 'local',
+                icon: 'fas fa-heart'
+            },
+            {
+                filename: 'scroll-bar/quick-example.html',
+                name: 'مثال سريع (محلي)',
+                description: 'مثال سريع محلي لعرض الوظائف الأساسية',
+                category: 'local',
+                icon: 'fas fa-rocket'
+            },
+
+            // أدوات الاختبار والتشخيص
+            {
+                filename: 'test-logo-integration.html',
+                name: 'اختبار تكامل الشعارات',
+                description: 'أداة شاملة لاختبار تكامل أنظمة الشعارات بين الأدوات المختلفة',
+                category: 'testing',
+                icon: 'fas fa-flask'
+            },
+            // أدوات إضافية من server.js
+            {
+                filename: 'barcelona-transfer-manager.html',
+                name: 'مدير انتقالات برشلونة',
+                description: 'أداة إدارة شاملة لانتقالات برشلونة',
+                category: 'admin',
+                icon: 'fas fa-exchange-alt'
+            },
+            {
+                filename: 'barcelona-obs-overlay.html',
+                name: 'طبقة OBS لبرشلونة',
+                description: 'طبقة مخصصة لـ OBS Studio لعرض بيانات برشلونة',
+                category: 'obs',
+                icon: 'fas fa-layer-group'
+            },
+            {
+                filename: 'barcelona-enhanced-manager.html',
+                name: 'مدير برشلونة المحسن',
+                description: 'نسخة محسنة من مدير انتقالات برشلونة',
+                category: 'admin',
+                icon: 'fas fa-crown'
+            },
+            {
+                filename: 'barcelona-dynamic-overlay.html',
+                name: 'طبقة برشلونة الديناميكية',
+                description: 'طبقة ديناميكية متحركة لعرض بيانات برشلونة',
+                category: 'broadcast',
+                icon: 'fas fa-magic'
+            },
+            {
+                filename: 'barcelona-player-editor.html',
+                name: 'محرر لاعبي برشلونة',
+                description: 'أداة تحرير وإدارة بيانات لاعبي برشلونة',
+                category: 'admin',
+                icon: 'fas fa-user-edit'
+            },
+            {
+                filename: 'barcelona-live-notifications.html',
+                name: 'إشعارات برشلونة المباشرة',
+                description: 'نظام إشعارات مباشر لأخبار وانتقالات برشلونة',
+                category: 'broadcast',
+                icon: 'fas fa-bell'
+            },
+            {
+                filename: 'barcelona-analytics-dashboard.html',
+                name: 'لوحة تحليلات برشلونة',
+                description: 'لوحة تحليلات متقدمة لإحصائيات ومعلومات برشلونة',
+                category: 'admin',
+                icon: 'fas fa-chart-bar'
+            },
+            {
+                filename: 'global-settings.html',
+                name: 'الإعدادات العامة',
+                description: 'إعدادات النظام العامة والتخصيصات',
+                category: 'admin',
+                icon: 'fas fa-cog'
+            }
+        );
+
+        // إضافة المزيد من الأدوات المتبقية
+        toolsData.push(
+            // أدوات إضافية مفقودة
+            {
+                filename: 'data-manager.js',
+                name: 'مدير البيانات JavaScript',
+                description: 'مكتبة JavaScript لإدارة البيانات والتخزين المحلي',
+                category: 'utility',
+                icon: 'fas fa-code'
+            },
+            {
+                filename: 'enhanced-scroll-engine.js',
+                name: 'محرك التمرير المحسن',
+                description: 'مكتبة JavaScript لتحسين تأثيرات التمرير',
+                category: 'utility',
+                icon: 'fas fa-scroll'
+            },
+            {
+                filename: 'shared-data.js',
+                name: 'البيانات المشتركة',
+                description: 'مكتبة لمشاركة البيانات بين الصفحات',
+                category: 'utility',
+                icon: 'fas fa-share-alt'
+            },
+            {
+                filename: 'auto-scroll-fix.js',
+                name: 'إصلاح التمرير التلقائي',
+                description: 'مكتبة لإصلاح مشاكل التمرير التلقائي',
+                category: 'utility',
+                icon: 'fas fa-wrench'
+            },
+            {
+                filename: 'stream-data.json',
+                name: 'بيانات البث',
+                description: 'ملف JSON يحتوي على بيانات البث والإعدادات',
+                category: 'utility',
+                icon: 'fas fa-file-code'
+            },
+            // أدوات شريط الداعمين الجديدة والمحسنة
+            {
+                filename: 'support-bar-final.html',
+                name: '🏆 شريط الداعمين النهائي',
+                description: 'الإصدار النهائي المتكامل مع جميع الميزات: شعار الملك، بطولات، تحكم في الأحجام، حفظ متقدم، سلاسة 10 مستويات، شعار YouTube',
+                category: 'final',
+                icon: 'fas fa-crown'
+            },
+            {
+                filename: 'support-bar-v3.html',
+                name: 'شريط الداعمين v3',
+                description: 'الإصدار الثالث المحسن من شريط الداعمين مع ميزات متقدمة',
+                category: 'broadcast',
+                icon: 'fas fa-heart-pulse'
+            },
+            {
+                filename: 'test-final.html',
+                name: 'اختبار شريط الداعمين النهائي',
+                description: 'صفحة اختبار شاملة للإصدار النهائي من شريط الداعمين',
+                category: 'test',
+                icon: 'fas fa-vial'
+            },
+            {
+                filename: 'GUIDE-ULTIMATE.md',
+                name: 'دليل شريط الداعمين النهائي',
+                description: 'دليل استخدام شامل للإصدار النهائي من شريط الداعمين مع جميع الميزات',
+                category: 'utility',
+                icon: 'fas fa-book'
+            },
+            {
+                filename: 'GUIDE-FINAL.md',
+                name: 'دليل الاستخدام النهائي',
+                description: 'دليل استخدام مفصل لجميع ميزات شريط الداعمين',
+                category: 'utility',
+                icon: 'fas fa-file-text'
+            },
+            // أدوات Transfermarkt المطورة والمحسنة
+            {
+                filename: 'obs-new-tols/transfermarkt-top-spenders-2025.html',
+                name: '💰 أكثر الأندية صرفاً 2025 - محسن',
+                description: 'الأداة الرئيسية المحسنة مع أسماء عربية، شعارات ذكية، إجماليات، وتصميم عصري متطور',
+                category: 'final',
+                icon: 'fas fa-chart-bar'
+            },
+            {
+                filename: 'transfermarkt-ultimate-display.html',
+                name: '🏆 عرض Transfermarkt النهائي',
+                description: 'العرض النهائي والمتطور لـ Transfermarkt مع جميع الميزات',
+                category: 'final',
+                icon: 'fas fa-trophy'
+            },
+            {
+                filename: 'transfermarkt-display-pro.html',
+                name: '📊 عرض احترافي محسن - Transfermarkt',
+                description: 'أداة العرض الاحترافية المحدثة مع دعم الأسماء العربية والشعارات الذكية',
+                category: 'broadcast',
+                icon: 'fas fa-presentation'
+            },
+            {
+                filename: 'transfermarkt-live-display.html',
+                name: '🔴 عرض مباشر متطور - Transfermarkt',
+                description: 'أداة العرض المباشر المحسنة مع تصميم عصري وبيانات محدثة',
+                category: 'broadcast',
+                icon: 'fas fa-broadcast-tower'
+            },
+            {
+                filename: 'smart-logo-system.js',
+                name: '🎨 نظام الشعارات الذكي',
+                description: 'نظام متطور لإدارة شعارات الأندية تلقائياً مع دعم الأندية الجديدة ومصادر متعددة',
+                category: 'utility',
+                icon: 'fas fa-magic'
+            },
+            {
+                filename: 'TRANSFERMARKT-FIXED-GUIDE.md',
+                name: '📋 دليل Transfermarkt المحدث',
+                description: 'دليل شامل للأدوات المحسنة مع حلول جميع المشاكل والميزات الجديدة',
+                category: 'final',
+                icon: 'fas fa-book'
+            }
+        );
+
+        // إضافة جميع الأدوات المفقودة من المجلدات المختلفة
+        toolsData.push(
+            // أدوات OBS الجديدة
+            {
+                filename: 'obs-new-tols/universal-logo-fix.js',
+                name: '🔧 إصلاح الشعارات الشامل',
+                description: 'أداة شاملة لإصلاح مشاكل الشعارات في جميع الأدوات مع دعم تلقائي',
+                category: 'obs',
+                icon: 'fas fa-tools'
+            },
+            {
+                filename: 'obs-new-tols/crash-test-tool.html',
+                name: '🧪 أداة اختبار الانهيار',
+                description: 'أداة اختبار شاملة للكشف عن مشاكل الانهيار وحلها',
+                category: 'test',
+                icon: 'fas fa-bug'
+            },
+            {
+                filename: 'obs-new-tols/transfermarkt-ultimate-display-fixed.html',
+                name: '🏆 عرض Transfermarkt النهائي المصلح',
+                description: 'النسخة المصلحة من العرض النهائي لـ Transfermarkt مع جميع التحسينات',
+                category: 'final',
+                icon: 'fas fa-trophy'
+            },
+            {
+                filename: 'obs-new-tols/transfermarkt-real-data.html',
+                name: '📊 بيانات Transfermarkt الحقيقية',
+                description: 'عرض البيانات الحقيقية من Transfermarkt مع تحديثات فورية',
+                category: 'transfer',
+                icon: 'fas fa-database'
+            },
+            {
+                filename: 'obs-new-tols/instant-logo-fix.html',
+                name: '⚡ إصلاح الشعارات الفوري',
+                description: 'أداة إصلاح سريعة للشعارات مع واجهة بسيطة',
+                category: 'obs',
+                icon: 'fas fa-bolt'
+            },
+            {
+                filename: 'obs-new-tols/logo-sync-helper.js',
+                name: '🔄 مساعد مزامنة الشعارات',
+                description: 'أداة مساعدة لمزامنة الشعارات بين الأدوات المختلفة',
+                category: 'utility',
+                icon: 'fas fa-sync'
+            },
+            {
+                filename: 'obs-new-tols/logo-debug-tool.html',
+                name: '🐛 أداة تصحيح الشعارات',
+                description: 'أداة تصحيح متقدمة لمشاكل الشعارات',
+                category: 'test',
+                icon: 'fas fa-bug'
+            },
+            {
+                filename: 'obs-new-tols/FINAL-SYSTEM-TEST.html',
+                name: '🧪 اختبار النظام النهائي',
+                description: 'اختبار شامل للنظام النهائي مع جميع الميزات',
+                category: 'test',
+                icon: 'fas fa-vial'
+            },
+            {
+                filename: 'obs-new-tols/transfermarkt-unified-system.js',
+                name: '🔄 نظام Transfermarkt الموحد',
+                description: 'نظام موحد لإدارة جميع بيانات Transfermarkt',
+                category: 'utility',
+                icon: 'fas fa-cogs'
+            },
+            {
+                filename: 'obs-new-tols/test-real-data-system.html',
+                name: '🧪 اختبار نظام البيانات الحقيقية',
+                description: 'اختبار شامل لنظام البيانات الحقيقية',
+                category: 'test',
+                icon: 'fas fa-vial'
+            },
+            {
+                filename: 'obs-new-tols/transfermarkt-display-real.html',
+                name: '📺 عرض Transfermarkt الحقيقي',
+                description: 'عرض حقيقي لبيانات Transfermarkt مع تصميم احترافي',
+                category: 'broadcast',
+                icon: 'fas fa-tv'
+            },
+            {
+                filename: 'obs-new-tols/system-cleanup.html',
+                name: '🧹 تنظيف النظام',
+                description: 'أداة تنظيف شاملة للنظام وإزالة الملفات غير الضرورية',
+                category: 'utility',
+                icon: 'fas fa-broom'
+            },
+            {
+                filename: 'obs-new-tols/transfermarkt-fixed.html',
+                name: '🔧 Transfermarkt المصلح',
+                description: 'النسخة المصلحة من أداة Transfermarkt',
+                category: 'transfer',
+                icon: 'fas fa-wrench'
+            },
+            {
+                filename: 'obs-new-tols/quick-fix.html',
+                name: '⚡ الإصلاح السريع',
+                description: 'أداة إصلاح سريعة للمشاكل الشائعة',
+                category: 'utility',
+                icon: 'fas fa-bolt'
+            },
+            {
+                filename: 'obs-new-tols/test-buttons.html',
+                name: '🔘 اختبار الأزرار',
+                description: 'صفحة اختبار لجميع أنواع الأزرار والتفاعلات',
+                category: 'test',
+                icon: 'fas fa-square'
+            },
+            {
+                filename: 'obs-new-tols/system-monitor.js',
+                name: '📊 مراقب النظام',
+                description: 'أداة مراقبة شاملة لأداء النظام',
+                category: 'utility',
+                icon: 'fas fa-chart-line'
+            },
+            {
+                filename: 'obs-new-tols/test-diagnosis.html',
+                name: '🔍 تشخيص الاختبار',
+                description: 'أداة تشخيص متقدمة للاختبارات',
+                category: 'test',
+                icon: 'fas fa-stethoscope'
+            },
+            {
+                filename: 'obs-new-tols/transfermarkt-ultimate-display.html',
+                name: '🏆 العرض النهائي لـ Transfermarkt',
+                description: 'النسخة النهائية من عرض Transfermarkt',
+                category: 'final',
+                icon: 'fas fa-trophy'
+            },
+            {
+                filename: 'obs-new-tols/smart-logo-system.js',
+                name: '🧠 نظام الشعارات الذكي',
+                description: 'نظام ذكي لإدارة الشعارات تلقائياً',
+                category: 'utility',
+                icon: 'fas fa-brain'
+            },
+
+            // أدوات شريط التمرير
+            {
+                filename: 'شريط التمرير/quick-example.html',
+                name: '📝 مثال سريع للتمرير',
+                description: 'مثال سريع لعرض وظائف التمرير المحسنة',
+                category: 'local',
+                icon: 'fas fa-scroll'
+            },
+            {
+                filename: 'شريط التمرير/enhanced-scroll-engine.js',
+                name: '🚀 محرك التمرير المحسن',
+                description: 'محرك تمرير متطور مع تأثيرات متقدمة',
+                category: 'utility',
+                icon: 'fas fa-rocket'
+            },
+            {
+                filename: 'شريط التمرير/support-bar-pro.html',
+                name: '💎 شريط الداعمين الاحترافي',
+                description: 'النسخة الاحترافية من شريط الداعمين مع تمرير محسن',
+                category: 'broadcast',
+                icon: 'fas fa-gem'
+            },
+            {
+                filename: 'شريط التمرير/support-bar-enhanced.html',
+                name: '⭐ شريط الداعمين المحسن',
+                description: 'نسخة محسنة من شريط الداعمين مع ميزات إضافية',
+                category: 'broadcast',
+                icon: 'fas fa-star'
+            },
+            {
+                filename: 'شريط التمرير/auto-scroll-fix.js',
+                name: '🔧 إصلاح التمرير التلقائي',
+                description: 'إصلاح مشاكل التمرير التلقائي في شريط الداعمين',
+                category: 'utility',
+                icon: 'fas fa-wrench'
+            },
+
+            // أدوات OBS المحسنة
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/support-bar-enhanced-original.html',
+                name: '🎯 شريط الداعمين المحسن الأصلي',
+                description: 'النسخة الأصلية المحسنة من شريط الداعمين لـ OBS',
+                category: 'obs',
+                icon: 'fas fa-bullseye'
+            },
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/index-new-updated.html',
+                name: '🏠 الصفحة الرئيسية المحدثة',
+                description: 'الصفحة الرئيسية المحدثة مع جميع التحسينات',
+                category: 'admin',
+                icon: 'fas fa-home'
+            },
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/test-transfermarkt-tools.html',
+                name: '🧪 اختبار أدوات Transfermarkt',
+                description: 'اختبار شامل لأدوات Transfermarkt المحسنة',
+                category: 'test',
+                icon: 'fas fa-vial'
+            },
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/transfermarkt-top-spenders-2025.html',
+                name: '💰 أكبر المنفقين 2025 - محسن',
+                description: 'عرض أكبر المنفقين في 2025 مع تحسينات OBS',
+                category: 'transfer',
+                icon: 'fas fa-money-bill-wave'
+            },
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/transfermarkt-display-pro.html',
+                name: '📊 عرض Transfermarkt الاحترافي',
+                description: 'عرض احترافي لـ Transfermarkt مُحسن لـ OBS',
+                category: 'broadcast',
+                icon: 'fas fa-chart-bar'
+            },
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/support-bar-pro.html',
+                name: '💎 شريط الداعمين الاحترافي - OBS',
+                description: 'النسخة الاحترافية من شريط الداعمين لـ OBS',
+                category: 'obs',
+                icon: 'fas fa-gem'
+            },
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/support-bar-enhanced.html',
+                name: '⭐ شريط الداعمين المحسن - OBS',
+                description: 'شريط الداعمين المحسن مخصص لـ OBS',
+                category: 'obs',
+                icon: 'fas fa-star'
+            },
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/quick-example.html',
+                name: '📝 مثال سريع - OBS',
+                description: 'مثال سريع للوظائف الأساسية في OBS',
+                category: 'obs',
+                icon: 'fas fa-play'
+            },
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/enhanced-scroll-engine.js',
+                name: '🚀 محرك التمرير المحسن - OBS',
+                description: 'محرك تمرير محسن مخصص لـ OBS Studio',
+                category: 'obs',
+                icon: 'fas fa-rocket'
+            },
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/auto-scroll-fix.js',
+                name: '🔧 إصلاح التمرير التلقائي - OBS',
+                description: 'إصلاح مشاكل التمرير التلقائي في OBS',
+                category: 'obs',
+                icon: 'fas fa-wrench'
+            },
+
+            // أدوات OBS الإضافية
+            {
+                filename: 'obs tols add/build-obs-plugin.bat',
+                name: '🔨 بناء إضافة OBS',
+                description: 'سكريبت بناء إضافة OBS Studio',
+                category: 'obs',
+                icon: 'fas fa-hammer'
+            },
+            {
+                filename: 'obs tols add/build-obs-plugin.sh',
+                name: '🔨 بناء إضافة OBS (Linux)',
+                description: 'سكريبت بناء إضافة OBS Studio لنظام Linux',
+                category: 'obs',
+                icon: 'fas fa-hammer'
+            },
+            {
+                filename: 'obs tols add/install-advanced-html-plugin.bat',
+                name: '📦 تثبيت إضافة HTML المتقدمة',
+                description: 'تثبيت إضافة HTML متقدمة لـ OBS Studio',
+                category: 'obs',
+                icon: 'fas fa-download'
+            },
+            {
+                filename: 'obs tols add/create-simple-plugin.bat',
+                name: '➕ إنشاء إضافة بسيطة',
+                description: 'إنشاء إضافة OBS بسيطة',
+                category: 'obs',
+                icon: 'fas fa-plus'
+            },
+            {
+                filename: 'obs tols add/complete-install.bat',
+                name: '✅ التثبيت الكامل',
+                description: 'تثبيت كامل لجميع مكونات OBS',
+                category: 'obs',
+                icon: 'fas fa-check-circle'
+            },
+            {
+                filename: 'obs tols add/setup-dev.bat',
+                name: '⚙️ إعداد بيئة التطوير',
+                description: 'إعداد بيئة التطوير لـ OBS Studio',
+                category: 'obs',
+                icon: 'fas fa-cog'
+            },
+
+            // أدوات الخدمات
+            {
+                filename: 'services/enhancedTransfermarktExtractor.js',
+                name: '🔍 مستخرج Transfermarkt المحسن',
+                description: 'خدمة متقدمة لاستخراج بيانات Transfermarkt',
+                category: 'utility',
+                icon: 'fas fa-search'
+            },
+            {
+                filename: 'services/trueFotMobExtractor.js',
+                name: '📱 مستخرج FotMob الحقيقي',
+                description: 'مستخرج بيانات حقيقي من FotMob',
+                category: 'utility',
+                icon: 'fas fa-mobile-alt'
+            },
+            {
+                filename: 'services/fotmobRealTimeExtractor.js',
+                name: '⏰ مستخرج FotMob المباشر',
+                description: 'مستخرج بيانات مباشر من FotMob',
+                category: 'utility',
+                icon: 'fas fa-clock'
+            },
+            {
+                filename: 'services/fotmobExtractorService.js',
+                name: '🔄 خدمة مستخرج FotMob',
+                description: 'خدمة شاملة لاستخراج بيانات FotMob',
+                category: 'utility',
+                icon: 'fas fa-sync'
+            },
+            {
+                filename: 'services/fotmobMonitoringService.js',
+                name: '📊 خدمة مراقبة FotMob',
+                description: 'خدمة مراقبة شاملة لـ FotMob',
+                category: 'utility',
+                icon: 'fas fa-chart-line'
+            },
+            {
+                filename: 'services/advancedErrorHandler.js',
+                name: '🛡️ معالج الأخطاء المتقدم',
+                description: 'معالج أخطاء متقدم للنظام',
+                category: 'utility',
+                icon: 'fas fa-shield-alt'
+            },
+            {
+                filename: 'services/topTransfersExtractor.js',
+                name: '🏆 مستخرج أفضل الانتقالات',
+                description: 'مستخرج لأفضل الانتقالات من مصادر متعددة',
+                category: 'transfer',
+                icon: 'fas fa-trophy'
+            },
+            {
+                filename: 'services/supportersService.js',
+                name: '💖 خدمة الداعمين',
+                description: 'خدمة إدارة الداعمين والمساهمين',
+                category: 'utility',
+                icon: 'fas fa-heart'
+            },
+            {
+                filename: 'services/obsTransferExtractor.js',
+                name: '📺 مستخرج الانتقالات لـ OBS',
+                description: 'مستخرج انتقالات مخصص لـ OBS Studio',
+                category: 'obs',
+                icon: 'fas fa-tv'
+            },
+            {
+                filename: 'services/globalConfigService.js',
+                name: '⚙️ خدمة الإعدادات العامة',
+                description: 'خدمة إدارة الإعدادات العامة للنظام',
+                category: 'utility',
+                icon: 'fas fa-cog'
+            },
+            {
+                filename: 'services/guaranteedFotMobExtractor.js',
+                name: '✅ مستخرج FotMob المضمون',
+                description: 'مستخرج بيانات مضمون من FotMob',
+                category: 'utility',
+                icon: 'fas fa-check-circle'
+            },
+            {
+                filename: 'services/fallbackRealExtractor.js',
+                name: '🔄 مستخرج الاحتياطي الحقيقي',
+                description: 'مستخرج بيانات احتياطي للاستخدام عند فشل المصادر الرئيسية',
+                category: 'utility',
+                icon: 'fas fa-undo'
+            },
+            {
+                filename: 'services/realTimeFotMobExtractor.js',
+                name: '⚡ مستخرج FotMob في الوقت الفعلي',
+                description: 'مستخرج بيانات في الوقت الفعلي من FotMob',
+                category: 'utility',
+                icon: 'fas fa-bolt'
+            },
+            {
+                filename: 'services/fixedFotMobExtractor.js',
+                name: '🔧 مستخرج FotMob المصلح',
+                description: 'النسخة المصلحة من مستخرج FotMob',
+                category: 'utility',
+                icon: 'fas fa-wrench'
+            },
+            {
+                filename: 'services/robustFotMobExtractor.js',
+                name: '🛡️ مستخرج FotMob القوي',
+                description: 'مستخرج بيانات قوي ومقاوم للأخطاء',
+                category: 'utility',
+                icon: 'fas fa-shield-alt'
+            },
+            {
+                filename: 'services/ultimateFotMobExtractor.js',
+                name: '🏆 المستخرج النهائي لـ FotMob',
+                description: 'المستخرج النهائي والمتطور لـ FotMob',
+                category: 'final',
+                icon: 'fas fa-crown'
+            },
+            {
+                filename: 'services/eliteTransfersExtractor.js',
+                name: '👑 مستخرج الانتقالات النخبة',
+                description: 'مستخرج انتقالات نخبة مع دقة عالية',
+                category: 'transfer',
+                icon: 'fas fa-crown'
+            },
+            {
+                filename: 'services/advancedFotMobExtractor.js',
+                name: '🚀 مستخرج FotMob المتقدم',
+                description: 'مستخرج بيانات متقدم لـ FotMob',
+                category: 'utility',
+                icon: 'fas fa-rocket'
+            },
+            {
+                filename: 'services/ultimateTransfersExtractor.js',
+                name: '🏆 المستخرج النهائي للانتقالات',
+                description: 'المستخرج النهائي لجميع أنواع الانتقالات',
+                category: 'final',
+                icon: 'fas fa-trophy'
+            },
+            {
+                filename: 'services/fotmobAdvancedExtractor.js',
+                name: '🔬 مستخرج FotMob المتقدم',
+                description: 'مستخرج بيانات متقدم وعلمي لـ FotMob',
+                category: 'utility',
+                icon: 'fas fa-microscope'
+            },
+            {
+                filename: 'services/smartCacheService.js',
+                name: '🧠 خدمة التخزين المؤقت الذكي',
+                description: 'خدمة تخزين مؤقت ذكية لتحسين الأداء',
+                category: 'utility',
+                icon: 'fas fa-brain'
+            },
+            {
+                filename: 'services/transfersMonitoringService.js',
+                name: '📊 خدمة مراقبة الانتقالات',
+                description: 'خدمة مراقبة شاملة للانتقالات',
+                category: 'transfer',
+                icon: 'fas fa-chart-bar'
+            },
+            {
+                filename: 'services/fotmobRealExtractor.js',
+                name: '📱 مستخرج FotMob الحقيقي',
+                description: 'مستخرج بيانات حقيقي من FotMob',
+                category: 'utility',
+                icon: 'fas fa-mobile-alt'
+            },
+            {
+                filename: 'services/fotmobPuppeteerExtractor.js',
+                name: '🤖 مستخرج FotMob بـ Puppeteer',
+                description: 'مستخرج بيانات باستخدام Puppeteer',
+                category: 'utility',
+                icon: 'fas fa-robot'
+            },
+            {
+                filename: 'services/professionalTransfersExtractor.js',
+                name: '💼 مستخرج الانتقالات الاحترافي',
+                description: 'مستخرج انتقالات احترافي للاستخدام التجاري',
+                category: 'transfer',
+                icon: 'fas fa-briefcase'
+            },
+            {
+                filename: 'services/intelligentClubSearch.js',
+                name: '🧠 البحث الذكي عن الأندية',
+                description: 'خدمة بحث ذكية عن الأندية والفرق',
+                category: 'utility',
+                icon: 'fas fa-search-plus'
+            },
+            {
+                filename: 'services/playerDataExtractor.js',
+                name: '👤 مستخرج بيانات اللاعبين',
+                description: 'مستخرج بيانات شامل للاعبين',
+                category: 'utility',
+                icon: 'fas fa-user'
+            },
+            {
+                filename: 'services/fotmobIntegratedService.js',
+                name: '🔗 خدمة FotMob المتكاملة',
+                description: 'خدمة متكاملة لجميع وظائف FotMob',
+                category: 'utility',
+                icon: 'fas fa-link'
+            },
+            {
+                filename: 'services/unifiedTransfersService.js',
+                name: '🔄 خدمة الانتقالات الموحدة',
+                description: 'خدمة موحدة لإدارة جميع الانتقالات',
+                category: 'transfer',
+                icon: 'fas fa-sync'
+            },
+            {
+                filename: 'services/transfersService.js',
+                name: '📊 خدمة الانتقالات',
+                description: 'خدمة شاملة لإدارة الانتقالات',
+                category: 'transfer',
+                icon: 'fas fa-exchange-alt'
+            },
+            {
+                filename: 'services/fotmobUltimateExtractor.js',
+                name: '🏆 المستخرج النهائي لـ FotMob',
+                description: 'المستخرج النهائي والمتطور لـ FotMob',
+                category: 'final',
+                icon: 'fas fa-crown'
+            },
+            {
+                filename: 'services/smartTransferCache.js',
+                name: '🧠 التخزين المؤقت الذكي للانتقالات',
+                description: 'نظام تخزين مؤقت ذكي للانتقالات',
+                category: 'utility',
+                icon: 'fas fa-memory'
+            },
+            {
+                filename: 'services/modernFotMobScraper.js',
+                name: '🔄 مستخرج FotMob الحديث',
+                description: 'مستخرج بيانات حديث لـ FotMob',
+                category: 'utility',
+                icon: 'fas fa-sync-alt'
+            },
+            {
+                filename: 'services/advancedFotMobScraper.js',
+                name: '🚀 مستخرج FotMob المتقدم',
+                description: 'مستخرج بيانات متقدم لـ FotMob',
+                category: 'utility',
+                icon: 'fas fa-rocket'
+            },
+            {
+                filename: 'services/realFotmobScraper.js',
+                name: '📱 مستخرج FotMob الحقيقي',
+                description: 'مستخرج بيانات حقيقي من FotMob',
+                category: 'utility',
+                icon: 'fas fa-mobile-alt'
+            },
+            {
+                filename: 'services/realisticTransferGenerator.js',
+                name: '🎲 مولد الانتقالات الواقعية',
+                description: 'مولد انتقالات واقعية للاختبار',
+                category: 'utility',
+                icon: 'fas fa-dice'
+            },
+            {
+                filename: 'services/alternativeTransferSources.js',
+                name: '🔄 مصادر الانتقالات البديلة',
+                description: 'خدمة مصادر بديلة للانتقالات',
+                category: 'utility',
+                icon: 'fas fa-exchange-alt'
+            },
+            {
+                filename: 'services/fotmobEnhanced.js',
+                name: '⭐ FotMob المحسن',
+                description: 'نسخة محسنة من خدمات FotMob',
+                category: 'utility',
+                icon: 'fas fa-star'
+            },
+            {
+                filename: 'services/lmStudioConfigService.js',
+                name: '⚙️ خدمة إعدادات LM Studio',
+                description: 'خدمة إدارة إعدادات LM Studio',
+                category: 'utility',
+                icon: 'fas fa-cog'
+            },
+            {
+                filename: 'services/errorHandler.js',
+                name: '🛡️ معالج الأخطاء',
+                description: 'معالج أخطاء شامل للنظام',
+                category: 'utility',
+                icon: 'fas fa-shield-alt'
+            },
+            {
+                filename: 'services/notificationService.js',
+                name: '🔔 خدمة الإشعارات',
+                description: 'خدمة إشعارات متقدمة للنظام',
+                category: 'utility',
+                icon: 'fas fa-bell'
+            },
+            {
+                filename: 'services/networkService.js',
+                name: '🌐 خدمة الشبكة',
+                description: 'خدمة إدارة الشبكة والاتصالات',
+                category: 'utility',
+                icon: 'fas fa-network-wired'
+            },
+            {
+                filename: 'services/pinterestImageService.js',
+                name: '📌 خدمة صور Pinterest',
+                description: 'خدمة استخراج الصور من Pinterest',
+                category: 'utility',
+                icon: 'fas fa-thumbtack'
+            },
+            {
+                filename: 'services/playerImageService.js',
+                name: '👤 خدمة صور اللاعبين',
+                description: 'خدمة إدارة صور اللاعبين',
+                category: 'utility',
+                icon: 'fas fa-user'
+            },
+
+            // أدوات إضافية من المجلد الرئيسي
+            {
+                filename: 'clubLogos.js',
+                name: '🛡️ شعارات الأندية',
+                description: 'مكتبة شاملة لإدارة شعارات الأندية',
+                category: 'utility',
+                icon: 'fas fa-shield-alt'
+            },
+            {
+                filename: 'server.js',
+                name: '🖥️ الخادم الرئيسي',
+                description: 'الخادم الرئيسي للنظام مع جميع الوظائف',
+                category: 'utility',
+                icon: 'fas fa-server'
+            },
+            {
+                filename: 'simple-server.js',
+                name: '🖥️ الخادم البسيط',
+                description: 'خادم بسيط للاختبار والتطوير',
+                category: 'utility',
+                icon: 'fas fa-server'
+            },
+            {
+                filename: 'start-server.py',
+                name: '🐍 بدء الخادم بـ Python',
+                description: 'سكريبت Python لبدء الخادم',
+                category: 'utility',
+                icon: 'fab fa-python'
+            },
+            {
+                filename: 'test-final-system.js',
+                name: '🧪 اختبار النظام النهائي',
+                description: 'اختبار شامل للنظام النهائي',
+                category: 'test',
+                icon: 'fas fa-vial'
+            },
+            {
+                filename: 'test-true-extractor.js',
+                name: '🧪 اختبار المستخرج الحقيقي',
+                description: 'اختبار المستخرج الحقيقي للبيانات',
+                category: 'test',
+                icon: 'fas fa-vial'
+            },
+            {
+                filename: 'test-real-extractor.js',
+                name: '🧪 اختبار المستخرج الحقيقي',
+                description: 'اختبار المستخرج الحقيقي للبيانات',
+                category: 'test',
+                icon: 'fas fa-vial'
+            },
+            {
+                filename: 'test-api.js',
+                name: '🧪 اختبار API',
+                description: 'اختبار شامل لجميع APIs',
+                category: 'test',
+                icon: 'fas fa-code'
+            },
+
+            // أدوات البداية والإدارة
+            {
+                filename: 'ULTIMATE-UNIFIED-START.bat',
+                name: '🚀 البداية النهائية الموحدة',
+                description: 'سكريبت البداية النهائي الموحد لجميع الأدوات',
+                category: 'admin',
+                icon: 'fas fa-rocket'
+            },
+            {
+                filename: 'ULTIMATE-START.bat',
+                name: '🚀 البداية النهائية',
+                description: 'سكريبت البداية النهائي للنظام',
+                category: 'admin',
+                icon: 'fas fa-rocket'
+            },
+            {
+                filename: 'TEST-ULTIMATE-START.bat',
+                name: '🧪 اختبار البداية النهائية',
+                description: 'اختبار سكريبت البداية النهائي',
+                category: 'test',
+                icon: 'fas fa-vial'
+            },
+
+            // أدوات OBS المحسنة الإضافية
+            {
+                filename: 'obs-new-tols/ULTIMATE-START-ENGLISH.bat',
+                name: '🚀 البداية النهائية الإنجليزية',
+                description: 'سكريبت البداية النهائي باللغة الإنجليزية',
+                category: 'obs',
+                icon: 'fas fa-rocket'
+            },
+            {
+                filename: 'obs-new-tols/ULTIMATE-START-NEW.bat',
+                name: '🚀 البداية النهائية الجديدة',
+                description: 'سكريبت البداية النهائي الجديد',
+                category: 'obs',
+                icon: 'fas fa-rocket'
+            },
+            {
+                filename: 'obs-new-tols/TEST-SYSTEM.bat',
+                name: '🧪 اختبار النظام',
+                description: 'اختبار شامل للنظام',
+                category: 'test',
+                icon: 'fas fa-vial'
+            },
+            {
+                filename: 'obs-new-tols/ULTIMATE-START.bat',
+                name: '🚀 البداية النهائية OBS',
+                description: 'سكريبت البداية النهائي لـ OBS',
+                category: 'obs',
+                icon: 'fas fa-rocket'
+            },
+            {
+                filename: 'obs-new-tols/start-server.sh',
+                name: '🐧 بدء الخادم Linux',
+                description: 'سكريبت بدء الخادم لنظام Linux',
+                category: 'obs',
+                icon: 'fab fa-linux'
+            },
+            {
+                filename: 'obs-new-tols/start-server.bat',
+                name: '🪟 بدء الخادم Windows',
+                description: 'سكريبت بدء الخادم لنظام Windows',
+                category: 'obs',
+                icon: 'fab fa-windows'
+            },
+            {
+                filename: 'obs-new-tols/server.js',
+                name: '🖥️ خادم OBS',
+                description: 'خادم مخصص لـ OBS Studio',
+                category: 'obs',
+                icon: 'fas fa-server'
+            },
+
+            // ملفات البيانات والملفات المساعدة
+            {
+                filename: 'obs-new-tols/sample-clubs-data.csv',
+                name: '📊 بيانات الأندية النموذجية CSV',
+                description: 'ملف CSV يحتوي على بيانات نموذجية للأندية',
+                category: 'utility',
+                icon: 'fas fa-file-csv'
+            },
+            {
+                filename: 'obs-new-tols/sample-clubs-data.json',
+                name: '📊 بيانات الأندية النموذجية JSON',
+                description: 'ملف JSON يحتوي على بيانات نموذجية للأندية',
+                category: 'utility',
+                icon: 'fas fa-file-code'
+            },
+
+            // أدوات API
+            {
+                filename: 'api/network/index.js',
+                name: '🌐 خدمة الشبكة API',
+                description: 'API خدمة الشبكة والاتصالات',
+                category: 'utility',
+                icon: 'fas fa-network-wired'
+            },
+            {
+                filename: 'api/network/test-lm-studio.js',
+                name: '🧪 اختبار LM Studio API',
+                description: 'اختبار API لـ LM Studio',
+                category: 'test',
+                icon: 'fas fa-vial'
+            },
+
+            // ملفات التكوين
+            {
+                filename: 'config/lm-studio.json',
+                name: '⚙️ إعدادات LM Studio',
+                description: 'ملف إعدادات LM Studio',
+                category: 'utility',
+                icon: 'fas fa-cog'
+            },
+
+            // ملفات البيانات
+            {
+                filename: 'data/barcelona-advanced-config.json',
+                name: '⚙️ إعدادات برشلونة المتقدمة',
+                description: 'ملف إعدادات متقدمة لبرشلونة',
+                category: 'admin',
+                icon: 'fas fa-cog'
+            },
+            {
+                filename: 'data/barcelona-mystery-candidates.json',
+                name: '🔍 مرشحي برشلونة الغامضون',
+                description: 'قائمة المرشحين الغامضين لبرشلونة',
+                category: 'admin',
+                icon: 'fas fa-search'
+            },
+            {
+                filename: 'data/barcelona-transfers-enhanced.json',
+                name: '📊 انتقالات برشلونة المحسنة',
+                description: 'بيانات انتقالات برشلونة المحسنة',
+                category: 'transfer',
+                icon: 'fas fa-exchange-alt'
+            }
+        );
+
+        // إضافة الأدوات المفقودة من مجلد public
+        toolsData.push(
+            // أدوات Transfermarkt المحسنة
+            {
+                filename: 'transfermarkt-ultimate-display.html',
+                name: '🏆 عرض Transfermarkt النهائي',
+                description: 'العرض النهائي والمتطور لـ Transfermarkt مع جميع الميزات',
+                category: 'final',
+                icon: 'fas fa-trophy'
+            },
+            {
+                filename: 'smart-logo-system.js',
+                name: '🧠 نظام الشعارات الذكي',
+                description: 'نظام ذكي لإدارة الشعارات تلقائياً مع دعم الأندية الجديدة',
+                category: 'utility',
+                icon: 'fas fa-brain'
+            },
+            {
+                filename: 'transfermarkt-live-display.html',
+                name: '🔴 عرض Transfermarkt المباشر',
+                description: 'عرض مباشر لبيانات Transfermarkt مع تحديثات فورية',
+                category: 'broadcast',
+                icon: 'fas fa-broadcast-tower'
+            },
+            {
+                filename: 'transfermarkt-display-pro.html',
+                name: '📊 عرض Transfermarkt الاحترافي',
+                description: 'عرض احترافي لـ Transfermarkt مع تصميم متطور',
+                category: 'broadcast',
+                icon: 'fas fa-chart-bar'
+            },
+            {
+                filename: 'support-bar-final.html',
+                name: '🏆 شريط الداعمين النهائي',
+                description: 'الإصدار النهائي المتكامل من شريط الداعمين مع جميع الميزات',
+                category: 'final',
+                icon: 'fas fa-crown'
+            },
+            {
+                filename: 'test-final.html',
+                name: '🧪 اختبار شريط الداعمين النهائي',
+                description: 'اختبار شامل للإصدار النهائي من شريط الداعمين',
+                category: 'test',
+                icon: 'fas fa-vial'
+            },
+            {
+                filename: 'support-bar-v3.html',
+                name: '💎 شريط الداعمين v3',
+                description: 'الإصدار الثالث المحسن من شريط الداعمين',
+                category: 'broadcast',
+                icon: 'fas fa-gem'
+            },
+            {
+                filename: 'test-v3.html',
+                name: '🧪 اختبار شريط الداعمين v3',
+                description: 'اختبار الإصدار الثالث من شريط الداعمين',
+                category: 'test',
+                icon: 'fas fa-vial'
+            },
+            {
+                filename: 'support-bar-enhanced-original.html',
+                name: '⭐ شريط الداعمين المحسن الأصلي',
+                description: 'النسخة الأصلية المحسنة من شريط الداعمين',
+                category: 'broadcast',
+                icon: 'fas fa-star'
+            },
+            {
+                filename: 'test-support-bar.html',
+                name: '🧪 اختبار شريط الداعمين',
+                description: 'اختبار شامل لجميع إصدارات شريط الداعمين',
+                category: 'test',
+                icon: 'fas fa-vial'
+            },
+            {
+                filename: 'test-logo-integration.html',
+                name: '🧪 اختبار تكامل الشعارات',
+                description: 'اختبار تكامل أنظمة الشعارات بين الأدوات',
+                category: 'test',
+                icon: 'fas fa-flask'
+            },
+            {
+                filename: 'club-logo-manager-enhanced-obs.html',
+                name: '🛡️ مدير شعارات الأندية المحسن لـ OBS',
+                description: 'مدير شعارات محسن مخصص لـ OBS Studio',
+                category: 'obs',
+                icon: 'fas fa-shield-alt'
+            },
+            {
+                filename: 'transfermarkt-control-simple.html',
+                name: '🎛️ تحكم Transfermarkt البسيط',
+                description: 'واجهة تحكم بسيطة لـ Transfermarkt',
+                category: 'transfer',
+                icon: 'fas fa-sliders-h'
+            },
+            {
+                filename: 'transfermarkt-live-2025.html',
+                name: '🔴 Transfermarkt المباشر 2025',
+                description: 'عرض مباشر لبيانات Transfermarkt 2025',
+                category: 'transfer',
+                icon: 'fas fa-broadcast-tower'
+            },
+            {
+                filename: 'data-manager.js',
+                name: '📊 مدير البيانات',
+                description: 'مكتبة إدارة البيانات والتخزين المحلي',
+                category: 'utility',
+                icon: 'fas fa-database'
+            },
+            {
+                filename: 'transfermarkt-control-2025.html',
+                name: '🎛️ تحكم Transfermarkt 2025',
+                description: 'واجهة تحكم متقدمة لـ Transfermarkt 2025',
+                category: 'transfer',
+                icon: 'fas fa-cogs'
+            },
+            {
+                filename: 'index-new.html',
+                name: '🏠 الصفحة الرئيسية الجديدة',
+                description: 'الصفحة الرئيسية المحدثة مع إدارة المجموعات',
+                category: 'admin',
+                icon: 'fas fa-home'
+            },
+            {
+                filename: 'club-logo-manager.html',
+                name: '🛡️ مدير شعارات الأندية',
+                description: 'نظام إدارة شعارات الأندية الشامل',
+                category: 'admin',
+                icon: 'fas fa-shield-alt'
+            },
+            {
+                filename: 'transfermarkt-top-spenders-2025.html',
+                name: '💰 أكبر المنفقين 2025',
+                description: 'عرض أكبر المنفقين في سوق الانتقالات 2025',
+                category: 'transfer',
+                icon: 'fas fa-money-bill-wave'
+            },
+            {
+                filename: 'test-transfermarkt-tools.html',
+                name: '🧪 اختبار أدوات Transfermarkt',
+                description: 'اختبار شامل لأدوات Transfermarkt',
+                category: 'test',
+                icon: 'fas fa-vial'
+            },
+            {
+                filename: 'quick-example.html',
+                name: '📝 مثال سريع',
+                description: 'مثال سريع للوظائف الأساسية',
+                category: 'test',
+                icon: 'fas fa-play'
+            },
+            {
+                filename: 'enhanced-scroll-engine.js',
+                name: '🚀 محرك التمرير المحسن',
+                description: 'محرك تمرير متطور مع تأثيرات متقدمة',
+                category: 'utility',
+                icon: 'fas fa-rocket'
+            },
+            {
+                filename: 'support-bar-enhanced.html',
+                name: '⭐ شريط الداعمين المحسن',
+                description: 'نسخة محسنة من شريط الداعمين',
+                category: 'broadcast',
+                icon: 'fas fa-star'
+            },
+            {
+                filename: 'auto-scroll-fix.js',
+                name: '🔧 إصلاح التمرير التلقائي',
+                description: 'إصلاح مشاكل التمرير التلقائي',
+                category: 'utility',
+                icon: 'fas fa-wrench'
+            },
+            {
+                filename: 'support-bar.html',
+                name: '💖 شريط الداعمين',
+                description: 'شريط الداعمين الأساسي',
+                category: 'broadcast',
+                icon: 'fas fa-heart'
+            },
+            {
+                filename: 'support-bar-ticker-live.html',
+                name: '🔴 شريط الداعمين المباشر',
+                description: 'شريط داعمين مع عرض مباشر',
+                category: 'broadcast',
+                icon: 'fas fa-heart'
+            },
+            {
+                filename: 'barcelona-ultimate-broadcast-ticker.html',
+                name: '🔴 شريط أخبار برشلونة المباشر',
+                description: 'شريط أخبار متحرك لبرشلونة',
+                category: 'broadcast',
+                icon: 'fas fa-tv'
+            },
+            {
+                filename: 'support-bar-ticker.html',
+                name: '📺 شريط الداعمين المتحرك',
+                description: 'شريط داعمين بسيط متحرك',
+                category: 'broadcast',
+                icon: 'fas fa-heart'
+            },
+            {
+                filename: 'barcelona-ultimate-broadcast-pro.html',
+                name: '🏆 بث برشلونة الاحترافي',
+                description: 'أداة بث احترافية لبرشلونة',
+                category: 'broadcast',
+                icon: 'fas fa-tv'
+            },
+            {
+                filename: 'barcelona-ultimate-control-pro.html',
+                name: '🏆 تحكم برشلونة الاحترافي',
+                description: 'لوحة تحكم احترافية لبرشلونة',
+                category: 'admin',
+                icon: 'fas fa-crown'
+            },
+            {
+                filename: 'all-tools-backup.html',
+                name: '💾 نسخة احتياطية من جميع الأدوات',
+                description: 'نسخة احتياطية من صفحة جميع الأدوات',
+                category: 'admin',
+                icon: 'fas fa-save'
+            },
+            {
+                filename: 'simple-test.html',
+                name: '🧪 اختبار بسيط',
+                description: 'صفحة اختبار بسيطة',
+                category: 'test',
+                icon: 'fas fa-vial'
+            },
+            {
+                filename: 'barcelona-ultimate-broadcast-fixed.html',
+                name: '🔧 بث برشلونة المصلح',
+                description: 'النسخة المصلحة من بث برشلونة',
+                category: 'broadcast',
+                icon: 'fas fa-tv'
+            },
+            {
+                filename: 'barcelona-ultimate-control-fixed.html',
+                name: '🔧 تحكم برشلونة المصلح',
+                description: 'النسخة المصلحة من تحكم برشلونة',
+                category: 'admin',
+                icon: 'fas fa-crown'
+            },
+            {
+                filename: 'barcelona-ultimate-broadcast.html',
+                name: '🏆 بث برشلونة النهائي',
+                description: 'أداة البث النهائية لبرشلونة',
+                category: 'broadcast',
+                icon: 'fas fa-tv'
+            },
+            {
+                filename: 'barcelona-ultimate-control.html',
+                name: '🏆 تحكم برشلونة النهائي',
+                description: 'لوحة التحكم النهائية لبرشلونة',
+                category: 'admin',
+                icon: 'fas fa-crown'
+            },
+            {
+                filename: 'shared-data.js',
+                name: '🔗 البيانات المشتركة',
+                description: 'مكتبة مشاركة البيانات بين الصفحات',
+                category: 'utility',
+                icon: 'fas fa-share-alt'
+            },
+            {
+                filename: 'test-barcelona-sync.html',
+                name: '🧪 اختبار مزامنة برشلونة',
+                description: 'اختبار مزامنة بيانات برشلونة',
+                category: 'test',
+                icon: 'fas fa-sync'
+            },
+            {
+                filename: 'top-transfers-2025.html',
+                name: '🏆 أفضل الانتقالات 2025',
+                description: 'عرض أفضل الانتقالات في 2025',
+                category: 'transfer',
+                icon: 'fas fa-trophy'
+            },
+            {
+                filename: 'fotmob-real-data-test.html',
+                name: '🧪 اختبار بيانات FotMob الحقيقية',
+                description: 'اختبار البيانات الحقيقية من FotMob',
+                category: 'test',
+                icon: 'fas fa-vial'
+            },
+            {
+                filename: 'fotmob-monitoring-dashboard.html',
+                name: '📊 لوحة مراقبة FotMob',
+                description: 'لوحة تحكم لمراقبة FotMob',
+                category: 'utility',
+                icon: 'fas fa-chart-line'
+            },
+            {
+                filename: 'test-new-fotmob-system.html',
+                name: '🧪 اختبار نظام FotMob الجديد',
+                description: 'اختبار النظام الجديد لـ FotMob',
+                category: 'test',
+                icon: 'fas fa-vial'
+            },
+            {
+                filename: 'error-handler-test.html',
+                name: '🧪 اختبار معالج الأخطاء',
+                description: 'اختبار نظام معالجة الأخطاء',
+                category: 'test',
+                icon: 'fas fa-bug'
+            },
+            {
+                filename: 'quick-test.html',
+                name: '⚡ اختبار سريع',
+                description: 'اختبار سريع للوظائف الأساسية',
+                category: 'test',
+                icon: 'fas fa-bolt'
+            },
+            {
+                filename: 'test-fotmob-api.html',
+                name: '🧪 اختبار FotMob API',
+                description: 'اختبار API لـ FotMob',
+                category: 'test',
+                icon: 'fas fa-code'
+            },
+            {
+                filename: 'fotmob-extractor.html',
+                name: '📱 مستخرج FotMob',
+                description: 'أداة استخراج بيانات من FotMob',
+                category: 'utility',
+                icon: 'fas fa-mobile-alt'
+            },
+            {
+                filename: 'test-top-transfers.html',
+                name: '🧪 اختبار أفضل الانتقالات',
+                description: 'اختبار استخراج أفضل الانتقالات',
+                category: 'test',
+                icon: 'fas fa-vial'
+            },
+            {
+                filename: 'add-supporters-tools.html',
+                name: '➕ إضافة أدوات الداعمين',
+                description: 'أدوات إضافية للداعمين',
+                category: 'admin',
+                icon: 'fas fa-plus'
+            },
+            {
+                filename: 'test-supporters.html',
+                name: '🧪 اختبار الداعمين',
+                description: 'اختبار نظام الداعمين',
+                category: 'test',
+                icon: 'fas fa-vial'
+            },
+            {
+                filename: 'supporters-admin.html',
+                name: '👨‍💼 إدارة الداعمين',
+                description: 'لوحة إدارة الداعمين',
+                category: 'admin',
+                icon: 'fas fa-user-cog'
+            },
+            {
+                filename: 'test-barcelona-control.html',
+                name: '🧪 اختبار تحكم برشلونة',
+                description: 'اختبار لوحة تحكم برشلونة',
+                category: 'test',
+                icon: 'fas fa-vial'
+            },
+            {
+                filename: 'final-test.html',
+                name: '🏁 الاختبار النهائي',
+                description: 'الاختبار النهائي الشامل',
+                category: 'test',
+                icon: 'fas fa-flag-checkered'
+            },
+            {
+                filename: 'test-data.html',
+                name: '🧪 اختبار البيانات',
+                description: 'اختبار جميع أنواع البيانات',
+                category: 'test',
+                icon: 'fas fa-database'
+            },
+            {
+                filename: 'test-consistency.html',
+                name: '🧪 اختبار الاتساق',
+                description: 'اختبار اتساق البيانات',
+                category: 'test',
+                icon: 'fas fa-check-circle'
+            },
+            {
+                filename: 'stream-data.json',
+                name: '📊 بيانات البث',
+                description: 'ملف بيانات البث والإعدادات',
+                category: 'utility',
+                icon: 'fas fa-file-code'
+            },
+            {
+                filename: 'index.html',
+                name: '🏠 الصفحة الرئيسية',
+                description: 'الصفحة الرئيسية الأصلية',
+                category: 'admin',
+                icon: 'fas fa-home'
+            },
+            {
+                filename: 'football-pro-studio.html',
+                name: '⚽ الاستوديو الاحترافي للكرة',
+                description: 'استوديو تصميم احترافي للمحتوى الرياضي',
+                category: 'design',
+                icon: 'fas fa-futbol'
+            },
+            {
+                filename: 'football-design-studio-pro.html',
+                name: '🎨 استوديو التصميم الاحترافي للكرة',
+                description: 'أدوات تصميم متقدمة للمحتوى الرياضي',
+                category: 'design',
+                icon: 'fas fa-paint-brush'
+            },
+            {
+                filename: 'barcelona-broadcast-control.html',
+                name: '🎛️ تحكم بث برشلونة',
+                description: 'واجهة تحكم بث برشلونة',
+                category: 'broadcast',
+                icon: 'fas fa-video'
+            },
+            {
+                filename: 'pro-studio-v4-ultimate.html',
+                name: '🏆 الاستوديو الاحترافي v4 النهائي',
+                description: 'أقوى استوديو تصميم احترافي متكامل',
+                category: 'design',
+                icon: 'fas fa-magic'
+            },
+            {
+                filename: 'stream-clean.html',
+                name: '🧹 البث النظيف',
+                description: 'واجهة بث نظيفة ومبسطة',
+                category: 'broadcast',
+                icon: 'fas fa-broom'
+            },
+            {
+                filename: 'player-links.html',
+                name: '🔗 روابط اللاعبين',
+                description: 'إدارة روابط صفحات اللاعبين',
+                category: 'admin',
+                icon: 'fas fa-link'
+            }
+        );
+
+        // إضافة الأدوات المفقودة من مجلد data
+        toolsData.push(
+            // ملفات البيانات المهمة
+            {
+                filename: 'data/daily-transfers.json',
+                name: '📅 الانتقالات اليومية',
+                description: 'ملف بيانات الانتقالات اليومية',
+                category: 'utility',
+                icon: 'fas fa-calendar-day'
+            },
+            {
+                filename: 'data/cache-metadata.json',
+                name: '📋 بيانات التخزين المؤقت',
+                description: 'بيانات وصفية للتخزين المؤقت',
+                category: 'utility',
+                icon: 'fas fa-info-circle'
+            },
+            {
+                filename: 'data/smart-transfer-cache.json',
+                name: '🧠 التخزين المؤقت الذكي للانتقالات',
+                description: 'ملف التخزين المؤقت الذكي للانتقالات',
+                category: 'utility',
+                icon: 'fas fa-memory'
+            },
+            {
+                filename: 'data/player-pages.json',
+                name: '👤 صفحات اللاعبين',
+                description: 'بيانات صفحات اللاعبين',
+                category: 'utility',
+                icon: 'fas fa-user'
+            },
+            {
+                filename: 'data/supporters.json',
+                name: '💖 بيانات الداعمين',
+                description: 'ملف بيانات الداعمين والمساهمين',
+                category: 'utility',
+                icon: 'fas fa-heart'
+            },
+            {
+                filename: 'data/barcelona-transfers.json',
+                name: '📊 انتقالات برشلونة',
+                description: 'بيانات انتقالات برشلونة الأساسية',
+                category: 'transfer',
+                icon: 'fas fa-exchange-alt'
+            },
+            {
+                filename: 'data/obs-transfers.json',
+                name: '📺 انتقالات OBS',
+                description: 'بيانات الانتقالات لـ OBS Studio',
+                category: 'obs',
+                icon: 'fas fa-tv'
+            },
+            {
+                filename: 'data/user-global-config.json',
+                name: '⚙️ إعدادات المستخدم العامة',
+                description: 'إعدادات المستخدم العامة للنظام',
+                category: 'utility',
+                icon: 'fas fa-user-cog'
+            },
+            {
+                filename: 'data/global-config.json',
+                name: '⚙️ الإعدادات العامة',
+                description: 'ملف الإعدادات العامة للنظام',
+                category: 'utility',
+                icon: 'fas fa-cog'
+            },
+            {
+                filename: 'data/real-selected.json',
+                name: '✅ الانتقالات المحددة الحقيقية',
+                description: 'الانتقالات المحددة من البيانات الحقيقية',
+                category: 'transfer',
+                icon: 'fas fa-check-circle'
+            },
+            {
+                filename: 'data/real-transfers.json',
+                name: '📊 الانتقالات الحقيقية',
+                description: 'ملف الانتقالات الحقيقية الشامل',
+                category: 'transfer',
+                icon: 'fas fa-database'
+            },
+            {
+                filename: 'data/obs-selected.json',
+                name: '📺 الانتقالات المحددة لـ OBS',
+                description: 'الانتقالات المحددة لـ OBS Studio',
+                category: 'obs',
+                icon: 'fas fa-tv'
+            },
+            {
+                filename: 'data/verified-clubs.json',
+                name: '✅ الأندية المؤكدة',
+                description: 'قاعدة بيانات الأندية المؤكدة والموثقة',
+                category: 'utility',
+                icon: 'fas fa-check-double'
+            },
+            {
+                filename: 'data/selected-transfers.json',
+                name: '📋 الانتقالات المحددة',
+                description: 'ملف الانتقالات المحددة',
+                category: 'transfer',
+                icon: 'fas fa-list'
+            },
+            {
+                filename: 'data/clubs-database.json',
+                name: '🏛️ قاعدة بيانات الأندية',
+                description: 'قاعدة بيانات شاملة للأندية',
+                category: 'utility',
+                icon: 'fas fa-database'
+            },
+            {
+                filename: 'data/club-logos.json',
+                name: '🛡️ شعارات الأندية',
+                description: 'ملف شعارات الأندية',
+                category: 'utility',
+                icon: 'fas fa-shield-alt'
+            },
+            {
+                filename: 'data/pinterest-players.json',
+                name: '📌 لاعبي Pinterest',
+                description: 'بيانات اللاعبين من Pinterest',
+                category: 'utility',
+                icon: 'fab fa-pinterest'
+            },
+            {
+                filename: 'data/pinterest-player-images.json',
+                name: '🖼️ صور اللاعبين من Pinterest',
+                description: 'صور اللاعبين المستخرجة من Pinterest',
+                category: 'utility',
+                icon: 'fas fa-images'
+            }
+        );
+
+        // إضافة الأدوات المفقودة من مجلدات js و css
+        toolsData.push(
+            // ملفات JavaScript
+            {
+                filename: 'js/support-bar.js',
+                name: '💖 شريط الداعمين JavaScript',
+                description: 'مكتبة JavaScript لشريط الداعمين',
+                category: 'utility',
+                icon: 'fas fa-heart'
+            },
+            {
+                filename: 'js/supporters-admin.js',
+                name: '👨‍💼 إدارة الداعمين JavaScript',
+                description: 'مكتبة JavaScript لإدارة الداعمين',
+                category: 'utility',
+                icon: 'fas fa-user-cog'
+            },
+            // ملفات CSS
+            {
+                filename: 'css/supporters-modern.css',
+                name: '🎨 تصميم الداعمين الحديث',
+                description: 'ملف CSS للتصميم الحديث للداعمين',
+                category: 'design',
+                icon: 'fas fa-paint-brush'
+            }
+        );
+
+        // إضافة الأدوات المفقودة من مجلد designs
+        toolsData.push(
+            {
+                filename: 'data/designs/1751734162613.json',
+                name: '🎨 تصميم مخصص',
+                description: 'ملف تصميم مخصص مع إعدادات متقدمة',
+                category: 'design',
+                icon: 'fas fa-palette'
+            }
+        );
+
+        // إضافة الأدوات المفقودة من الملفات الرئيسية
+        toolsData.push(
+            // ملفات التكوين والبيانات
+            {
+                filename: 'package.json',
+                name: '📦 إعدادات المشروع',
+                description: 'ملف إعدادات المشروع والتبعيات',
+                category: 'utility',
+                icon: 'fas fa-box'
+            },
+            {
+                filename: 'package-lock.json',
+                name: '🔒 قفل التبعيات',
+                description: 'ملف قفل إصدارات التبعيات',
+                category: 'utility',
+                icon: 'fas fa-lock'
+            },
+            {
+                filename: 'clubLogos.js',
+                name: '🛡️ شعارات الأندية الرئيسي',
+                description: 'المكتبة الرئيسية لإدارة شعارات الأندية',
+                category: 'utility',
+                icon: 'fas fa-shield-alt'
+            },
+            // ملفات التقارير والتوثيق
+            {
+                filename: 'ALL-TOOLS-UPDATE-REPORT.md',
+                name: '📋 تقرير تحديث جميع الأدوات',
+                description: 'تقرير شامل لتحديث جميع الأدوات',
+                category: 'utility',
+                icon: 'fas fa-file-alt'
+            },
+            {
+                filename: 'BROADCAST-ENHANCEMENT-REPORT.md',
+                name: '📺 تقرير تحسين البث',
+                description: 'تقرير تحسينات أدوات البث',
+                category: 'broadcast',
+                icon: 'fas fa-tv'
+            },
+            {
+                filename: 'BARCELONA-SYNC-FIX-REPORT.md',
+                name: '🔧 تقرير إصلاح مزامنة برشلونة',
+                description: 'تقرير إصلاح مشاكل مزامنة برشلونة',
+                category: 'admin',
+                icon: 'fas fa-sync'
+            },
+            {
+                filename: 'UNIVERSAL-LOGO-FIX-REPORT.md',
+                name: '🔧 تقرير إصلاح الشعارات الشامل',
+                description: 'تقرير إصلاح مشاكل الشعارات الشامل',
+                category: 'utility',
+                icon: 'fas fa-tools'
+            },
+            {
+                filename: 'LOGO-SYSTEM-INTEGRATION-REPORT.md',
+                name: '🔗 تقرير تكامل نظام الشعارات',
+                description: 'تقرير تكامل نظام الشعارات',
+                category: 'utility',
+                icon: 'fas fa-link'
+            },
+            {
+                filename: 'PROBLEM-SOLVED-FINAL-REPORT.md',
+                name: '✅ تقرير حل المشاكل النهائي',
+                description: 'التقرير النهائي لحل جميع المشاكل',
+                category: 'utility',
+                icon: 'fas fa-check-circle'
+            },
+            {
+                filename: 'UNIFIED-SYSTEM-COMPLETE-REPORT.md',
+                name: '🔄 تقرير النظام الموحد الكامل',
+                description: 'تقرير النظام الموحد الكامل',
+                category: 'utility',
+                icon: 'fas fa-cogs'
+            },
+            {
+                filename: 'OBS-TOOLS-FIX-REPORT.md',
+                name: '🔧 تقرير إصلاح أدوات OBS',
+                description: 'تقرير إصلاح أدوات OBS Studio',
+                category: 'obs',
+                icon: 'fas fa-tools'
+            },
+            {
+                filename: 'ULTIMATE-START-TOOLS-GUIDE.md',
+                name: '🚀 دليل البداية النهائية',
+                description: 'دليل شامل لبدء جميع الأدوات',
+                category: 'utility',
+                icon: 'fas fa-rocket'
+            },
+            {
+                filename: 'PROBABILITY-PERCENTAGES-FIX-REPORT.md',
+                name: '📊 تقرير إصلاح النسب المئوية',
+                description: 'تقرير إصلاح نسب الاحتمالات',
+                category: 'utility',
+                icon: 'fas fa-percentage'
+            },
+            {
+                filename: 'PROBABILITY-SETTINGS-COMPLETE-FIX-REPORT.md',
+                name: '⚙️ تقرير إصلاح إعدادات الاحتمالات',
+                description: 'تقرير إصلاح إعدادات الاحتمالات الكامل',
+                category: 'utility',
+                icon: 'fas fa-cog'
+            },
+            {
+                filename: 'PROBABILITY-SETTINGS-FIX-REPORT.md',
+                name: '⚙️ تقرير إصلاح إعدادات الاحتمالات',
+                description: 'تقرير إصلاح إعدادات الاحتمالات',
+                category: 'utility',
+                icon: 'fas fa-cog'
+            },
+            {
+                filename: 'WORLDWIDE-MODERN-DEVELOPMENT-REPORT.md',
+                name: '🌍 تقرير التطوير الحديث العالمي',
+                description: 'تقرير التطوير الحديث على مستوى العالم',
+                category: 'utility',
+                icon: 'fas fa-globe'
+            },
+            {
+                filename: 'COMPLETE-FIX-REPORT.md',
+                name: '✅ تقرير الإصلاح الكامل',
+                description: 'التقرير الكامل للإصلاحات',
+                category: 'utility',
+                icon: 'fas fa-check-double'
+            },
+            {
+                filename: 'QUICK-FIX-REPORT.md',
+                name: '⚡ تقرير الإصلاح السريع',
+                description: 'تقرير الإصلاحات السريعة',
+                category: 'utility',
+                icon: 'fas fa-bolt'
+            },
+            {
+                filename: 'FINAL-COMPLETE-FIX-REPORT.md',
+                name: '🏁 التقرير النهائي الكامل',
+                description: 'التقرير النهائي الكامل للإصلاحات',
+                category: 'final',
+                icon: 'fas fa-flag-checkered'
+            },
+            {
+                filename: 'FINAL-FIX-REPORT.md',
+                name: '🏁 تقرير الإصلاح النهائي',
+                description: 'تقرير الإصلاح النهائي',
+                category: 'final',
+                icon: 'fas fa-flag-checkered'
+            },
+            {
+                filename: 'COMPREHENSIVE-ENHANCEMENT-REPORT.md',
+                name: '📈 تقرير التحسين الشامل',
+                description: 'تقرير التحسينات الشاملة',
+                category: 'utility',
+                icon: 'fas fa-chart-line'
+            },
+            {
+                filename: 'QUICK-START-GUIDE.md',
+                name: '⚡ دليل البداية السريعة',
+                description: 'دليل البداية السريعة للنظام',
+                category: 'utility',
+                icon: 'fas fa-bolt'
+            },
+            {
+                filename: 'DEVELOPMENT-REPORT.md',
+                name: '💻 تقرير التطوير',
+                description: 'تقرير التطوير والنمو',
+                category: 'utility',
+                icon: 'fas fa-code'
+            },
+            {
+                filename: 'QUICK-FIX-README.md',
+                name: '⚡ دليل الإصلاح السريع',
+                description: 'دليل الإصلاح السريع',
+                category: 'utility',
+                icon: 'fas fa-bolt'
+            },
+            {
+                filename: 'SOLUTION-GUIDE.md',
+                name: '💡 دليل الحلول',
+                description: 'دليل شامل للحلول',
+                category: 'utility',
+                icon: 'fas fa-lightbulb'
+            },
+            {
+                filename: 'FINAL-SOLUTION-REPORT.md',
+                name: '🏁 تقرير الحل النهائي',
+                description: 'التقرير النهائي للحلول',
+                category: 'final',
+                icon: 'fas fa-flag-checkered'
+            },
+            {
+                filename: 'FOTMOB-SOLUTION-REPORT.md',
+                name: '📱 تقرير حلول FotMob',
+                description: 'تقرير حلول مشاكل FotMob',
+                category: 'utility',
+                icon: 'fas fa-mobile-alt'
+            },
+            {
+                filename: 'ERROR-HANDLING-SOLUTION.md',
+                name: '🛡️ حلول معالجة الأخطاء',
+                description: 'دليل حلول معالجة الأخطاء',
+                category: 'utility',
+                icon: 'fas fa-shield-alt'
+            },
+            {
+                filename: 'TOP-TRANSFERS-SUMMARY.md',
+                name: '🏆 ملخص أفضل الانتقالات',
+                description: 'ملخص شامل لأفضل الانتقالات',
+                category: 'transfer',
+                icon: 'fas fa-trophy'
+            },
+            {
+                filename: 'TOP-TRANSFERS-README.md',
+                name: '🏆 دليل أفضل الانتقالات',
+                description: 'دليل شامل لأفضل الانتقالات',
+                category: 'transfer',
+                icon: 'fas fa-trophy'
+            }
+        );
+
+        // إضافة الأدوات المفقودة من الملفات الإضافية
+        toolsData.push(
+            // ملفات الاختبار الإضافية
+            {
+                filename: 'test-final-system.js',
+                name: '🧪 اختبار النظام النهائي JavaScript',
+                description: 'اختبار النظام النهائي بـ JavaScript',
+                category: 'test',
+                icon: 'fas fa-vial'
+            },
+            {
+                filename: 'test-true-extractor.js',
+                name: '🧪 اختبار المستخرج الحقيقي',
+                description: 'اختبار المستخرج الحقيقي للبيانات',
+                category: 'test',
+                icon: 'fas fa-vial'
+            },
+            {
+                filename: 'test-real-extractor.js',
+                name: '🧪 اختبار المستخرج الحقيقي',
+                description: 'اختبار المستخرج الحقيقي للبيانات',
+                category: 'test',
+                icon: 'fas fa-vial'
+            },
+            {
+                filename: 'test-api.js',
+                name: '🧪 اختبار API',
+                description: 'اختبار جميع APIs',
+                category: 'test',
+                icon: 'fas fa-code'
+            },
+            // ملفات البداية
+            {
+                filename: 'ULTIMATE-UNIFIED-START.bat',
+                name: '🚀 البداية النهائية الموحدة',
+                description: 'سكريبت البداية النهائي الموحد',
+                category: 'admin',
+                icon: 'fas fa-rocket'
+            },
+            {
+                filename: 'ULTIMATE-START.bat',
+                name: '🚀 البداية النهائية',
+                description: 'سكريبت البداية النهائي',
+                category: 'admin',
+                icon: 'fas fa-rocket'
+            },
+            {
+                filename: 'TEST-ULTIMATE-START.bat',
+                name: '🧪 اختبار البداية النهائية',
+                description: 'اختبار سكريبت البداية النهائي',
+                category: 'test',
+                icon: 'fas fa-vial'
+            },
+            // ملفات الخادم
+            {
+                filename: 'server.js',
+                name: '🖥️ الخادم الرئيسي',
+                description: 'الخادم الرئيسي للنظام',
+                category: 'utility',
+                icon: 'fas fa-server'
+            },
+            {
+                filename: 'simple-server.js',
+                name: '🖥️ الخادم البسيط',
+                description: 'خادم بسيط للاختبار',
+                category: 'utility',
+                icon: 'fas fa-server'
+            },
+            {
+                filename: 'start-server.py',
+                name: '🐍 بدء الخادم بـ Python',
+                description: 'سكريبت Python لبدء الخادم',
+                category: 'utility',
+                icon: 'fab fa-python'
+            }
+        );
+
+        // إضافة الأدوات المفقودة من مجلد src
+        toolsData.push(
+            // ملفات C++ للإضافات
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/src/obs-compatible-plugin.cpp',
+                name: '🔌 إضافة OBS المتوافقة',
+                description: 'إضافة OBS متوافقة مع جميع الإصدارات',
+                category: 'obs',
+                icon: 'fas fa-plug'
+            },
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/src/final-plugin.cpp',
+                name: '🏆 الإضافة النهائية',
+                description: 'الإضافة النهائية لـ OBS Studio',
+                category: 'obs',
+                icon: 'fas fa-trophy'
+            },
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/src/simple-plugin-main.cpp',
+                name: '➕ الإضافة البسيطة الرئيسية',
+                description: 'الملف الرئيسي للإضافة البسيطة',
+                category: 'obs',
+                icon: 'fas fa-plus'
+            },
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/src/simple-browser-source.cpp',
+                name: '🌐 مصدر المتصفح البسيط',
+                description: 'مصدر المتصفح البسيط لـ OBS',
+                category: 'obs',
+                icon: 'fas fa-globe'
+            },
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/src/simple-browser-source.h',
+                name: '🌐 رأس مصدر المتصفح البسيط',
+                description: 'ملف الرأس لمصدر المتصفح البسيط',
+                category: 'obs',
+                icon: 'fas fa-file-code'
+            },
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/src/browser-client.h',
+                name: '🌐 رأس عميل المتصفح',
+                description: 'ملف الرأس لعميل المتصفح',
+                category: 'obs',
+                icon: 'fas fa-file-code'
+            },
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/src/browser-client.cpp',
+                name: '🌐 عميل المتصفح',
+                description: 'عميل المتصفح لـ OBS Studio',
+                category: 'obs',
+                icon: 'fas fa-user'
+            },
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/src/scroll-fix.js',
+                name: '🔧 إصلاح التمرير JavaScript',
+                description: 'إصلاح مشاكل التمرير بـ JavaScript',
+                category: 'obs',
+                icon: 'fas fa-wrench'
+            },
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/src/browser-app.cpp',
+                name: '🌐 تطبيق المتصفح',
+                description: 'تطبيق المتصفح لـ OBS',
+                category: 'obs',
+                icon: 'fas fa-window-maximize'
+            },
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/src/browser-app.h',
+                name: '🌐 رأس تطبيق المتصفح',
+                description: 'ملف الرأس لتطبيق المتصفح',
+                category: 'obs',
+                icon: 'fas fa-file-code'
+            },
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/src/enhanced-browser-source.cpp',
+                name: '🚀 مصدر المتصفح المحسن',
+                description: 'مصدر المتصفح المحسن لـ OBS',
+                category: 'obs',
+                icon: 'fas fa-rocket'
+            },
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/src/enhanced-browser-source.h',
+                name: '🚀 رأس مصدر المتصفح المحسن',
+                description: 'ملف الرأس لمصدر المتصفح المحسن',
+                category: 'obs',
+                icon: 'fas fa-file-code'
+            },
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/src/plugin-main.cpp',
+                name: '🔌 الرئيسي للإضافة',
+                description: 'الملف الرئيسي للإضافة',
+                category: 'obs',
+                icon: 'fas fa-plug'
+            },
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/src/enhanced-browser-source-simple.cpp',
+                name: '🚀 مصدر المتصفح المحسن البسيط',
+                description: 'مصدر المتصفح المحسن البسيط',
+                category: 'obs',
+                icon: 'fas fa-rocket'
+            },
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/src/plugin-main-simple.cpp',
+                name: '🔌 الرئيسي للإضافة البسيطة',
+                description: 'الملف الرئيسي للإضافة البسيطة',
+                category: 'obs',
+                icon: 'fas fa-plug'
+            },
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/src/properties.cpp',
+                name: '⚙️ خصائص الإضافة',
+                description: 'خصائص وإعدادات الإضافة',
+                category: 'obs',
+                icon: 'fas fa-cog'
+            }
+        );
+
+        // إضافة الأدوات المفقودة من مجلد locale
+        toolsData.push(
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/data/locale/ar-SA.ini',
+                name: '🇸🇦 اللغة العربية',
+                description: 'ملف اللغة العربية للإضافة',
+                category: 'obs',
+                icon: 'fas fa-language'
+            },
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/data/locale/en-US.ini',
+                name: '🇺🇸 اللغة الإنجليزية',
+                description: 'ملف اللغة الإنجليزية للإضافة',
+                category: 'obs',
+                icon: 'fas fa-language'
+            }
+        );
+
+        // إضافة الأدوات المفقودة من مجلد enhanced-browser-source
+        toolsData.push(
+            // ملفات التقارير والتوثيق
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/ALL_TOOLS_UPDATE_REPORT.md',
+                name: '📋 تقرير تحديث جميع الأدوات - OBS',
+                description: 'تقرير تحديث جميع أدوات OBS',
+                category: 'obs',
+                icon: 'fas fa-file-alt'
+            },
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/SYSTEM_UPDATES.md',
+                name: '🔄 تحديثات النظام - OBS',
+                description: 'تحديثات نظام OBS Studio',
+                category: 'obs',
+                icon: 'fas fa-sync'
+            },
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/SCROLL_TIMING_FIX.md',
+                name: '⏰ إصلاح توقيت التمرير - OBS',
+                description: 'إصلاح مشاكل توقيت التمرير في OBS',
+                category: 'obs',
+                icon: 'fas fa-clock'
+            },
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/GLITCH_FIXES.md',
+                name: '🐛 إصلاحات الأعطال - OBS',
+                description: 'إصلاحات الأعطال في OBS Studio',
+                category: 'obs',
+                icon: 'fas fa-bug'
+            },
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/SCROLL_FIXES.md',
+                name: '🔧 إصلاحات التمرير - OBS',
+                description: 'إصلاحات مشاكل التمرير في OBS',
+                category: 'obs',
+                icon: 'fas fa-wrench'
+            },
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/ORIGINAL_ENHANCED_GUIDE.md',
+                name: '📖 الدليل الأصلي المحسن - OBS',
+                description: 'الدليل الأصلي المحسن لـ OBS',
+                category: 'obs',
+                icon: 'fas fa-book'
+            },
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/FINAL_USAGE_GUIDE.md',
+                name: '📖 دليل الاستخدام النهائي - OBS',
+                description: 'دليل الاستخدام النهائي لـ OBS',
+                category: 'obs',
+                icon: 'fas fa-book'
+            },
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/DEVELOPER_GUIDE.md',
+                name: '💻 دليل المطور - OBS',
+                description: 'دليل المطور لـ OBS Studio',
+                category: 'obs',
+                icon: 'fas fa-code'
+            },
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/SIMPLE_SOLUTION.md',
+                name: '💡 الحل البسيط - OBS',
+                description: 'الحل البسيط لمشاكل OBS',
+                category: 'obs',
+                icon: 'fas fa-lightbulb'
+            },
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/support-bar-enhanced.html',
+                name: '⭐ شريط الداعمين المحسن - OBS',
+                description: 'شريط الداعمين المحسن لـ OBS',
+                category: 'obs',
+                icon: 'fas fa-star'
+            },
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/auto-scroll-fix.js',
+                name: '🔧 إصلاح التمرير التلقائي - OBS',
+                description: 'إصلاح التمرير التلقائي لـ OBS',
+                category: 'obs',
+                icon: 'fas fa-wrench'
+            },
+            // ملفات البناء والتثبيت
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/install-obs.bat',
+                name: '📦 تثبيت OBS',
+                description: 'سكريبت تثبيت OBS Studio',
+                category: 'obs',
+                icon: 'fas fa-download'
+            },
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/build-obs.bat',
+                name: '🔨 بناء OBS',
+                description: 'سكريبت بناء OBS Studio',
+                category: 'obs',
+                icon: 'fas fa-hammer'
+            },
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/install-admin.bat',
+                name: '👨‍💼 تثبيت الإدارة - OBS',
+                description: 'تثبيت أدوات الإدارة لـ OBS',
+                category: 'obs',
+                icon: 'fas fa-user-cog'
+            },
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/install-simple-final.bat',
+                name: '✅ التثبيت البسيط النهائي - OBS',
+                description: 'التثبيت البسيط النهائي لـ OBS',
+                category: 'obs',
+                icon: 'fas fa-check-circle'
+            },
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/install-final.bat',
+                name: '🏆 التثبيت النهائي - OBS',
+                description: 'التثبيت النهائي لـ OBS Studio',
+                category: 'obs',
+                icon: 'fas fa-trophy'
+            },
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/build-final.bat',
+                name: '🏆 البناء النهائي - OBS',
+                description: 'سكريبت البناء النهائي لـ OBS',
+                category: 'obs',
+                icon: 'fas fa-trophy'
+            },
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/FINAL_INSTRUCTIONS.md',
+                name: '📋 التعليمات النهائية - OBS',
+                description: 'التعليمات النهائية لـ OBS',
+                category: 'obs',
+                icon: 'fas fa-file-alt'
+            },
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/FINAL_SIMPLE_PLUGIN.md',
+                name: '🏆 الإضافة البسيطة النهائية - OBS',
+                description: 'دليل الإضافة البسيطة النهائية',
+                category: 'obs',
+                icon: 'fas fa-trophy'
+            },
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/build-simple.bat',
+                name: '🔨 البناء البسيط - OBS',
+                description: 'سكريبت البناء البسيط لـ OBS',
+                category: 'obs',
+                icon: 'fas fa-hammer'
+            },
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/install-simple.bat',
+                name: '📦 التثبيت البسيط - OBS',
+                description: 'سكريبت التثبيت البسيط لـ OBS',
+                category: 'obs',
+                icon: 'fas fa-download'
+            },
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/AUTO_SCROLL_FIX.md',
+                name: '🔧 إصلاح التمرير التلقائي - OBS',
+                description: 'دليل إصلاح التمرير التلقائي',
+                category: 'obs',
+                icon: 'fas fa-wrench'
+            },
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/README.md',
+                name: '📖 README - OBS',
+                description: 'ملف README لـ OBS Studio',
+                category: 'obs',
+                icon: 'fas fa-book'
+            },
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/copy-obs-files.ps1',
+                name: '📋 نسخ ملفات OBS',
+                description: 'سكريبت نسخ ملفات OBS',
+                category: 'obs',
+                icon: 'fas fa-copy'
+            },
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/setup.bat',
+                name: '⚙️ إعداد OBS',
+                description: 'سكريبت إعداد OBS Studio',
+                category: 'obs',
+                icon: 'fas fa-cog'
+            },
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/download-real-deps.ps1',
+                name: '📥 تحميل التبعيات الحقيقية - OBS',
+                description: 'تحميل التبعيات الحقيقية لـ OBS',
+                category: 'obs',
+                icon: 'fas fa-download'
+            },
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/QUICK_START.md',
+                name: '⚡ البداية السريعة - OBS',
+                description: 'دليل البداية السريعة لـ OBS',
+                category: 'obs',
+                icon: 'fas fa-bolt'
+            },
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/build.bat',
+                name: '🔨 البناء - OBS',
+                description: 'سكريبت البناء لـ OBS',
+                category: 'obs',
+                icon: 'fas fa-hammer'
+            },
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/install.bat',
+                name: '📦 التثبيت - OBS',
+                description: 'سكريبت التثبيت لـ OBS',
+                category: 'obs',
+                icon: 'fas fa-download'
+            },
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/download-deps.ps1',
+                name: '📥 تحميل التبعيات - OBS',
+                description: 'تحميل التبعيات لـ OBS',
+                category: 'obs',
+                icon: 'fas fa-download'
+            },
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/download-dependencies.ps1',
+                name: '📥 تحميل التبعيات - OBS',
+                description: 'تحميل جميع التبعيات لـ OBS',
+                category: 'obs',
+                icon: 'fas fa-download'
+            }
+        );
+
+        // إضافة الأدوات المفقودة من مجلد website-files
+        toolsData.push(
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/website-files/support-bar-enhanced-original.html',
+                name: '⭐ شريط الداعمين المحسن الأصلي - OBS',
+                description: 'النسخة الأصلية المحسنة من شريط الداعمين لـ OBS',
+                category: 'obs',
+                icon: 'fas fa-star'
+            },
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/website-files/index-new-updated.html',
+                name: '🏠 الصفحة الرئيسية المحدثة - OBS',
+                description: 'الصفحة الرئيسية المحدثة لـ OBS',
+                category: 'obs',
+                icon: 'fas fa-home'
+            },
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/website-files/test-transfermarkt-tools.html',
+                name: '🧪 اختبار أدوات Transfermarkt - OBS',
+                description: 'اختبار أدوات Transfermarkt لـ OBS',
+                category: 'obs',
+                icon: 'fas fa-vial'
+            },
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/website-files/transfermarkt-top-spenders-2025.html',
+                name: '💰 أكبر المنفقين 2025 - OBS',
+                description: 'عرض أكبر المنفقين 2025 لـ OBS',
+                category: 'obs',
+                icon: 'fas fa-money-bill-wave'
+            },
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/website-files/TRANSFERMARKT-QUICK-START.md',
+                name: '⚡ البداية السريعة Transfermarkt - OBS',
+                description: 'دليل البداية السريعة لـ Transfermarkt في OBS',
+                category: 'obs',
+                icon: 'fas fa-bolt'
+            },
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/website-files/START-TRANSFERMARKT-TOOLS.bat',
+                name: '🚀 بدء أدوات Transfermarkt - OBS',
+                description: 'سكريبت بدء أدوات Transfermarkt لـ OBS',
+                category: 'obs',
+                icon: 'fas fa-rocket'
+            },
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/website-files/transfermarkt-display-pro.html',
+                name: '📊 عرض Transfermarkt الاحترافي - OBS',
+                description: 'عرض Transfermarkt الاحترافي لـ OBS',
+                category: 'obs',
+                icon: 'fas fa-chart-bar'
+            },
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/website-files/ULTIMATE-START-updated.bat',
+                name: '🚀 البداية النهائية المحدثة - OBS',
+                description: 'سكريبت البداية النهائية المحدثة لـ OBS',
+                category: 'obs',
+                icon: 'fas fa-rocket'
+            },
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/website-files/quick-example.html',
+                name: '📝 مثال سريع - OBS',
+                description: 'مثال سريع لـ OBS',
+                category: 'obs',
+                icon: 'fas fa-play'
+            },
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/website-files/enhanced-scroll-engine.js',
+                name: '🚀 محرك التمرير المحسن - OBS',
+                description: 'محرك التمرير المحسن لـ OBS',
+                category: 'obs',
+                icon: 'fas fa-rocket'
+            },
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/website-files/support-bar-pro.html',
+                name: '💎 شريط الداعمين الاحترافي - OBS',
+                description: 'شريط الداعمين الاحترافي لـ OBS',
+                category: 'obs',
+                icon: 'fas fa-gem'
+            },
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/website-files/support-bar-enhanced.html',
+                name: '⭐ شريط الداعمين المحسن - OBS',
+                description: 'شريط الداعمين المحسن لـ OBS',
+                category: 'obs',
+                icon: 'fas fa-star'
+            },
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/website-files/auto-scroll-fix.js',
+                name: '🔧 إصلاح التمرير التلقائي - OBS',
+                description: 'إصلاح التمرير التلقائي لـ OBS',
+                category: 'obs',
+                icon: 'fas fa-wrench'
+            }
+        );
+
+        // إضافة الأدوات المفقودة من مجلد mock-obs
+        toolsData.push(
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/mock-obs/obs-stub.cpp',
+                name: '🔌 OBS Stub',
+                description: 'ملف OBS Stub للاختبار',
+                category: 'obs',
+                icon: 'fas fa-plug'
+            },
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/mock-obs/include/obs-module.h',
+                name: '📋 رأس وحدة OBS',
+                description: 'ملف الرأس لوحدة OBS',
+                category: 'obs',
+                icon: 'fas fa-file-code'
+            },
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/mock-obs/include/util/dstr.h',
+                name: '📋 رأس dstr',
+                description: 'ملف الرأس لـ dstr',
+                category: 'obs',
+                icon: 'fas fa-file-code'
+            },
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/mock-obs/include/util/platform.h',
+                name: '📋 رأس المنصة',
+                description: 'ملف الرأس للمنصة',
+                category: 'obs',
+                icon: 'fas fa-file-code'
+            },
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/mock-obs/include/graphics/graphics.h',
+                name: '📋 رأس الرسومات',
+                description: 'ملف الرأس للرسومات',
+                category: 'obs',
+                icon: 'fas fa-file-code'
+            }
+        );
+
+        // إضافة الأدوات المفقودة من مجلد build
+        toolsData.push(
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/build/cmake_install.cmake',
+                name: '🔧 تثبيت CMake',
+                description: 'ملف تثبيت CMake',
+                category: 'obs',
+                icon: 'fas fa-wrench'
+            },
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/build/enhanced-browser-source.sln',
+                name: '💼 حل Visual Studio',
+                description: 'حل Visual Studio لـ OBS',
+                category: 'obs',
+                icon: 'fas fa-briefcase'
+            },
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/build/INSTALL.vcxproj',
+                name: '📦 مشروع التثبيت',
+                description: 'مشروع التثبيت لـ OBS',
+                category: 'obs',
+                icon: 'fas fa-download'
+            },
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/build/ALL_BUILD.vcxproj',
+                name: '🔨 مشروع البناء الكامل',
+                description: 'مشروع البناء الكامل لـ OBS',
+                category: 'obs',
+                icon: 'fas fa-hammer'
+            },
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/build/enhanced-browser-source.vcxproj',
+                name: '🚀 مشروع المتصفح المحسن',
+                description: 'مشروع المتصفح المحسن لـ OBS',
+                category: 'obs',
+                icon: 'fas fa-rocket'
+            },
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/build/ZERO_CHECK.vcxproj',
+                name: '✅ مشروع فحص الصفر',
+                description: 'مشروع فحص الصفر لـ OBS',
+                category: 'obs',
+                icon: 'fas fa-check-circle'
+            },
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/build/CMakeCache.txt',
+                name: '📋 ذاكرة التخزين المؤقت CMake',
+                description: 'ذاكرة التخزين المؤقت لـ CMake',
+                category: 'obs',
+                icon: 'fas fa-memory'
+            }
+        );
+
+        // إضافة الأدوات المفقودة من مجلد build/x64
+        toolsData.push(
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/build/x64/Release/ZERO_CHECK/ZERO_CHECK.recipe',
+                name: '✅ وصفة فحص الصفر',
+                description: 'وصفة فحص الصفر لـ OBS',
+                category: 'obs',
+                icon: 'fas fa-check-circle'
+            }
+        );
+
+        // إضافة الأدوات المفقودة من مجلد build-final
+        toolsData.push(
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/build-final/enhanced-browser-source-final.sln',
+                name: '💼 حل Visual Studio النهائي',
+                description: 'حل Visual Studio النهائي لـ OBS',
+                category: 'obs',
+                icon: 'fas fa-briefcase'
+            },
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/build-final/cmake_install.cmake',
+                name: '🔧 تثبيت CMake النهائي',
+                description: 'ملف تثبيت CMake النهائي',
+                category: 'obs',
+                icon: 'fas fa-wrench'
+            },
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/build-final/enhanced-browser-source-final.vcxproj',
+                name: '🏆 مشروع المتصفح المحسن النهائي',
+                description: 'مشروع المتصفح المحسن النهائي لـ OBS',
+                category: 'obs',
+                icon: 'fas fa-trophy'
+            },
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/build-final/CMakeLists.txt',
+                name: '📋 قائمة CMake النهائية',
+                description: 'قائمة CMake النهائية لـ OBS',
+                category: 'obs',
+                icon: 'fas fa-list'
+            }
+        );
+
+        // إضافة الأدوات المفقودة من مجلد build-simple
+        toolsData.push(
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/build-simple/enhanced-browser-source-simple.sln',
+                name: '💼 حل Visual Studio البسيط',
+                description: 'حل Visual Studio البسيط لـ OBS',
+                category: 'obs',
+                icon: 'fas fa-briefcase'
+            },
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/build-simple/cmake_install.cmake',
+                name: '🔧 تثبيت CMake البسيط',
+                description: 'ملف تثبيت CMake البسيط',
+                category: 'obs',
+                icon: 'fas fa-wrench'
+            },
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/build-simple/enhanced-browser-source-simple.vcxproj',
+                name: '➕ مشروع المتصفح المحسن البسيط',
+                description: 'مشروع المتصفح المحسن البسيط لـ OBS',
+                category: 'obs',
+                icon: 'fas fa-plus'
+            },
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/build-simple/CMakeLists.txt',
+                name: '📋 قائمة CMake البسيطة',
+                description: 'قائمة CMake البسيطة لـ OBS',
+                category: 'obs',
+                icon: 'fas fa-list'
+            }
+        );
+
+        // إضافة الأدوات المفقودة من مجلد build-obs
+        toolsData.push(
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/build-obs/enhanced-browser-source-obs.sln',
+                name: '💼 حل Visual Studio OBS',
+                description: 'حل Visual Studio OBS',
+                category: 'obs',
+                icon: 'fas fa-briefcase'
+            },
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/build-obs/cmake_install.cmake',
+                name: '🔧 تثبيت CMake OBS',
+                description: 'ملف تثبيت CMake OBS',
+                category: 'obs',
+                icon: 'fas fa-wrench'
+            },
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/build-obs/enhanced-browser-source-obs.vcxproj',
+                name: '📺 مشروع المتصفح المحسن OBS',
+                description: 'مشروع المتصفح المحسن OBS',
+                category: 'obs',
+                icon: 'fas fa-tv'
+            },
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/build-obs/CMakeLists.txt',
+                name: '📋 قائمة CMake OBS',
+                description: 'قائمة CMake OBS',
+                category: 'obs',
+                icon: 'fas fa-list'
+            }
+        );
+
+        // إضافة الأدوات المفقودة من مجلد dependencies
+        toolsData.push(
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/dependencies/qt5.7z',
+                name: '📦 Qt5 Archive',
+                description: 'أرشيف Qt5 للتبعيات',
+                category: 'obs',
+                icon: 'fas fa-box'
+            },
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/dependencies/obs-studio/include/obs-frontend-api.h',
+                name: '📋 رأس API الواجهة الأمامية',
+                description: 'ملف الرأس لـ API الواجهة الأمامية',
+                category: 'obs',
+                icon: 'fas fa-file-code'
+            },
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/dependencies/obs-studio/include/obs-module.h',
+                name: '📋 رأس وحدة OBS',
+                description: 'ملف الرأس لوحدة OBS',
+                category: 'obs',
+                icon: 'fas fa-file-code'
+            }
+        );
+
+        // إضافة الأدوات المفقودة من مجلد dependencies/obs-studio/include
+        toolsData.push(
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/dependencies/obs-studio/include/util/dstr.h',
+                name: '📋 رأس dstr',
+                description: 'ملف الرأس لـ dstr',
+                category: 'obs',
+                icon: 'fas fa-file-code'
+            },
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/dependencies/obs-studio/include/util/platform.h',
+                name: '📋 رأس المنصة',
+                description: 'ملف الرأس للمنصة',
+                category: 'obs',
+                icon: 'fas fa-file-code'
+            },
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/dependencies/obs-studio/include/graphics/graphics.h',
+                name: '📋 رأس الرسومات',
+                description: 'ملف الرأس للرسومات',
+                category: 'obs',
+                icon: 'fas fa-file-code'
+            }
+        );
+
+        // إضافة الأدوات المفقودة من مجلد dependencies/obs-studio/bin
+        toolsData.push(
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/dependencies/obs-studio/bin/64bit/obs.lib',
+                name: '📚 مكتبة OBS',
+                description: 'مكتبة OBS للربط',
+                category: 'obs',
+                icon: 'fas fa-book'
+            }
+        );
+
+        // إضافة الأدوات المفقودة من مجلد dependencies/cef
+        toolsData.push(
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/dependencies/cef/include/include/cef_display_handler.h',
+                name: '📋 رأس معالج العرض CEF',
+                description: 'ملف الرأس لمعالج العرض CEF',
+                category: 'obs',
+                icon: 'fas fa-file-code'
+            },
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/dependencies/cef/include/include/cef_load_handler.h',
+                name: '📋 رأس معالج التحميل CEF',
+                description: 'ملف الرأس لمعالج التحميل CEF',
+                category: 'obs',
+                icon: 'fas fa-file-code'
+            },
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/dependencies/cef/include/include/cef_browser.h',
+                name: '📋 رأس المتصفح CEF',
+                description: 'ملف الرأس للمتصفح CEF',
+                category: 'obs',
+                icon: 'fas fa-file-code'
+            },
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/dependencies/cef/include/include/cef_render_handler.h',
+                name: '📋 رأس معالج العرض CEF',
+                description: 'ملف الرأس لمعالج العرض CEF',
+                category: 'obs',
+                icon: 'fas fa-file-code'
+            },
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/dependencies/cef/include/include/cef_base.h',
+                name: '📋 الرأس الأساسي CEF',
+                description: 'الرأس الأساسي لـ CEF',
+                category: 'obs',
+                icon: 'fas fa-file-code'
+            },
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/dependencies/cef/include/include/cef_client.h',
+                name: '📋 رأس العميل CEF',
+                description: 'ملف الرأس للعميل CEF',
+                category: 'obs',
+                icon: 'fas fa-file-code'
+            },
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/dependencies/cef/include/include/cef_app.h',
+                name: '📋 رأس التطبيق CEF',
+                description: 'ملف الرأس للتطبيق CEF',
+                category: 'obs',
+                icon: 'fas fa-file-code'
+            }
+        );
+
+        // إضافة الأدوات المفقودة من مجلد build-final/Release
+        toolsData.push(
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/build-final/Release/enhanced-browser-source-final.dll',
+                name: '🔌 مكتبة DLL النهائية',
+                description: 'مكتبة DLL النهائية لـ OBS',
+                category: 'obs',
+                icon: 'fas fa-plug'
+            },
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/build-final/Release/enhanced-browser-source-final.lib',
+                name: '📚 مكتبة LIB النهائية',
+                description: 'مكتبة LIB النهائية لـ OBS',
+                category: 'obs',
+                icon: 'fas fa-book'
+            },
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/build-final/Release/enhanced-browser-source-final.exp',
+                name: '📋 ملف EXP النهائي',
+                description: 'ملف EXP النهائي لـ OBS',
+                category: 'obs',
+                icon: 'fas fa-file-alt'
+            }
+        );
+
+        // إضافة الأدوات المفقودة من مجلد build-obs/Release
+        toolsData.push(
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/build-obs/Release/enhanced-browser-source-obs.lib',
+                name: '📚 مكتبة LIB OBS',
+                description: 'مكتبة LIB OBS',
+                category: 'obs',
+                icon: 'fas fa-book'
+            },
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/build-obs/Release/enhanced-browser-source-obs.exp',
+                name: '📋 ملف EXP OBS',
+                description: 'ملف EXP OBS',
+                category: 'obs',
+                icon: 'fas fa-file-alt'
+            }
+        );
+
+        // إضافة الأدوات المفقودة من مجلد build/CMakeFiles
+        toolsData.push(
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/build/CMakeFiles/generate.stamp',
+                name: '🕐 ختم التوليد',
+                description: 'ختم التوليد لـ CMake',
+                category: 'obs',
+                icon: 'fas fa-clock'
+            },
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/build/CMakeFiles/InstallScripts.json',
+                name: '📋 سكريبتات التثبيت',
+                description: 'ملف سكريبتات التثبيت',
+                category: 'obs',
+                icon: 'fas fa-file-alt'
+            },
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/build/CMakeFiles/cmake.check_cache',
+                name: '📋 فحص ذاكرة التخزين المؤقت',
+                description: 'فحص ذاكرة التخزين المؤقت CMake',
+                category: 'obs',
+                icon: 'fas fa-search'
+            },
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/build/CMakeFiles/TargetDirectories.txt',
+                name: '📋 مجلدات الأهداف',
+                description: 'ملف مجلدات الأهداف',
+                category: 'obs',
+                icon: 'fas fa-folder'
+            },
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/build/CMakeFiles/CMakeConfigureLog.yaml',
+                name: '📋 سجل تكوين CMake',
+                description: 'سجل تكوين CMake',
+                category: 'obs',
+                icon: 'fas fa-file-alt'
+            }
+        );
+
+        // إضافة الأدوات المفقودة من مجلد build/CMakeFiles/4.1.0-rc2
+        toolsData.push(
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/build/CMakeFiles/4.1.0-rc2/CMakeCXXCompiler.cmake',
+                name: '📋 مترجم C++ CMake',
+                description: 'ملف مترجم C++ CMake',
+                category: 'obs',
+                icon: 'fas fa-file-code'
+            },
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/build/CMakeFiles/4.1.0-rc2/CMakeDetermineCompilerABI_CXX.bin',
+                name: '🔧 تحديد ABI المترجم',
+                description: 'تحديد ABI المترجم C++',
+                category: 'obs',
+                icon: 'fas fa-wrench'
+            },
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/build/CMakeFiles/4.1.0-rc2/CMakeRCCompiler.cmake',
+                name: '📋 مترجم RC CMake',
+                description: 'ملف مترجم RC CMake',
+                category: 'obs',
+                icon: 'fas fa-file-code'
+            },
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/build/CMakeFiles/4.1.0-rc2/VCTargetsPath.txt',
+                name: '📋 مسار أهداف VC',
+                description: 'ملف مسار أهداف Visual C++',
+                category: 'obs',
+                icon: 'fas fa-file-alt'
+            },
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/build/CMakeFiles/4.1.0-rc2/VCTargetsPath.vcxproj',
+                name: '💼 مشروع مسار أهداف VC',
+                description: 'مشروع مسار أهداف Visual C++',
+                category: 'obs',
+                icon: 'fas fa-briefcase'
+            },
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/build/CMakeFiles/4.1.0-rc2/CMakeSystem.cmake',
+                name: '📋 نظام CMake',
+                description: 'ملف نظام CMake',
+                category: 'obs',
+                icon: 'fas fa-file-code'
+            }
+        );
+
+        // إضافة الأدوات المفقودة من مجلد build/CMakeFiles/4.1.0-rc2/CompilerIdCXX
+        toolsData.push(
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/build/CMakeFiles/4.1.0-rc2/CompilerIdCXX/CompilerIdCXX.exe',
+                name: '🔧 معرف المترجم C++',
+                description: 'معرف المترجم C++',
+                category: 'obs',
+                icon: 'fas fa-wrench'
+            },
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/build/CMakeFiles/4.1.0-rc2/CompilerIdCXX/CompilerIdCXX.vcxproj',
+                name: '💼 مشروع معرف المترجم C++',
+                description: 'مشروع معرف المترجم C++',
+                category: 'obs',
+                icon: 'fas fa-briefcase'
+            },
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/build/CMakeFiles/4.1.0-rc2/CompilerIdCXX/CMakeCXXCompilerId.cpp',
+                name: '📋 معرف المترجم C++ CMake',
+                description: 'ملف معرف المترجم C++ CMake',
+                category: 'obs',
+                icon: 'fas fa-file-code'
+            }
+        );
+
+        // إضافة الأدوات المفقودة من مجلد build/CMakeFiles/4.1.0-rc2/CompilerIdCXX/Debug
+        toolsData.push(
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/build/CMakeFiles/4.1.0-rc2/CompilerIdCXX/Debug/CompilerIdCXX.exe.recipe',
+                name: '📋 وصفة معرف المترجم C++',
+                description: 'وصفة معرف المترجم C++',
+                category: 'obs',
+                icon: 'fas fa-file-alt'
+            },
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/build/CMakeFiles/4.1.0-rc2/CompilerIdCXX/Debug/CMakeCXXCompilerId.obj',
+                name: '📋 كائن معرف المترجم C++',
+                description: 'كائن معرف المترجم C++',
+                category: 'obs',
+                icon: 'fas fa-file-code'
+            }
+        );
+
+        // إضافة الأدوات المفقودة من مجلد build/CMakeFiles/4.1.0-rc2/CompilerIdCXX/Debug/CompilerIdCXX.tlog
+        toolsData.push(
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/build/CMakeFiles/4.1.0-rc2/CompilerIdCXX/Debug/CompilerIdCXX.tlog/CompilerIdCXX.lastbuildstate',
+                name: '📋 حالة البناء الأخيرة',
+                description: 'حالة البناء الأخيرة لمعرف المترجم',
+                category: 'obs',
+                icon: 'fas fa-file-alt'
+            },
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/build/CMakeFiles/4.1.0-rc2/CompilerIdCXX/Debug/CompilerIdCXX.tlog/Cl.items.tlog',
+                name: '📋 عناصر CL',
+                description: 'ملف عناصر CL',
+                category: 'obs',
+                icon: 'fas fa-file-alt'
+            },
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/build/CMakeFiles/4.1.0-rc2/CompilerIdCXX/Debug/CompilerIdCXX.tlog/link.command.1.tlog',
+                name: '📋 أمر الربط',
+                description: 'ملف أمر الربط',
+                category: 'obs',
+                icon: 'fas fa-file-alt'
+            },
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/build/CMakeFiles/4.1.0-rc2/CompilerIdCXX/Debug/CompilerIdCXX.tlog/link.read.1.tlog',
+                name: '📋 قراءة الربط',
+                description: 'ملف قراءة الربط',
+                category: 'obs',
+                icon: 'fas fa-file-alt'
+            },
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/build/CMakeFiles/4.1.0-rc2/CompilerIdCXX/Debug/CompilerIdCXX.tlog/link.write.1.tlog',
+                name: '📋 كتابة الربط',
+                description: 'ملف كتابة الربط',
+                category: 'obs',
+                icon: 'fas fa-file-alt'
+            },
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/build/CMakeFiles/4.1.0-rc2/CompilerIdCXX/Debug/CompilerIdCXX.tlog/link.secondary.1.tlog',
+                name: '📋 الربط الثانوي',
+                description: 'ملف الربط الثانوي',
+                category: 'obs',
+                icon: 'fas fa-file-alt'
+            },
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/build/CMakeFiles/4.1.0-rc2/CompilerIdCXX/Debug/CompilerIdCXX.tlog/CL.command.1.tlog',
+                name: '📋 أمر CL',
+                description: 'ملف أمر CL',
+                category: 'obs',
+                icon: 'fas fa-file-alt'
+            },
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/build/CMakeFiles/4.1.0-rc2/CompilerIdCXX/Debug/CompilerIdCXX.tlog/CL.read.1.tlog',
+                name: '📋 قراءة CL',
+                description: 'ملف قراءة CL',
+                category: 'obs',
+                icon: 'fas fa-file-alt'
+            },
+            {
+                filename: 'obs-new-tols/enhanced-browser-source/build/CMakeFiles/4.1.0-rc2/CompilerIdCXX/Debug/CompilerIdCXX.tlog/CL.write.1.tlog',
+                name: '📋 كتابة CL',
+                description: 'ملف كتابة CL',
+                category: 'obs',
+                icon: 'fas fa-file-alt'
+            }
+        );
+
+        // فئات الأدوات
+        const categories = {
+            'broadcast': { name: 'البث', color: 'category-broadcast' },
+            'design': { name: 'التصميم', color: 'category-design' },
+            'admin': { name: 'الإدارة', color: 'category-admin' },
+            'test': { name: 'الاختبار', color: 'category-test' },
+            'transfer': { name: 'الانتقالات', color: 'category-transfer' },
+            'utility': { name: 'أدوات مساعدة', color: 'category-utility' },
+            'obs': { name: 'أدوات OBS', color: 'category-obs' },
+            'local': { name: 'أدوات محلية', color: 'category-local' },
+            'final': { name: 'الإصدارات النهائية', color: 'category-final' },
+            'enhanced': { name: 'أدوات محسنة', color: 'category-enhanced' }
+        };
+
+        let selectedTools = new Set();
+        let filteredTools = [...toolsData];
+
+        // تهيئة الصفحة
+        document.addEventListener('DOMContentLoaded', function() {
+            renderTools();
+            updateStats();
+            setupSearch();
+        });
+
+        // عرض الأدوات
+        function renderTools() {
+            const grid = document.getElementById('toolsGrid');
+            grid.innerHTML = '';
+
+            filteredTools.forEach(tool => {
+                const card = createToolCard(tool);
+                grid.appendChild(card);
+            });
+        }
+
+        // إنشاء بطاقة أداة
+        function createToolCard(tool) {
+            const card = document.createElement('div');
+            card.className = 'tool-card';
+
+            const category = categories[tool.category] || categories.utility;
+
+            // تحديد نوع الملف
+            const isHtmlFile = tool.filename.toLowerCase().endsWith('.html');
+            const isJsFile = tool.filename.toLowerCase().endsWith('.js');
+            const isJsonFile = tool.filename.toLowerCase().endsWith('.json');
+            const isLocalFile = tool.filename.includes('obs-new-tols') || tool.filename.includes('scroll-bar');
+            
+            card.innerHTML = `
+                <div class="category-badge ${category.color}">${category.name}</div>
+                
+                <div class="tool-header">
+                    <div class="tool-icon">
+                        <i class="${tool.icon}"></i>
+                    </div>
+                    <div class="tool-info">
+                        <div class="tool-name">${tool.name}</div>
+                        <div class="tool-filename">
+                            ${tool.filename}
+                            ${isLocalFile ? ' <span style="color: #22c55e; font-size: 0.8em;">(محلي)</span>' : ''}
+                            ${isJsFile ? ' <span style="color: #f59e0b; font-size: 0.8em;">(JS)</span>' : ''}
+                            ${isJsonFile ? ' <span style="color: #8b5cf6; font-size: 0.8em;">(JSON)</span>' : ''}
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tool-description">${tool.description}</div>
+                
+                <div class="tool-actions">
+                    <a href="/${tool.filename}" class="action-btn btn-primary" target="_blank">
+                        <i class="fas fa-external-link-alt"></i>
+                        فتح
+                    </a>
+                    <button class="action-btn btn-secondary" onclick="toggleToolSelection('${tool.filename}')">
+                        <i class="fas fa-check"></i>
+                        تحديد
+                    </button>
+                    <button class="action-btn btn-success" onclick="addToolToHome('${tool.filename}')">
+                        <i class="fas fa-home"></i>
+                        إضافة للمنزل
+                    </button>
+                </div>
+            `;
+
+            // تحديث حالة التحديد
+            if (selectedTools.has(tool.filename)) {
+                card.style.borderColor = '#10b981';
+                card.style.background = 'rgba(16,185,129,0.1)';
+                const selectBtn = card.querySelector('.btn-secondary');
+                selectBtn.innerHTML = '<i class="fas fa-check-double"></i> محدد';
+                selectBtn.style.background = '#10b981';
+                selectBtn.style.color = 'white';
+            }
+
+            return card;
+        }
+
+        // تبديل تحديد أداة
+        function toggleToolSelection(filename) {
+            if (selectedTools.has(filename)) {
+                selectedTools.delete(filename);
+            } else {
+                selectedTools.add(filename);
+            }
+            
+            updateSelectedCount();
+            renderTools();
+        }
+
+        // تحديد جميع الأدوات
+        function selectAllTools() {
+            filteredTools.forEach(tool => {
+                selectedTools.add(tool.filename);
+            });
+            updateSelectedCount();
+            renderTools();
+        }
+
+        // إلغاء تحديد جميع الأدوات
+        function deselectAllTools() {
+            selectedTools.clear();
+            updateSelectedCount();
+            renderTools();
+        }
+
+        // إضافة أداة للمنزل
+        function addToolToHome(filename) {
+            const tool = toolsData.find(t => t.filename === filename);
+            if (tool) {
+                console.log('إضافة أداة للمنزل:', filename);
+                
+                // حفظ الأداة في localStorage
+                localStorage.setItem('selectedTools', JSON.stringify([filename]));
+                console.log('تم حفظ الأداة في localStorage');
+                
+                // عرض نافذة اختيار المجموعة
+                showGroupSelectionModal([filename]);
+            }
+        }
+
+        // إضافة الأدوات المحددة للمنزل
+        function addSelectedToHome() {
+            if (selectedTools.size === 0) {
+                showNotification('يرجى تحديد أدوات أولاً', 'warning');
+                return;
+            }
+
+            // تحويل Set إلى Array
+            const newTools = Array.from(selectedTools);
+            console.log('إضافة أدوات محددة للمنزل:', newTools);
+            
+            // حفظ الأدوات المحددة في localStorage
+            localStorage.setItem('selectedTools', JSON.stringify(newTools));
+            console.log('تم حفظ الأدوات في localStorage');
+            
+            showNotification(`تم تحديد ${newTools.length} أداة للإضافة. يرجى اختيار المجموعة...`, 'success');
+            
+            // عرض نافذة اختيار المجموعة
+            showGroupSelectionModal(newTools);
+            
+            selectedTools.clear();
+            updateSelectedCount();
+            renderTools();
+        }
+
+        // مسح أدوات المنزل
+        function clearHomeTools() {
+            if (confirm('هل أنت متأكد من مسح جميع أدوات المنزل؟')) {
+                localStorage.removeItem('selectedTools');
+                showNotification('تم مسح أدوات المنزل بنجاح!', 'success');
+            }
+        }
+
+        // إعداد البحث
+        function setupSearch() {
+            const searchBox = document.getElementById('searchBox');
+            searchBox.addEventListener('input', function() {
+                const query = this.value.toLowerCase();
+                
+                filteredTools = toolsData.filter(tool => 
+                    tool.name.toLowerCase().includes(query) ||
+                    tool.description.toLowerCase().includes(query) ||
+                    tool.filename.toLowerCase().includes(query) ||
+                    categories[tool.category].name.toLowerCase().includes(query)
+                );
+                
+                renderTools();
+                updateStats();
+            });
+        }
+
+        // تحديث الإحصائيات
+        function updateStats() {
+            document.getElementById('totalTools').textContent = toolsData.length;
+            document.getElementById('selectedTools').textContent = selectedTools.size;
+            document.getElementById('categories').textContent = Object.keys(categories).length;
+        }
+
+        // تحديث عداد الأدوات المحددة
+        function updateSelectedCount() {
+            const countDiv = document.getElementById('selectedCount');
+            const countValue = document.getElementById('selectedCountValue');
+            
+            if (selectedTools.size > 0) {
+                countValue.textContent = selectedTools.size;
+                countDiv.style.display = 'block';
+            } else {
+                countDiv.style.display = 'none';
+            }
+        }
+
+        // عرض إشعار
+        function showNotification(message, type = 'info') {
+            // إنشاء عنصر الإشعار
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: ${type === 'success' ? '#10b981' : type === 'warning' ? '#f59e0b' : '#3b82f6'};
+                color: white;
+                padding: 1rem 1.5rem;
+                border-radius: 12px;
+                box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+                z-index: 1000;
+                font-weight: 600;
+                transform: translateX(100%);
+                transition: transform 0.3s ease;
+            `;
+            notification.textContent = message;
+            
+            document.body.appendChild(notification);
+            
+            // إظهار الإشعار
+            setTimeout(() => {
+                notification.style.transform = 'translateX(0)';
+            }, 100);
+            
+            // إخفاء الإشعار
+            setTimeout(() => {
+                notification.style.transform = 'translateX(100%)';
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 300);
+            }, 3000);
+        }
+
+        // دالة عرض نافذة اختيار المجموعة
+        function showGroupSelectionModal(selectedTools) {
+            console.log('عرض نافذة اختيار المجموعة للأدوات:', selectedTools);
+            
+            // جلب البيانات من index-new.html
+            const savedData = localStorage.getItem('homeToolsData');
+            let data = { groups: [] };
+            
+            if (savedData) {
+                try {
+                    data = JSON.parse(savedData);
+                    console.log('تم قراءة بيانات المجموعات:', data);
+                } catch (error) {
+                    console.error('خطأ في قراءة بيانات المجموعات:', error);
+                }
+            }
+            
+            // إذا لم توجد مجموعات، أنشئ مجموعة افتراضية
+            if (!data.groups || data.groups.length === 0) {
+                console.log('إنشاء مجموعة افتراضية');
+                data = {
+                    groups: [
+                        {
+                            id: 1,
+                            name: 'مجموعة رئيسية',
+                            tools: []
+                        }
+                    ]
+                };
+                localStorage.setItem('homeToolsData', JSON.stringify(data));
+            }
+            
+            // إنشاء نافذة الاختيار
+            const modal = document.createElement('div');
+            modal.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: rgba(0, 0, 0, 0.8);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                z-index: 10000;
+            `;
+            
+            const content = document.createElement('div');
+            content.style.cssText = `
+                background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+                padding: 2rem;
+                border-radius: 16px;
+                box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+                max-width: 500px;
+                width: 90%;
+                max-height: 80vh;
+                overflow-y: auto;
+                border: 1px solid #475569;
+            `;
+            
+            content.innerHTML = `
+                <div style="text-align: center; margin-bottom: 1.5rem;">
+                    <h3 style="color: #f8fafc; margin: 0 0 0.5rem 0; font-size: 1.5rem;">اختيار المجموعة</h3>
+                    <p style="color: #94a3b8; margin: 0;">إلى أي مجموعة تريد إضافة ${selectedTools.length} أداة؟</p>
+                </div>
+                
+                <div id="groupsList" style="margin-bottom: 1.5rem;">
+                    ${data.groups.map(group => `
+                        <div style="
+                            border: 2px solid #475569;
+                            border-radius: 12px;
+                            padding: 1rem;
+                            margin-bottom: 0.75rem;
+                            cursor: pointer;
+                            transition: all 0.2s ease;
+                            background: linear-gradient(135deg, #334155 0%, #475569 100%);
+                        " class="group-option" data-group-id="${group.id}">
+                            <div style="display: flex; align-items: center; justify-content: space-between;">
+                                <div>
+                                    <h4 style="margin: 0 0 0.25rem 0; color: #f8fafc; font-size: 1.1rem;">${group.name}</h4>
+                                    <p style="margin: 0; color: #94a3b8; font-size: 0.9rem;">${group.tools.length} أداة</p>
+                                </div>
+                                <i class="fas fa-folder" style="color: #3b82f6; font-size: 1.5rem;"></i>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+                
+                <div style="display: flex; gap: 1rem; justify-content: center;">
+                    <button id="cancelSelection" style="
+                        background: #6b7280;
+                        color: white;
+                        border: none;
+                        padding: 0.75rem 1.5rem;
+                        border-radius: 8px;
+                        cursor: pointer;
+                        font-weight: 600;
+                        transition: background 0.2s ease;
+                    ">إلغاء</button>
+                    
+                    <button id="createNewGroup" style="
+                        background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+                        color: white;
+                        border: none;
+                        padding: 0.75rem 1.5rem;
+                        border-radius: 8px;
+                        cursor: pointer;
+                        font-weight: 600;
+                        transition: all 0.2s ease;
+                    ">
+                        <i class="fas fa-plus"></i> مجموعة جديدة
+                    </button>
+                </div>
+            `;
+            
+            modal.appendChild(content);
+            document.body.appendChild(modal);
+            
+            // إضافة تأثيرات التفاعل للمجموعات
+            content.querySelectorAll('.group-option').forEach(option => {
+                option.addEventListener('mouseenter', function() {
+                    this.style.borderColor = '#3b82f6';
+                    this.style.background = 'linear-gradient(135deg, #1e40af 0%, #3b82f6 100%)';
+                    this.style.transform = 'translateY(-2px)';
+                    this.style.boxShadow = '0 8px 25px rgba(59, 130, 246, 0.3)';
+                });
+                
+                option.addEventListener('mouseleave', function() {
+                    this.style.borderColor = '#475569';
+                    this.style.background = 'linear-gradient(135deg, #334155 0%, #475569 100%)';
+                    this.style.transform = 'translateY(0)';
+                    this.style.boxShadow = 'none';
+                });
+                
+                option.addEventListener('click', function() {
+                    const groupId = this.getAttribute('data-group-id');
+                    console.log('تم اختيار المجموعة:', groupId);
+                    
+                    localStorage.setItem('pendingGroupSelection', groupId);
+                    console.log('تم حفظ المجموعة في localStorage');
+                    
+                    // التأكد من وجود الأدوات المحددة
+                    const selectedTools = localStorage.getItem('selectedTools');
+                    console.log('الأدوات المحددة:', selectedTools);
+                    
+                    document.body.removeChild(modal);
+                    
+                    // فتح صفحة المنزل
+                    setTimeout(() => {
+                        console.log('فتح صفحة index-new.html...');
+                        window.open('/index-new.html', '_blank');
+                    }, 500);
+                });
+            });
+            
+            // زر الإلغاء
+            content.querySelector('#cancelSelection').addEventListener('click', function() {
+                localStorage.removeItem('selectedTools');
+                document.body.removeChild(modal);
+            });
+            
+            // زر إنشاء مجموعة جديدة
+            content.querySelector('#createNewGroup').addEventListener('click', function() {
+                const groupName = prompt('اسم المجموعة الجديدة:');
+                if (groupName && groupName.trim()) {
+                    try {
+                        // إنشاء ID فريد للمجموعة الجديدة
+                        const maxId = data.groups.length > 0 ? Math.max(...data.groups.map(g => g.id)) : 0;
+                        const newGroup = {
+                            id: maxId + 1,
+                            name: groupName.trim(),
+                            tools: []
+                        };
+                        
+                        // إضافة المجموعة الجديدة للبيانات
+                        data.groups.push(newGroup);
+                        localStorage.setItem('homeToolsData', JSON.stringify(data));
+                        
+                        localStorage.setItem('pendingGroupSelection', newGroup.id.toString());
+                        document.body.removeChild(modal);
+                        
+                        // فتح صفحة المنزل
+                        setTimeout(() => {
+                            window.open('/index-new.html', '_blank');
+                        }, 500);
+                    } catch (error) {
+                        console.error('خطأ في إنشاء المجموعة الجديدة:', error);
+                        alert('حدث خطأ في إنشاء المجموعة الجديدة. يرجى المحاولة مرة أخرى.');
+                    }
+                }
+            });
+            
+            // إغلاق عند النقر خارج النافذة
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    localStorage.removeItem('selectedTools');
+                    document.body.removeChild(modal);
+                }
+            });
+        }
+    </script>
+</body>
+</html> 

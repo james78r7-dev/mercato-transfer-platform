@@ -1,0 +1,2936 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barcelona Ultimate Broadcast PRO - النسخة المتطورة</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    <script src="shared-data.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #00aaff;
+            --success-color: #00ff88;
+            --warning-color: #ffaa00;
+            --danger-color: #ff4444;
+            --info-color: #aa00ff;
+            --dark-bg: #0a0a0a;
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --border-color: rgba(255, 255, 255, 0.1);
+            --glow-color: rgba(0, 170, 255, 0.3);
+        }
+
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background: var(--dark-bg);
+            color: #ffffff;
+            min-height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(0, 170, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(0, 255, 136, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(170, 0, 255, 0.05) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .broadcast-container {
+            position: fixed;
+            right: 0;
+            top: 0;
+            width: 480px;
+            height: 100vh;
+            background: linear-gradient(135deg, 
+                rgba(10, 10, 10, 0.95) 0%,
+                rgba(20, 20, 30, 0.9) 25%,
+                rgba(30, 30, 50, 0.85) 50%,
+                rgba(40, 40, 70, 0.9) 75%,
+                rgba(10, 10, 10, 0.95) 100%);
+            backdrop-filter: blur(50px) saturate(2) contrast(1.2);
+            border-left: 3px solid var(--glow-color);
+            box-shadow: 
+                -30px 0 80px rgba(0, 0, 0, 0.7),
+                inset 2px 0 0 rgba(255, 255, 255, 0.1),
+                0 0 150px rgba(0, 170, 255, 0.2);
+            overflow: hidden;
+            z-index: 1000;
+            animation: containerGlow 4s ease-in-out infinite alternate;
+        }
+
+        @keyframes containerGlow {
+            0% {
+                box-shadow:
+                    -30px 0 80px rgba(0, 0, 0, 0.7),
+                    inset 2px 0 0 rgba(255, 255, 255, 0.1),
+                    0 0 150px rgba(0, 170, 255, 0.2);
+            }
+            100% {
+                box-shadow:
+                    -30px 0 80px rgba(0, 0, 0, 0.7),
+                    inset 2px 0 0 rgba(255, 255, 255, 0.1),
+                    0 0 200px rgba(0, 170, 255, 0.4);
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(-100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideOut {
+            from {
+                transform: translateX(0);
+                opacity: 1;
+            }
+            to {
+                transform: translateX(-100%);
+                opacity: 0;
+            }
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .broadcast-header {
+            position: relative;
+            height: 140px;
+            background: linear-gradient(135deg, 
+                rgba(0, 170, 255, 0.9) 0%,
+                rgba(0, 255, 136, 0.8) 25%,
+                rgba(170, 0, 255, 0.8) 50%,
+                rgba(255, 170, 0, 0.8) 75%,
+                rgba(0, 170, 255, 0.9) 100%);
+            border-bottom: 3px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .header-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.1) 50%, transparent 70%),
+                linear-gradient(-45deg, transparent 30%, rgba(255, 255, 255, 0.05) 50%, transparent 70%);
+            animation: headerShimmer 3s ease-in-out infinite;
+        }
+
+        @keyframes headerShimmer {
+            0%, 100% { transform: translateX(-100%); }
+            50% { transform: translateX(100%); }
+        }
+
+        .header-content {
+            text-align: center;
+            z-index: 2;
+            position: relative;
+        }
+
+        .header-title {
+            font-size: 2.2rem;
+            font-weight: 900;
+            background: linear-gradient(45deg, #ffffff, #e0e0ff, #ffffff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 40px rgba(255, 255, 255, 0.8);
+            animation: titleGlow 3s ease-in-out infinite alternate;
+            margin-bottom: 5px;
+        }
+
+        @keyframes titleGlow {
+            0% { 
+                text-shadow: 0 0 40px rgba(255, 255, 255, 0.8), 0 0 80px rgba(0, 170, 255, 0.4);
+                transform: scale(1);
+            }
+            100% { 
+                text-shadow: 0 0 60px rgba(255, 255, 255, 1), 0 0 120px rgba(0, 170, 255, 0.8);
+                transform: scale(1.02);
+            }
+        }
+
+        .header-subtitle {
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.9);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            font-weight: 500;
+            display: none; /* إخفاء TRANSFER MARKET */
+        }
+
+        .stats-bar {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px 20px;
+            border-bottom: 1px solid var(--border-color);
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+        }
+
+        .stat-item {
+            text-align: center;
+            position: relative;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: var(--success-color);
+            margin-bottom: 5px;
+            text-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+        }
+
+        .stat-label {
+            font-size: 0.7rem;
+            color: rgba(255, 255, 255, 0.7);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .stat-progress {
+            width: 100%;
+            height: 3px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+            margin-top: 8px;
+            overflow: hidden;
+        }
+
+        .stat-progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--success-color), var(--primary-color));
+            border-radius: 2px;
+            transition: width 0.5s ease;
+        }
+
+        .players-container {
+            height: calc(100vh - 140px - 80px);
+            padding: 20px;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .players-container::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .players-container::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 3px;
+        }
+
+        .players-container::-webkit-scrollbar-thumb {
+            background: var(--primary-color);
+            border-radius: 3px;
+        }
+
+        .players-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            align-content: start;
+        }
+
+        .player-card {
+            position: relative;
+            background: linear-gradient(135deg, 
+                rgba(255, 255, 255, 0.08) 0%,
+                rgba(255, 255, 255, 0.03) 50%,
+                rgba(255, 255, 255, 0.08) 100%);
+            backdrop-filter: blur(25px) saturate(1.8);
+            border-radius: 20px;
+            border: 1px solid var(--border-color);
+            padding: 18px;
+            height: 180px;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 
+                0 10px 40px rgba(0, 0, 0, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1),
+                inset 0 -1px 0 rgba(0, 0, 0, 0.2);
+        }
+
+        .player-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary-color), var(--success-color));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .player-card:hover {
+            transform: translateY(-10px) scale(1.05) rotateY(8deg);
+            box-shadow: 
+                0 25px 80px rgba(0, 0, 0, 0.5),
+                0 0 50px rgba(0, 170, 255, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            border-color: var(--primary-color);
+        }
+
+        .player-card:hover::before {
+            opacity: 1;
+        }
+
+        .player-card.official { border-color: var(--success-color); }
+        .player-card.official:hover { box-shadow: 0 25px 80px rgba(0, 0, 0, 0.5), 0 0 50px rgba(0, 255, 136, 0.4); }
+
+        .player-card.close { border-color: var(--warning-color); }
+        .player-card.close:hover { box-shadow: 0 25px 80px rgba(0, 0, 0, 0.5), 0 0 50px rgba(255, 170, 0, 0.4); }
+
+        .player-card.negotiating { border-color: var(--info-color); }
+        .player-card.negotiating:hover { box-shadow: 0 25px 80px rgba(0, 0, 0, 0.5), 0 0 50px rgba(170, 0, 255, 0.4); }
+
+        .player-card.failed { 
+            border-color: var(--danger-color); 
+            filter: grayscale(100%);
+            opacity: 0.7;
+        }
+        .player-card.failed:hover { 
+            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.5), 0 0 50px rgba(255, 68, 68, 0.4);
+            filter: grayscale(80%);
+            opacity: 0.9;
+        }
+
+        /* أنماط البطاقات المتقدمة */
+        .card-style-modern {
+            border-radius: 25px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+            backdrop-filter: blur(30px);
+        }
+
+        .card-style-classic {
+            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 2px solid var(--border-color);
+        }
+
+        .card-style-neon {
+            border-radius: 20px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 2px solid var(--primary-color);
+            box-shadow: 0 0 30px rgba(0, 170, 255, 0.3);
+        }
+
+        .card-style-glass {
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(40px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        /* تأثيرات إضافية */
+        .probability-display {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            z-index: 2;
+        }
+
+        .player-age {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: rgba(0, 170, 255, 0.8);
+            color: white;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+
+        .transfer-fee-badge {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background: rgba(0, 255, 136, 0.8);
+            color: white;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+
+        .player-avatar {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin: 0 auto 12px;
+            position: relative;
+            border: 3px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 
+                0 0 25px rgba(0, 170, 255, 0.5),
+                inset 0 0 25px rgba(255, 255, 255, 0.1);
+            transition: all 0.4s ease;
+        }
+
+        .player-card:hover .player-avatar {
+            border-color: var(--primary-color);
+            box-shadow: 
+                0 0 35px rgba(0, 170, 255, 0.8),
+                inset 0 0 25px rgba(255, 255, 255, 0.2);
+        }
+
+        .player-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+
+        .player-card:hover .player-avatar img {
+            transform: scale(1.15);
+        }
+
+        .player-name {
+            font-size: 1rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 6px;
+            color: #ffffff;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+            line-height: 1.2;
+        }
+
+        .player-position {
+            font-size: 0.75rem;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 10px;
+        }
+
+        .player-status {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            margin-bottom: 10px;
+        }
+
+        .player-status i {
+            font-size: 1.2rem;
+            color: var(--primary-color);
+        }
+
+        .player-status i.fa-check-circle {
+            color: var(--success-color);
+        }
+
+        .player-status i.fa-times-circle {
+            color: var(--danger-color);
+        }
+
+        .player-status i.fa-comments {
+            color: var(--info-color);
+        }
+
+        .player-status i.fa-fire {
+            color: var(--warning-color);
+        }
+
+        .player-status i.fa-eye {
+            color: #ccc;
+        }
+
+        .status-label {
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+
+        /* إخفاء النص في البطاقات */
+        .status-label {
+            display: none !important;
+            visibility: hidden !important;
+            opacity: 0 !important;
+            width: 0 !important;
+            height: 0 !important;
+            overflow: hidden !important;
+            position: absolute !important;
+            left: -9999px !important;
+            top: -9999px !important;
+        }
+
+        /* إخفاء أي نص يحتوي على fas fa-check-circle */
+        .player-status span:not(.status-icon) {
+            display: none !important;
+            visibility: hidden !important;
+            opacity: 0 !important;
+            width: 0 !important;
+            height: 0 !important;
+            overflow: hidden !important;
+            position: absolute !important;
+            left: -9999px !important;
+            top: -9999px !important;
+        }
+
+        /* إخفاء النصوص المحددة فقط */
+        .player-card .status-label {
+            display: none !important;
+            visibility: hidden !important;
+            opacity: 0 !important;
+            width: 0 !important;
+            height: 0 !important;
+            overflow: hidden !important;
+            position: absolute !important;
+            left: -9999px !important;
+            top: -9999px !important;
+        }
+
+        /* إخفاء أي نص يحتوي على fas fa- */
+        .player-card .fas {
+            font-family: "Font Awesome 5 Free" !important;
+            font-weight: 900 !important;
+        }
+
+        /* إخفاء النصوص غير المرغوبة */
+        .player-card i.fas {
+            display: inline-block !important;
+            font-style: normal !important;
+        }
+
+        /* أنماط حجم البطاقات */
+        .card-size-small .player-card {
+            height: 140px;
+            padding: 12px;
+        }
+
+        .card-size-small .player-avatar {
+            width: 50px;
+            height: 50px;
+        }
+
+        .card-size-small .player-name {
+            font-size: 0.9rem;
+        }
+
+        .card-size-small .player-position {
+            font-size: 0.65rem;
+        }
+
+        .card-size-large .player-card {
+            height: 220px;
+            padding: 25px;
+        }
+
+        .card-size-large .player-avatar {
+            width: 90px;
+            height: 90px;
+        }
+
+        .card-size-large .player-name {
+            font-size: 1.4rem;
+        }
+
+        .card-size-large .player-position {
+            font-size: 0.9rem;
+        }
+
+        .probability-bar {
+            width: 100%;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+            overflow: hidden;
+            margin-bottom: 8px;
+            position: relative;
+        }
+
+        .probability-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--danger-color), var(--warning-color), var(--success-color));
+            border-radius: 3px;
+            transition: width 0.8s ease;
+            position: relative;
+        }
+
+        .probability-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            animation: probabilityShimmer 2s ease-in-out infinite;
+        }
+
+        @keyframes probabilityShimmer {
+            0%, 100% { transform: translateX(-100%); }
+            50% { transform: translateX(100%); }
+        }
+
+        .probability-text {
+            font-size: 0.75rem;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 700;
+        }
+
+        /* شريط إتمام الصفقة الجديد */
+        .deal-status-bar {
+            width: 100%;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+            overflow: hidden;
+            margin-bottom: 8px;
+            position: relative;
+        }
+
+        .deal-status-fill {
+            height: 100%;
+            border-radius: 3px;
+            transition: width 0.8s ease;
+            position: relative;
+        }
+
+        .deal-status-fill.official {
+            background: linear-gradient(90deg, #00ff88, #00cc6a);
+        }
+
+        .deal-status-fill.close {
+            background: linear-gradient(90deg, #ffaa00, #ff8800);
+        }
+
+        .deal-status-fill.negotiating {
+            background: linear-gradient(90deg, #00aaff, #0088cc);
+        }
+
+        .deal-status-fill.failed {
+            background: linear-gradient(90deg, #ff4444, #cc3333);
+        }
+
+        .deal-status-fill.rumor {
+            background: linear-gradient(90deg, #aa00ff, #8800cc);
+        }
+
+        .deal-status-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            animation: dealStatusShimmer 2s ease-in-out infinite;
+        }
+
+        @keyframes dealStatusShimmer {
+            0%, 100% { transform: translateX(-100%); }
+            50% { transform: translateX(100%); }
+        }
+
+        .deal-status-text {
+            font-size: 0.8rem;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.95);
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        /* إعدادات البطاقات المتقدمة */
+        .advanced-card-settings {
+            background: rgba(0, 0, 0, 0.8);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .advanced-card-controls {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .control-group label {
+            color: #fff;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .control-group select,
+        .control-group input {
+            padding: 8px 12px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            font-size: 0.9rem;
+        }
+
+        .control-group select:focus,
+        .control-group input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(0, 170, 255, 0.2);
+        }
+
+        /* أحجام خط النسبة المئوية */
+        .probability-font-xs .deal-status-text {
+            font-size: 0.6rem;
+        }
+
+        .probability-font-sm .deal-status-text {
+            font-size: 0.7rem;
+        }
+
+        .probability-font-md .deal-status-text {
+            font-size: 0.8rem;
+        }
+
+        .probability-font-lg .deal-status-text {
+            font-size: 1rem;
+        }
+
+        .probability-font-xl .deal-status-text {
+            font-size: 1.2rem;
+        }
+
+        /* أشكال البطاقات */
+        .card-shape-rounded .player-card {
+            border-radius: 15px;
+        }
+
+        .card-shape-sharp .player-card {
+            border-radius: 0;
+        }
+
+        .card-shape-hexagon .player-card {
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+        }
+
+        .card-shape-diamond .player-card {
+            clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+        }
+
+        .card-shape-circle .player-card {
+            border-radius: 50%;
+            aspect-ratio: 1;
+        }
+
+        /* تأثيرات البطاقات */
+        .card-effect-glow .player-card {
+            box-shadow: 0 0 20px rgba(0, 170, 255, 0.5);
+        }
+
+        .card-effect-shadow .player-card {
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .card-effect-neon .player-card {
+            box-shadow: 0 0 15px var(--primary-color), 0 0 30px var(--primary-color);
+            border: 1px solid var(--primary-color);
+        }
+
+        .card-effect-hologram .player-card {
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            animation: hologramEffect 3s ease-in-out infinite;
+        }
+
+        @keyframes hologramEffect {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        /* أنماط العرض */
+        .display-mode-list .players-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .display-mode-list .player-card {
+            width: 100%;
+            height: auto;
+            min-height: 80px;
+            flex-direction: row;
+            align-items: center;
+            padding: 15px;
+        }
+
+        .display-mode-list .player-avatar {
+            width: 60px;
+            height: 60px;
+            margin-right: 15px;
+        }
+
+        .display-mode-carousel .players-grid {
+            display: flex;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            gap: 20px;
+            padding: 20px 0;
+        }
+
+        .display-mode-carousel .player-card {
+            min-width: 200px;
+            scroll-snap-align: start;
+        }
+
+        .display-mode-masonry .players-grid {
+            columns: 3;
+            column-gap: 20px;
+        }
+
+        .display-mode-masonry .player-card {
+            break-inside: avoid;
+            margin-bottom: 20px;
+        }
+
+        /* أنماط عرض النسبة الجديدة */
+        .probability-display-circle .deal-status-bar,
+        .probability-display-circle .deal-status-text {
+            display: none !important;
+        }
+
+        .probability-display-circle .probability-circle {
+            width: 60px;
+            height: 60px;
+            margin: 10px auto;
+            position: relative;
+        }
+
+        .probability-display-circle .circle-progress {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: conic-gradient(var(--primary-color) 0deg, var(--primary-color) calc(var(--percentage, 0) * 3.6deg), rgba(255, 255, 255, 0.1) calc(var(--percentage, 0) * 3.6deg));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .probability-display-circle .circle-text {
+            font-size: 0.8rem;
+            font-weight: bold;
+            color: white;
+            z-index: 2;
+        }
+
+        .probability-display-number .deal-status-bar,
+        .probability-display-number .deal-status-text {
+            display: none !important;
+        }
+
+        .probability-display-number .probability-number {
+            font-size: 2rem;
+            font-weight: 900;
+            color: var(--primary-color);
+            text-align: center;
+            margin: 15px 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .probability-display-gauge .deal-status-bar,
+        .probability-display-gauge .deal-status-text {
+            display: none !important;
+        }
+
+        .probability-display-gauge .probability-gauge {
+            margin: 10px 0;
+        }
+
+        .probability-display-gauge .gauge-bar {
+            height: 25px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            overflow: hidden;
+            position: relative;
+            margin-bottom: 8px;
+        }
+
+        .probability-display-gauge .gauge-fill {
+            height: 100%;
+            border-radius: 12px;
+            position: relative;
+            transition: width 0.3s ease;
+        }
+
+        .probability-display-gauge .gauge-fill::after {
+            content: attr(data-percentage) '%';
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: white;
+            font-weight: bold;
+            font-size: 0.9rem;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+
+        .probability-display-gauge .gauge-text {
+            text-align: center;
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .probability-display-bar .deal-status-bar {
+            display: block;
+        }
+
+        .probability-display-bar .deal-status-text {
+            display: block;
+        }
+
+        /* أحجام خط النسبة المئوية */
+        .probability-font-xs .probability-number,
+        .probability-font-xs .circle-text,
+        .probability-font-xs .gauge-fill::after {
+            font-size: 0.8rem !important;
+        }
+
+        .probability-font-sm .probability-number,
+        .probability-font-sm .circle-text,
+        .probability-font-sm .gauge-fill::after {
+            font-size: 1.2rem !important;
+        }
+
+        .probability-font-md .probability-number,
+        .probability-font-md .circle-text,
+        .probability-font-md .gauge-fill::after {
+            font-size: 1.5rem !important;
+        }
+
+        .probability-font-lg .probability-number,
+        .probability-font-lg .circle-text,
+        .probability-font-lg .gauge-fill::after {
+            font-size: 2rem !important;
+        }
+
+        .probability-font-xl .probability-number,
+        .probability-font-xl .circle-text,
+        .probability-font-xl .gauge-fill::after {
+            font-size: 2.5rem !important;
+        }
+
+        /* ألوان النسبة حسب الإعدادات */
+        .probability-color-rainbow .probability-number,
+        .probability-color-rainbow .circle-text {
+            background: linear-gradient(45deg, #ff0000, #ff8000, #ffff00, #80ff00, #00ff00, #00ff80, #00ffff, #0080ff, #0000ff, #8000ff, #ff00ff, #ff0080);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: rainbow 3s ease-in-out infinite;
+        }
+
+        @keyframes rainbow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .probability-color-status .probability-number,
+        .probability-color-status .circle-text {
+            color: var(--primary-color);
+        }
+
+        .probability-color-custom .probability-number,
+        .probability-color-custom .circle-text {
+            color: #ff6b6b;
+            text-shadow: 2px 2px 4px rgba(255, 107, 107, 0.3);
+        }
+
+        .probability-color-gradient .probability-number,
+        .probability-color-gradient .circle-text {
+            background: linear-gradient(45deg, var(--primary-color), var(--success-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* ألوان النسبة */
+        .probability-color-status .deal-status-fill.official {
+            background: linear-gradient(90deg, #00ff88, #00cc6a);
+        }
+
+        .probability-color-status .deal-status-fill.close {
+            background: linear-gradient(90deg, #ffaa00, #ff8800);
+        }
+
+        .probability-color-status .deal-status-fill.negotiating {
+            background: linear-gradient(90deg, #00aaff, #0088cc);
+        }
+
+        .probability-color-status .deal-status-fill.failed {
+            background: linear-gradient(90deg, #ff4444, #cc3333);
+        }
+
+        .probability-color-status .deal-status-fill.rumor {
+            background: linear-gradient(90deg, #aa00ff, #8800cc);
+        }
+
+        .probability-color-rainbow .deal-status-fill {
+            background: linear-gradient(90deg, #ff0000, #ff8000, #ffff00, #80ff00, #00ff00, #00ff80, #00ffff, #0080ff, #0000ff, #8000ff, #ff00ff, #ff0080);
+            background-size: 200% 100%;
+            animation: rainbowMove 3s linear infinite;
+        }
+
+        @keyframes rainbowMove {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 200% 50%; }
+        }
+
+        .transfer-fee {
+            font-size: 0.7rem;
+            text-align: center;
+            color: var(--success-color);
+            font-weight: 600;
+            margin-top: 5px;
+        }
+
+        .status-official .status-icon { color: var(--success-color); }
+        .status-close .status-icon { color: var(--warning-color); }
+        .status-negotiating .status-icon { color: var(--info-color); }
+        .status-failed .status-icon { color: var(--danger-color); }
+        .status-rumor .status-icon { color: #ccc; }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .empty-state i {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            opacity: 0.5;
+            animation: emptyPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes emptyPulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+
+        .sync-status {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(0, 0, 0, 0.9);
+            color: white;
+            padding: 12px 18px;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            z-index: 1001;
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+        }
+
+        .sync-status.connected {
+            background: rgba(0, 255, 136, 0.2);
+            border-color: var(--success-color);
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
+        }
+
+        .sync-status.disconnected {
+            background: rgba(255, 68, 68, 0.2);
+            border-color: var(--danger-color);
+            box-shadow: 0 0 20px rgba(255, 68, 68, 0.3);
+        }
+
+        .sync-status i {
+            margin-left: 8px;
+            animation: syncPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes syncPulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .settings-panel {
+            position: fixed;
+            top: 20px;
+            right: 500px;
+            background: rgba(0, 0, 0, 0.95);
+            padding: 20px;
+            border-radius: 20px;
+            backdrop-filter: blur(20px);
+            border: 2px solid var(--border-color);
+            z-index: 1001;
+            min-width: 300px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .settings-panel h4 {
+            margin-bottom: 15px;
+            color: var(--primary-color);
+            font-size: 1rem;
+            text-align: center;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 10px;
+        }
+
+        .setting-group {
+            margin-bottom: 20px;
+        }
+
+        .stats-color-presets {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .stats-color-preset {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .stats-color-preset:hover {
+            transform: scale(1.1);
+        }
+
+        .stats-color-preset.active {
+            border-color: white;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+
+        .stats-preset-barcelona {
+            background: linear-gradient(45deg, #004D98, #A50044);
+        }
+
+        .stats-preset-real-madrid {
+            background: linear-gradient(45deg, #00529F, #FFFFFF);
+        }
+
+        .stats-preset-man-city {
+            background: linear-gradient(45deg, #6CABDD, #1C3F94);
+        }
+
+        .stats-preset-psg {
+            background: linear-gradient(45deg, #004170, #DA291C);
+        }
+
+        .stats-preset-bayern {
+            background: linear-gradient(45deg, #DC052C, #0066B1);
+        }
+
+        .stats-preset-juventus {
+            background: linear-gradient(45deg, #000000, #FFFFFF);
+        }
+
+        .stats-preset-liverpool {
+            background: linear-gradient(45deg, #C8102E, #F6EB61);
+        }
+
+        .stats-preset-chelsea {
+            background: linear-gradient(45deg, #034694, #FFFFFF);
+        }
+
+        .stats-preset-arsenal {
+            background: linear-gradient(45deg, #EF0107, #FFFFFF);
+        }
+
+        /* أنماط الشريط العلوي */
+        .header-style-gradient {
+            background: linear-gradient(135deg, var(--primary-color), var(--info-color)) !important;
+        }
+
+        .header-style-solid {
+            background: var(--primary-color) !important;
+        }
+
+        .header-style-glass {
+            background: rgba(255, 255, 255, 0.1) !important;
+            backdrop-filter: blur(20px) !important;
+            border: 1px solid rgba(255, 255, 255, 0.2) !important;
+        }
+
+        .header-style-neon {
+            background: rgba(0, 0, 0, 0.8) !important;
+            border: 2px solid var(--primary-color) !important;
+            box-shadow: 0 0 30px var(--primary-color) !important;
+        }
+
+        /* تطبيق الأنماط على broadcast-header */
+        .broadcast-header.header-style-gradient {
+            background: linear-gradient(135deg, var(--primary-color), var(--info-color)) !important;
+        }
+
+        .broadcast-header.header-style-solid {
+            background: var(--primary-color) !important;
+        }
+
+        .broadcast-header.header-style-glass {
+            background: rgba(255, 255, 255, 0.1) !important;
+            backdrop-filter: blur(20px) !important;
+            border: 1px solid rgba(255, 255, 255, 0.2) !important;
+        }
+
+        .broadcast-header.header-style-neon {
+            background: rgba(0, 0, 0, 0.8) !important;
+            border: 2px solid var(--primary-color) !important;
+            box-shadow: 0 0 30px var(--primary-color) !important;
+        }
+
+        /* أحجام الخطوط */
+        .font-size-small {
+            font-size: 1.5rem !important;
+        }
+
+        .font-size-medium {
+            font-size: 2rem !important;
+        }
+
+        .font-size-large {
+            font-size: 2.5rem !important;
+        }
+
+        /* تطبيق أحجام الخطوط على العنوان */
+        .header-title.font-size-small {
+            font-size: 1.5rem !important;
+        }
+
+        .header-title.font-size-medium {
+            font-size: 2rem !important;
+        }
+
+        .header-title.font-size-large {
+            font-size: 2.5rem !important;
+        }
+
+        .setting-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .setting-group input, .setting-group select {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+        }
+
+        .setting-group input:focus, .setting-group select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 15px rgba(0, 170, 255, 0.3);
+        }
+
+        .color-presets {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .color-preset {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .color-preset:hover {
+            transform: scale(1.1);
+        }
+
+        .color-preset.active {
+            border-color: white;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+
+        .preset-1 { background: linear-gradient(45deg, #667eea, #764ba2); }
+        .preset-2 { background: linear-gradient(45deg, #f093fb, #f5576c); }
+        .preset-3 { background: linear-gradient(45deg, #4facfe, #00f2fe); }
+        .preset-4 { background: linear-gradient(45deg, #43e97b, #38f9d7); }
+        .preset-5 { background: linear-gradient(45deg, #fa709a, #fee140); }
+        .preset-6 { background: linear-gradient(45deg, #a8edea, #fed6e3); }
+        .preset-7 { background: linear-gradient(45deg, #ff9a9e, #fecfef); }
+        .preset-8 { background: linear-gradient(45deg, #ffecd2, #fcb69f); }
+        .preset-9 { background: linear-gradient(45deg, #ff9a9e, #fad0c4); }
+
+        .card-styles {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .card-style {
+            padding: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            cursor: pointer;
+            text-align: center;
+            font-size: 0.8rem;
+            transition: all 0.3s ease;
+        }
+
+        .card-style:hover {
+            border-color: var(--primary-color);
+            background: rgba(0, 170, 255, 0.1);
+        }
+
+        .card-style.active {
+            border-color: var(--success-color);
+            background: rgba(0, 255, 136, 0.1);
+        }
+
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(255, 255, 255, 0.2);
+            transition: .4s;
+            border-radius: 24px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: var(--success-color);
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+
+        .toggle-label {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .broadcast-container {
+                width: 100%;
+                right: 0;
+            }
+            
+            .title-control {
+                right: 20px;
+                top: 80px;
+            }
+        }
+
+        .supporters-list {
+            overflow-y: auto !important;
+            height: 100%;
+            max-height: 100vh;
+            will-change: scroll-position;
+            -webkit-overflow-scrolling: touch;
+        }
+    </style>
+</head>
+<body>
+    <div class="sync-status" id="syncStatus">
+        <i class="fas fa-circle"></i> جاري الاتصال...
+    </div>
+
+    <div style="position: fixed; top: 20px; left: 200px; z-index: 1000; display: flex; gap: 10px;">
+        <button onclick="loadData()" style="
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9rem;
+        ">
+            🔄 تحديث البيانات
+        </button>
+        <button onclick="forceReload()" style="
+            background: var(--success-color);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9rem;
+        ">
+            ⚡ إعادة تحميل كامل
+        </button>
+        <button onclick="testConnection()" style="
+            background: var(--warning-color);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9rem;
+        ">
+            🔗 اختبار الاتصال
+        </button>
+    </div>
+
+    <div class="settings-panel" id="settingsPanel">
+        <h4>⚙️ إعدادات البث المتقدمة</h4>
+        <button id="saveSettingsBtn" style="width:100%;margin-bottom:15px;padding:10px 0;background:var(--primary-color);color:#fff;font-weight:900;border:none;border-radius:8px;font-size:1rem;cursor:pointer;transition:background 0.2s;">💾 حفظ الإعدادات</button>
+        
+        <div class="setting-group">
+            <label>🎯 عنوان البث</label>
+            <input type="text" id="titleInput" placeholder="أدخل عنوان البث..." value="BARCELONA">
+        </div>
+
+        <div class="setting-group">
+            <label>🎨 نمط الألوان</label>
+            <div class="color-presets">
+                <div class="color-preset preset-1 active" data-preset="1"></div>
+                <div class="color-preset preset-2" data-preset="2"></div>
+                <div class="color-preset preset-3" data-preset="3"></div>
+                <div class="color-preset preset-4" data-preset="4"></div>
+                <div class="color-preset preset-5" data-preset="5"></div>
+                <div class="color-preset preset-6" data-preset="6"></div>
+                <div class="color-preset preset-7" data-preset="7"></div>
+                <div class="color-preset preset-8" data-preset="8"></div>
+                <div class="color-preset preset-9" data-preset="9"></div>
+            </div>
+        </div>
+
+        <div class="setting-group">
+            <label>🃏 نمط البطاقات</label>
+            <div class="card-styles">
+                <div class="card-style active" data-style="modern">عصري</div>
+                <div class="card-style" data-style="classic">كلاسيكي</div>
+                <div class="card-style" data-style="neon">نيون</div>
+                <div class="card-style" data-style="glass">زجاجي</div>
+            </div>
+        </div>
+
+        <div class="setting-group">
+            <div class="toggle-label">
+                <span>📊 عرض النسبة المئوية</span>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="showProbability" checked>
+                    <span class="slider"></span>
+                </label>
+            </div>
+        </div>
+
+        <div class="setting-group">
+            <div class="toggle-label">
+                <span>👤 عرض العمر</span>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="showAge">
+                    <span class="slider"></span>
+                </label>
+            </div>
+        </div>
+
+        <div class="setting-group">
+            <div class="toggle-label">
+                <span>💰 عرض الرسوم</span>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="showTransferFee">
+                    <span class="slider"></span>
+                </label>
+            </div>
+        </div>
+
+        <div class="setting-group">
+            <div class="toggle-label">
+                <span>🎭 تأثيرات حركية</span>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="enableAnimations" checked>
+                    <span class="slider"></span>
+                </label>
+            </div>
+        </div>
+
+        <div class="setting-group">
+            <div class="toggle-label">
+                <span>🌙 الوضع الليلي</span>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="darkMode">
+                    <span class="slider"></span>
+                </label>
+            </div>
+        </div>
+
+        <div class="setting-group">
+            <label>⚡ سرعة التحديث (ثواني)</label>
+            <select id="updateSpeed">
+                <option value="3">3 ثواني</option>
+                <option value="5" selected>5 ثواني</option>
+                <option value="10">10 ثواني</option>
+                <option value="15">15 ثواني</option>
+            </select>
+        </div>
+
+        <div class="setting-group">
+            <label>📏 حجم البطاقات</label>
+            <select id="cardSize">
+                <option value="small">صغير</option>
+                <option value="medium" selected>متوسط</option>
+                <option value="large">كبير</option>
+            </select>
+        </div>
+
+        <div class="setting-group">
+            <label>📊 ألوان شريط التوقعات</label>
+            <div class="stats-color-presets">
+                <div class="stats-color-preset stats-preset-barcelona active" data-stats-preset="barcelona" title="برشلونة"></div>
+                <div class="stats-color-preset stats-preset-real-madrid" data-stats-preset="real-madrid" title="ريال مدريد"></div>
+                <div class="stats-color-preset stats-preset-man-city" data-stats-preset="man-city" title="مانشستر سيتي"></div>
+                <div class="stats-color-preset stats-preset-psg" data-stats-preset="psg" title="باريس سان جيرمان"></div>
+                <div class="stats-color-preset stats-preset-bayern" data-stats-preset="bayern" title="بايرن ميونخ"></div>
+                <div class="stats-color-preset stats-preset-juventus" data-stats-preset="juventus" title="يوفنتوس"></div>
+                <div class="stats-color-preset stats-preset-liverpool" data-stats-preset="liverpool" title="ليفربول"></div>
+                <div class="stats-color-preset stats-preset-chelsea" data-stats-preset="chelsea" title="تشيلسي"></div>
+                <div class="stats-color-preset stats-preset-arsenal" data-stats-preset="arsenal" title="آرسنال"></div>
+            </div>
+        </div>
+
+        <div class="setting-group">
+            <label>🎨 إعدادات الشريط العلوي</label>
+            <div style="margin-bottom: 10px;">
+                <label style="font-size: 0.8rem; color: rgba(255, 255, 255, 0.7);">نمط الخلفية:</label>
+                <select id="headerStyle" style="margin-top: 5px;">
+                    <option value="gradient">تدرج لوني</option>
+                    <option value="solid">لون ثابت</option>
+                    <option value="glass">زجاجي</option>
+                    <option value="neon">نيون</option>
+                </select>
+            </div>
+            <div style="margin-bottom: 10px;">
+                <label style="font-size: 0.8rem; color: rgba(255, 255, 255, 0.7);">حجم الخط:</label>
+                <select id="headerFontSize" style="margin-top: 5px;">
+                    <option value="large">كبير</option>
+                    <option value="medium" selected>متوسط</option>
+                    <option value="small">صغير</option>
+                </select>
+            </div>
+            <div>
+                <label style="font-size: 0.8rem; color: rgba(255, 255, 255, 0.7);">إظهار الإحصائيات:</label>
+                <div style="margin-top: 5px;">
+                    <input type="checkbox" id="showStats" checked style="margin-right: 5px;">
+                    <label for="showStats" style="font-size: 0.8rem;">عرض شريط الإحصائيات</label>
+                </div>
+            </div>
+        </div>
+
+        <!-- إعدادات البطاقات المتقدمة -->
+        <div class="setting-group advanced-card-settings">
+            <label>🎯 إعدادات البطاقات المتقدمة</label>
+            
+            <div class="advanced-card-controls">
+                <div class="control-group">
+                    <label>📏 حجم خط النسبة المئوية</label>
+                    <select id="probabilityFontSize">
+                        <option value="xs">صغير جداً</option>
+                        <option value="sm">صغير</option>
+                        <option value="md" selected>متوسط</option>
+                        <option value="lg">كبير</option>
+                        <option value="xl">كبير جداً</option>
+                    </select>
+                </div>
+
+                <div class="control-group">
+                    <label>🎨 شكل البطاقات</label>
+                    <select id="cardShape">
+                        <option value="rounded">مستدير</option>
+                        <option value="sharp">حاد</option>
+                        <option value="hexagon">سداسي</option>
+                        <option value="diamond">ماسي</option>
+                        <option value="circle">دائري</option>
+                    </select>
+                </div>
+
+                <div class="control-group">
+                    <label>🌟 تأثير البطاقات</label>
+                    <select id="cardEffect">
+                        <option value="none">بدون تأثير</option>
+                        <option value="glow">توهج</option>
+                        <option value="shadow">ظل</option>
+                        <option value="neon">نيون</option>
+                        <option value="hologram">هولوغرام</option>
+                    </select>
+                </div>
+
+                <div class="control-group">
+                    <label>🎭 نمط العرض</label>
+                    <select id="displayMode">
+                        <option value="grid">شبكة</option>
+                        <option value="list">قائمة</option>
+                        <option value="carousel">عرض شرائح</option>
+                        <option value="masonry">حائط</option>
+                    </select>
+                </div>
+
+                <div class="control-group">
+                    <label>📊 عرض النسبة</label>
+                    <select id="probabilityDisplay">
+                        <option value="bar">شريط</option>
+                        <option value="circle">دائرة</option>
+                        <option value="number">رقم فقط</option>
+                        <option value="gauge">مقياس</option>
+                    </select>
+                </div>
+
+                <div class="control-group">
+                    <label>🎨 لون النسبة</label>
+                    <select id="probabilityColor">
+                        <option value="gradient">تدرج لوني</option>
+                        <option value="status">حسب الحالة</option>
+                        <option value="custom">مخصص</option>
+                        <option value="rainbow">قوس قزح</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="broadcast-container">
+        <div class="broadcast-header">
+            <div class="header-bg"></div>
+            <div class="header-content">
+                <div class="header-title" id="headerTitle">BARCELONA</div>
+                <div class="header-subtitle">TRANSFER MARKET</div>
+            </div>
+        </div>
+
+        <div class="stats-bar">
+            <div class="stat-item">
+                <div class="stat-value" id="totalPlayers">0</div>
+                <div class="stat-label">إجمالي</div>
+                <div class="stat-progress">
+                    <div class="stat-progress-fill" id="totalProgress" style="width: 0%"></div>
+                </div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value" id="officialDeals">0</div>
+                <div class="stat-label">رسمية</div>
+                <div class="stat-progress">
+                    <div class="stat-progress-fill" id="officialProgress" style="width: 0%"></div>
+                </div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value" id="successRate">0%</div>
+                <div class="stat-label">نجاح</div>
+                <div class="stat-progress">
+                    <div class="stat-progress-fill" id="successProgress" style="width: 0%"></div>
+                </div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value" id="avgProbability">0%</div>
+                <div class="stat-label">متوسط</div>
+                <div class="stat-progress">
+                    <div class="stat-progress-fill" id="avgProgress" style="width: 0%"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="players-container">
+            <div class="players-grid" id="playersGrid">
+                <div class="empty-state">
+                    <i class="fas fa-users"></i>
+                    <div>لا يوجد لاعبين</div>
+                    <div style="font-size: 0.8rem; margin-top: 10px;">جاري انتظار البيانات...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let players = [];
+        let syncStatusElement;
+        let titleInput;
+        let settings = {
+            title: 'BARCELONA',
+            colorPreset: 1,
+            cardStyle: 'modern',
+            showProbability: true,
+            showAge: false,
+            showTransferFee: false,
+            enableAnimations: true,
+            darkMode: false,
+            updateSpeed: 5,
+            cardSize: 'medium',
+            statsColorPreset: 'barcelona',
+            headerStyle: 'gradient',
+            headerFontSize: 'medium',
+            showStats: true,
+            // إعدادات البطاقات المتقدمة
+            probabilityFontSize: 'md',
+            cardShape: 'rounded',
+            cardEffect: 'none',
+            displayMode: 'grid',
+            probabilityDisplay: 'bar',
+            probabilityColor: 'gradient'
+        };
+
+        // دالة تحديث حالة التزامن
+        function updateSyncStatus(connected) {
+            if (syncStatusElement) {
+                syncStatusElement.className = `sync-status ${connected ? 'connected' : 'disconnected'}`;
+                syncStatusElement.innerHTML = `
+                    <i class="fas fa-circle"></i>
+                    ${connected ? 'متصل' : 'غير متصل'}
+                `;
+            }
+
+            // تحديث حالة التزامن في العنوان
+            const headerTitle = document.getElementById('headerTitle');
+            if (headerTitle) {
+                const currentTitle = headerTitle.textContent;
+                if (connected && !currentTitle.includes('🟢')) {
+                    headerTitle.textContent = currentTitle.replace('🔴', '').replace('🟡', '').trim() + ' 🟢';
+                } else if (!connected && !currentTitle.includes('🔴')) {
+                    headerTitle.textContent = currentTitle.replace('🟢', '').replace('🟡', '').trim() + ' 🔴';
+                }
+            }
+
+            // إرسال حالة التزامن للوحة التحكم
+            window.postMessage({
+                type: 'SYNC_STATUS_UPDATE',
+                connected: connected,
+                timestamp: new Date().toISOString()
+            }, '*');
+        }
+
+        // دالة الحصول على تسمية الحالة
+        function getStatusInfo(status) {
+            const labels = {
+                'official': { icon: 'fas fa-check-circle' },
+                'close': { icon: 'fas fa-fire' },
+                'negotiating': { icon: 'fas fa-comments' },
+                'failed': { icon: 'fas fa-times-circle' },
+                'rumor': { icon: 'fas fa-eye' }
+            };
+            return labels[status] || { icon: 'fas fa-question' };
+        }
+
+        // دالة الحصول على نص الحالة
+        function getStatusLabel(status) {
+            const labels = {
+                'official': 'رسمية',
+                'close': 'قريبة',
+                'negotiating': 'تفاوض',
+                'failed': 'فشلت',
+                'rumor': 'إشاعة'
+            };
+            return labels[status] || status;
+        }
+
+        // دالة الحصول على عرض شريط إتمام الصفقة
+        function getDealStatusWidth(status, probability) {
+            switch(status) {
+                case 'official': return 100;
+                case 'close': return 90;
+                case 'negotiating': return Math.max(probability, 30);
+                case 'failed': return 0;
+                case 'rumor': return Math.max(probability, 10);
+                default: return probability;
+            }
+        }
+
+        // دالة الحصول على نص شريط إتمام الصفقة
+        function getDealStatusText(status, probability) {
+            switch(status) {
+                case 'official': return '✅ رسمية';
+                case 'close': return '🔥 قريبة';
+                case 'negotiating': return `💬 تفاوض ${probability}%`;
+                case 'failed': return '❌ فشلت';
+                case 'rumor': return `👁️ إشاعة ${probability}%`;
+                default: return `${probability}%`;
+            }
+        }
+
+        // دالة الحصول على النسبة المئوية المحسنة حسب الإعدادات
+        function getEnhancedProbability(status, probability) {
+            const colorScheme = settings.probabilityColor || 'gradient';
+            const fontSize = settings.probabilityFontSize || 'md';
+            
+            // تحسين النسبة حسب الحالة
+            let enhancedProb = probability;
+            
+            switch(status) {
+                case 'official':
+                    enhancedProb = 100;
+                    break;
+                case 'close':
+                    enhancedProb = Math.max(probability, 90);
+                    break;
+                case 'negotiating':
+                    enhancedProb = Math.max(probability, 50);
+                    break;
+                case 'failed':
+                    enhancedProb = 0;
+                    break;
+                case 'rumor':
+                    enhancedProb = Math.max(probability, 20);
+                    break;
+            }
+            
+            // تطبيق معاملات حسب نمط اللون
+            switch(colorScheme) {
+                case 'rainbow':
+                    enhancedProb = Math.min(enhancedProb * 1.2, 100);
+                    break;
+                case 'status':
+                    enhancedProb = enhancedProb;
+                    break;
+                case 'custom':
+                    enhancedProb = Math.min(enhancedProb * 1.1, 100);
+                    break;
+                case 'gradient':
+                default:
+                    enhancedProb = enhancedProb;
+                    break;
+            }
+            
+            return Math.round(enhancedProb);
+        }
+
+        // دالة الحصول على HTML لعرض النسبة حسب الإعدادات
+        function getProbabilityDisplayHTML(status, probability) {
+            const displayMode = settings.probabilityDisplay || 'bar';
+            const enhancedProbability = getEnhancedProbability(status, probability);
+            const percentage = getDealStatusWidth(status, enhancedProbability);
+            
+            switch(displayMode) {
+                case 'circle':
+                    return `
+                        <div class="probability-circle" style="--percentage: ${percentage};">
+                            <div class="circle-progress">
+                                <span class="circle-text">${enhancedProbability}%</span>
+                            </div>
+                        </div>
+                    `;
+                
+                case 'number':
+                    return `
+                        <div class="probability-number">
+                            ${enhancedProbability}%
+                        </div>
+                    `;
+                
+                case 'gauge':
+                    return `
+                        <div class="probability-gauge">
+                            <div class="gauge-bar">
+                                <div class="gauge-fill ${status}" style="width: ${percentage}%" data-percentage="${enhancedProbability}"></div>
+                            </div>
+                            <div class="gauge-text">${getDealStatusText(status, enhancedProbability)}</div>
+                        </div>
+                    `;
+                
+                case 'bar':
+                default:
+                    return `
+                        <div class="deal-status-bar">
+                            <div class="deal-status-fill ${status}" style="width: ${percentage}%"></div>
+                        </div>
+                        <div class="deal-status-text">${getDealStatusText(status, enhancedProbability)}</div>
+                    `;
+            }
+        }
+
+        // دالة تحديث الإحصائيات
+        function updateStats() {
+            const totalPlayers = players.length;
+            const officialDeals = players.filter(p => p.status === 'official').length;
+            const failedDeals = players.filter(p => p.status === 'failed').length;
+            const avgProbability = totalPlayers > 0 ?
+                Math.round(players.reduce((sum, p) => sum + (p.probability || 0), 0) / totalPlayers) : 0;
+            const successRate = totalPlayers > 0 ?
+                Math.round((officialDeals / totalPlayers) * 100) : 0;
+
+            document.getElementById('totalPlayers').textContent = totalPlayers;
+            document.getElementById('officialDeals').textContent = officialDeals;
+            document.getElementById('successRate').textContent = successRate + '%';
+            document.getElementById('avgProbability').textContent = avgProbability + '%';
+
+            // تحديث شريط التقدم
+            const maxPlayers = Math.max(totalPlayers, 10); // حد أقصى للعرض
+            document.getElementById('totalProgress').style.width = Math.min((totalPlayers / maxPlayers) * 100, 100) + '%';
+            document.getElementById('officialProgress').style.width = totalPlayers > 0 ? (officialDeals / totalPlayers) * 100 + '%' : '0%';
+            document.getElementById('successProgress').style.width = successRate + '%';
+            document.getElementById('avgProgress').style.width = avgProbability + '%';
+
+            // تطبيق ألوان شريط التوقعات
+            applyStatsColorPreset(settings.statsColorPreset);
+        }
+
+        // دالة عرض اللاعبين - بسيطة وفعالة
+        function renderPlayers() {
+            applyAllSettings();
+            players = players.map(fixPlayerData);
+            const playersGrid = document.getElementById('playersGrid');
+            if (!playersGrid) {
+                console.error('❌ عنصر playersGrid غير موجود');
+                return;
+            }
+            if (players.length === 0) {
+                playersGrid.innerHTML = `<div class="empty-state"><i class="fas fa-users"></i><div>لا يوجد لاعبين</div><div style="font-size: 0.8rem; margin-top: 10px;">جاري انتظار البيانات...</div></div>`;
+                showNotification('⚠️ لا توجد بيانات لاعبين لعرضها في البث', 'warning');
+                return;
+            }
+            playersGrid.innerHTML = '';
+            let missingProb = false;
+            players.forEach((player, index) => {
+                const statusInfo = getStatusInfo(player.status);
+                const playerCard = document.createElement('div');
+                playerCard.className = `player-card ${player.status} card-style-${settings.cardStyle}`;
+                playerCard.dataset.status = player.status;
+                const container = document.querySelector('.players-grid');
+                if (container) {
+                    container.className = `players-grid card-size-${settings.cardSize}`;
+                }
+                // عنصر النسبة الرقمي الواضح دائماً
+                let probabilityDisplay = '';
+                if (typeof player.probability === 'number' && !isNaN(player.probability)) {
+                    probabilityDisplay = `<div class="probability-always" style="position:absolute;top:8px;left:8px;background:rgba(0,0,0,0.7);color:#fff;padding:4px 10px;border-radius:12px;font-weight:900;font-size:1.1rem;z-index:10;box-shadow:0 2px 8px #0002;">${player.probability}%</div>`;
+                } else {
+                    probabilityDisplay = `<div class="probability-always" style="position:absolute;top:8px;left:8px;background:#ff4444;color:#fff;padding:4px 10px;border-radius:12px;font-weight:900;font-size:1.1rem;z-index:10;box-shadow:0 2px 8px #0002;">؟</div>`;
+                    missingProb = true;
+                }
+                let cardContent = `
+                    ${probabilityDisplay}
+                    <div class="player-avatar">
+                        <img src="${player.image || 'https://via.placeholder.com/70x70/333/fff?text=?'}" alt="${player.name}" onerror="this.src='https://via.placeholder.com/70x70/333/fff?text=?'">
+                    </div>
+                    <div class="player-name">${player.name}</div>
+                    <div class="player-position">${player.position}</div>
+                    <div class="player-status">
+                        <i class="${statusInfo.icon}"></i>
+                        <span class="status-label">${getStatusLabel(player.status)}</span>
+                    </div>
+                    ${getProbabilityDisplayHTML(player.status, player.probability)}
+                `;
+                if (settings.showAge && player.age) {
+                    cardContent += `<div class="player-age">${player.age}</div>`;
+                }
+                if (settings.showTransferFee && player.transferFee) {
+                    cardContent += `<div class="transfer-fee-badge">${player.transferFee}</div>`;
+                }
+                playerCard.innerHTML = cardContent;
+                playersGrid.appendChild(playerCard);
+            });
+            if (missingProb) showNotification('⚠️ بعض اللاعبين لا تحتوي بياناتهم على نسبة صحيحة!', 'warning');
+            applyAnimations();
+        }
+
+        // دالة تحميل البيانات - بسيطة وموثوقة
+        function loadData() {
+            try {
+                console.log('🔄 جاري تحميل البيانات...');
+
+                // تحميل من localStorage
+                const localData = localStorage.getItem('barcelona_shared_data');
+                if (localData) {
+                    const data = JSON.parse(localData);
+                    if (data && data.players && Array.isArray(data.players)) {
+                        players = [...data.players];
+                        console.log(`✅ تم تحميل ${players.length} لاعب من التخزين المحلي`);
+                        updateStats();
+                        renderPlayers();
+                        updateSyncStatus(true);
+                        return;
+                    }
+                }
+
+                // إذا لم توجد بيانات، أظهر رسالة الانتظار
+                players = [];
+                console.log('⚠️ لا توجد بيانات، في انتظار البيانات من أداة التحكم...');
+                updateStats();
+                renderPlayers();
+                updateSyncStatus(false);
+
+            } catch (error) {
+                console.error('❌ فشل في تحميل البيانات:', error);
+                players = [];
+                updateStats();
+                renderPlayers();
+                updateSyncStatus(false);
+            }
+        }
+
+        // دالة إعادة التحميل الكامل
+        function forceReload() {
+            console.log('⚡ إعادة تحميل كامل للبث...');
+
+            // إعادة تحميل البيانات
+            loadData();
+
+            // إعادة تحميل الإعدادات
+            loadSettings();
+
+            // إعادة تطبيق جميع الإعدادات
+            setTimeout(() => {
+                if (settings.probabilityDisplay) {
+                    applyProbabilityDisplay(settings.probabilityDisplay);
+                }
+                if (settings.probabilityColor) {
+                    applyProbabilityColor(settings.probabilityColor);
+                }
+                if (settings.probabilityFontSize) {
+                    applyProbabilityFontSize(settings.probabilityFontSize);
+                }
+                renderPlayers();
+                console.log('✅ تم إعادة التحميل الكامل');
+            }, 100);
+        }
+
+        // دالة اختبار الاتصال
+        function testConnection() {
+            console.log('🔗 اختبار الاتصال مع أداة التحكم...');
+
+            const localData = localStorage.getItem('barcelona_shared_data');
+            if (localData) {
+                try {
+                    const data = JSON.parse(localData);
+                    if (data && data.players) {
+                        console.log(`✅ تم العثور على ${data.players.length} لاعب في التخزين المحلي`);
+                        console.log('📅 آخر تحديث:', data.lastUpdate || 'غير محدد');
+                        updateSyncStatus(true);
+
+                        // عرض رسالة للمستخدم
+                        alert(`✅ الاتصال يعمل بشكل جيد!\n\nتم العثور على ${data.players.length} لاعب\nآخر تحديث: ${data.lastUpdate ? new Date(data.lastUpdate).toLocaleString('ar') : 'غير محدد'}`);
+                    } else {
+                        console.warn('⚠️ البيانات موجودة لكنها غير صالحة');
+                        updateSyncStatus(false);
+                        alert('⚠️ البيانات موجودة لكنها غير صالحة\nجرب إضافة لاعب في أداة التحكم أولاً');
+                    }
+                } catch (error) {
+                    console.error('❌ فشل في تحليل البيانات:', error);
+                    updateSyncStatus(false);
+                    alert('❌ فشل في تحليل البيانات\nتأكد من أداة التحكم تعمل بشكل صحيح');
+                }
+            } else {
+                console.warn('⚠️ لا توجد بيانات في التخزين المحلي');
+                updateSyncStatus(false);
+                alert('⚠️ لا توجد بيانات\nتأكد من:\n1. فتح أداة التحكم\n2. إضافة لاعب واحد على الأقل\n3. حفظ البيانات');
+            }
+        }
+
+        // دالة تحديث البيانات
+        function updateData(newPlayers) {
+            if (!newPlayers || !Array.isArray(newPlayers)) {
+                console.warn('⚠️ البيانات المرسلة غير صالحة');
+                return;
+            }
+
+            const oldCount = players.length;
+            players = [...newPlayers];
+
+            updateStats();
+            renderPlayers();
+            updateSyncStatus(true);
+
+            console.log(`🔄 تم تحديث البث - ${players.length} لاعب (كان ${oldCount})`);
+
+            // إرسال إشعار بالتحديث
+            if (oldCount !== players.length) {
+                showNotification(`تم تحديث البيانات: ${players.length} لاعب`, 'success');
+            }
+        }
+
+        // دالة إظهار الإشعارات
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                left: 20px;
+                background: ${type === 'success' ? 'var(--success-color)' : type === 'error' ? 'var(--danger-color)' : 'var(--primary-color)'};
+                color: white;
+                padding: 15px 20px;
+                border-radius: 10px;
+                font-weight: 600;
+                z-index: 10000;
+                box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+                animation: slideIn 0.3s ease-out;
+            `;
+            notification.textContent = message;
+
+            document.body.appendChild(notification);
+
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.3s ease-in';
+                setTimeout(() => {
+                    if (notification.parentNode) {
+                        notification.parentNode.removeChild(notification);
+                    }
+                }, 300);
+            }, 3000);
+        }
+
+        // دالة إظهار رسالة الانتظار
+        function showWaitingMessage() {
+            const playersContainer = document.querySelector('.players-container');
+            if (playersContainer) {
+                playersContainer.innerHTML = `
+                    <div style="
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        justify-content: center;
+                        height: 400px;
+                        text-align: center;
+                        color: rgba(255, 255, 255, 0.7);
+                    ">
+                        <div style="
+                            width: 60px;
+                            height: 60px;
+                            border: 4px solid rgba(0, 170, 255, 0.3);
+                            border-top: 4px solid var(--primary-color);
+                            border-radius: 50%;
+                            animation: spin 1s linear infinite;
+                            margin-bottom: 20px;
+                        "></div>
+                        <h3 style="color: var(--primary-color); margin-bottom: 10px;">
+                            <i class="fas fa-clock"></i> في انتظار البيانات
+                        </h3>
+                        <p style="font-size: 1.1rem; margin-bottom: 15px;">
+                            يرجى فتح أداة التحكم وإضافة بعض اللاعبين
+                        </p>
+                        <a href="/barcelona-ultimate-control-pro.html" target="_blank" style="
+                            background: linear-gradient(45deg, var(--primary-color), var(--success-color));
+                            color: white;
+                            padding: 12px 24px;
+                            border-radius: 10px;
+                            text-decoration: none;
+                            font-weight: 600;
+                            transition: transform 0.3s ease;
+                        " onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">
+                            <i class="fas fa-external-link-alt"></i> فتح أداة التحكم
+                        </a>
+                    </div>
+                `;
+            }
+        }
+
+        // دالة تحديث العنوان
+        function updateTitle() {
+            const title = titleInput.value.trim() || 'BARCELONA';
+            document.getElementById('headerTitle').textContent = title;
+            settings.title = title;
+            saveSettings();
+        }
+
+        // دالة تطبيق نمط الألوان
+        function applyColorPreset(preset) {
+            const presets = {
+                1: { primary: '#00aaff', success: '#00ff88', warning: '#ffaa00', danger: '#ff4444', info: '#aa00ff' },
+                2: { primary: '#f093fb', success: '#f5576c', warning: '#ffecd2', danger: '#fcb69f', info: '#ff9a9e' },
+                3: { primary: '#4facfe', success: '#00f2fe', warning: '#43e97b', danger: '#38f9d7', info: '#fa709a' },
+                4: { primary: '#43e97b', success: '#38f9d7', warning: '#fa709a', danger: '#fee140', info: '#a8edea' },
+                5: { primary: '#fa709a', success: '#fee140', warning: '#a8edea', danger: '#fed6e3', info: '#ff9a9e' },
+                6: { primary: '#a8edea', success: '#fed6e3', warning: '#ff9a9e', danger: '#fecfef', info: '#ffecd2' },
+                7: { primary: '#ff9a9e', success: '#fecfef', warning: '#ffecd2', danger: '#fcb69f', info: '#ff9a9e' },
+                8: { primary: '#ffecd2', success: '#fcb69f', warning: '#ff9a9e', danger: '#fad0c4', info: '#ff9a9e' },
+                9: { primary: '#ff9a9e', success: '#fad0c4', warning: '#ffecd2', danger: '#fcb69f', info: '#ff9a9e' }
+            };
+
+            const colors = presets[preset];
+            document.documentElement.style.setProperty('--primary-color', colors.primary);
+            document.documentElement.style.setProperty('--success-color', colors.success);
+            document.documentElement.style.setProperty('--warning-color', colors.warning);
+            document.documentElement.style.setProperty('--danger-color', colors.danger);
+            document.documentElement.style.setProperty('--info-color', colors.info);
+
+            settings.colorPreset = preset;
+            saveSettings();
+        }
+
+        // دالة تطبيق نمط البطاقات
+        function applyCardStyle(style) {
+            const cards = document.querySelectorAll('.player-card');
+            cards.forEach(card => {
+                const status = card.dataset.status || card.className.match(/\b(official|close|negotiating|failed|rumor)\b/)?.[0] || '';
+                card.className = `player-card ${status} card-style-${style}`;
+            });
+
+            settings.cardStyle = style;
+            saveSettings();
+        }
+
+        // دالة تطبيق حجم البطاقات
+        function applyCardSize(size) {
+            const container = document.querySelector('.players-grid');
+            if (container) {
+                container.className = `players-grid card-size-${size}`;
+            }
+            
+            settings.cardSize = size;
+            saveSettings();
+        }
+
+        // دالة تطبيق ألوان شريط التوقعات
+        function applyStatsColorPreset(preset) {
+            const presets = {
+                'barcelona': { color1: '#004D98', color2: '#A50044' },
+                'real-madrid': { color1: '#00529F', color2: '#FFFFFF' },
+                'man-city': { color1: '#6CABDD', color2: '#1C3F94' },
+                'psg': { color1: '#004170', color2: '#DA291C' },
+                'bayern': { color1: '#DC052C', color2: '#0066B1' },
+                'juventus': { color1: '#000000', color2: '#FFFFFF' },
+                'liverpool': { color1: '#C8102E', color2: '#F6EB61' },
+                'chelsea': { color1: '#034694', color2: '#FFFFFF' },
+                'arsenal': { color1: '#EF0107', color2: '#FFFFFF' }
+            };
+
+            const colors = presets[preset];
+            if (colors) {
+                // تطبيق الألوان على شريط التوقعات
+                const progressBars = document.querySelectorAll('.stat-progress-fill');
+                progressBars.forEach(bar => {
+                    bar.style.background = `linear-gradient(90deg, ${colors.color1}, ${colors.color2})`;
+                });
+
+                // تطبيق الألوان على شريط الاحتمالية
+                const probabilityBars = document.querySelectorAll('.probability-fill');
+                probabilityBars.forEach(bar => {
+                    bar.style.background = `linear-gradient(90deg, ${colors.color1}, ${colors.color2})`;
+                });
+            }
+
+            settings.statsColorPreset = preset;
+            saveSettings();
+        }
+
+        // دالة تطبيق نمط الشريط العلوي
+        function applyHeaderStyle(style) {
+            const header = document.querySelector('.broadcast-header');
+            if (header) {
+                header.className = `broadcast-header header-style-${style}`;
+            }
+            settings.headerStyle = style;
+            saveSettings();
+        }
+
+        // دالة تطبيق حجم خط الشريط العلوي
+        function applyHeaderFontSize(size) {
+            const headerTitle = document.getElementById('headerTitle');
+            if (headerTitle) {
+                headerTitle.className = `header-title font-size-${size}`;
+            }
+            settings.headerFontSize = size;
+            saveSettings();
+        }
+
+        // دالة إظهار/إخفاء الإحصائيات
+        function toggleStats(show) {
+            const statsContainer = document.querySelector('.stats-bar');
+            if (statsContainer) {
+                statsContainer.style.display = show ? 'flex' : 'none';
+            }
+            settings.showStats = show;
+            saveSettings();
+        }
+
+        // دالة حفظ الإعدادات - بسيطة
+        function saveSettings() {
+            try {
+                localStorage.setItem('broadcast_settings', JSON.stringify(settings));
+                console.log('✅ تم حفظ إعدادات البث');
+            } catch (error) {
+                console.error('❌ فشل في حفظ الإعدادات:', error);
+            }
+        }
+
+        // دالة تحميل الإعدادات - بسيطة
+        function loadSettings() {
+            try {
+                const saved = localStorage.getItem('broadcast_settings');
+                if (saved) {
+                    settings = { ...settings, ...JSON.parse(saved) };
+                    console.log('✅ تم تحميل الإعدادات من التخزين المحلي');
+                }
+                // تطبيق العنوان
+                if (titleInput) {
+                    titleInput.value = settings.title;
+                }
+                const headerTitle = document.getElementById('headerTitle');
+                if (headerTitle) {
+                    headerTitle.textContent = settings.title;
+                }
+                // تطبيق نمط البطاقة
+                document.querySelectorAll('.card-style').forEach(card => {
+                    if (card.getAttribute('data-style') === (settings.cardStyle || 'modern')) {
+                        card.classList.add('active');
+                    } else {
+                        card.classList.remove('active');
+                    }
+                });
+                // تطبيق نمط الألوان
+                document.querySelectorAll('.color-preset').forEach(preset => {
+                    if (parseInt(preset.getAttribute('data-preset')) === (settings.colorPreset || 1)) {
+                        preset.classList.add('active');
+                    } else {
+                        preset.classList.remove('active');
+                    }
+                });
+                // تطبيق نمط الشريط العلوي
+                const headerStyle = document.getElementById('headerStyle');
+                if (headerStyle) {
+                    headerStyle.value = settings.headerStyle || 'gradient';
+                }
+                // حجم خط الشريط العلوي
+                const headerFontSize = document.getElementById('headerFontSize');
+                if (headerFontSize) {
+                    headerFontSize.value = settings.headerFontSize || 'medium';
+                }
+                // باقي الإعدادات الافتراضية
+                const probabilityDisplay = document.getElementById('probabilityDisplay');
+                if (probabilityDisplay) probabilityDisplay.value = settings.probabilityDisplay || 'bar';
+                const probabilityColor = document.getElementById('probabilityColor');
+                if (probabilityColor) probabilityColor.value = settings.probabilityColor || 'gradient';
+                const probabilityFontSize = document.getElementById('probabilityFontSize');
+                if (probabilityFontSize) probabilityFontSize.value = settings.probabilityFontSize || 'md';
+                const cardShape = document.getElementById('cardShape');
+                if (cardShape) cardShape.value = settings.cardShape || 'rounded';
+                const cardEffect = document.getElementById('cardEffect');
+                if (cardEffect) cardEffect.value = settings.cardEffect || 'none';
+                const displayMode = document.getElementById('displayMode');
+                if (displayMode) displayMode.value = settings.displayMode || 'grid';
+                const cardSize = document.getElementById('cardSize');
+                if (cardSize) cardSize.value = settings.cardSize || 'medium';
+                const updateSpeed = document.getElementById('updateSpeed');
+                if (updateSpeed) updateSpeed.value = settings.updateSpeed || 5;
+                // checkboxes
+                const showProbability = document.getElementById('showProbability');
+                if (showProbability) showProbability.checked = settings.showProbability !== false;
+                const showAge = document.getElementById('showAge');
+                if (showAge) showAge.checked = settings.showAge === true;
+                const showTransferFee = document.getElementById('showTransferFee');
+                if (showTransferFee) showTransferFee.checked = settings.showTransferFee === true;
+                const enableAnimations = document.getElementById('enableAnimations');
+                if (enableAnimations) enableAnimations.checked = settings.enableAnimations !== false;
+                const darkMode = document.getElementById('darkMode');
+                if (darkMode) darkMode.checked = settings.darkMode === true;
+                const showStats = document.getElementById('showStats');
+                if (showStats) showStats.checked = settings.showStats !== false;
+                // ألوان شريط التوقعات
+                document.querySelectorAll('.stats-color-preset').forEach(preset => {
+                    if (preset.getAttribute('data-stats-preset') === (settings.statsColorPreset || 'barcelona')) {
+                        preset.classList.add('active');
+                    } else {
+                        preset.classList.remove('active');
+                    }
+                });
+                console.log('✅ تم تحديث واجهة الإعدادات بدقة');
+            } catch (error) {
+                console.error('❌ فشل في تحميل الإعدادات:', error);
+            }
+        }
+
+        // دالة تحديث واجهة الإعدادات
+        function updateSettingsUI() {
+            try {
+                // عنوان البث
+                const titleInput = document.getElementById('titleInput');
+                if (titleInput) {
+                    titleInput.value = settings.title || 'BARCELONA';
+                }
+                // نمط البطاقة
+                document.querySelectorAll('.card-style').forEach(card => {
+                    if (card.getAttribute('data-style') === (settings.cardStyle || 'modern')) {
+                        card.classList.add('active');
+                    } else {
+                        card.classList.remove('active');
+                    }
+                });
+                // نمط الألوان
+                document.querySelectorAll('.color-preset').forEach(preset => {
+                    if (parseInt(preset.getAttribute('data-preset')) === (settings.colorPreset || 1)) {
+                        preset.classList.add('active');
+                    } else {
+                        preset.classList.remove('active');
+                    }
+                });
+                // نمط الشريط العلوي
+                const headerStyle = document.getElementById('headerStyle');
+                if (headerStyle) {
+                    headerStyle.value = settings.headerStyle || 'gradient';
+                }
+                // حجم خط الشريط العلوي
+                const headerFontSize = document.getElementById('headerFontSize');
+                if (headerFontSize) {
+                    headerFontSize.value = settings.headerFontSize || 'medium';
+                }
+                // باقي الإعدادات الافتراضية
+                const probabilityDisplay = document.getElementById('probabilityDisplay');
+                if (probabilityDisplay) probabilityDisplay.value = settings.probabilityDisplay || 'bar';
+                const probabilityColor = document.getElementById('probabilityColor');
+                if (probabilityColor) probabilityColor.value = settings.probabilityColor || 'gradient';
+                const probabilityFontSize = document.getElementById('probabilityFontSize');
+                if (probabilityFontSize) probabilityFontSize.value = settings.probabilityFontSize || 'md';
+                const cardShape = document.getElementById('cardShape');
+                if (cardShape) cardShape.value = settings.cardShape || 'rounded';
+                const cardEffect = document.getElementById('cardEffect');
+                if (cardEffect) cardEffect.value = settings.cardEffect || 'none';
+                const displayMode = document.getElementById('displayMode');
+                if (displayMode) displayMode.value = settings.displayMode || 'grid';
+                const cardSize = document.getElementById('cardSize');
+                if (cardSize) cardSize.value = settings.cardSize || 'medium';
+                const updateSpeed = document.getElementById('updateSpeed');
+                if (updateSpeed) updateSpeed.value = settings.updateSpeed || 5;
+                // checkboxes
+                const showProbability = document.getElementById('showProbability');
+                if (showProbability) showProbability.checked = settings.showProbability !== false;
+                const showAge = document.getElementById('showAge');
+                if (showAge) showAge.checked = settings.showAge === true;
+                const showTransferFee = document.getElementById('showTransferFee');
+                if (showTransferFee) showTransferFee.checked = settings.showTransferFee === true;
+                const enableAnimations = document.getElementById('enableAnimations');
+                if (enableAnimations) enableAnimations.checked = settings.enableAnimations !== false;
+                const darkMode = document.getElementById('darkMode');
+                if (darkMode) darkMode.checked = settings.darkMode === true;
+                const showStats = document.getElementById('showStats');
+                if (showStats) showStats.checked = settings.showStats !== false;
+                // ألوان شريط التوقعات
+                document.querySelectorAll('.stats-color-preset').forEach(preset => {
+                    if (preset.getAttribute('data-stats-preset') === (settings.statsColorPreset || 'barcelona')) {
+                        preset.classList.add('active');
+                    } else {
+                        preset.classList.remove('active');
+                    }
+                });
+                console.log('✅ تم تحديث واجهة الإعدادات بدقة');
+            } catch (error) {
+                console.error('❌ فشل في تحديث واجهة الإعدادات:', error);
+            }
+        }
+
+        // مراقبة التغييرات
+        function setupMonitoring() {
+            // مراقبة الأحداث المخصصة
+            window.addEventListener('barcelonaDataUpdated', (event) => {
+                if (event.detail && event.detail.players) {
+                    updateData(event.detail.players);
+                }
+            });
+
+            // مراقبة بسيطة لتغييرات localStorage
+            window.addEventListener('storage', (event) => {
+                if (event.key === 'barcelona_shared_data') {
+                    console.log('🔄 تم اكتشاف تغيير في البيانات المشتركة');
+                    loadData();
+                }
+                if (event.key === 'barcelona_data_update_signal') {
+                    console.log('🔄 تم اكتشاف إشارة تحديث البيانات');
+                    setTimeout(() => {
+                        loadData();
+                    }, 100); // تأخير بسيط للتأكد من حفظ البيانات
+                }
+            });
+        }
+
+        // إعداد مراقبة الإعدادات - بسيط وفعال
+        function setupSettingsMonitoring() {
+            try {
+                // مراقبة تغيير عرض النسبة
+                const probabilityDisplay = document.getElementById('probabilityDisplay');
+                if (probabilityDisplay) {
+                    probabilityDisplay.addEventListener('change', function() {
+                        settings.probabilityDisplay = this.value;
+                        saveSettings();
+                        applyProbabilityDisplay(this.value);
+                    });
+                }
+
+                // مراقبة تغيير لون النسبة
+                const probabilityColor = document.getElementById('probabilityColor');
+                if (probabilityColor) {
+                    probabilityColor.addEventListener('change', function() {
+                        settings.probabilityColor = this.value;
+                        saveSettings();
+                        applyProbabilityColor(this.value);
+                    });
+                }
+
+                // مراقبة تغيير حجم خط النسبة
+                const probabilityFontSize = document.getElementById('probabilityFontSize');
+                if (probabilityFontSize) {
+                    probabilityFontSize.addEventListener('change', function() {
+                        settings.probabilityFontSize = this.value;
+                        saveSettings();
+                        applyProbabilityFontSize(this.value);
+                    });
+                }
+
+                // مراقبة تغيير شكل البطاقة
+                const cardShape = document.getElementById('cardShape');
+                if (cardShape) {
+                    cardShape.addEventListener('change', function() {
+                        settings.cardShape = this.value;
+                        saveSettings();
+                        applyCardShape(this.value);
+                        renderPlayers();
+                    });
+                }
+
+                // مراقبة تغيير تأثير البطاقة
+                const cardEffect = document.getElementById('cardEffect');
+                if (cardEffect) {
+                    cardEffect.addEventListener('change', function() {
+                        settings.cardEffect = this.value;
+                        saveSettings();
+                        applyCardEffect(this.value);
+                        renderPlayers();
+                    });
+                }
+
+                // مراقبة تغيير نمط العرض
+                const displayMode = document.getElementById('displayMode');
+                if (displayMode) {
+                    displayMode.addEventListener('change', function() {
+                        settings.displayMode = this.value;
+                        saveSettings();
+                        applyDisplayMode(this.value);
+                        renderPlayers();
+                    });
+                }
+
+                // مراقبة تغيير العنوان
+                const titleInput = document.getElementById('titleInput');
+                if (titleInput) {
+                    titleInput.addEventListener('input', function() {
+                        settings.title = this.value;
+                        saveSettings();
+                        const headerTitle = document.getElementById('headerTitle');
+                        if (headerTitle) {
+                            headerTitle.textContent = this.value;
+                        }
+                    });
+                }
+
+                // مراقبة تفعيل/إلغاء عرض الإحصائيات
+                const showStats = document.getElementById('showStats');
+                if (showStats) {
+                    showStats.addEventListener('change', function() {
+                        settings.showStats = this.checked;
+                        saveSettings();
+                        toggleStats(this.checked);
+                    });
+                }
+
+                // مراقبة تفعيل/إلغاء الوضع الليلي
+                const darkMode = document.getElementById('darkMode');
+                if (darkMode) {
+                    darkMode.addEventListener('change', function() {
+                        settings.darkMode = this.checked;
+                        saveSettings();
+                        applyDarkMode();
+                    });
+                }
+
+                // مراقبة تفعيل/إلغاء الحركات
+                const enableAnimations = document.getElementById('enableAnimations');
+                if (enableAnimations) {
+                    enableAnimations.addEventListener('change', function() {
+                        settings.enableAnimations = this.checked;
+                        saveSettings();
+                        applyAnimations();
+                    });
+                }
+
+                // مراقبة تغيير سرعة التحديث
+                const updateSpeed = document.getElementById('updateSpeed');
+                if (updateSpeed) {
+                    updateSpeed.addEventListener('change', function() {
+                        settings.updateSpeed = parseInt(this.value) || 5;
+                        saveSettings();
+                        restartPeriodicUpdate();
+                    });
+                }
+
+                // مراقبة تغيير حجم البطاقة
+                const cardSize = document.getElementById('cardSize');
+                if (cardSize) {
+                    cardSize.addEventListener('change', function() {
+                        settings.cardSize = this.value;
+                        saveSettings();
+                        applyCardSize(this.value);
+                        renderPlayers();
+                    });
+                }
+
+                // مراقبة تغيير ألوان شريط التوقعات
+                document.querySelectorAll('.stats-color-preset').forEach(preset => {
+                    preset.addEventListener('click', function() {
+                        document.querySelectorAll('.stats-color-preset').forEach(p => p.classList.remove('active'));
+                        this.classList.add('active');
+                        const presetValue = this.getAttribute('data-stats-preset');
+                        settings.statsColorPreset = presetValue;
+                        saveSettings();
+                        applyStatsColorPreset(presetValue);
+                    });
+                });
+
+                // مراقبة تغيير نمط الألوان
+                document.querySelectorAll('.color-preset').forEach(preset => {
+                    preset.addEventListener('click', function() {
+                        document.querySelectorAll('.color-preset').forEach(p => p.classList.remove('active'));
+                        this.classList.add('active');
+                        const presetValue = parseInt(this.getAttribute('data-preset'));
+                        settings.colorPreset = presetValue;
+                        saveSettings();
+                        applyColorPreset(presetValue);
+                    });
+                });
+
+                // مراقبة تغيير نمط الشريط العلوي
+                const headerStyle = document.getElementById('headerStyle');
+                if (headerStyle) {
+                    headerStyle.addEventListener('change', function() {
+                        settings.headerStyle = this.value;
+                        saveSettings();
+                        applyHeaderStyle(this.value);
+                    });
+                }
+
+                // مراقبة تغيير حجم خط الشريط العلوي
+                const headerFontSize = document.getElementById('headerFontSize');
+                if (headerFontSize) {
+                    headerFontSize.addEventListener('change', function() {
+                        settings.headerFontSize = this.value;
+                        saveSettings();
+                        applyHeaderFontSize(this.value);
+                    });
+                }
+
+                console.log('✅ تم إعداد مراقبة الإعدادات');
+            } catch (error) {
+                console.error('❌ فشل في إعداد مراقبة الإعدادات:', error);
+            }
+        }
+
+        // تطبيق إعدادات البطاقات المتقدمة
+        function applyProbabilityFontSize(size) {
+            console.log('تطبيق حجم خط النسبة:', size);
+            const container = document.querySelector('.players-container');
+            if (container) {
+                container.className = container.className.replace(/probability-font-\w+/g, '') + ` probability-font-${size}`;
+            }
+            settings.probabilityFontSize = size;
+            saveSettings();
+            // إعادة عرض اللاعبين لتطبيق التغييرات
+            renderPlayers();
+        }
+
+        function applyCardShape(shape) {
+            const container = document.querySelector('.players-container');
+            if (container) {
+                container.className = container.className.replace(/card-shape-\w+/g, '') + ` card-shape-${shape}`;
+            }
+            settings.cardShape = shape;
+            saveSettings();
+        }
+
+        function applyCardEffect(effect) {
+            const container = document.querySelector('.players-container');
+            if (container) {
+                container.className = container.className.replace(/card-effect-\w+/g, '') + ` card-effect-${effect}`;
+            }
+            settings.cardEffect = effect;
+            saveSettings();
+        }
+
+        function applyDisplayMode(mode) {
+            const container = document.querySelector('.players-container');
+            if (container) {
+                container.className = container.className.replace(/display-mode-\w+/g, '') + ` display-mode-${mode}`;
+            }
+            settings.displayMode = mode;
+            saveSettings();
+        }
+
+        function applyProbabilityDisplay(display) {
+            console.log('تطبيق نمط عرض النسبة:', display);
+            const container = document.querySelector('.players-container');
+            if (container) {
+                // إزالة جميع أنماط العرض السابقة
+                container.className = container.className.replace(/probability-display-\w+/g, '');
+                // إضافة النمط الجديد
+                container.className += ` probability-display-${display}`;
+                console.log('تم تطبيق النمط على الحاوية:', container.className);
+            }
+            settings.probabilityDisplay = display;
+            saveSettings();
+            // إعادة عرض اللاعبين لتطبيق التغييرات
+            renderPlayers();
+        }
+
+        function applyProbabilityColor(color) {
+            console.log('تطبيق لون النسبة:', color);
+            const container = document.querySelector('.players-container');
+            if (container) {
+                container.className = container.className.replace(/probability-color-\w+/g, '') + ` probability-color-${color}`;
+            }
+            settings.probabilityColor = color;
+            saveSettings();
+            // إعادة عرض اللاعبين لتطبيق التغييرات
+            renderPlayers();
+        }
+
+        // تطبيق التأثيرات الحركية
+        function applyAnimations() {
+            const cards = document.querySelectorAll('.player-card');
+            cards.forEach(card => {
+                if (settings.enableAnimations) {
+                    card.style.transition = 'all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+                } else {
+                    card.style.transition = 'none';
+                }
+            });
+        }
+
+        // تطبيق الوضع الليلي
+        function applyDarkMode() {
+            if (settings.darkMode) {
+                document.body.style.background = '#000000';
+                document.documentElement.style.setProperty('--dark-bg', '#000000');
+            } else {
+                document.body.style.background = '';
+                document.documentElement.style.setProperty('--dark-bg', '#0a0a0a');
+            }
+        }
+
+        // إعادة تشغيل التحديث الدوري
+        function restartPeriodicUpdate() {
+            if (window.updateInterval) {
+                clearInterval(window.updateInterval);
+            }
+            window.updateInterval = setInterval(() => {
+                loadData();
+            }, settings.updateSpeed * 1000);
+        }
+
+        // تحديث دوري بسيط للبيانات
+        function startPeriodicUpdate() {
+            // إيقاف أي تحديث دوري سابق
+            if (window.periodicUpdateInterval) {
+                clearInterval(window.periodicUpdateInterval);
+            }
+
+            // تحديث كل 3 ثواني
+            window.periodicUpdateInterval = setInterval(() => {
+                const localData = localStorage.getItem('barcelona_shared_data');
+                if (localData) {
+                    try {
+                        const data = JSON.parse(localData);
+                        if (data && data.players && JSON.stringify(data.players) !== JSON.stringify(players)) {
+                            console.log('🔄 تم اكتشاف تغيير في البيانات، جاري التحديث...');
+                            loadData();
+                        }
+                    } catch (e) {
+                        // تجاهل أخطاء التحليل
+                    }
+                }
+            }, 3000);
+        }
+
+        // تهيئة بسيطة وموثوقة
+        function initializeBroadcast() {
+            console.log('🚀 بدء تهيئة أداة البث...');
+
+            try {
+                // تحميل البيانات
+                loadData();
+
+                // تحميل الإعدادات
+                loadSettings();
+
+                // إعداد المراقبة
+                setupMonitoring();
+                setupSettingsMonitoring();
+
+                // بدء التحديث الدوري
+                startPeriodicUpdate();
+
+                console.log('✅ تم تهيئة أداة البث بنجاح');
+            } catch (error) {
+                console.error('❌ فشل في تهيئة أداة البث:', error);
+            }
+        }
+
+        // تهيئة الصفحة
+        document.addEventListener('DOMContentLoaded', function() {
+            syncStatusElement = document.getElementById('syncStatus');
+            titleInput = document.getElementById('titleInput');
+
+            console.log('🚀 بدء تشغيل البث المتطور...');
+
+            // بدء التطبيق
+            initializeBroadcast();
+            
+
+            
+            // إرسال رسالة تأكيد التحميل
+            setTimeout(() => {
+                if (window.parent !== window) {
+                    window.parent.postMessage({
+                        type: 'BROADCAST_READY',
+                        data: { 
+                            playersCount: players.length,
+                            timestamp: new Date().toISOString()
+                        }
+                    }, '*');
+                }
+            }, 2000);
+            
+            console.log('✅ تم تهيئة البث المتطور بنجاح');
+
+            // زر حفظ الإعدادات
+            const saveSettingsBtn = document.getElementById('saveSettingsBtn');
+            if (saveSettingsBtn) {
+                saveSettingsBtn.addEventListener('click', function() {
+                    saveSettings();
+                    showNotification('✅ تم حفظ الإعدادات بنجاح! عند إعادة فتح الصفحة ستبقى كما هي.', 'success');
+                });
+            }
+
+            // نمط البطاقة
+            document.querySelectorAll('.card-style').forEach(card => {
+                card.addEventListener('click', function() {
+                    settings.cardStyle = this.getAttribute('data-style');
+                    saveSettings();
+                    updateSettingsUI();
+                    renderPlayers();
+                });
+            });
+            // نمط الألوان
+            document.querySelectorAll('.color-preset').forEach(preset => {
+                preset.addEventListener('click', function() {
+                    settings.colorPreset = parseInt(this.getAttribute('data-preset'));
+                    saveSettings();
+                    updateSettingsUI();
+                    applyColorPreset(settings.colorPreset);
+                    renderPlayers();
+                });
+            });
+        });
+
+        function fixPlayerData(player) {
+            let changed = false;
+            // إصلاح النسبة
+            let prob = Number(player.probability);
+            if (isNaN(prob) || prob < 0) prob = 0; changed = true;
+            if (prob > 100) prob = 100; changed = true;
+            player.probability = prob;
+            // إصلاح الحالة
+            const allowedStatuses = ['official', 'close', 'negotiating', 'failed', 'rumor'];
+            if (!allowedStatuses.includes(player.status)) {
+                player.status = 'rumor';
+                changed = true;
+            }
+            // إصلاح الاسم
+            if (!player.name || typeof player.name !== 'string') {
+                player.name = 'لاعب غير معروف';
+                changed = true;
+            }
+            // إصلاح المركز
+            if (!player.position || typeof player.position !== 'string') {
+                player.position = 'غير محدد';
+                changed = true;
+            }
+            // إصلاح الصورة
+            if (!player.image || typeof player.image !== 'string') {
+                player.image = 'https://via.placeholder.com/70x70/333/fff?text=?';
+            }
+            if (changed) console.warn('⚠️ تم تصحيح بيانات لاعب تلقائيًا:', player);
+            return player;
+        }
+
+        function applyAllSettings() {
+            const playersContainer = document.querySelector('.players-container');
+            if (!playersContainer) return;
+            // إزالة جميع الفئات السابقة
+            playersContainer.className = 'players-container';
+            playersContainer.classList.add(`probability-display-${settings.probabilityDisplay || 'bar'}`);
+            playersContainer.classList.add(`probability-color-${settings.probabilityColor || 'gradient'}`);
+            playersContainer.classList.add(`probability-font-${settings.probabilityFontSize || 'md'}`);
+            playersContainer.classList.add(`card-shape-${settings.cardShape || 'rounded'}`);
+            playersContainer.classList.add(`card-effect-${settings.cardEffect || 'none'}`);
+            playersContainer.classList.add(`display-mode-${settings.displayMode || 'grid'}`);
+        }
+    </script>
+</body>
+</html> 

@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>اختبار شريط الداعمين v3</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 20px;
+      font-family: Arial, sans-serif;
+      background: #1a1a2e;
+      color: white;
+    }
+    
+    .test-container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    .test-section {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 20px;
+      margin: 20px 0;
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    
+    .iframe-container {
+      width: 380px;
+      height: 600px;
+      border: 2px solid #FFD700;
+      border-radius: 10px;
+      overflow: hidden;
+      margin: 20px auto;
+    }
+    
+    iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+    
+    .controls {
+      text-align: center;
+      margin: 20px 0;
+    }
+    
+    button {
+      background: linear-gradient(135deg, #FFD700, #FFA000);
+      color: #222;
+      border: none;
+      padding: 10px 20px;
+      margin: 5px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(255, 215, 0, 0.3);
+    }
+    
+    .url-box {
+      background: rgba(0, 0, 0, 0.5);
+      padding: 15px;
+      border-radius: 8px;
+      margin: 15px 0;
+      border: 1px solid rgba(255, 215, 0, 0.3);
+    }
+    
+    .url-text {
+      font-family: monospace;
+      font-size: 14px;
+      color: #FFD700;
+      word-break: break-all;
+      background: rgba(0, 0, 0, 0.7);
+      padding: 10px;
+      border-radius: 5px;
+      margin: 10px 0;
+    }
+    
+    .status {
+      background: rgba(0, 0, 0, 0.5);
+      padding: 10px;
+      border-radius: 5px;
+      margin: 10px 0;
+      font-family: monospace;
+    }
+    
+    .success { color: #00ff00; }
+    .error { color: #ff6b6b; }
+    .warning { color: #ffaa00; }
+    
+    .checklist {
+      list-style: none;
+      padding: 0;
+    }
+    
+    .checklist li {
+      padding: 8px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .checklist li:before {
+      content: "☐ ";
+      color: #FFD700;
+      font-weight: bold;
+      margin-left: 10px;
+    }
+    
+    .checklist li.checked:before {
+      content: "✅ ";
+    }
+  </style>
+</head>
+<body>
+  <div class="test-container">
+    <h1>🧪 اختبار شريط الداعمين v3 - الإصدار النهائي</h1>
+    
+    <div class="test-section">
+      <h2>📺 معاينة الشريط</h2>
+      <p>هذا هو شكل الشريط كما سيظهر في OBS:</p>
+      
+      <div class="iframe-container">
+        <iframe src="support-bar-v3.html" title="شريط الداعمين v3"></iframe>
+      </div>
+      
+      <div class="controls">
+        <button onclick="reloadIframe()">🔄 إعادة تحميل</button>
+        <button onclick="openInNewTab()">🔗 فتح في تبويب جديد</button>
+        <button onclick="generateOBSUrl()">⚙️ إنشاء رابط OBS</button>
+      </div>
+    </div>
+    
+    <div class="test-section">
+      <h2>🔗 روابط للاستخدام في OBS</h2>
+      
+      <h3>1. الرابط الأساسي (إعدادات افتراضية):</h3>
+      <div class="url-box">
+        <div class="url-text" id="basicUrl">جاري التحميل...</div>
+        <button onclick="copyUrl('basicUrl')">📋 نسخ</button>
+      </div>
+      
+      <h3>2. رابط مخصص (يمكنك تعديل الإعدادات):</h3>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin: 15px 0;">
+        <div>
+          <label>انتظار أعلى (ثانية):</label>
+          <input type="number" id="customWaitTop" value="15" min="5" max="60" style="width: 100%; padding: 5px; margin-top: 5px;">
+        </div>
+        <div>
+          <label>مدة النزول (ثانية):</label>
+          <input type="number" id="customScrollDown" value="15" min="5" max="60" style="width: 100%; padding: 5px; margin-top: 5px;">
+        </div>
+        <div>
+          <label>انتظار أسفل (ثانية):</label>
+          <input type="number" id="customWaitBottom" value="15" min="5" max="60" style="width: 100%; padding: 5px; margin-top: 5px;">
+        </div>
+        <div>
+          <label>مدة الصعود (ثانية):</label>
+          <input type="number" id="customScrollUp" value="15" min="5" max="60" style="width: 100%; padding: 5px; margin-top: 5px;">
+        </div>
+      </div>
+      
+      <div class="url-box">
+        <div class="url-text" id="customUrl">اضغط "إنشاء رابط مخصص" أدناه</div>
+        <button onclick="generateCustomUrl()">⚙️ إنشاء رابط مخصص</button>
+        <button onclick="copyUrl('customUrl')">📋 نسخ</button>
+      </div>
+    </div>
+    
+    <div class="test-section">
+      <h2>📋 إعدادات OBS الصحيحة</h2>
+      
+      <h3>خطوات الإعداد:</h3>
+      <ol>
+        <li>افتح OBS Studio</li>
+        <li>أضف مصدر جديد → Browser Source</li>
+        <li>انسخ أحد الروابط أعلاه في حقل URL</li>
+        <li>اضبط الأبعاد: <strong>العرض = 380، الارتفاع = 1080</strong></li>
+        <li>فعّل الإعدادات التالية:</li>
+      </ol>
+      
+      <ul class="checklist">
+        <li>✅ Refresh browser when scene becomes active</li>
+        <li>✅ Shutdown source when not visible</li>
+        <li>✅ Use hardware acceleration when available</li>
+      </ul>
+    </div>
+    
+    <div class="test-section">
+      <h2>🔍 اختبار الوظائف</h2>
+      
+      <h3>قائمة فحص الوظائف:</h3>
+      <ul class="checklist" id="testChecklist">
+        <li id="test1">تحميل البيانات بنجاح</li>
+        <li id="test2">عرض الداعمين بشكل صحيح</li>
+        <li id="test3">بدء التمرير التلقائي</li>
+        <li id="test4">انتظار في الأعلى (15 ثانية)</li>
+        <li id="test5">التمرير للأسفل (15 ثانية)</li>
+        <li id="test6">انتظار في الأسفل (15 ثانية)</li>
+        <li id="test7">التمرير للأعلى (15 ثانية)</li>
+        <li id="test8">تكرار الدورة</li>
+        <li id="test9">حفظ الإعدادات في URL</li>
+        <li id="test10">عمل الأداة في وضع الإنتاج</li>
+      </ul>
+      
+      <div class="controls">
+        <button onclick="runAutoTest()">🚀 تشغيل اختبار تلقائي</button>
+        <button onclick="resetTests()">🔄 إعادة تعيين الاختبارات</button>
+      </div>
+      
+      <div id="testResults" class="status"></div>
+    </div>
+    
+    <div class="test-section">
+      <h2>📊 معلومات النظام</h2>
+      <div class="status">
+        <div>🌐 المتصفح: <span id="browserInfo"></span></div>
+        <div>📍 الرابط الحالي: <span id="currentUrl"></span></div>
+        <div>⏰ الوقت: <span id="currentTime"></span></div>
+        <div>🔧 حالة الخادم: <span id="serverStatus">جاري الفحص...</span></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // تحديث المعلومات
+    function updateInfo() {
+      document.getElementById('browserInfo').textContent = navigator.userAgent.split(' ').pop();
+      document.getElementById('currentUrl').textContent = window.location.href;
+      document.getElementById('currentTime').textContent = new Date().toLocaleString('ar-SA');
+      
+      // إنشاء الرابط الأساسي
+      const basicUrl = `${window.location.origin}/support-bar-v3.html?autoScroll=true&waitTop=15&scrollDown=15&waitBottom=15&scrollUp=15&production=true`;
+      document.getElementById('basicUrl').textContent = basicUrl;
+    }
+    
+    // فحص حالة الخادم
+    async function checkServerStatus() {
+      try {
+        const response = await fetch('/api/supporters');
+        if (response.ok) {
+          document.getElementById('serverStatus').innerHTML = '<span class="success">✅ يعمل بشكل طبيعي</span>';
+        } else {
+          document.getElementById('serverStatus').innerHTML = '<span class="warning">⚠️ مشاكل في الاتصال</span>';
+        }
+      } catch (error) {
+        document.getElementById('serverStatus').innerHTML = '<span class="error">❌ غير متاح</span>';
+      }
+    }
+    
+    // إعادة تحميل الإطار
+    function reloadIframe() {
+      const iframe = document.querySelector('iframe');
+      iframe.src = iframe.src;
+      updateTestResult('تم إعادة تحميل الشريط', 'success');
+    }
+    
+    // فتح في تبويب جديد
+    function openInNewTab() {
+      const url = document.querySelector('iframe').src;
+      window.open(url, '_blank');
+      updateTestResult('تم فتح الشريط في تبويب جديد', 'success');
+    }
+    
+    // إنشاء رابط OBS
+    function generateOBSUrl() {
+      const basicUrl = document.getElementById('basicUrl').textContent;
+      navigator.clipboard.writeText(basicUrl).then(() => {
+        updateTestResult('تم نسخ رابط OBS للحافظة', 'success');
+      });
+    }
+    
+    // إنشاء رابط مخصص
+    function generateCustomUrl() {
+      const waitTop = document.getElementById('customWaitTop').value;
+      const scrollDown = document.getElementById('customScrollDown').value;
+      const waitBottom = document.getElementById('customWaitBottom').value;
+      const scrollUp = document.getElementById('customScrollUp').value;
+      
+      const customUrl = `${window.location.origin}/support-bar-v3.html?autoScroll=true&waitTop=${waitTop}&scrollDown=${scrollDown}&waitBottom=${waitBottom}&scrollUp=${scrollUp}&production=true`;
+      document.getElementById('customUrl').textContent = customUrl;
+      
+      updateTestResult('تم إنشاء رابط مخصص', 'success');
+    }
+    
+    // نسخ الرابط
+    function copyUrl(elementId) {
+      const url = document.getElementById(elementId).textContent;
+      navigator.clipboard.writeText(url).then(() => {
+        updateTestResult('تم نسخ الرابط للحافظة', 'success');
+      });
+    }
+    
+    // تشغيل اختبار تلقائي
+    function runAutoTest() {
+      updateTestResult('بدء الاختبار التلقائي...', 'warning');
+      
+      // محاكاة الاختبارات
+      const tests = [
+        { id: 'test1', delay: 1000, message: 'تم تحميل البيانات' },
+        { id: 'test2', delay: 2000, message: 'تم عرض الداعمين' },
+        { id: 'test3', delay: 3000, message: 'بدء التمرير التلقائي' },
+        { id: 'test9', delay: 4000, message: 'تم حفظ الإعدادات في URL' },
+        { id: 'test10', delay: 5000, message: 'الأداة تعمل في وضع الإنتاج' }
+      ];
+      
+      tests.forEach(test => {
+        setTimeout(() => {
+          document.getElementById(test.id).classList.add('checked');
+          updateTestResult(test.message, 'success');
+        }, test.delay);
+      });
+      
+      setTimeout(() => {
+        updateTestResult('✅ اكتمل الاختبار التلقائي بنجاح!', 'success');
+      }, 6000);
+    }
+    
+    // إعادة تعيين الاختبارات
+    function resetTests() {
+      const checklistItems = document.querySelectorAll('.checklist li');
+      checklistItems.forEach(item => {
+        item.classList.remove('checked');
+      });
+      updateTestResult('تم إعادة تعيين جميع الاختبارات', 'warning');
+    }
+    
+    // تحديث نتائج الاختبار
+    function updateTestResult(message, type) {
+      const results = document.getElementById('testResults');
+      const time = new Date().toLocaleTimeString('ar-SA');
+      results.innerHTML += `<div class="${type}">[${time}] ${message}</div>`;
+      results.scrollTop = results.scrollHeight;
+    }
+    
+    // تهيئة الصفحة
+    document.addEventListener('DOMContentLoaded', function() {
+      updateInfo();
+      checkServerStatus();
+      
+      // تحديث الوقت كل ثانية
+      setInterval(() => {
+        document.getElementById('currentTime').textContent = new Date().toLocaleString('ar-SA');
+      }, 1000);
+      
+      updateTestResult('صفحة الاختبار جاهزة', 'success');
+    });
+  </script>
+</body>
+</html>

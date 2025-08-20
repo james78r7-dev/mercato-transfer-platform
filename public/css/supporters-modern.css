@@ -1,0 +1,424 @@
+/* Modern Supporters CSS - Advanced Visual Effects */
+
+/* Custom Properties */
+:root {
+  --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --gold-gradient: linear-gradient(135deg, #FFD700, #FFA000);
+  --success-gradient: linear-gradient(135deg, #4CAF50, #45a049);
+  --danger-gradient: linear-gradient(135deg, #ff6b6b, #ee5a52);
+  --warning-gradient: linear-gradient(135deg, #FFD700, #FFA000);
+  --glass-bg: rgba(255, 255, 255, 0.1);
+  --glass-border: rgba(255, 255, 255, 0.2);
+  --shadow-light: 0 8px 32px rgba(0, 0, 0, 0.1);
+  --shadow-medium: 0 12px 40px rgba(0, 0, 0, 0.15);
+  --shadow-heavy: 0 20px 60px rgba(0, 0, 0, 0.2);
+  --border-radius: 16px;
+  --transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Advanced Animations */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+@keyframes glow {
+  0%, 100% { box-shadow: 0 0 20px rgba(255, 215, 0, 0.5); }
+  50% { box-shadow: 0 0 40px rgba(255, 215, 0, 0.8); }
+}
+
+@keyframes slideInFromRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideInFromBottom {
+  from {
+    transform: translateY(50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Enhanced Support Bar */
+.support-bar {
+  position: relative;
+  overflow: hidden;
+}
+
+.support-bar::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(45deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.05) 50%,
+    transparent 70%);
+  animation: shimmer 4s infinite;
+  pointer-events: none;
+}
+
+/* Enhanced Header */
+.support-bar-header {
+  position: relative;
+  overflow: hidden;
+}
+
+.header-icon {
+  position: relative;
+  overflow: hidden;
+}
+
+.header-icon::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(45deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.3) 50%,
+    transparent 70%);
+  animation: shimmer 3s infinite;
+}
+
+/* Enhanced Supporter Cards */
+.supporter {
+  position: relative;
+  overflow: hidden;
+  transition: var(--transition);
+}
+
+.supporter::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg,
+    transparent,
+    rgba(255, 255, 255, 0.1),
+    transparent);
+  transition: left 0.5s;
+}
+
+.supporter:hover::before {
+  left: 100%;
+}
+
+.supporter:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: var(--shadow-heavy);
+}
+
+/* Elite Supporter Enhancements */
+.supporter.top {
+  position: relative;
+  overflow: hidden;
+}
+
+.supporter.top::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(45deg,
+    transparent 30%,
+    rgba(255, 215, 0, 0.2) 50%,
+    transparent 70%);
+  animation: eliteShine 4s infinite;
+}
+
+@keyframes eliteShine {
+  0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+  100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+}
+
+.supporter.top .crown {
+  animation: crownGlow 2s infinite alternate;
+}
+
+@keyframes crownGlow {
+  from {
+    text-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
+    transform: scale(1);
+  }
+  to {
+    text-shadow: 0 0 30px rgba(255, 215, 0, 1);
+    transform: scale(1.1);
+  }
+}
+
+/* Enhanced Avatars */
+.supporter-avatar {
+  position: relative;
+  overflow: hidden;
+}
+
+.supporter-avatar::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(45deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.3) 50%,
+    transparent 70%);
+  animation: shimmer 3s infinite;
+}
+
+.supporter.top .supporter-avatar {
+  animation: pulse 2s infinite;
+}
+
+/* Enhanced Buttons */
+.btn {
+  position: relative;
+  overflow: hidden;
+  transition: var(--transition);
+}
+
+.btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent);
+  transition: left 0.5s;
+}
+
+.btn:hover::before {
+  left: 100%;
+}
+
+.btn:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-medium);
+}
+
+/* Enhanced Form Elements */
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  animation: glow 1s ease-in-out;
+}
+
+/* Enhanced Table */
+.supporters-table tr {
+  transition: var(--transition);
+}
+
+.supporters-table tr:hover {
+  transform: scale(1.01);
+  box-shadow: var(--shadow-light);
+}
+
+/* Enhanced Stats Cards */
+.stat-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.stat-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(45deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.1) 50%,
+    transparent 70%);
+  animation: shimmer 4s infinite;
+}
+
+.stat-card:hover {
+  animation: float 3s ease-in-out infinite;
+}
+
+.stat-icon {
+  animation: pulse 3s infinite;
+}
+
+/* Enhanced Loading */
+.loading-spinner {
+  position: relative;
+}
+
+.loading-spinner::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  border: 2px solid transparent;
+  border-top: 2px solid rgba(255, 215, 0, 0.3);
+  border-radius: 50%;
+  animation: spin 1.5s linear infinite reverse;
+}
+
+/* Enhanced Messages */
+.message {
+  position: relative;
+  overflow: hidden;
+}
+
+.message::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent);
+  animation: shimmer 2s infinite;
+}
+
+/* Responsive Enhancements */
+@media (max-width: 768px) {
+  .support-bar {
+    width: 100vw;
+    right: 0;
+  }
+
+  .supporter {
+    margin-bottom: 12px;
+    padding: 16px 20px;
+  }
+
+  .stat-card {
+    margin-bottom: 16px;
+  }
+}
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --glass-bg: rgba(0, 0, 0, 0.2);
+    --glass-border: rgba(255, 255, 255, 0.1);
+  }
+}
+
+/* High Contrast Mode */
+@media (prefers-contrast: high) {
+  .supporter {
+    border: 2px solid rgba(255, 255, 255, 0.3);
+  }
+
+  .btn {
+    border: 2px solid currentColor;
+  }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Print Styles */
+@media print {
+  .support-bar {
+    position: static;
+    width: 100%;
+    height: auto;
+    background: white;
+    color: black;
+  }
+
+  .btn {
+    display: none;
+  }
+}
+
+/* Custom Scrollbar */
+.supporters-list::-webkit-scrollbar {
+  width: 8px;
+}
+
+.supporters-list::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+
+.supporters-list::-webkit-scrollbar-thumb {
+  background: var(--gold-gradient);
+  border-radius: 4px;
+  transition: var(--transition);
+}
+
+.supporters-list::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, #FFA000, #FFD700);
+}
+
+/* Focus Indicators */
+.btn:focus,
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  outline: 2px solid #667eea;
+  outline-offset: 2px;
+}
+
+/* Selection Styles */
+::selection {
+  background: rgba(102, 126, 234, 0.3);
+  color: inherit;
+}
+
+::-moz-selection {
+  background: rgba(102, 126, 234, 0.3);
+  color: inherit;
+}

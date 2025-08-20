@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>شريط الداعمين المتحرك</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: transparent;
+      overflow: hidden;
+      font-family: 'Tajawal', 'Inter', Arial, sans-serif;
+    }
+    .ticker-container {
+      width: 100vw;
+      height: 80px;
+      background: linear-gradient(90deg, #222 0%, #FFD700 100%);
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      border-radius: 18px;
+      box-shadow: 0 4px 32px rgba(0,0,0,0.18);
+      border: 2px solid #FFD700;
+      position: fixed;
+      top: 20px;
+      right: 0;
+      left: 0;
+      z-index: 9999;
+    }
+    .ticker {
+      display: flex;
+      align-items: center;
+      white-space: nowrap;
+      animation: ticker-move 30s linear infinite;
+      font-size: 2.2em;
+      font-weight: 700;
+      color: #fff;
+      gap: 48px;
+      padding-right: 100vw;
+    }
+    .supporter {
+      display: inline-flex;
+      align-items: center;
+      background: rgba(255,255,255,0.08);
+      border-radius: 12px;
+      padding: 8px 24px;
+      margin: 0 8px;
+      color: #FFD700;
+      font-size: 1em;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      border: 1px solid rgba(255,255,255,0.12);
+    }
+    .supporter i {
+      margin-left: 10px;
+      color: #FFD700;
+      font-size: 1.2em;
+    }
+    @keyframes ticker-move {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+  </style>
+</head>
+<body>
+  <div class="ticker-container">
+    <div class="ticker" id="supportersTicker">
+      <span class="supporter"><i>💛</i> أحمد</span>
+      <span class="supporter"><i>💛</i> محمد</span>
+      <span class="supporter"><i>💛</i> سارة</span>
+      <span class="supporter"><i>💛</i> يوسف</span>
+      <span class="supporter"><i>💛</i> ريم</span>
+      <span class="supporter"><i>💛</i> خالد</span>
+      <span class="supporter"><i>💛</i> فاطمة</span>
+      <span class="supporter"><i>💛</i> علي</span>
+      <span class="supporter"><i>💛</i> نورة</span>
+      <span class="supporter"><i>💛</i> سامي</span>
+      <!-- كرر نفس الأسماء لجعل الحركة مستمرة بدون توقف -->
+      <span class="supporter"><i>💛</i> أحمد</span>
+      <span class="supporter"><i>💛</i> محمد</span>
+      <span class="supporter"><i>💛</i> سارة</span>
+      <span class="supporter"><i>💛</i> يوسف</span>
+      <span class="supporter"><i>💛</i> ريم</span>
+      <span class="supporter"><i>💛</i> خالد</span>
+      <span class="supporter"><i>💛</i> فاطمة</span>
+      <span class="supporter"><i>💛</i> علي</span>
+      <span class="supporter"><i>💛</i> نورة</span>
+      <span class="supporter"><i>💛</i> سامي</span>
+    </div>
+  </div>
+</body>
+</html> 

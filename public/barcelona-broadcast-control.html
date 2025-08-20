@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barcelona Ultimate Broadcast Control</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;900&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background: linear-gradient(135deg, #0a0a1e 0%, #1a1a3e 50%, #2a2a5e 100%);
+            min-height: 100vh;
+            color: white;
+            overflow-x: hidden;
+        }
+
+        /* Header */
+        .control-header {
+            background: linear-gradient(135deg, rgba(138, 43, 226, 0.9), rgba(75, 0, 130, 0.8));
+            padding: 20px;
+            text-align: center;
+            border-bottom: 3px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .control-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(138, 43, 226, 0.2) 0%, transparent 50%);
+            animation: headerPattern 8s linear infinite;
+        }
+
+        @keyframes headerPattern {
+            0% { transform: translateX(-100px) rotate(0deg); }
+            100% { transform: translateX(100px) rotate(360deg); }
+        }
+
+        .control-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 2.2rem;
+            font-weight: 900;
+            background: linear-gradient(45deg, #ffffff, #e0e0ff, #ffffff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 2;
+            animation: titleGlow 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes titleGlow {
+            0% { text-shadow: 0 0 30px rgba(255, 255, 255, 0.5); }
+            100% { text-shadow: 0 0 50px rgba(255, 255, 255, 0.8), 0 0 100px rgba(138, 43, 226, 0.6); }
+        }
+
+        .control-subtitle {
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.8);
+            letter-spacing: 2px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Main Container */
+        .control-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            padding: 30px;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        /* Control Panel */
+        .control-panel {
+            background: linear-gradient(135deg, 
+                rgba(255, 255, 255, 0.1) 0%,
+                rgba(255, 255, 255, 0.05) 50%,
+                rgba(255, 255, 255, 0.1) 100%);
+            backdrop-filter: blur(20px) saturate(1.5);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 25px;
+            box-shadow: 
+                0 8px 32px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        }
+
+        .panel-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 25px;
+            color: #ffffff;
+            text-align: center;
+            border-bottom: 2px solid rgba(138, 43, 226, 0.5);
+            padding-bottom: 15px;
+            position: relative;
+        }
+
+        .panel-title::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(138, 43, 226, 0.8), transparent);
+        }
+
+        /* Control Groups */
+        .control-group {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .control-label {
+            display: block;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: rgba(255, 255, 255, 0.9);
+            text-align: center;
+        }
+
+        .control-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            justify-content: center;
+        }
+
+        .control-btn {
+            background: linear-gradient(135deg, 
+                rgba(255, 255, 255, 0.1) 0%,
+                rgba(255, 255, 255, 0.05) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            padding: 12px 18px;
+            color: white;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .control-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .control-btn:hover::before {
+            left: 100%;
+        }
+
+        .control-btn:hover {
+            background: linear-gradient(135deg, rgba(138, 43, 226, 0.3), rgba(75, 0, 130, 0.2));
+            border-color: rgba(138, 43, 226, 0.6);
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 8px 25px rgba(138, 43, 226, 0.4);
+        }
+
+        .control-btn.active {
+            background: linear-gradient(135deg, rgba(138, 43, 226, 0.8), rgba(75, 0, 130, 0.6));
+            border-color: rgba(138, 43, 226, 0.8);
+            box-shadow: 0 0 30px rgba(138, 43, 226, 0.6);
+            transform: scale(1.05);
+        }
+
+        /* Layout Preview */
+        .layout-preview {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 12px;
+            margin-top: 15px;
+            border: 1px solid rgba(138, 43, 226, 0.3);
+        }
+
+        .preview-item {
+            width: 25px;
+            height: 25px;
+            background: linear-gradient(135deg, rgba(138, 43, 226, 0.8), rgba(75, 0, 130, 0.6));
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(138, 43, 226, 0.3);
+        }
+
+        .preview-item:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 15px rgba(138, 43, 226, 0.5);
+        }
+
+        /* Live Preview */
+        .preview-panel {
+            background: linear-gradient(135deg, 
+                rgba(255, 255, 255, 0.05) 0%,
+                rgba(255, 255, 255, 0.02) 100%);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 25px;
+            box-shadow: 
+                0 8px 32px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        }
+
+        .preview-iframe {
+            width: 100%;
+            height: 650px;
+            border: none;
+            border-radius: 15px;
+            background: #000;
+            box-shadow: 
+                0 0 40px rgba(0, 0, 0, 0.6),
+                inset 0 0 20px rgba(138, 43, 226, 0.1);
+        }
+
+        /* Action Buttons */
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 25px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .action-btn {
+            background: linear-gradient(135deg, rgba(34, 197, 94, 0.8), rgba(22, 163, 74, 0.6));
+            border: none;
+            border-radius: 12px;
+            padding: 14px 22px;
+            color: white;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .action-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .action-btn:hover::before {
+            left: 100%;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 10px 30px rgba(34, 197, 94, 0.5);
+        }
+
+        .action-btn.secondary {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.8), rgba(37, 99, 235, 0.6));
+        }
+
+        .action-btn.secondary:hover {
+            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.5);
+        }
+
+        .action-btn.danger {
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.8), rgba(220, 38, 38, 0.6));
+        }
+
+        .action-btn.danger:hover {
+            box-shadow: 0 10px 30px rgba(239, 68, 68, 0.5);
+        }
+
+        /* Status Indicator */
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            background: rgba(34, 197, 94, 0.2);
+            border: 1px solid rgba(34, 197, 94, 0.4);
+            border-radius: 8px;
+            font-size: 0.85rem;
+            margin-bottom: 15px;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background: #22c55e;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .control-container {
+                grid-template-columns: 1fr;
+                gap: 25px;
+                padding: 20px;
+            }
+            
+            .preview-iframe {
+                height: 500px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .control-title {
+                font-size: 1.8rem;
+            }
+            
+            .control-buttons {
+                justify-content: center;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
+        /* Animation Classes */
+        .fade-in {
+            animation: fadeIn 0.6s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .slide-in {
+            animation: slideIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+    </style>
+</head>
+<body>
+    <div class="control-header">
+        <div class="control-title">ULTIMATE BROADCAST CONTROL</div>
+        <div class="control-subtitle">Barcelona Transfer Market - Professional Broadcasting System</div>
+    </div>
+
+    <div class="control-container">
+        <!-- Control Panel -->
+        <div class="control-panel fade-in">
+            <h2 class="panel-title">🎛️ إعدادات التحكم المتقدمة</h2>
+            
+            <div class="status-indicator">
+                <div class="status-dot"></div>
+                <span>متصل بالبث المباشر</span>
+            </div>
+            
+            <!-- Layout Control -->
+            <div class="control-group slide-in">
+                <label class="control-label">🎨 تخطيط العرض المتقدم</label>
+                <div class="control-buttons">
+                    <button class="control-btn active" data-layout="grid">
+                        <i class="fas fa-th"></i> شبكة
+                    </button>
+                    <button class="control-btn" data-layout="circular">
+                        <i class="fas fa-circle"></i> دائري
+                    </button>
+                    <button class="control-btn" data-layout="wave">
+                        <i class="fas fa-water"></i> موجي
+                    </button>
+                    <button class="control-btn" data-layout="pyramid">
+                        <i class="fas fa-mountain"></i> هرمي
+                    </button>
+                    <button class="control-btn" data-layout="hexagon">
+                        <i class="fas fa-hexagon"></i> سداسي
+                    </button>
+                    <button class="control-btn" data-layout="spiral">
+                        <i class="fas fa-hurricane"></i> حلزوني
+                    </button>
+                </div>
+                <div class="layout-preview" id="layoutPreview">
+                    <div class="preview-item"></div>
+                    <div class="preview-item"></div>
+                    <div class="preview-item"></div>
+                    <div class="preview-item"></div>
+                    <div class="preview-item"></div>
+                    <div class="preview-item"></div>
+                </div>
+            </div>
+
+            <!-- Data Control -->
+            <div class="control-group slide-in">
+                <label class="control-label">📊 تحكم البيانات</label>
+                <div class="control-buttons">
+                    <button class="control-btn" onclick="refreshData()">
+                        <i class="fas fa-sync"></i> تحديث البيانات
+                    </button>
+                    <button class="control-btn" onclick="refreshPreview()">
+                        <i class="fas fa-eye"></i> تحديث المعاينة
+                    </button>
+                    <a href="/barcelona-ultimate-control" target="_blank" class="control-btn">
+                        <i class="fas fa-cogs"></i> لوحة التحكم الرئيسية
+                    </a>
+                </div>
+            </div>
+
+            <!-- Animation Speed -->
+            <div class="control-group slide-in">
+                <label class="control-label">⚡ سرعة الحركة والتأثيرات</label>
+                <div class="control-buttons">
+                    <button class="control-btn" data-speed="0.5">
+                        <i class="fas fa-turtle"></i> بطيء
+                    </button>
+                    <button class="control-btn active" data-speed="1">
+                        <i class="fas fa-walking"></i> عادي
+                    </button>
+                    <button class="control-btn" data-speed="1.5">
+                        <i class="fas fa-running"></i> سريع
+                    </button>
+                    <button class="control-btn" data-speed="2">
+                        <i class="fas fa-rocket"></i> سريع جداً
+                    </button>
+                </div>
+            </div>
+
+            <!-- Visual Effects -->
+            <div class="control-group slide-in">
+                <label class="control-label">✨ التأثيرات البصرية المتقدمة</label>
+                <div class="control-buttons">
+                    <button class="control-btn active" data-effect="particles">
+                        <i class="fas fa-sparkles"></i> جسيمات 3D
+                    </button>
+                    <button class="control-btn active" data-effect="glow">
+                        <i class="fas fa-sun"></i> توهج ديناميكي
+                    </button>
+                    <button class="control-btn active" data-effect="floating">
+                        <i class="fas fa-feather"></i> حركة عائمة
+                    </button>
+                    <button class="control-btn" data-effect="hologram">
+                        <i class="fas fa-cube"></i> هولوجرام
+                    </button>
+                    <button class="control-btn" data-effect="neon">
+                        <i class="fas fa-bolt"></i> نيون
+                    </button>
+                </div>
+            </div>
+
+            <!-- Advanced Display Settings -->
+            <div class="control-group slide-in">
+                <label class="control-label">🎛️ إعدادات العرض المتقدمة</label>
+                <div class="control-buttons">
+                    <button class="control-btn" data-setting="compact" onclick="toggleDisplayMode('compact')">
+                        <i class="fas fa-compress"></i> مضغوط
+                    </button>
+                    <button class="control-btn active" data-setting="normal" onclick="toggleDisplayMode('normal')">
+                        <i class="fas fa-expand"></i> عادي
+                    </button>
+                    <button class="control-btn" data-setting="detailed" onclick="toggleDisplayMode('detailed')">
+                        <i class="fas fa-list"></i> مفصل
+                    </button>
+                </div>
+            </div>
+
+            <!-- Theme Control -->
+            <div class="control-group slide-in">
+                <label class="control-label">🎨 التحكم في الثيم</label>
+                <div class="control-buttons">
+                    <button class="control-btn active" data-theme="classic" onclick="changeTheme('classic')">
+                        <i class="fas fa-palette"></i> كلاسيكي
+                    </button>
+                    <button class="control-btn" data-theme="modern" onclick="changeTheme('modern')">
+                        <i class="fas fa-magic"></i> حديث
+                    </button>
+                    <button class="control-btn" data-theme="dark" onclick="changeTheme('dark')">
+                        <i class="fas fa-moon"></i> داكن
+                    </button>
+                    <button class="control-btn" data-theme="neon" onclick="changeTheme('neon')">
+                        <i class="fas fa-bolt"></i> نيون
+                    </button>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="action-buttons">
+                <button class="action-btn" onclick="refreshPreview()">
+                    <i class="fas fa-sync-alt"></i>
+                    تحديث المعاينة
+                </button>
+                <a href="/barcelona-ultimate-broadcast.html" target="_blank" class="action-btn secondary">
+                    <i class="fas fa-external-link-alt"></i>
+                    فتح في نافذة جديدة
+                </a>
+                <button class="action-btn danger" onclick="resetSettings()">
+                    <i class="fas fa-undo"></i>
+                    إعادة تعيين
+                </button>
+            </div>
+        </div>
+
+        <!-- Live Preview -->
+        <div class="preview-panel fade-in">
+            <h2 class="panel-title">📺 المعاينة المباشرة</h2>
+            <iframe id="previewFrame" class="preview-iframe" src="/barcelona-ultimate-broadcast.html"></iframe>
+        </div>
+    </div>
+
+    <script>
+        class UltimateBroadcastControl {
+            constructor() {
+                this.currentLayout = 'grid';
+                this.currentSpeed = 1;
+                this.activeEffects = ['particles', 'glow', 'floating'];
+                
+                this.setupEventListeners();
+                this.setupBroadcastChannel();
+                this.initializeAnimations();
+                this.updateLayoutPreview();
+            }
+
+            setupEventListeners() {
+                // Layout buttons
+                document.querySelectorAll('[data-layout]').forEach(btn => {
+                    btn.addEventListener('click', () => this.handleLayoutChange(btn));
+                });
+
+                // Speed buttons
+                document.querySelectorAll('[data-speed]').forEach(btn => {
+                    btn.addEventListener('click', () => this.handleSpeedChange(btn));
+                });
+
+                // Effect buttons
+                document.querySelectorAll('[data-effect]').forEach(btn => {
+                    btn.addEventListener('click', () => this.handleEffectToggle(btn));
+                });
+            }
+
+            setupBroadcastChannel() {
+                try {
+                    // Use the same channel as Ultimate Control for synchronization
+                    this.channel = new BroadcastChannel('barcelona_obs_sync');
+
+                    // Listen for messages from the broadcast overlay
+                    this.channel.addEventListener('message', (event) => {
+                        console.log('📡 رسالة واردة:', event.data);
+                    });
+
+                    console.log('✅ تم ربط قناة التزامن مع Ultimate Control');
+                } catch (error) {
+                    console.warn('❌ فشل في ربط قناة التزامن:', error);
+                }
+            }
+
+            initializeAnimations() {
+                // Animate control groups on load
+                gsap.fromTo('.control-group', 
+                    { opacity: 0, x: -50 },
+                    { opacity: 1, x: 0, duration: 0.6, stagger: 0.2, ease: 'power2.out' }
+                );
+
+                // Animate buttons
+                gsap.fromTo('.control-btn', 
+                    { opacity: 0, scale: 0.8 },
+                    { opacity: 1, scale: 1, duration: 0.4, stagger: 0.05, delay: 0.3 }
+                );
+            }
+
+            handleLayoutChange(btn) {
+                this.setActiveButton(btn);
+                this.currentLayout = btn.dataset.layout;
+                this.updateLayoutPreview();
+                this.broadcastChange('layoutChange', { layout: this.currentLayout });
+                this.updatePreview();
+                
+                // Visual feedback
+                this.showNotification(`تم تغيير التخطيط إلى: ${btn.textContent.trim()}`);
+            }
+
+            handleSpeedChange(btn) {
+                this.setActiveButton(btn);
+                this.currentSpeed = parseFloat(btn.dataset.speed);
+                this.broadcastChange('speedChange', { speed: this.currentSpeed });
+                
+                this.showNotification(`تم تغيير السرعة إلى: ${btn.textContent.trim()}`);
+            }
+
+            handleEffectToggle(btn) {
+                const effect = btn.dataset.effect;
+                if (btn.classList.contains('active')) {
+                    btn.classList.remove('active');
+                    this.activeEffects = this.activeEffects.filter(e => e !== effect);
+                } else {
+                    btn.classList.add('active');
+                    this.activeEffects.push(effect);
+                }
+                
+                this.broadcastChange('effectsChange', { effects: this.activeEffects });
+                
+                const action = btn.classList.contains('active') ? 'تفعيل' : 'إلغاء';
+                this.showNotification(`${action} تأثير: ${btn.textContent.trim()}`);
+            }
+
+            setActiveButton(clickedBtn) {
+                const group = clickedBtn.parentElement;
+                group.querySelectorAll('.control-btn').forEach(btn => btn.classList.remove('active'));
+                clickedBtn.classList.add('active');
+                
+                // Add click animation
+                gsap.fromTo(clickedBtn, 
+                    { scale: 0.95 },
+                    { scale: 1.05, duration: 0.1, yoyo: true, repeat: 1 }
+                );
+            }
+
+            updateLayoutPreview() {
+                const preview = document.getElementById('layoutPreview');
+                const items = preview.querySelectorAll('.preview-item');
+                
+                // Reset all items
+                items.forEach(item => {
+                    item.style.transform = 'none';
+                    item.style.position = 'relative';
+                });
+                
+                // Apply layout-specific preview with animation
+                gsap.to(items, { scale: 0.8, duration: 0.2, onComplete: () => {
+                    this.applyPreviewLayout(items);
+                    gsap.to(items, { scale: 1, duration: 0.3, ease: 'back.out(1.7)' });
+                }});
+            }
+
+            applyPreviewLayout(items) {
+                switch(this.currentLayout) {
+                    case 'circular':
+                        items.forEach((item, index) => {
+                            const angle = (index / items.length) * 2 * Math.PI;
+                            const radius = 25;
+                            const x = radius * Math.cos(angle);
+                            const y = radius * Math.sin(angle);
+                            item.style.transform = `translate(${x}px, ${y}px)`;
+                        });
+                        break;
+                    case 'wave':
+                        items.forEach((item, index) => {
+                            const y = Math.sin(index * 0.8) * 8;
+                            item.style.transform = `translateY(${y}px)`;
+                        });
+                        break;
+                    case 'pyramid':
+                        items.forEach((item, index) => {
+                            const row = Math.floor(index / 3);
+                            const col = index % 3;
+                            const offsetX = (row * 10) - 10;
+                            item.style.transform = `translateX(${offsetX}px)`;
+                        });
+                        break;
+                    case 'hexagon':
+                        items.forEach((item, index) => {
+                            if (index === 0) return; // Center item
+                            const angle = ((index - 1) / (items.length - 1)) * 2 * Math.PI;
+                            const radius = 20;
+                            const x = radius * Math.cos(angle);
+                            const y = radius * Math.sin(angle);
+                            item.style.transform = `translate(${x}px, ${y}px)`;
+                        });
+                        break;
+                    case 'spiral':
+                        items.forEach((item, index) => {
+                            const angle = index * 0.8;
+                            const radius = 5 + index * 3;
+                            const x = radius * Math.cos(angle);
+                            const y = radius * Math.sin(angle);
+                            item.style.transform = `translate(${x}px, ${y}px) rotate(${angle * 20}deg)`;
+                        });
+                        break;
+                }
+            }
+
+            broadcastChange(type, data) {
+                if (this.channel) {
+                    this.channel.postMessage({ type, ...data });
+                    console.log('📡 تم إرسال رسالة للبث:', { type, ...data });
+                }
+            }
+
+            updatePreview() {
+                const iframe = document.getElementById('previewFrame');
+                const url = new URL(iframe.src);
+                url.searchParams.set('layout', this.currentLayout);
+                url.searchParams.set('t', Date.now());
+                iframe.src = url.toString();
+
+                // Broadcast the change to all connected overlays
+                this.broadcastChange('layoutChange', { layout: this.currentLayout });
+            }
+
+            showNotification(message) {
+                // Create notification element
+                const notification = document.createElement('div');
+                notification.style.cssText = `
+                    position: fixed;
+                    top: 20px;
+                    right: 20px;
+                    background: linear-gradient(135deg, rgba(34, 197, 94, 0.9), rgba(22, 163, 74, 0.8));
+                    color: white;
+                    padding: 12px 20px;
+                    border-radius: 8px;
+                    font-weight: 600;
+                    z-index: 10000;
+                    box-shadow: 0 4px 20px rgba(34, 197, 94, 0.3);
+                    backdrop-filter: blur(10px);
+                `;
+                notification.textContent = message;
+                
+                document.body.appendChild(notification);
+                
+                // Animate in
+                gsap.fromTo(notification, 
+                    { opacity: 0, x: 100 },
+                    { opacity: 1, x: 0, duration: 0.3 }
+                );
+                
+                // Remove after 3 seconds
+                setTimeout(() => {
+                    gsap.to(notification, {
+                        opacity: 0,
+                        x: 100,
+                        duration: 0.3,
+                        onComplete: () => notification.remove()
+                    });
+                }, 3000);
+            }
+        }
+
+        // Initialize control panel
+        document.addEventListener('DOMContentLoaded', () => {
+            window.broadcastControl = new UltimateBroadcastControl();
+        });
+
+        // Global functions
+        function refreshPreview() {
+            const iframe = document.getElementById('previewFrame');
+            iframe.src = iframe.src.split('?')[0] + '?t=' + Date.now();
+
+            // Show loading animation
+            iframe.style.opacity = '0.5';
+            setTimeout(() => {
+                iframe.style.opacity = '1';
+            }, 500);
+
+            // Broadcast data update to all overlays
+            if (window.broadcastControl && window.broadcastControl.channel) {
+                window.broadcastControl.broadcastChange('dataUpdate', {});
+            }
+        }
+
+        function refreshData() {
+            // Refresh data and broadcast to overlays
+            if (window.broadcastControl && window.broadcastControl.channel) {
+                window.broadcastControl.broadcastChange('reload', {});
+                window.broadcastControl.showNotification('تم تحديث البيانات في جميع الشاشات');
+            }
+            refreshPreview();
+        }
+
+        function toggleDisplayMode(mode) {
+            // Update active button
+            document.querySelectorAll('[data-setting]').forEach(btn => btn.classList.remove('active'));
+            document.querySelector(`[data-setting="${mode}"]`).classList.add('active');
+
+            // Broadcast change
+            if (window.broadcastControl && window.broadcastControl.channel) {
+                window.broadcastControl.broadcastChange('displayMode', { mode });
+                window.broadcastControl.showNotification(`تم تغيير وضع العرض إلى: ${mode}`);
+            }
+        }
+
+        function changeTheme(theme) {
+            // Update active button
+            document.querySelectorAll('[data-theme]').forEach(btn => btn.classList.remove('active'));
+            document.querySelector(`[data-theme="${theme}"]`).classList.add('active');
+
+            // Broadcast change
+            if (window.broadcastControl && window.broadcastControl.channel) {
+                window.broadcastControl.broadcastChange('themeChange', { theme });
+                window.broadcastControl.showNotification(`تم تغيير الثيم إلى: ${theme}`);
+            }
+        }
+
+        function resetSettings() {
+            // Reset to default settings
+            document.querySelectorAll('.control-btn.active').forEach(btn => btn.classList.remove('active'));
+            document.querySelector('[data-layout="grid"]').classList.add('active');
+            document.querySelector('[data-speed="1"]').classList.add('active');
+            document.querySelector('[data-setting="normal"]').classList.add('active');
+            document.querySelector('[data-theme="classic"]').classList.add('active');
+            document.querySelectorAll('[data-effect="particles"], [data-effect="glow"], [data-effect="floating"]')
+                .forEach(btn => btn.classList.add('active'));
+
+            // Update control instance
+            if (window.broadcastControl) {
+                window.broadcastControl.currentLayout = 'grid';
+                window.broadcastControl.currentSpeed = 1;
+                window.broadcastControl.activeEffects = ['particles', 'glow', 'floating'];
+                window.broadcastControl.updateLayoutPreview();
+                window.broadcastControl.updatePreview();
+                window.broadcastControl.broadcastChange('reset', {});
+                window.broadcastControl.showNotification('تم إعادة تعيين جميع الإعدادات');
+            }
+        }
+    </script>
+</body>
+</html>
