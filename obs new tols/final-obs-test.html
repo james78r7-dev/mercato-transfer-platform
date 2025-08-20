@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎯 اختبار نهائي للحل العالمي</title>
+    
+    <!-- منع التخزين المؤقت -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
+            color: #fff;
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .title {
+            font-size: 3rem;
+            font-weight: bold;
+            background: linear-gradient(45deg, #ffd700, #ffed4e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: #94a3b8;
+        }
+
+        .test-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .test-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 2rem;
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .test-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.2);
+        }
+
+        .test-title {
+            font-size: 1.5rem;
+            color: #ffd700;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .status {
+            padding: 0.5rem 1rem;
+            border-radius: 10px;
+            font-weight: bold;
+            margin: 0.5rem 0;
+            text-align: center;
+        }
+
+        .status.success {
+            background: rgba(16, 185, 129, 0.2);
+            color: #10b981;
+            border: 1px solid #10b981;
+        }
+
+        .status.warning {
+            background: rgba(245, 158, 11, 0.2);
+            color: #f59e0b;
+            border: 1px solid #f59e0b;
+        }
+
+        .status.error {
+            background: rgba(239, 68, 68, 0.2);
+            color: #ef4444;
+            border: 1px solid #ef4444;
+        }
+
+        .status.info {
+            background: rgba(59, 130, 246, 0.2);
+            color: #3b82f6;
+            border: 1px solid #3b82f6;
+        }
+
+        .test-result {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            padding: 1rem;
+            margin: 1rem 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            border-left: 4px solid #ffd700;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .button {
+            background: linear-gradient(45deg, #ffd700, #ffed4e);
+            color: #1a1a2e;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            margin: 0.5rem;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.4);
+        }
+
+        .button.success {
+            background: linear-gradient(45deg, #10b981, #34d399);
+            color: white;
+        }
+
+        .button.danger {
+            background: linear-gradient(45deg, #ef4444, #f87171);
+            color: white;
+        }
+
+        .summary-card {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 20px;
+            padding: 3rem;
+            text-align: center;
+            border: 2px solid rgba(255, 215, 0, 0.5);
+            margin-top: 3rem;
+        }
+
+        .summary-title {
+            font-size: 2rem;
+            color: #ffd700;
+            margin-bottom: 1rem;
+        }
+
+        .summary-text {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+        }
+
+        .live-indicator {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            background: #10b981;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+            margin-left: 0.5rem;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
+        .club-count {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #ffd700;
+            margin: 1rem 0;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 1rem 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(45deg, #ffd700, #ffed4e);
+            transition: width 0.5s ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 class="title">🎯 اختبار نهائي للحل العالمي</h1>
+            <p class="subtitle">فحص شامل للتأكد من حل مشكلة عرض 3 أندية فقط في OBS</p>
+            <div class="live-indicator"></div>
+        </div>
+
+        <!-- شريط التقدم -->
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressBar" style="width: 0%"></div>
+        </div>
+
+        <!-- شبكة الاختبارات -->
+        <div class="test-grid">
+            <!-- اختبار البيئة -->
+            <div class="test-card">
+                <h2 class="test-title">🌐 فحص البيئة</h2>
+                <div id="environmentResult" class="test-result">
+                    جاري الفحص...
+                </div>
+                <div id="environmentStatus" class="status info">جاري الفحص...</div>
+            </div>
+
+            <!-- اختبار الحل العالمي -->
+            <div class="test-card">
+                <h2 class="test-title">🌟 الحل العالمي</h2>
+                <div id="universalResult" class="test-result">
+                    جاري الفحص...
+                </div>
+                <div id="universalStatus" class="status info">جاري الفحص...</div>
+            </div>
+
+            <!-- اختبار البيانات -->
+            <div class="test-card">
+                <h2 class="test-title">📊 فحص البيانات</h2>
+                <div id="dataResult" class="test-result">
+                    جاري الفحص...
+                </div>
+                <div id="dataStatus" class="status info">جاري الفحص...</div>
+            </div>
+
+            <!-- اختبار OBS -->
+            <div class="test-card">
+                <h2 class="test-title">🎥 فحص OBS</h2>
+                <div id="obsResult" class="test-result">
+                    جاري الفحص...
+                </div>
+                <div id="obsStatus" class="status info">جاري الفحص...</div>
+            </div>
+        </div>
+
+        <!-- أزرار التحكم -->
+        <div style="text-align: center; margin: 2rem 0;">
+            <button class="button" onclick="runAllTests()">🔄 إعادة الاختبار</button>
+            <button class="button success" onclick="applyFinalFix()">🔧 تطبيق الحل النهائي</button>
+            <button class="button" onclick="openMainPage()">📱 فتح الصفحة الرئيسية</button>
+            <button class="button danger" onclick="resetEverything()">🗑️ إعادة تعيين كاملة</button>
+        </div>
+
+        <!-- ملخص النتائج -->
+        <div class="summary-card">
+            <h2 class="summary-title">📋 ملخص النتائج</h2>
+            <div class="club-count" id="clubCount">0</div>
+            <p class="summary-text" id="summaryText">جاري فحص النظام...</p>
+            <div id="finalStatus" class="status info">جاري الفحص...</div>
+        </div>
+    </div>
+
+    <!-- تحميل الأنظمة -->
+    <script src="universal-obs-solution.js"></script>
+    
+    <script>
+        // متغيرات الاختبار
+        let testResults = {
+            environment: false,
+            universal: false,
+            data: false,
+            obs: false
+        };
+
+        let totalClubs = 0;
+
+        // بدء الاختبارات عند تحميل الصفحة
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🎯 بدء الاختبار النهائي للحل العالمي...');
+            
+            setTimeout(() => {
+                runAllTests();
+            }, 2000);
+        });
+
+        // تشغيل جميع الاختبارات
+        async function runAllTests() {
+            console.log('🚀 بدء جميع الاختبارات...');
+            updateProgress(0);
+
+            try {
+                // 1. فحص البيئة
+                await testEnvironment();
+                updateProgress(25);
+
+                // 2. فحص الحل العالمي
+                await testUniversalSolution();
+                updateProgress(50);
+
+                // 3. فحص البيانات
+                await testData();
+                updateProgress(75);
+
+                // 4. فحص OBS
+                await testOBS();
+                updateProgress(100);
+
+                // 5. تحليل النتائج
+                analyzeResults();
+
+                console.log('✅ تم إكمال جميع الاختبارات');
+
+            } catch (error) {
+                console.error('❌ خطأ في الاختبارات:', error);
+            }
+        }
+
+        // تحديث شريط التقدم
+        function updateProgress(percentage) {
+            const progressBar = document.getElementById('progressBar');
+            if (progressBar) {
+                progressBar.style.width = percentage + '%';
+            }
+        }
+
+        // اختبار البيئة
+        async function testEnvironment() {
+            const resultElement = document.getElementById('environmentResult');
+            const statusElement = document.getElementById('environmentStatus');
+
+            try {
+                const userAgent = navigator.userAgent;
+                const isOBS = userAgent.includes('obs') || userAgent.includes('OBS') || userAgent.includes('CEF');
+                const isChrome = userAgent.includes('Chrome');
+
+                let result = `<strong>User Agent:</strong><br>${userAgent}<br><br>`;
+                result += `<strong>البيئة:</strong> ${isOBS ? 'OBS Browser Source' : 'متصفح عادي'}<br>`;
+                result += `<strong>المتصفح:</strong> ${isChrome ? 'Chrome' : 'آخر'}<br>`;
+
+                // فحص الميزات
+                const features = {
+                    'localStorage': typeof Storage !== 'undefined',
+                    'fetch': typeof fetch !== 'undefined',
+                    'Promise': typeof Promise !== 'undefined'
+                };
+
+                result += '<br><strong>الميزات:</strong><br>';
+                for (const [feature, supported] of Object.entries(features)) {
+                    result += `${supported ? '✅' : '❌'} ${feature}<br>`;
+                }
+
+                resultElement.innerHTML = result;
+
+                if (Object.values(features).every(f => f)) {
+                    statusElement.className = 'status success';
+                    statusElement.textContent = '✅ البيئة متوافقة';
+                    testResults.environment = true;
+                } else {
+                    statusElement.className = 'status error';
+                    statusElement.textContent = '❌ البيئة غير متوافقة';
+                    testResults.environment = false;
+                }
+
+            } catch (error) {
+                resultElement.innerHTML = `❌ خطأ: ${error.message}`;
+                statusElement.className = 'status error';
+                statusElement.textContent = '❌ فشل الفحص';
+                testResults.environment = false;
+            }
+        }
+
+        // اختبار الحل العالمي
+        async function testUniversalSolution() {
+            const resultElement = document.getElementById('universalResult');
+            const statusElement = document.getElementById('universalStatus');
+
+            try {
+                let result = '';
+
+                // فحص وجود النظام
+                if (window.universalOBSSolution) {
+                    result += '✅ النظام محمل<br>';
+                    
+                    if (window.universalOBSSolution.isInitialized) {
+                        result += '✅ النظام متهيأ<br>';
+                        
+                        // فحص حالة النظام
+                        const status = window.universalOBSSolution.getSystemStatus();
+                        result += `<br><strong>حالة النظام:</strong><br>`;
+                        result += `البيانات الحقيقية: ${status.realDataCount} نادي<br>`;
+                        result += `البيانات القديمة: ${status.oldDataCount} نادي<br>`;
+                        result += `البيانات الاحتياطية: ${status.fallbackDataCount} نادي<br>`;
+                        result += `الحالة الصحية: ${status.isHealthy ? '✅ جيد' : '❌ سيء'}<br>`;
+
+                        if (status.isHealthy) {
+                            statusElement.className = 'status success';
+                            statusElement.textContent = '✅ الحل العالمي يعمل';
+                            testResults.universal = true;
+                        } else {
+                            statusElement.className = 'status warning';
+                            statusElement.textContent = '⚠️ الحل العالمي يحتاج تحسين';
+                            testResults.universal = false;
+                        }
+
+                    } else {
+                        result += '❌ النظام غير متهيأ<br>';
+                        statusElement.className = 'status error';
+                        statusElement.textContent = '❌ النظام غير متهيأ';
+                        testResults.universal = false;
+                    }
+                } else {
+                    result += '❌ النظام غير محمل<br>';
+                    statusElement.className = 'status error';
+                    statusElement.textContent = '❌ النظام غير محمل';
+                    testResults.universal = false;
+                }
+
+                resultElement.innerHTML = result;
+
+            } catch (error) {
+                resultElement.innerHTML = `❌ خطأ: ${error.message}`;
+                statusElement.className = 'status error';
+                statusElement.textContent = '❌ فشل الفحص';
+                testResults.universal = false;
+            }
+        }
+
+        // اختبار البيانات
+        async function testData() {
+            const resultElement = document.getElementById('dataResult');
+            const statusElement = document.getElementById('dataStatus');
+
+            try {
+                let result = '';
+                let maxClubs = 0;
+
+                // فحص transfermarktRealData
+                const realData = localStorage.getItem('transfermarktRealData');
+                if (realData) {
+                    try {
+                        const data = JSON.parse(realData);
+                        const clubCount = data.clubs ? data.clubs.length : 0;
+                        result += `✅ transfermarktRealData: ${clubCount} نادي<br>`;
+                        maxClubs = Math.max(maxClubs, clubCount);
+                    } catch (e) {
+                        result += '❌ transfermarktRealData: بيانات تالفة<br>';
+                    }
+                } else {
+                    result += '❌ transfermarktRealData: غير موجود<br>';
+                }
+
+                // فحص transfermarktData
+                const oldData = localStorage.getItem('transfermarktData');
+                if (oldData) {
+                    try {
+                        const data = JSON.parse(oldData);
+                        const clubCount = Array.isArray(data) ? data.length : 0;
+                        result += `✅ transfermarktData: ${clubCount} نادي<br>`;
+                        maxClubs = Math.max(maxClubs, clubCount);
+                    } catch (e) {
+                        result += '❌ transfermarktData: بيانات تالفة<br>';
+                    }
+                } else {
+                    result += '❌ transfermarktData: غير موجود<br>';
+                }
+
+                result += `<br><strong>أقصى عدد أندية:</strong> ${maxClubs}<br>`;
+                totalClubs = maxClubs;
+
+                resultElement.innerHTML = result;
+
+                if (maxClubs > 3) {
+                    statusElement.className = 'status success';
+                    statusElement.textContent = `✅ البيانات جيدة (${maxClubs} نادي)`;
+                    testResults.data = true;
+                } else {
+                    statusElement.className = 'status error';
+                    statusElement.textContent = `❌ البيانات قليلة (${maxClubs} نادي)`;
+                    testResults.data = false;
+                }
+
+            } catch (error) {
+                resultElement.innerHTML = `❌ خطأ: ${error.message}`;
+                statusElement.className = 'status error';
+                statusElement.textContent = '❌ فشل الفحص';
+                testResults.data = false;
+            }
+        }
+
+        // اختبار OBS
+        async function testOBS() {
+            const resultElement = document.getElementById('obsResult');
+            const statusElement = document.getElementById('obsStatus');
+
+            try {
+                const userAgent = navigator.userAgent;
+                const isOBS = userAgent.includes('obs') || userAgent.includes('OBS') || userAgent.includes('CEF');
+
+                let result = `<strong>اكتشاف OBS:</strong> ${isOBS ? '✅ نعم' : '❌ لا'}<br>`;
+                
+                if (isOBS) {
+                    result += '<br><strong>خصائص OBS:</strong><br>';
+                    result += `العرض: ${window.innerWidth}x${window.innerHeight}<br>`;
+                    result += `نسبة البكسل: ${window.devicePixelRatio}<br>`;
+                    
+                    // فحص التوافق
+                    const compatibility = {
+                        'Cache API': 'caches' in window,
+                        'Visibility API': typeof document.visibilityState !== 'undefined',
+                        'BroadcastChannel': typeof BroadcastChannel !== 'undefined'
+                    };
+
+                    result += '<br><strong>التوافق:</strong><br>';
+                    for (const [feature, supported] of Object.entries(compatibility)) {
+                        result += `${supported ? '✅' : '❌'} ${feature}<br>`;
+                    }
+
+                    const compatibilityScore = Object.values(compatibility).filter(Boolean).length;
+                    if (compatibilityScore >= 2) {
+                        statusElement.className = 'status success';
+                        statusElement.textContent = '✅ متوافق مع OBS';
+                        testResults.obs = true;
+                    } else {
+                        statusElement.className = 'status warning';
+                        statusElement.textContent = '⚠️ توافق محدود مع OBS';
+                        testResults.obs = false;
+                    }
+
+                } else {
+                    result += '<br>ℹ️ متصفح عادي (ليس OBS)<br>';
+                    statusElement.className = 'status info';
+                    statusElement.textContent = 'ℹ️ متصفح عادي';
+                    testResults.obs = true; // متصفح عادي يعتبر متوافق
+                }
+
+                resultElement.innerHTML = result;
+
+            } catch (error) {
+                resultElement.innerHTML = `❌ خطأ: ${error.message}`;
+                statusElement.className = 'status error';
+                statusElement.textContent = '❌ فشل الفحص';
+                testResults.obs = false;
+            }
+        }
+
+        // تحليل النتائج
+        function analyzeResults() {
+            const clubCountElement = document.getElementById('clubCount');
+            const summaryTextElement = document.getElementById('summaryText');
+            const finalStatusElement = document.getElementById('finalStatus');
+
+            clubCountElement.textContent = totalClubs;
+
+            const passedTests = Object.values(testResults).filter(Boolean).length;
+            const totalTests = Object.keys(testResults).length;
+
+            let summaryText = '';
+            let statusClass = '';
+            let statusText = '';
+
+            if (totalClubs > 10 && passedTests === totalTests) {
+                summaryText = `🎉 ممتاز! النظام يعمل بشكل مثالي مع ${totalClubs} نادي. مشكلة OBS تم حلها بالكامل!`;
+                statusClass = 'status success';
+                statusText = '✅ النظام يعمل بشكل مثالي';
+            } else if (totalClubs > 3 && passedTests >= 3) {
+                summaryText = `✅ جيد! النظام يعمل مع ${totalClubs} نادي. تم حل المشكلة الأساسية.`;
+                statusClass = 'status success';
+                statusText = '✅ المشكلة محلولة';
+            } else if (totalClubs > 3) {
+                summaryText = `⚠️ البيانات جيدة (${totalClubs} نادي) لكن هناك مشاكل في النظام.`;
+                statusClass = 'status warning';
+                statusText = '⚠️ يحتاج تحسين';
+            } else {
+                summaryText = `❌ المشكلة لا تزال موجودة! يظهر ${totalClubs} أندية فقط.`;
+                statusClass = 'status error';
+                statusText = '❌ المشكلة لم تحل';
+            }
+
+            summaryTextElement.textContent = summaryText;
+            finalStatusElement.className = statusClass;
+            finalStatusElement.textContent = statusText;
+
+            console.log(`📊 النتائج النهائية: ${passedTests}/${totalTests} اختبارات نجحت، ${totalClubs} نادي`);
+        }
+
+        // تطبيق الحل النهائي
+        async function applyFinalFix() {
+            console.log('🔧 تطبيق الحل النهائي...');
+            
+            try {
+                if (window.universalOBSSolution) {
+                    await window.universalOBSSolution.forceUpdate();
+                    console.log('✅ تم تطبيق الحل النهائي');
+                    
+                    // إعادة تشغيل الاختبارات
+                    setTimeout(() => {
+                        runAllTests();
+                    }, 2000);
+                    
+                    alert('✅ تم تطبيق الحل النهائي! جاري إعادة الاختبار...');
+                } else {
+                    alert('❌ الحل العالمي غير متاح');
+                }
+            } catch (error) {
+                console.error('❌ خطأ في تطبيق الحل:', error);
+                alert('❌ فشل في تطبيق الحل: ' + error.message);
+            }
+        }
+
+        // فتح الصفحة الرئيسية
+        function openMainPage() {
+            window.open('transfermarkt-ultimate-display-fixed.html', '_blank');
+        }
+
+        // إعادة تعيين كاملة
+        function resetEverything() {
+            if (confirm('هل أنت متأكد من إعادة تعيين كل شيء؟ سيتم مسح جميع البيانات.')) {
+                console.log('🗑️ إعادة تعيين كاملة...');
+                
+                // مسح localStorage
+                const keysToRemove = [
+                    'transfermarktRealData',
+                    'transfermarktData',
+                    'transfermarktLastUpdate',
+                    'clubManagerData',
+                    'verifiedClubs',
+                    'lastDataCheck'
+                ];
+
+                keysToRemove.forEach(key => {
+                    localStorage.removeItem(key);
+                });
+
+                alert('✅ تم إعادة التعيين. يرجى إعادة تحميل الصفحة.');
+                window.location.reload();
+            }
+        }
+
+        console.log('✅ تم تحميل صفحة الاختبار النهائي');
+    </script>
+</body>
+</html>

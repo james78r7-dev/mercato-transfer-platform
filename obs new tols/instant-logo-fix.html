@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔧 إصلاح فوري لمشكلة الشعارات</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #fff;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .fix-section {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            backdrop-filter: blur(10px);
+        }
+        .fix-title {
+            color: #ffd700;
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #ffd700;
+            padding-bottom: 10px;
+        }
+        .fix-content {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+            font-family: monospace;
+            white-space: pre-wrap;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .btn-fix {
+            background: linear-gradient(45deg, #ffd700, #ffed4e);
+            color: #1a1a2e;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            margin: 10px;
+            transition: all 0.3s ease;
+        }
+        .btn-fix:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.4);
+        }
+        .success { color: #51cf66; }
+        .error { color: #ff6b6b; }
+        .warning { color: #ffd43b; }
+        .info { color: #74c0fc; }
+        .logo-preview {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #ffd700;
+            margin: 5px;
+        }
+        .club-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            margin: 10px 0;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 215, 0, 0.2);
+        }
+        .status-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        .status-success { background: #51cf66; }
+        .status-error { background: #ff6b6b; }
+        .status-warning { background: #ffd43b; }
+    </style>
+</head>
+<body>
+    <h1>🔧 إصلاح فوري لمشكلة الشعارات</h1>
+    
+    <div class="fix-section">
+        <div class="fix-title">🚀 الإصلاح التلقائي</div>
+        <button class="btn-fix" onclick="runAutoFix()">تشغيل الإصلاح التلقائي</button>
+        <button class="btn-fix" onclick="forceSync()">إجبار المزامنة</button>
+        <button class="btn-fix" onclick="clearAndRebuild()">مسح وإعادة بناء</button>
+        <div id="autoFixResult"></div>
+    </div>
+
+    <div class="fix-section">
+        <div class="fix-title">📊 حالة البيانات</div>
+        <button class="btn-fix" onclick="checkDataStatus()">فحص حالة البيانات</button>
+        <div id="dataStatusResult"></div>
+    </div>
+
+    <div class="fix-section">
+        <div class="fix-title">🎨 اختبار الشعارات</div>
+        <input type="text" id="testClubInput" placeholder="اسم النادي للاختبار" style="padding: 12px; margin: 10px; width: 300px; background: rgba(0,0,0,0.3); color: #fff; border: 1px solid #555; border-radius: 8px;">
+        <button class="btn-fix" onclick="testLogo()">اختبار الشعار</button>
+        <div id="testResult"></div>
+    </div>
+
+    <div class="fix-section">
+        <div class="fix-title">📋 الأندية مع الشعارات</div>
+        <button class="btn-fix" onclick="showClubsWithLogos()">عرض الأندية مع الشعارات</button>
+        <div id="clubsWithLogosResult"></div>
+    </div>
+
+    <script>
+        // الإصلاح التلقائي
+        async function runAutoFix() {
+            const resultDiv = document.getElementById('autoFixResult');
+            let result = '';
+
+            try {
+                result += '🚀 بدء الإصلاح التلقائي...\n\n';
+
+                // 1. تحميل البيانات من clubManagerData
+                const clubManagerData = localStorage.getItem('clubManagerData');
+                if (clubManagerData) {
+                    const data = JSON.parse(clubManagerData);
+                    const clubsWithLogos = data.filter(club => club.logoUrl);
+                    result += `✅ تم تحميل ${data.length} نادي من clubManagerData\n`;
+                    result += `   - ${clubsWithLogos.length} نادي مع شعارات\n`;
+
+                    // 2. نسخ الشعارات إلى transfermarktData
+                    const transfermarktData = localStorage.getItem('transfermarktData');
+                    if (transfermarktData) {
+                        const tmData = JSON.parse(transfermarktData);
+                        let updated = false;
+                        
+                        tmData.forEach(tmClub => {
+                            const matchingClub = clubsWithLogos.find(cmClub => 
+                                cmClub.englishName === tmClub.englishName ||
+                                cmClub.arabicName === tmClub.arabicName ||
+                                cmClub.arabicName === tmClub.name
+                            );
+                            
+                            if (matchingClub && matchingClub.logoUrl && !tmClub.logoUrl) {
+                                tmClub.logoUrl = matchingClub.logoUrl;
+                                updated = true;
+                                result += `   ✅ تم ربط شعار ${tmClub.englishName || tmClub.arabicName}\n`;
+                            }
+                        });
+                        
+                        if (updated) {
+                            localStorage.setItem('transfermarktData', JSON.stringify(tmData));
+                            result += `\n✅ تم تحديث transfermarktData\n`;
+                        }
+                    }
+
+                    // 3. نسخ الشعارات إلى transfermarktRealData
+                    const transfermarktRealData = localStorage.getItem('transfermarktRealData');
+                    if (transfermarktRealData) {
+                        const tmRealData = JSON.parse(transfermarktRealData);
+                        if (tmRealData.clubs) {
+                            let updated = false;
+                            
+                            tmRealData.clubs.forEach(tmClub => {
+                                const matchingClub = clubsWithLogos.find(cmClub => 
+                                    cmClub.englishName === tmClub.englishName ||
+                                    cmClub.arabicName === tmClub.arabicName
+                                );
+                                
+                                if (matchingClub && matchingClub.logoUrl && !tmClub.logoUrl) {
+                                    tmClub.logoUrl = matchingClub.logoUrl;
+                                    updated = true;
+                                    result += `   ✅ تم ربط شعار ${tmClub.englishName || tmClub.arabicName}\n`;
+                                }
+                            });
+                            
+                            if (updated) {
+                                localStorage.setItem('transfermarktRealData', JSON.stringify(tmRealData));
+                                result += `\n✅ تم تحديث transfermarktRealData\n`;
+                            }
+                        }
+                    }
+
+                    // 4. إنشاء قاعدة بيانات موحدة
+                    const unifiedData = {
+                        clubs: data,
+                        lastUpdate: new Date().toISOString(),
+                        source: 'auto-fix',
+                        version: '2025.1.0'
+                    };
+                    
+                    localStorage.setItem('unifiedLogoDatabase', JSON.stringify(unifiedData));
+                    result += `\n✅ تم إنشاء قاعدة بيانات موحدة\n`;
+
+                    // 5. إرسال إشعار التحديث
+                    if ('BroadcastChannel' in window) {
+                        const channel = new BroadcastChannel('universal-logo-fix');
+                        channel.postMessage({
+                            type: 'database-updated',
+                            timestamp: new Date().toISOString(),
+                            data: { key: 'auto-fix' }
+                        });
+                        channel.close();
+                        result += `\n✅ تم إرسال إشعار التحديث\n`;
+                    }
+
+                    result += `\n🎉 تم الإصلاح التلقائي بنجاح!`;
+                    
+                } else {
+                    result += `❌ لا توجد بيانات في clubManagerData\n`;
+                    result += `يرجى التأكد من وجود الشعارات في مدير الشعارات أولاً`;
+                }
+
+            } catch (error) {
+                result += `\n❌ خطأ في الإصلاح التلقائي: ${error.message}`;
+            }
+
+            resultDiv.innerHTML = `<div class="fix-content">${result}</div>`;
+        }
+
+        // إجبار المزامنة
+        function forceSync() {
+            const resultDiv = document.getElementById('autoFixResult');
+            let result = '';
+
+            try {
+                result += '🔄 إجبار المزامنة...\n\n';
+
+                // تحميل البيانات من clubManagerData
+                const clubManagerData = localStorage.getItem('clubManagerData');
+                if (clubManagerData) {
+                    const data = JSON.parse(clubManagerData);
+                    
+                    // حفظ في جميع المواقع
+                    localStorage.setItem('verifiedClubs', JSON.stringify(data));
+                    result += `✅ تم حفظ ${data.length} نادي في verifiedClubs\n`;
+                    
+                    const unifiedData = {
+                        clubs: data,
+                        lastUpdate: new Date().toISOString(),
+                        source: 'force-sync',
+                        version: '2025.1.0'
+                    };
+                    
+                    localStorage.setItem('unifiedLogoDatabase', JSON.stringify(unifiedData));
+                    result += `✅ تم حفظ ${data.length} نادي في unifiedLogoDatabase\n`;
+                    
+                    // إرسال إشعار التحديث
+                    if ('BroadcastChannel' in window) {
+                        const channel = new BroadcastChannel('universal-logo-fix');
+                        channel.postMessage({
+                            type: 'database-updated',
+                            timestamp: new Date().toISOString(),
+                            data: { key: 'force-sync' }
+                        });
+                        channel.close();
+                        result += `✅ تم إرسال إشعار التحديث\n`;
+                    }
+                    
+                    result += `\n🎉 تم إجبار المزامنة بنجاح!`;
+                } else {
+                    result += `❌ لا توجد بيانات في clubManagerData`;
+                }
+                
+            } catch (error) {
+                result += `\n❌ خطأ في إجبار المزامنة: ${error.message}`;
+            }
+
+            resultDiv.innerHTML = `<div class="fix-content">${result}</div>`;
+        }
+
+        // مسح وإعادة بناء
+        function clearAndRebuild() {
+            const resultDiv = document.getElementById('autoFixResult');
+            let result = '';
+
+            try {
+                result += '🧹 مسح وإعادة بناء قاعدة البيانات...\n\n';
+
+                // مسح البيانات القديمة
+                localStorage.removeItem('transfermarktData');
+                localStorage.removeItem('transfermarktRealData');
+                localStorage.removeItem('unifiedLogoDatabase');
+                result += `✅ تم مسح البيانات القديمة\n`;
+
+                // إعادة بناء من clubManagerData
+                const clubManagerData = localStorage.getItem('clubManagerData');
+                if (clubManagerData) {
+                    const data = JSON.parse(clubManagerData);
+                    
+                    // حفظ في verifiedClubs
+                    localStorage.setItem('verifiedClubs', JSON.stringify(data));
+                    result += `✅ تم إعادة بناء verifiedClubs\n`;
+                    
+                    // إنشاء قاعدة بيانات موحدة جديدة
+                    const unifiedData = {
+                        clubs: data,
+                        lastUpdate: new Date().toISOString(),
+                        source: 'rebuild',
+                        version: '2025.1.0'
+                    };
+                    
+                    localStorage.setItem('unifiedLogoDatabase', JSON.stringify(unifiedData));
+                    result += `✅ تم إنشاء قاعدة بيانات موحدة جديدة\n`;
+                    
+                    result += `\n🎉 تم إعادة البناء بنجاح!`;
+                } else {
+                    result += `❌ لا توجد بيانات في clubManagerData`;
+                }
+                
+            } catch (error) {
+                result += `\n❌ خطأ في إعادة البناء: ${error.message}`;
+            }
+
+            resultDiv.innerHTML = `<div class="fix-content">${result}</div>`;
+        }
+
+        // فحص حالة البيانات
+        function checkDataStatus() {
+            const resultDiv = document.getElementById('dataStatusResult');
+            let result = '';
+
+            const storageKeys = [
+                'clubManagerData',
+                'verifiedClubs', 
+                'transfermarktData',
+                'transfermarktRealData',
+                'unifiedLogoDatabase'
+            ];
+
+            storageKeys.forEach(key => {
+                const data = localStorage.getItem(key);
+                if (data) {
+                    try {
+                        const parsed = JSON.parse(data);
+                        let count = 0;
+                        let logosCount = 0;
+                        
+                        if (Array.isArray(parsed)) {
+                            count = parsed.length;
+                            logosCount = parsed.filter(club => club.logoUrl).length;
+                        } else if (parsed.clubs && Array.isArray(parsed.clubs)) {
+                            count = parsed.clubs.length;
+                            logosCount = parsed.clubs.filter(club => club.logoUrl).length;
+                        }
+                        
+                        result += `✅ ${key}: ${count} نادي (${logosCount} مع شعارات)\n`;
+                    } catch (e) {
+                        result += `❌ ${key}: خطأ في التحليل\n`;
+                    }
+                } else {
+                    result += `❌ ${key}: غير موجود\n`;
+                }
+            });
+
+            resultDiv.innerHTML = `<div class="fix-content">${result}</div>`;
+        }
+
+        // اختبار الشعار
+        function testLogo() {
+            const clubName = document.getElementById('testClubInput').value;
+            const resultDiv = document.getElementById('testResult');
+            
+            if (!clubName) {
+                resultDiv.innerHTML = '<div class="fix-content error">يرجى إدخال اسم النادي</div>';
+                return;
+            }
+
+            let result = `🔍 اختبار الشعار لـ: ${clubName}\n\n`;
+
+            // البحث في clubManagerData
+            const clubManagerData = localStorage.getItem('clubManagerData');
+            if (clubManagerData) {
+                try {
+                    const data = JSON.parse(clubManagerData);
+                    const club = data.find(c => 
+                        c.englishName === clubName ||
+                        c.arabicName === clubName ||
+                        c.name === clubName
+                    );
+                    
+                    if (club) {
+                        result += `✅ تم العثور في clubManagerData:\n`;
+                        result += `   الاسم: ${club.arabicName || club.englishName}\n`;
+                        result += `   الشعار: ${club.logoUrl ? '✅ موجود' : '❌ غير موجود'}\n`;
+                        if (club.logoUrl) {
+                            result += `   الرابط: ${club.logoUrl}\n`;
+                            result += `   <img src="${club.logoUrl}" alt="test" class="logo-preview" onerror="this.style.display='none'">\n`;
+                        }
+                    } else {
+                        result += `❌ لم يتم العثور في clubManagerData\n`;
+                    }
+                } catch (e) {
+                    result += `❌ خطأ في clubManagerData: ${e.message}\n`;
+                }
+            }
+
+            resultDiv.innerHTML = `<div class="fix-content">${result}</div>`;
+        }
+
+        // عرض الأندية مع الشعارات
+        function showClubsWithLogos() {
+            const resultDiv = document.getElementById('clubsWithLogosResult');
+            let result = '';
+
+            const clubManagerData = localStorage.getItem('clubManagerData');
+            if (clubManagerData) {
+                try {
+                    const data = JSON.parse(clubManagerData);
+                    const clubsWithLogos = data.filter(club => club.logoUrl);
+                    
+                    result += `<h3>الأندية مع الشعارات (${clubsWithLogos.length})</h3>`;
+                    
+                    clubsWithLogos.forEach(club => {
+                        result += `
+                            <div class="club-item">
+                                <div class="status-indicator status-success"></div>
+                                <img src="${club.logoUrl}" alt="${club.arabicName || club.englishName}" class="logo-preview" onerror="this.style.display='none'">
+                                <div>
+                                    <strong>${club.arabicName || club.englishName}</strong><br>
+                                    <small>${club.englishName || ''}</small><br>
+                                    <small class="info">${club.logoUrl}</small>
+                                </div>
+                            </div>
+                        `;
+                    });
+                    
+                } catch (e) {
+                    result += `<div class="error">خطأ في تحليل البيانات: ${e.message}</div>`;
+                }
+            } else {
+                result += `<div class="error">لا توجد بيانات في clubManagerData</div>`;
+            }
+
+            resultDiv.innerHTML = result;
+        }
+
+        // تشغيل فحص الحالة عند تحميل الصفحة
+        window.onload = function() {
+            checkDataStatus();
+        };
+    </script>
+</body>
+</html> 

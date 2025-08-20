@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>🎥 OBS Bridge - عرض البيانات الحقيقية مباشرة</title>
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
+  <meta http-equiv="Pragma" content="no-cache"/>
+  <meta http-equiv="Expires" content="0"/>
+  <style>
+    html, body { height:100%; margin:0; background:#0b1220; color:#f8fafc; font-family: Arial, sans-serif; }
+    .center { display:flex; align-items:center; justify-content:center; height:100%; }
+    .card { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); border-radius: 16px; padding: 24px; width: 90%; max-width: 900px; }
+    .status { font-size: 14px; color:#a3b2c7; margin-bottom: 8px; }
+    .title { font-size: 22px; font-weight:bold; margin-bottom: 8px; color:#ffd700; }
+    .log { font-family: monospace; background: rgba(0,0,0,0.4); border-radius: 8px; padding: 12px; height: 220px; overflow:auto; }
+  </style>
+</head>
+<body>
+  <div class="center">
+    <div class="card">
+      <div class="title">🎥 OBS Bridge</div>
+      <div class="status">جلب البيانات الحقيقية مباشرة من transfermarkt-real-data.html دون استخدام localStorage</div>
+      <div class="log" id="log"></div>
+    </div>
+  </div>
+
+  <script>
+    const logEl = document.getElementById('log');
+    function log(msg) { const t = new Date().toLocaleTimeString(); logEl.innerHTML += `[${t}] ${msg}<br>`; logEl.scrollTop = logEl.scrollHeight; }
+
+    // رابط صفحة المصدر
+    const SRC_URL = '/obs-new-tols/transfermarkt-real-data.html?embed=1&_=' + Date.now();
+
+    // إنشاء IFRAME غير مرئي لتحميل المصدر الحقيقي
+    const iframe = document.createElement('iframe');
+    iframe.style.width = '1px';
+    iframe.style.height = '1px';
+    iframe.style.opacity = '0';
+    iframe.style.position = 'absolute';
+    iframe.style.pointerEvents = 'none';
+    iframe.src = SRC_URL;
+    document.body.appendChild(iframe);
+    log('📦 تم تحميل مصدر البيانات في IFRAME...');
+
+    // قناة استقبال الرسائل
+    window.addEventListener('message', (event) => {
+      try {
+        const data = event.data;
+        if (!data || typeof data !== 'object') return;
+        if (data.type === 'REAL_DATA_UPDATED' && data.payload && data.payload.clubs) {
+          log(`✅ استقبلنا ${data.payload.clubs.length} نادي من المصدر الحقيقي`);
+          render(data.payload.clubs);
+        }
+      } catch (e) {
+        log('⚠️ رسالة غير صالحة: ' + e.message);
+      }
+    });
+
+    // في حال لم تصل رسالة، نحاول قراءة localStorage من IFRAME عبر postMessage (اختياري)
+    setTimeout(() => {
+      try {
+        iframe.contentWindow.postMessage({ type: 'REQUEST_REAL_DATA' }, '*');
+        log('📨 طلب البيانات عبر postMessage');
+      } catch {}
+    }, 2000);
+
+    function render(clubs) {
+      // عرض أول نادي كاختبار سريع + عدد الأندية
+      const first = clubs[0];
+      const html = `
+        <div><strong>الأندية:</strong> ${clubs.length}</div>
+        <div><strong>الأول:</strong> ${(first?.arabicName||first?.name||first?.englishName)||'-'}</div>
+      `;
+      logEl.innerHTML += '<hr>' + html;
+    }
+  </script>
+</body>
+</html>

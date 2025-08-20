@@ -1,0 +1,964 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔧 جميع الأدوات - Mercato Professional System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0a0a0f 60%, #3b82f6 100%);
+            color: #f8fafc;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: rgba(26,26,46,0.97);
+            border-radius: 24px;
+            box-shadow: 0 8px 32px #0005;
+            padding: 2rem;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .main-title {
+            font-size: 2.5rem;
+            font-weight: 900;
+            background: linear-gradient(90deg,#3b82f6,#8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: #94a3b8;
+            margin-bottom: 1rem;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            background: rgba(59,130,246,0.1);
+            border: 1px solid #3b82f6;
+            border-radius: 12px;
+            padding: 1rem 1.5rem;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: #3b82f6;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: #94a3b8;
+            margin-top: 0.25rem;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            background: linear-gradient(45deg, #3b82f6, #8b5cf6);
+            border: none;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.3);
+        }
+
+        .btn-success {
+            background: linear-gradient(45deg, #10b981, #059669);
+        }
+
+        .btn-warning {
+            background: linear-gradient(45deg, #f59e0b, #d97706);
+        }
+
+        .btn-danger {
+            background: linear-gradient(45deg, #ef4444, #dc2626);
+        }
+
+        .search-box {
+            width: 100%;
+            max-width: 400px;
+            padding: 0.75rem 1rem;
+            border: 2px solid #3b82f6;
+            border-radius: 12px;
+            background: rgba(59,130,246,0.1);
+            color: #f8fafc;
+            font-size: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .search-box::placeholder {
+            color: #94a3b8;
+        }
+
+        .search-box:focus {
+            outline: none;
+            border-color: #8b5cf6;
+            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+        }
+
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .tool-card {
+            background: rgba(59,130,246,0.07);
+            border: 1px solid #3b82f6;
+            border-radius: 16px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .tool-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(59, 130, 246, 0.2);
+            border-color: #8b5cf6;
+        }
+
+        .tool-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .tool-icon {
+            font-size: 2rem;
+            color: #3b82f6;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(59,130,246,0.1);
+            border-radius: 12px;
+        }
+
+        .tool-info {
+            flex: 1;
+        }
+
+        .tool-name {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #f8fafc;
+            margin-bottom: 0.25rem;
+        }
+
+        .tool-filename {
+            font-size: 0.9rem;
+            color: #94a3b8;
+            font-family: monospace;
+        }
+
+        .tool-description {
+            color: #cbd5e1;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+            min-height: 3rem;
+        }
+
+        .tool-actions {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+
+        .action-btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: #3b82f6;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #2563eb;
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background: rgba(59,130,246,0.1);
+            color: #3b82f6;
+            border: 1px solid #3b82f6;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(59,130,246,0.2);
+        }
+
+        .btn-success {
+            background: #10b981;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #059669;
+        }
+
+        .category-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .category-broadcast {
+            background: rgba(59,130,246,0.2);
+            color: #3b82f6;
+        }
+
+        .category-design {
+            background: rgba(139,92,246,0.2);
+            color: #8b5cf6;
+        }
+
+        .category-admin {
+            background: rgba(16,185,129,0.2);
+            color: #10b981;
+        }
+
+        .category-test {
+            background: rgba(245,158,11,0.2);
+            color: #f59e0b;
+        }
+
+        .category-transfer {
+            background: rgba(239,68,68,0.2);
+            color: #ef4444;
+        }
+
+        .category-utility {
+            background: rgba(107,114,128,0.2);
+            color: #6b7280;
+        }
+
+        .footer {
+            text-align: center;
+            color: #94a3b8;
+            font-size: 0.95rem;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(59,130,246,0.2);
+        }
+
+        .selected-count {
+            background: rgba(16,185,129,0.1);
+            border: 1px solid #10b981;
+            border-radius: 8px;
+            padding: 0.5rem 1rem;
+            color: #10b981;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .tools-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats {
+                gap: 1rem;
+            }
+            
+            .controls {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
+        .loading {
+            text-align: center;
+            padding: 3rem;
+            color: #94a3b8;
+        }
+
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(59,130,246,0.1);
+            border-top: 4px solid #3b82f6;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 class="main-title">🔧 جميع الأدوات</h1>
+            <p class="subtitle">استكشف وإدارة جميع أدوات Mercato Professional System</p>
+            
+            <div class="stats">
+                <div class="stat-item">
+                    <div class="stat-value" id="totalTools">0</div>
+                    <div class="stat-label">إجمالي الأدوات</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="selectedTools">0</div>
+                    <div class="stat-label">الأدوات المحددة</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="categories">0</div>
+                    <div class="stat-label">الفئات</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="controls">
+            <input type="text" class="search-box" id="searchBox" placeholder="🔍 ابحث في الأدوات...">
+            <button class="btn btn-success" onclick="selectAllTools()">
+                <i class="fas fa-check-double"></i>
+                تحديد الكل
+            </button>
+            <button class="btn btn-warning" onclick="deselectAllTools()">
+                <i class="fas fa-times"></i>
+                إلغاء التحديد
+            </button>
+            <button class="btn" onclick="addSelectedToHome()">
+                <i class="fas fa-home"></i>
+                إضافة للمنزل
+            </button>
+            <button class="btn btn-danger" onclick="clearHomeTools()">
+                <i class="fas fa-trash"></i>
+                مسح المنزل
+            </button>
+        </div>
+
+        <div id="selectedCount" class="selected-count" style="display: none;">
+            تم تحديد <span id="selectedCountValue">0</span> أداة
+        </div>
+
+        <div id="toolsGrid" class="tools-grid">
+            <div class="loading">
+                <div class="loading-spinner"></div>
+                جاري تحميل الأدوات...
+            </div>
+        </div>
+
+        <div class="footer">
+            جميع الحقوق محفوظة © 2025 - Mercato Professional System
+        </div>
+    </div>
+
+    <script>
+        // بيانات الأدوات مع الأوصاف والفئات
+        const toolsData = [
+            {
+                filename: 'index.html',
+                name: 'الصفحة الرئيسية الأصلية',
+                description: 'الصفحة الرئيسية الأصلية للنظام',
+                category: 'admin',
+                icon: 'fas fa-home'
+            },
+            {
+                filename: 'index-new.html',
+                name: 'الصفحة الرئيسية الجديدة',
+                description: 'الصفحة الرئيسية المحدثة للنظام مع إدارة المجموعات والأدوات',
+                category: 'admin',
+                icon: 'fas fa-home'
+            },
+            {
+                filename: 'top-transfers-2025.html',
+                name: 'أغلى 15 صفقة في صيف 2025',
+                description: 'عرض احترافي للصفقات الأعلى قيمة من FotMob مع تصميم كامل الشاشة',
+                category: 'transfer',
+                icon: 'fas fa-trophy'
+            },
+            {
+                filename: 'fotmob-extractor.html',
+                name: 'FotMob Data Extractor',
+                description: 'أداة استخراج البيانات الحقيقية من FotMob مع تحديث يومي تلقائي',
+                category: 'utility',
+                icon: 'fas fa-database'
+            },
+            {
+                filename: 'fotmob-monitoring-dashboard.html',
+                name: 'لوحة مراقبة FotMob',
+                description: 'لوحة تحكم متقدمة لمراقبة وإدارة بيانات FotMob',
+                category: 'utility',
+                icon: 'fas fa-chart-line'
+            },
+            {
+                filename: 'fotmob-real-data-test.html',
+                name: 'اختبار بيانات FotMob الحقيقية',
+                description: 'صفحة اختبار للتحقق من صحة البيانات المستخرجة من FotMob',
+                category: 'test',
+                icon: 'fas fa-vial'
+            },
+            {
+                filename: 'test-top-transfers.html',
+                name: 'اختبار API أغلى الصفقات',
+                description: 'صفحة اختبار شاملة لـ API استخراج أغلى الصفقات من FotMob',
+                category: 'test',
+                icon: 'fas fa-vial'
+            },
+            {
+                filename: 'test-fotmob-api.html',
+                name: 'اختبار FotMob API',
+                description: 'اختبار شامل لجميع وظائف FotMob API',
+                category: 'test',
+                icon: 'fas fa-code'
+            },
+            {
+                filename: 'test-new-fotmob-system.html',
+                name: 'اختبار نظام FotMob الجديد',
+                description: 'اختبار النظام المحدث لاستخراج بيانات FotMob',
+                category: 'test',
+                icon: 'fas fa-rocket'
+            },
+            {
+                filename: 'barcelona-ultimate-control.html',
+                name: 'لوحة التحكم النهائية لبرشلونة',
+                description: 'إدارة شاملة للانتقالات والإعدادات مع واجهة متقدمة',
+                category: 'admin',
+                icon: 'fas fa-crown'
+            },
+            {
+                filename: 'barcelona-ultimate-control-fixed.html',
+                name: 'لوحة التحكم النهائية لبرشلونة (محدثة)',
+                description: 'النسخة المحدثة والمحسنة من لوحة التحكم النهائية لبرشلونة',
+                category: 'admin',
+                icon: 'fas fa-crown'
+            },
+            {
+                filename: 'barcelona-ultimate-control-pro.html',
+                name: 'لوحة التحكم الاحترافية لبرشلونة',
+                description: 'النسخة الاحترافية المتقدمة من لوحة التحكم لبرشلونة',
+                category: 'admin',
+                icon: 'fas fa-crown'
+            },
+            {
+                filename: 'barcelona-ultimate-broadcast.html',
+                name: 'أداة البث النهائية لبرشلونة',
+                description: 'عرض احترافي للانتقالات والأخبار مع تأثيرات بصرية متقدمة',
+                category: 'broadcast',
+                icon: 'fas fa-tv'
+            },
+            {
+                filename: 'barcelona-ultimate-broadcast-fixed.html',
+                name: 'أداة البث النهائية لبرشلونة (محدثة)',
+                description: 'النسخة المحدثة والمحسنة من أداة البث النهائية لبرشلونة',
+                category: 'broadcast',
+                icon: 'fas fa-tv'
+            },
+            {
+                filename: 'barcelona-ultimate-broadcast-pro.html',
+                name: 'أداة البث الاحترافية لبرشلونة',
+                description: 'النسخة الاحترافية المتقدمة من أداة البث لبرشلونة',
+                category: 'broadcast',
+                icon: 'fas fa-tv'
+            },
+            {
+                filename: 'barcelona-broadcast-control.html',
+                name: 'لوحة التحكم في البث لبرشلونة',
+                description: 'تحكم متقدم في عرض الانتقالات مع إعدادات مفصلة',
+                category: 'broadcast',
+                icon: 'fas fa-video'
+            },
+            {
+                filename: 'test-barcelona-control.html',
+                name: 'اختبار لوحة تحكم برشلونة',
+                description: 'صفحة اختبار لوحة التحكم النهائية لبرشلونة',
+                category: 'test',
+                icon: 'fas fa-vial'
+            },
+            {
+                filename: 'test-barcelona-sync.html',
+                name: 'اختبار مزامنة برشلونة',
+                description: 'اختبار مزامنة البيانات والإعدادات لبرشلونة',
+                category: 'test',
+                icon: 'fas fa-sync'
+            },
+            {
+                filename: 'pro-studio-v4-ultimate.html',
+                name: 'الاستوديو الاحترافي v4 النهائي',
+                description: 'أقوى استوديو تصميم احترافي متكامل لجميع احتياجاتك الإبداعية',
+                category: 'design',
+                icon: 'fas fa-magic'
+            },
+            {
+                filename: 'football-pro-studio.html',
+                name: 'الستوديو الاحترافي للكرة',
+                description: 'مجموعة شاملة من أدوات التصميم الرياضي المتقدمة',
+                category: 'design',
+                icon: 'fas fa-futbol'
+            },
+            {
+                filename: 'football-design-studio-pro.html',
+                name: 'ستوديو التصميم الاحترافي للكرة',
+                description: 'أدوات تصميم متقدمة للمحتوى الرياضي مع قوالب احترافية',
+                category: 'design',
+                icon: 'fas fa-paint-brush'
+            },
+            {
+                filename: 'club-logo-manager.html',
+                name: 'إدارة شعارات الأندية',
+                description: 'نظام متقدم لإدارة شعارات الأندية والفرق مع قاعدة بيانات شاملة',
+                category: 'admin',
+                icon: 'fas fa-shield-alt'
+            },
+            {
+                filename: 'stream-clean.html',
+                name: 'أداة تنظيف البث',
+                description: 'واجهة نظيفة ومبسطة للبث المباشر مع تصميم عصري',
+                category: 'broadcast',
+                icon: 'fas fa-broom'
+            },
+            {
+                filename: 'player-links.html',
+                name: 'روابط اللاعبين',
+                description: 'إدارة وتنظيم روابط صفحات اللاعبين مع قاعدة بيانات متقدمة',
+                category: 'admin',
+                icon: 'fas fa-link'
+            },
+            {
+                filename: 'supporters-admin.html',
+                name: 'لوحة تحكم الداعمين',
+                description: 'إدارة شاملة للداعمين والمساهمين مع إحصائيات متقدمة',
+                category: 'admin',
+                icon: 'fas fa-user-cog'
+            },
+            {
+                filename: 'support-bar.html',
+                name: 'شريط الداعمين للبث',
+                description: 'عرض أنيق للداعمين مع تأثيرات بصرية حديثة للبث المباشر',
+                category: 'broadcast',
+                icon: 'fas fa-heart'
+            },
+            {
+                filename: 'test-supporters.html',
+                name: 'اختبار نظام الداعمين',
+                description: 'صفحة اختبار شاملة لجميع وظائف نظام الداعمين',
+                category: 'test',
+                icon: 'fas fa-vial'
+            },
+            {
+                filename: 'add-supporters-tools.html',
+                name: 'إضافة أدوات الداعمين',
+                description: 'أدوات إضافية لإدارة وتطوير نظام الداعمين',
+                category: 'admin',
+                icon: 'fas fa-tools'
+            },
+            {
+                filename: 'test-data.html',
+                name: 'اختبار البيانات',
+                description: 'صفحة اختبار لجميع أنواع البيانات في النظام',
+                category: 'test',
+                icon: 'fas fa-database'
+            },
+            {
+                filename: 'test-consistency.html',
+                name: 'اختبار الاتساق',
+                description: 'اختبار اتساق البيانات والوظائف في النظام',
+                category: 'test',
+                icon: 'fas fa-check-circle'
+            },
+            {
+                filename: 'final-test.html',
+                name: 'الاختبار النهائي',
+                description: 'صفحة الاختبار النهائية الشاملة لجميع الميزات',
+                category: 'test',
+                icon: 'fas fa-flag-checkered'
+            },
+            {
+                filename: 'quick-test.html',
+                name: 'الاختبار السريع',
+                description: 'صفحة اختبار سريعة للوظائف الأساسية',
+                category: 'test',
+                icon: 'fas fa-bolt'
+            },
+            {
+                filename: 'simple-test.html',
+                name: 'الاختبار البسيط',
+                description: 'صفحة اختبار بسيطة للوظائف الأساسية',
+                category: 'test',
+                icon: 'fas fa-play'
+            },
+            {
+                filename: 'error-handler-test.html',
+                name: 'اختبار معالج الأخطاء',
+                description: 'صفحة اختبار لنظام معالجة الأخطاء والاستثناءات',
+                category: 'test',
+                icon: 'fas fa-bug'
+            },
+            {
+                filename: 'support-bar-enhanced-original.html',
+                name: 'شريط الداعمين المحسن',
+                description: 'نفس التصميم الأصلي مع تمرير تلقائي متقدم وقابل للتخصيص - الإصدار المحسن',
+                category: 'broadcast',
+                icon: 'fas fa-heart-pulse'
+            },
+            {
+                filename: 'support-bar-enhanced.html',
+                name: 'شريط الداعمين المحسن (تجريبي)',
+                description: 'نسخة تجريبية محسنة من شريط الداعمين مع ميزات إضافية',
+                category: 'broadcast',
+                icon: 'fas fa-heart'
+            },
+            {
+                filename: 'support-bar-pro.html',
+                name: 'شريط الداعمين الاحترافي',
+                description: 'النسخة الاحترافية من شريط الداعمين مع تحكم متقدم',
+                category: 'broadcast',
+                icon: 'fas fa-heart'
+            },
+            {
+                filename: 'support-bar-ticker-live.html',
+                name: 'شريط الداعمين المباشر',
+                description: 'شريط داعمين مع عرض مباشر ومتحرك للأسماء',
+                category: 'broadcast',
+                icon: 'fas fa-heart'
+            },
+            {
+                filename: 'support-bar-ticker.html',
+                name: 'شريط الداعمين المتحرك',
+                description: 'شريط داعمين بسيط مع نص متحرك',
+                category: 'broadcast',
+                icon: 'fas fa-heart'
+            },
+            {
+                filename: 'barcelona-ultimate-broadcast-ticker.html',
+                name: 'شريط أخبار برشلونة المتحرك',
+                description: 'شريط أخبار متحرك مخصص لبرشلونة مع تحديثات مباشرة',
+                category: 'broadcast',
+                icon: 'fas fa-tv'
+            },
+            {
+                filename: 'quick-example.html',
+                name: 'مثال سريع',
+                description: 'صفحة مثال سريع لعرض الوظائف الأساسية',
+                category: 'test',
+                icon: 'fas fa-rocket'
+            },
+            {
+                filename: 'transfermarkt-top-spenders-2025.html',
+                name: 'أكثر 10 أندية صرفاً في سوق الانتقالات 2025',
+                description: 'أداة احترافية لاستخراج وعرض أكثر الأندية صرفاً للأموال في سوق الانتقالات الصيفي 2025 من Transfermarkt مع تحديث مباشر',
+                category: 'transfer',
+                icon: 'fas fa-money-bill-wave'
+            },
+            {
+                filename: 'transfermarkt-display-pro.html',
+                name: 'العرض الاحترافي لأكثر الأندية صرفاً 2025',
+                description: 'صفحة عرض احترافية وجميلة لأكثر الأندية صرفاً في سوق الانتقالات مع تصميم متناسق وعصري باللغة العربية',
+                category: 'transfer',
+                icon: 'fas fa-trophy'
+            },
+            {
+                filename: 'test-transfermarkt-tools.html',
+                name: 'اختبار أدوات Transfermarkt',
+                description: 'صفحة اختبار شاملة للتحقق من أن جميع أدوات Transfermarkt تعمل بشكل صحيح مع تعليمات الاستخدام',
+                category: 'test',
+                icon: 'fas fa-vial'
+            }
+        ];
+
+        // فئات الأدوات
+        const categories = {
+            'broadcast': { name: 'البث', color: 'category-broadcast' },
+            'design': { name: 'التصميم', color: 'category-design' },
+            'admin': { name: 'الإدارة', color: 'category-admin' },
+            'test': { name: 'الاختبار', color: 'category-test' },
+            'transfer': { name: 'الانتقالات', color: 'category-transfer' },
+            'utility': { name: 'أدوات مساعدة', color: 'category-utility' }
+        };
+
+        let selectedTools = new Set();
+        let filteredTools = [...toolsData];
+
+        // تهيئة الصفحة
+        document.addEventListener('DOMContentLoaded', function() {
+            renderTools();
+            updateStats();
+            setupSearch();
+        });
+
+        // عرض الأدوات
+        function renderTools() {
+            const grid = document.getElementById('toolsGrid');
+            grid.innerHTML = '';
+
+            filteredTools.forEach(tool => {
+                const card = createToolCard(tool);
+                grid.appendChild(card);
+            });
+        }
+
+        // إنشاء بطاقة أداة
+        function createToolCard(tool) {
+            const card = document.createElement('div');
+            card.className = 'tool-card';
+            
+            const category = categories[tool.category] || categories.utility;
+            
+            card.innerHTML = `
+                <div class="category-badge ${category.color}">${category.name}</div>
+                
+                <div class="tool-header">
+                    <div class="tool-icon">
+                        <i class="${tool.icon}"></i>
+                    </div>
+                    <div class="tool-info">
+                        <div class="tool-name">${tool.name}</div>
+                        <div class="tool-filename">${tool.filename}</div>
+                    </div>
+                </div>
+                
+                <div class="tool-description">${tool.description}</div>
+                
+                <div class="tool-actions">
+                    <a href="/${tool.filename}" class="action-btn btn-primary" target="_blank">
+                        <i class="fas fa-external-link-alt"></i>
+                        فتح
+                    </a>
+                    <button class="action-btn btn-secondary" onclick="toggleToolSelection('${tool.filename}')">
+                        <i class="fas fa-check"></i>
+                        تحديد
+                    </button>
+                    <button class="action-btn btn-success" onclick="addToolToHome('${tool.filename}')">
+                        <i class="fas fa-home"></i>
+                        إضافة للمنزل
+                    </button>
+                </div>
+            `;
+
+            // تحديث حالة التحديد
+            if (selectedTools.has(tool.filename)) {
+                card.style.borderColor = '#10b981';
+                card.style.background = 'rgba(16,185,129,0.1)';
+                const selectBtn = card.querySelector('.btn-secondary');
+                selectBtn.innerHTML = '<i class="fas fa-check-double"></i> محدد';
+                selectBtn.style.background = '#10b981';
+                selectBtn.style.color = 'white';
+            }
+
+            return card;
+        }
+
+        // تبديل تحديد أداة
+        function toggleToolSelection(filename) {
+            if (selectedTools.has(filename)) {
+                selectedTools.delete(filename);
+            } else {
+                selectedTools.add(filename);
+            }
+            
+            updateSelectedCount();
+            renderTools();
+        }
+
+        // تحديد جميع الأدوات
+        function selectAllTools() {
+            filteredTools.forEach(tool => {
+                selectedTools.add(tool.filename);
+            });
+            updateSelectedCount();
+            renderTools();
+        }
+
+        // إلغاء تحديد جميع الأدوات
+        function deselectAllTools() {
+            selectedTools.clear();
+            updateSelectedCount();
+            renderTools();
+        }
+
+        // إضافة أداة للمنزل
+        function addToolToHome(filename) {
+            const tool = toolsData.find(t => t.filename === filename);
+            if (tool) {
+                // حفظ في localStorage
+                const selected = JSON.parse(localStorage.getItem('selectedTools') || '[]');
+                if (!selected.includes(filename)) {
+                    selected.push(filename);
+                    localStorage.setItem('selectedTools', JSON.stringify(selected));
+                }
+                
+                showNotification(`تم إضافة ${tool.name} للمنزل بنجاح!`, 'success');
+            }
+        }
+
+        // إضافة الأدوات المحددة للمنزل
+        function addSelectedToHome() {
+            if (selectedTools.size === 0) {
+                showNotification('يرجى تحديد أدوات أولاً', 'warning');
+                return;
+            }
+
+            const selected = JSON.parse(localStorage.getItem('selectedTools') || '[]');
+            let added = 0;
+
+            selectedTools.forEach(filename => {
+                if (!selected.includes(filename)) {
+                    selected.push(filename);
+                    added++;
+                }
+            });
+
+            localStorage.setItem('selectedTools', JSON.stringify(selected));
+            showNotification(`تم إضافة ${added} أداة للمنزل بنجاح!`, 'success');
+            
+            selectedTools.clear();
+            updateSelectedCount();
+            renderTools();
+        }
+
+        // مسح أدوات المنزل
+        function clearHomeTools() {
+            if (confirm('هل أنت متأكد من مسح جميع أدوات المنزل؟')) {
+                localStorage.removeItem('selectedTools');
+                showNotification('تم مسح أدوات المنزل بنجاح!', 'success');
+            }
+        }
+
+        // إعداد البحث
+        function setupSearch() {
+            const searchBox = document.getElementById('searchBox');
+            searchBox.addEventListener('input', function() {
+                const query = this.value.toLowerCase();
+                
+                filteredTools = toolsData.filter(tool => 
+                    tool.name.toLowerCase().includes(query) ||
+                    tool.description.toLowerCase().includes(query) ||
+                    tool.filename.toLowerCase().includes(query) ||
+                    categories[tool.category].name.toLowerCase().includes(query)
+                );
+                
+                renderTools();
+                updateStats();
+            });
+        }
+
+        // تحديث الإحصائيات
+        function updateStats() {
+            document.getElementById('totalTools').textContent = toolsData.length;
+            document.getElementById('selectedTools').textContent = selectedTools.size;
+            document.getElementById('categories').textContent = Object.keys(categories).length;
+        }
+
+        // تحديث عداد الأدوات المحددة
+        function updateSelectedCount() {
+            const countDiv = document.getElementById('selectedCount');
+            const countValue = document.getElementById('selectedCountValue');
+            
+            if (selectedTools.size > 0) {
+                countValue.textContent = selectedTools.size;
+                countDiv.style.display = 'block';
+            } else {
+                countDiv.style.display = 'none';
+            }
+        }
+
+        // عرض إشعار
+        function showNotification(message, type = 'info') {
+            // إنشاء عنصر الإشعار
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: ${type === 'success' ? '#10b981' : type === 'warning' ? '#f59e0b' : '#3b82f6'};
+                color: white;
+                padding: 1rem 1.5rem;
+                border-radius: 12px;
+                box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+                z-index: 1000;
+                font-weight: 600;
+                transform: translateX(100%);
+                transition: transform 0.3s ease;
+            `;
+            notification.textContent = message;
+            
+            document.body.appendChild(notification);
+            
+            // إظهار الإشعار
+            setTimeout(() => {
+                notification.style.transform = 'translateX(0)';
+            }, 100);
+            
+            // إخفاء الإشعار
+            setTimeout(() => {
+                notification.style.transform = 'translateX(100%)';
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 300);
+            }, 3000);
+        }
+    </script>
+</body>
+</html> 

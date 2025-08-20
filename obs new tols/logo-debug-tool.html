@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔍 أداة تشخيص مشكلة الشعارات</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #1a1a2e;
+            color: #fff;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .debug-section {
+            background: #2d2d2d;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            border: 1px solid #444;
+        }
+        .debug-title {
+            color: #ffd700;
+            font-size: 1.2em;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #ffd700;
+            padding-bottom: 5px;
+        }
+        .debug-content {
+            background: #1a1a1a;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 10px 0;
+            font-family: monospace;
+            white-space: pre-wrap;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        .error {
+            color: #ff6b6b;
+        }
+        .success {
+            color: #51cf66;
+        }
+        .warning {
+            color: #ffd43b;
+        }
+        .info {
+            color: #74c0fc;
+        }
+        .logo-preview {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #ffd700;
+            margin: 5px;
+        }
+        .club-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            background: #333;
+            margin: 5px 0;
+            border-radius: 5px;
+        }
+        .btn {
+            background: #ffd700;
+            color: #1a1a2e;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+            font-weight: bold;
+        }
+        .btn:hover {
+            background: #ffed4e;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔍 أداة تشخيص مشكلة الشعارات</h1>
+    
+    <div class="debug-section">
+        <div class="debug-title">📊 فحص البيانات المحفوظة</div>
+        <button class="btn" onclick="checkAllData()">فحص جميع البيانات</button>
+        <button class="btn" onclick="fixLogoData()">إصلاح بيانات الشعارات</button>
+        <button class="btn" onclick="syncWithClubManager()">مزامنة مع مدير الشعارات</button>
+        <div id="dataCheckResult"></div>
+    </div>
+
+    <div class="debug-section">
+        <div class="debug-title">🎨 فحص قاعدة بيانات الشعارات</div>
+        <div id="logoDatabaseResult"></div>
+    </div>
+
+    <div class="debug-section">
+        <div class="debug-title">🔍 اختبار البحث عن الشعارات</div>
+        <input type="text" id="testClubName" placeholder="اسم النادي للاختبار" style="padding: 10px; margin: 10px; width: 300px; background: #333; color: #fff; border: 1px solid #555; border-radius: 5px;">
+        <button class="btn" onclick="testLogoSearch()">اختبار البحث</button>
+        <div id="testResult"></div>
+    </div>
+
+    <div class="debug-section">
+        <div class="debug-title">📋 قائمة الأندية مع الشعارات</div>
+        <div id="clubsList"></div>
+    </div>
+
+    <script>
+        // فحص جميع البيانات المحفوظة
+        function checkAllData() {
+            const resultDiv = document.getElementById('dataCheckResult');
+            let result = '';
+
+            // فحص clubManagerData
+            const clubManagerData = localStorage.getItem('clubManagerData');
+            if (clubManagerData) {
+                try {
+                    const data = JSON.parse(clubManagerData);
+                    result += `✅ clubManagerData موجود: ${data.length} نادي\n`;
+                    
+                    const clubsWithLogos = data.filter(club => club.logoUrl);
+                    result += `   - ${clubsWithLogos.length} نادي مع شعارات\n`;
+                    result += `   - ${data.length - clubsWithLogos.length} نادي بدون شعارات\n`;
+                    
+                    // عرض أول 3 أندية
+                    result += '\nأمثلة على الأندية:\n';
+                    data.slice(0, 3).forEach((club, index) => {
+                        result += `   ${index + 1}. ${club.arabicName || club.englishName} - ${club.logoUrl ? '✅' : '❌'}\n`;
+                    });
+                } catch (e) {
+                    result += `❌ خطأ في تحليل clubManagerData: ${e.message}\n`;
+                }
+            } else {
+                result += `❌ clubManagerData غير موجود\n`;
+            }
+
+            // فحص verifiedClubs
+            const verifiedClubs = localStorage.getItem('verifiedClubs');
+            if (verifiedClubs) {
+                try {
+                    const data = JSON.parse(verifiedClubs);
+                    result += `\n✅ verifiedClubs موجود: ${data.length} نادي\n`;
+                    
+                    const clubsWithLogos = data.filter(club => club.logoUrl);
+                    result += `   - ${clubsWithLogos.length} نادي مع شعارات\n`;
+                    result += `   - ${data.length - clubsWithLogos.length} نادي بدون شعارات\n`;
+                } catch (e) {
+                    result += `\n❌ خطأ في تحليل verifiedClubs: ${e.message}\n`;
+                }
+            } else {
+                result += `\n❌ verifiedClubs غير موجود\n`;
+            }
+
+            // فحص transfermarktData
+            const transfermarktData = localStorage.getItem('transfermarktData');
+            if (transfermarktData) {
+                try {
+                    const data = JSON.parse(transfermarktData);
+                    result += `\n✅ transfermarktData موجود: ${data.length} نادي\n`;
+                    
+                    const clubsWithLogos = data.filter(club => club.logoUrl);
+                    result += `   - ${clubsWithLogos.length} نادي مع شعارات\n`;
+                    result += `   - ${data.length - clubsWithLogos.length} نادي بدون شعارات\n`;
+                } catch (e) {
+                    result += `\n❌ خطأ في تحليل transfermarktData: ${e.message}\n`;
+                }
+            } else {
+                result += `\n❌ transfermarktData غير موجود\n`;
+            }
+
+            // فحص transfermarktRealData
+            const transfermarktRealData = localStorage.getItem('transfermarktRealData');
+            if (transfermarktRealData) {
+                try {
+                    const data = JSON.parse(transfermarktRealData);
+                    result += `\n✅ transfermarktRealData موجود: ${data.clubs ? data.clubs.length : 0} نادي\n`;
+                    
+                    if (data.clubs) {
+                        const clubsWithLogos = data.clubs.filter(club => club.logoUrl);
+                        result += `   - ${clubsWithLogos.length} نادي مع شعارات\n`;
+                        result += `   - ${data.clubs.length - clubsWithLogos.length} نادي بدون شعارات\n`;
+                    }
+                } catch (e) {
+                    result += `\n❌ خطأ في تحليل transfermarktRealData: ${e.message}\n`;
+                }
+            } else {
+                result += `\n❌ transfermarktRealData غير موجود\n`;
+            }
+
+            resultDiv.innerHTML = `<div class="debug-content">${result}</div>`;
+        }
+
+        // إصلاح بيانات الشعارات
+        function fixLogoData() {
+            const resultDiv = document.getElementById('dataCheckResult');
+            let result = '';
+
+            try {
+                // تحميل البيانات من clubManagerData
+                const clubManagerData = localStorage.getItem('clubManagerData');
+                if (clubManagerData) {
+                    const data = JSON.parse(clubManagerData);
+                    const clubsWithLogos = data.filter(club => club.logoUrl);
+                    
+                    // نسخ الشعارات إلى transfermarktData
+                    const transfermarktData = localStorage.getItem('transfermarktData');
+                    if (transfermarktData) {
+                        const tmData = JSON.parse(transfermarktData);
+                        let updated = false;
+                        
+                        tmData.forEach(tmClub => {
+                            const matchingClub = clubsWithLogos.find(cmClub => 
+                                cmClub.englishName === tmClub.englishName ||
+                                cmClub.arabicName === tmClub.arabicName ||
+                                cmClub.arabicName === tmClub.name
+                            );
+                            
+                            if (matchingClub && matchingClub.logoUrl && !tmClub.logoUrl) {
+                                tmClub.logoUrl = matchingClub.logoUrl;
+                                updated = true;
+                                result += `✅ تم ربط شعار ${tmClub.englishName || tmClub.arabicName}\n`;
+                            }
+                        });
+                        
+                        if (updated) {
+                            localStorage.setItem('transfermarktData', JSON.stringify(tmData));
+                            result += `\n✅ تم تحديث transfermarktData\n`;
+                        }
+                    }
+
+                    // نسخ الشعارات إلى transfermarktRealData
+                    const transfermarktRealData = localStorage.getItem('transfermarktRealData');
+                    if (transfermarktRealData) {
+                        const tmRealData = JSON.parse(transfermarktRealData);
+                        if (tmRealData.clubs) {
+                            let updated = false;
+                            
+                            tmRealData.clubs.forEach(tmClub => {
+                                const matchingClub = clubsWithLogos.find(cmClub => 
+                                    cmClub.englishName === tmClub.englishName ||
+                                    cmClub.arabicName === tmClub.arabicName
+                                );
+                                
+                                if (matchingClub && matchingClub.logoUrl && !tmClub.logoUrl) {
+                                    tmClub.logoUrl = matchingClub.logoUrl;
+                                    updated = true;
+                                    result += `✅ تم ربط شعار ${tmClub.englishName || tmClub.arabicName}\n`;
+                                }
+                            });
+                            
+                            if (updated) {
+                                localStorage.setItem('transfermarktRealData', JSON.stringify(tmRealData));
+                                result += `\n✅ تم تحديث transfermarktRealData\n`;
+                            }
+                        }
+                    }
+                }
+
+                result += `\n✅ تم إصلاح بيانات الشعارات بنجاح!`;
+                
+            } catch (error) {
+                result += `\n❌ خطأ في إصلاح البيانات: ${error.message}`;
+            }
+
+            resultDiv.innerHTML = `<div class="debug-content">${result}</div>`;
+        }
+
+        // مزامنة مع مدير الشعارات
+        function syncWithClubManager() {
+            const resultDiv = document.getElementById('dataCheckResult');
+            let result = '';
+
+            try {
+                // تحميل البيانات من clubManagerData
+                const clubManagerData = localStorage.getItem('clubManagerData');
+                if (clubManagerData) {
+                    const data = JSON.parse(clubManagerData);
+                    
+                    // حفظ في verifiedClubs أيضاً
+                    localStorage.setItem('verifiedClubs', JSON.stringify(data));
+                    result += `✅ تم مزامنة ${data.length} نادي مع verifiedClubs\n`;
+                    
+                    // إنشاء قاعدة بيانات موحدة
+                    const unifiedData = {
+                        clubs: data,
+                        lastUpdate: new Date().toISOString(),
+                        source: 'club-manager-sync',
+                        version: '2025.1.0'
+                    };
+                    
+                    localStorage.setItem('unifiedLogoDatabase', JSON.stringify(unifiedData));
+                    result += `✅ تم إنشاء قاعدة بيانات موحدة\n`;
+                    
+                    result += `\n✅ تمت المزامنة بنجاح!`;
+                } else {
+                    result += `❌ لا توجد بيانات في clubManagerData`;
+                }
+                
+            } catch (error) {
+                result += `\n❌ خطأ في المزامنة: ${error.message}`;
+            }
+
+            resultDiv.innerHTML = `<div class="debug-content">${result}</div>`;
+        }
+
+        // اختبار البحث عن الشعارات
+        function testLogoSearch() {
+            const clubName = document.getElementById('testClubName').value;
+            const resultDiv = document.getElementById('testResult');
+            
+            if (!clubName) {
+                resultDiv.innerHTML = '<div class="debug-content error">يرجى إدخال اسم النادي</div>';
+                return;
+            }
+
+            let result = `🔍 اختبار البحث عن: ${clubName}\n\n`;
+
+            // البحث في clubManagerData
+            const clubManagerData = localStorage.getItem('clubManagerData');
+            if (clubManagerData) {
+                try {
+                    const data = JSON.parse(clubManagerData);
+                    const club = data.find(c => 
+                        c.englishName === clubName ||
+                        c.arabicName === clubName ||
+                        c.name === clubName
+                    );
+                    
+                    if (club) {
+                        result += `✅ تم العثور في clubManagerData:\n`;
+                        result += `   الاسم: ${club.arabicName || club.englishName}\n`;
+                        result += `   الشعار: ${club.logoUrl ? '✅ موجود' : '❌ غير موجود'}\n`;
+                        if (club.logoUrl) {
+                            result += `   الرابط: ${club.logoUrl}\n`;
+                        }
+                    } else {
+                        result += `❌ لم يتم العثور في clubManagerData\n`;
+                    }
+                } catch (e) {
+                    result += `❌ خطأ في clubManagerData: ${e.message}\n`;
+                }
+            }
+
+            // البحث في transfermarktData
+            const transfermarktData = localStorage.getItem('transfermarktData');
+            if (transfermarktData) {
+                try {
+                    const data = JSON.parse(transfermarktData);
+                    const club = data.find(c => 
+                        c.englishName === clubName ||
+                        c.arabicName === clubName ||
+                        c.name === clubName
+                    );
+                    
+                    if (club) {
+                        result += `\n✅ تم العثور في transfermarktData:\n`;
+                        result += `   الاسم: ${club.arabicName || club.englishName}\n`;
+                        result += `   الشعار: ${club.logoUrl ? '✅ موجود' : '❌ غير موجود'}\n`;
+                        if (club.logoUrl) {
+                            result += `   الرابط: ${club.logoUrl}\n`;
+                        }
+                    } else {
+                        result += `\n❌ لم يتم العثور في transfermarktData\n`;
+                    }
+                } catch (e) {
+                    result += `\n❌ خطأ في transfermarktData: ${e.message}\n`;
+                }
+            }
+
+            resultDiv.innerHTML = `<div class="debug-content">${result}</div>`;
+        }
+
+        // عرض قائمة الأندية مع الشعارات
+        function displayClubsList() {
+            const resultDiv = document.getElementById('clubsList');
+            let result = '';
+
+            const clubManagerData = localStorage.getItem('clubManagerData');
+            if (clubManagerData) {
+                try {
+                    const data = JSON.parse(clubManagerData);
+                    const clubsWithLogos = data.filter(club => club.logoUrl);
+                    
+                    result += `<h3>الأندية مع الشعارات (${clubsWithLogos.length})</h3>`;
+                    
+                    clubsWithLogos.forEach(club => {
+                        result += `
+                            <div class="club-item">
+                                <img src="${club.logoUrl}" alt="${club.arabicName || club.englishName}" class="logo-preview" onerror="this.style.display='none'">
+                                <div>
+                                    <strong>${club.arabicName || club.englishName}</strong><br>
+                                    <small>${club.englishName || ''}</small><br>
+                                    <small class="info">${club.logoUrl}</small>
+                                </div>
+                            </div>
+                        `;
+                    });
+                    
+                } catch (e) {
+                    result += `<div class="error">خطأ في تحليل البيانات: ${e.message}</div>`;
+                }
+            } else {
+                result += `<div class="error">لا توجد بيانات في clubManagerData</div>`;
+            }
+
+            resultDiv.innerHTML = result;
+        }
+
+        // تشغيل الفحص عند تحميل الصفحة
+        window.onload = function() {
+            checkAllData();
+            displayClubsList();
+        };
+    </script>
+</body>
+</html> 

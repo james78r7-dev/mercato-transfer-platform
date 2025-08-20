@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎛️ Control Panel - Transfermarkt Live Data</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container { max-width: 1200px; margin: 0 auto; }
+        .header {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            text-align: center;
+            color: white;
+        }
+        .header h1 { font-size: 2.5rem; margin-bottom: 10px; }
+        .header p { opacity: 0.8; font-size: 1.1rem; }
+        
+        .control-section {
+            background: rgba(255,255,255,0.95);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+        }
+        .section-title {
+            font-size: 1.5rem;
+            color: #333;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            margin: 5px;
+        }
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
+        .btn:disabled { opacity: 0.6; cursor: not-allowed; }
+        .btn.success { background: linear-gradient(135deg, #4CAF50, #45a049); }
+        .btn.danger { background: linear-gradient(135deg, #f44336, #da190b); }
+        
+        .status-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .status-card {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 15px;
+            border-left: 4px solid #667eea;
+        }
+        .status-label { font-weight: bold; color: #333; margin-bottom: 5px; }
+        .status-value { color: #666; font-size: 0.9rem; }
+        
+        .clubs-preview {
+            max-height: 400px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 10px;
+            background: #f8f9fa;
+        }
+        .club-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px;
+            border-bottom: 1px solid #eee;
+        }
+        .club-rank { 
+            background: #667eea; 
+            color: white; 
+            width: 30px; 
+            height: 30px; 
+            border-radius: 50%; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            font-weight: bold; 
+            font-size: 0.9rem;
+        }
+        .club-name { font-weight: bold; color: #333; }
+        .club-expenditure { color: #e74c3c; font-weight: bold; margin-right: auto; }
+        
+        .output-link {
+            background: rgba(255,255,255,0.1);
+            border: 2px dashed rgba(255,255,255,0.3);
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            color: white;
+            margin-top: 20px;
+        }
+        .output-link h3 { margin-bottom: 10px; }
+        .output-url {
+            background: rgba(0,0,0,0.2);
+            padding: 10px;
+            border-radius: 5px;
+            font-family: monospace;
+            word-break: break-all;
+            margin: 10px 0;
+        }
+        
+        .log {
+            background: #1a1a1a;
+            color: #00ff00;
+            font-family: 'Courier New', monospace;
+            padding: 15px;
+            border-radius: 8px;
+            height: 200px;
+            overflow-y: auto;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎛️ Control Panel</h1>
+            <p>تحكم مباشر في بيانات Transfermarkt للعرض في OBS</p>
+        </div>
+
+        <div class="control-section">
+            <div class="section-title">
+                <span>📊</span>
+                <span>إدارة البيانات</span>
+            </div>
+            <button class="btn" id="fetchBtn" onclick="fetchRealData()">
+                🔄 جلب البيانات من Transfermarkt
+            </button>
+            <button class="btn success" id="broadcastBtn" onclick="broadcastToOutput()" disabled>
+                📡 بث للعرض المباشر
+            </button>
+            <button class="btn danger" onclick="clearOutput()">
+                🗑️ مسح العرض
+            </button>
+        </div>
+
+        <div class="control-section">
+            <div class="section-title">
+                <span>📈</span>
+                <span>حالة النظام</span>
+            </div>
+            <div class="status-grid">
+                <div class="status-card">
+                    <div class="status-label">عدد الأندية</div>
+                    <div class="status-value" id="clubsCount">0</div>
+                </div>
+                <div class="status-card">
+                    <div class="status-label">آخر تحديث</div>
+                    <div class="status-value" id="lastUpdate">لم يتم التحديث</div>
+                </div>
+                <div class="status-card">
+                    <div class="status-label">حالة الاتصال</div>
+                    <div class="status-value" id="connectionStatus">غير متصل</div>
+                </div>
+                <div class="status-card">
+                    <div class="status-label">العرض النشط</div>
+                    <div class="status-value" id="outputStatus">متوقف</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="control-section">
+            <div class="section-title">
+                <span>👁️</span>
+                <span>معاينة البيانات</span>
+            </div>
+            <div class="clubs-preview" id="clubsPreview">
+                <p style="text-align: center; color: #666; padding: 20px;">لا توجد بيانات للعرض</p>
+            </div>
+        </div>
+
+        <div class="output-link">
+            <h3>🎥 رابط العرض المباشر لـ OBS</h3>
+            <p>استخدم هذا الرابط في OBS Browser Source:</p>
+            <div class="output-url" id="outputUrl">
+                http://localhost:8201/obs-new-tols/transfermarkt-output.html
+            </div>
+            <button class="btn" onclick="copyOutputUrl()">📋 نسخ الرابط</button>
+            <button class="btn" onclick="openOutput()">🔗 فتح العرض</button>
+        </div>
+
+        <div class="control-section">
+            <div class="section-title">
+                <span>📝</span>
+                <span>سجل العمليات</span>
+            </div>
+            <div class="log" id="log"></div>
+        </div>
+    </div>
+
+    <script>
+        let currentData = null;
+        let ws = null;
+        
+        function log(message) {
+            const logEl = document.getElementById('log');
+            const timestamp = new Date().toLocaleTimeString();
+            logEl.innerHTML += `[${timestamp}] ${message}\n`;
+            logEl.scrollTop = logEl.scrollHeight;
+        }
+        
+        function updateStatus() {
+            document.getElementById('clubsCount').textContent = currentData ? currentData.length : 0;
+            document.getElementById('lastUpdate').textContent = currentData ? new Date().toLocaleString() : 'لم يتم التحديث';
+            document.getElementById('broadcastBtn').disabled = !currentData || currentData.length === 0;
+        }
+        
+        async function fetchRealData() {
+            const btn = document.getElementById('fetchBtn');
+            btn.disabled = true;
+            btn.textContent = '🔄 جاري الجلب...';
+
+            try {
+                log('🚀 بدء جلب البيانات من Transfermarkt...');
+
+                // استخدام API الخادم لجلب البيانات
+                const response = await fetch('/api/fetch-transfermarkt-data', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' }
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+
+                const result = await response.json();
+
+                if (result.success && result.data && result.data.length > 0) {
+                    currentData = result.data;
+                    log(`✅ تم جلب ${currentData.length} نادي بنجاح من الخادم`);
+                    updateStatus();
+                    displayClubsPreview();
+                } else {
+                    throw new Error(result.error || 'لم يتم العثور على بيانات');
+                }
+
+            } catch (error) {
+                log(`❌ خطأ في جلب البيانات: ${error.message}`);
+
+                // محاولة احتياطية: جلب من localStorage إن وجد
+                try {
+                    const savedData = localStorage.getItem('transfermarktRealData');
+                    if (savedData) {
+                        const parsed = JSON.parse(savedData);
+                        if (parsed.clubs && parsed.clubs.length > 0) {
+                            currentData = parsed.clubs;
+                            log(`📦 تم استخدام البيانات المحفوظة: ${currentData.length} نادي`);
+                            updateStatus();
+                            displayClubsPreview();
+                        }
+                    }
+                } catch (fallbackError) {
+                    log(`❌ فشل في الحصول على البيانات الاحتياطية: ${fallbackError.message}`);
+                }
+            } finally {
+                btn.disabled = false;
+                btn.textContent = '🔄 جلب البيانات من Transfermarkt';
+            }
+        }
+        
+        function displayClubsPreview() {
+            const preview = document.getElementById('clubsPreview');
+            if (!currentData || currentData.length === 0) {
+                preview.innerHTML = '<p style="text-align: center; color: #666; padding: 20px;">لا توجد بيانات للعرض</p>';
+                return;
+            }
+            
+            preview.innerHTML = currentData.map(club => `
+                <div class="club-item">
+                    <div class="club-rank">${club.rank}</div>
+                    <div class="club-name">${club.arabicName || club.name || club.englishName}</div>
+                    <div class="club-expenditure">${club.expenditure}</div>
+                </div>
+            `).join('');
+        }
+        
+        async function broadcastToOutput() {
+            if (!currentData) return;
+
+            log('📡 بث البيانات للعرض المباشر...');
+
+            try {
+                // حفظ البيانات في ملف محلي عبر API الخادم
+                const response = await fetch('/api/save-live-data', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ clubs: currentData })
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    log(`💾 تم حفظ ${result.count} نادي في الملف المحلي`);
+
+                    // حفظ في localStorage أيضاً كاحتياطي
+                    localStorage.setItem('transfermarktLiveData', JSON.stringify({
+                        clubs: currentData,
+                        timestamp: Date.now(),
+                        source: 'control-panel'
+                    }));
+
+                    // إرسال عبر WebSocket إذا كان متاحاً
+                    if (ws && ws.readyState === WebSocket.OPEN) {
+                        ws.send(JSON.stringify({
+                            type: 'BROADCAST_DATA',
+                            data: currentData
+                        }));
+                    }
+
+                    // إرسال عبر BroadcastChannel
+                    const channel = new BroadcastChannel('transfermarkt-live');
+                    channel.postMessage({
+                        type: 'DATA_UPDATE',
+                        data: currentData
+                    });
+                    channel.close();
+
+                    document.getElementById('outputStatus').textContent = 'نشط';
+                    log(`✅ تم بث ${currentData.length} نادي للعرض المباشر`);
+                } else {
+                    throw new Error(result.error || 'فشل في حفظ البيانات');
+                }
+
+            } catch (error) {
+                log(`❌ خطأ في البث: ${error.message}`);
+
+                // محاولة احتياطية: حفظ في localStorage فقط
+                localStorage.setItem('transfermarktLiveData', JSON.stringify({
+                    clubs: currentData,
+                    timestamp: Date.now(),
+                    source: 'control-panel-fallback'
+                }));
+
+                const channel = new BroadcastChannel('transfermarkt-live');
+                channel.postMessage({
+                    type: 'DATA_UPDATE',
+                    data: currentData
+                });
+                channel.close();
+
+                log('⚠️ تم استخدام الحفظ الاحتياطي في localStorage');
+            }
+        }
+        
+        async function clearOutput() {
+            try {
+                // مسح البيانات من الملف المحلي
+                const response = await fetch('/api/clear-live-data', {
+                    method: 'DELETE'
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    log('🗑️ تم مسح البيانات من الملف المحلي');
+                } else {
+                    log('⚠️ خطأ في مسح الملف المحلي');
+                }
+            } catch (error) {
+                log(`❌ خطأ في مسح البيانات: ${error.message}`);
+            }
+
+            // مسح من localStorage أيضاً
+            localStorage.removeItem('transfermarktLiveData');
+
+            // إرسال إشعار المسح
+            const channel = new BroadcastChannel('transfermarkt-live');
+            channel.postMessage({ type: 'CLEAR_DATA' });
+            channel.close();
+
+            document.getElementById('outputStatus').textContent = 'متوقف';
+            log('🗑️ تم مسح العرض');
+        }
+        
+        function copyOutputUrl() {
+            const url = document.getElementById('outputUrl').textContent;
+            navigator.clipboard.writeText(url).then(() => {
+                log('📋 تم نسخ رابط العرض');
+            });
+        }
+        
+        function openOutput() {
+            const url = document.getElementById('outputUrl').textContent;
+            window.open(url, '_blank');
+        }
+        
+        // تحميل البيانات المحفوظة عند بدء التشغيل
+        async function loadSavedData() {
+            try {
+                const response = await fetch('/api/get-live-data');
+                const result = await response.json();
+
+                if (result.success && result.data && result.data.clubs && result.data.clubs.length > 0) {
+                    currentData = result.data.clubs;
+                    log(`📦 تم تحميل ${currentData.length} نادي محفوظ من الملف المحلي`);
+                    updateStatus();
+                    displayClubsPreview();
+                    document.getElementById('outputStatus').textContent = 'نشط';
+                }
+            } catch (error) {
+                log(`⚠️ لا توجد بيانات محفوظة: ${error.message}`);
+            }
+        }
+
+        // تهيئة النظام
+        document.addEventListener('DOMContentLoaded', function() {
+            log('🎛️ تم تشغيل Control Panel');
+            updateStatus();
+
+            // تحميل البيانات المحفوظة
+            loadSavedData();
+
+            // محاولة الاتصال بـ WebSocket
+            try {
+                ws = new WebSocket(`ws://localhost:8201/ws`);
+                ws.onopen = () => {
+                    document.getElementById('connectionStatus').textContent = 'متصل';
+                    log('🔗 تم الاتصال بالخادم');
+                };
+                ws.onclose = () => {
+                    document.getElementById('connectionStatus').textContent = 'غير متصل';
+                    log('❌ انقطع الاتصال بالخادم');
+                };
+            } catch (error) {
+                log('⚠️ لا يمكن الاتصال بـ WebSocket');
+            }
+        });
+    </script>
+</body>
+</html>

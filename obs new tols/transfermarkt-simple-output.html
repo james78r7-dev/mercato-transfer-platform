@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📺 Simple Output - Transfermarkt</title>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: Arial, sans-serif;
+            background: transparent;
+            overflow: hidden;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .container {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .club-card {
+            background: linear-gradient(135deg, rgba(26, 26, 46, 0.95), rgba(46, 46, 86, 0.95));
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 215, 0, 0.4);
+            max-width: 700px;
+            width: 90%;
+            text-align: center;
+            transform: scale(0.9);
+            opacity: 0;
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .club-card.show {
+            transform: scale(1);
+            opacity: 1;
+        }
+        
+        .club-rank {
+            background: linear-gradient(135deg, #ffd700, #ffed4e);
+            color: #1a1a2e;
+            font-size: 2.5rem;
+            font-weight: bold;
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 25px;
+            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.4);
+        }
+        
+        .club-logo {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 20px;
+            border: 3px solid rgba(255, 215, 0, 0.6);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+            display: none;
+        }
+        
+        .club-logo.show { display: block; }
+        
+        .club-name {
+            font-size: 2.8rem;
+            font-weight: bold;
+            color: #ffffff;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+            line-height: 1.2;
+        }
+        
+        .club-english-name {
+            font-size: 1.3rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 35px;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            margin-top: 35px;
+        }
+        
+        .stat-item {
+            background: rgba(255, 255, 255, 0.12);
+            border-radius: 15px;
+            padding: 25px 15px;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+        
+        .stat-label {
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 500;
+        }
+        
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #ffffff;
+        }
+        
+        .stat-value.expenditure { color: #ff6b6b; }
+        .stat-value.income { color: #51cf66; }
+        .stat-value.balance { color: #ffd700; }
+        
+        .waiting {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            color: #ffffff;
+            text-align: center;
+        }
+        
+        .spinner {
+            width: 60px;
+            height: 60px;
+            border: 4px solid rgba(255, 215, 0, 0.3);
+            border-top: 4px solid #ffd700;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 25px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .waiting-text {
+            font-size: 1.6rem;
+            margin-bottom: 15px;
+        }
+        
+        .waiting-subtitle {
+            font-size: 1rem;
+            opacity: 0.7;
+        }
+        
+        .progress-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #ffd700, #ffed4e);
+            transition: width 5s linear;
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="waiting" id="waiting">
+            <div class="spinner"></div>
+            <div class="waiting-text">في انتظار البيانات...</div>
+            <div class="waiting-subtitle">تأكد من تشغيل Control Panel وحفظ البيانات</div>
+        </div>
+        
+        <div class="club-card" id="clubCard" style="display: none;">
+            <div class="club-rank" id="clubRank">#1</div>
+            <img class="club-logo" id="clubLogo" src="" alt="">
+            <div class="club-name" id="clubName">اسم النادي</div>
+            <div class="club-english-name" id="clubEnglishName">English Name</div>
+            
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-label">المصروفات</div>
+                    <div class="stat-value expenditure" id="expenditure">€0m</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">الإيرادات</div>
+                    <div class="stat-value income" id="income">€0m</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">الرصيد</div>
+                    <div class="stat-value balance" id="balance">€0m</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="progress-bar" id="progressBar" style="width: 0%;"></div>
+    </div>
+
+    <script>
+        let clubs = [];
+        let currentIndex = 0;
+        let displayInterval = null;
+        
+        function showWaiting(show = true) {
+            document.getElementById('waiting').style.display = show ? 'flex' : 'none';
+            document.getElementById('clubCard').style.display = show ? 'none' : 'block';
+        }
+        
+        async function fetchClubLogo(clubName) {
+            if (!clubName) return null;
+            try {
+                const response = await fetch(`/api/get-club-logo?clubName=${encodeURIComponent(clubName)}`);
+                const data = await response.json();
+                return data.success ? data.data.logoUrl : null;
+            } catch (error) {
+                return null;
+            }
+        }
+        
+        async function displayClub(club, index) {
+            if (!club) return;
+            
+            const card = document.getElementById('clubCard');
+            card.classList.remove('show');
+            
+            setTimeout(async () => {
+                // تحديث البيانات
+                document.getElementById('clubRank').textContent = `#${club.rank || index + 1}`;
+                document.getElementById('clubName').textContent = club.arabicName || club.name || club.englishName || 'غير محدد';
+                document.getElementById('clubEnglishName').textContent = club.englishName || club.name || '';
+                document.getElementById('expenditure').textContent = club.expenditure || '€0m';
+                document.getElementById('income').textContent = club.income || '€0m';
+                document.getElementById('balance').textContent = club.balance || '€0m';
+                
+                // تحديث الشعار
+                const logo = document.getElementById('clubLogo');
+                if (club.logoUrl || club.logo) {
+                    logo.src = club.logoUrl || club.logo;
+                    logo.classList.add('show');
+                    logo.onerror = async () => {
+                        const logoUrl = await fetchClubLogo(club.englishName || club.name);
+                        if (logoUrl) {
+                            logo.src = logoUrl;
+                            logo.classList.add('show');
+                        } else {
+                            logo.classList.remove('show');
+                        }
+                    };
+                } else {
+                    const logoUrl = await fetchClubLogo(club.englishName || club.name);
+                    if (logoUrl) {
+                        logo.src = logoUrl;
+                        logo.classList.add('show');
+                    } else {
+                        logo.classList.remove('show');
+                    }
+                }
+                
+                card.classList.add('show');
+            }, 300);
+        }
+        
+        function startDisplay() {
+            if (!clubs || clubs.length === 0) return;
+            
+            showWaiting(false);
+            currentIndex = 0;
+            displayClub(clubs[currentIndex], currentIndex);
+            
+            if (displayInterval) clearInterval(displayInterval);
+            
+            displayInterval = setInterval(() => {
+                currentIndex = (currentIndex + 1) % clubs.length;
+                displayClub(clubs[currentIndex], currentIndex);
+                
+                // تحديث شريط التقدم
+                const progress = ((currentIndex + 1) / clubs.length) * 100;
+                document.getElementById('progressBar').style.width = progress + '%';
+                
+                if (currentIndex === 0) {
+                    setTimeout(() => {
+                        document.getElementById('progressBar').style.width = '0%';
+                    }, 100);
+                }
+            }, 5000);
+        }
+        
+        function stopDisplay() {
+            if (displayInterval) {
+                clearInterval(displayInterval);
+                displayInterval = null;
+            }
+            showWaiting(true);
+        }
+        
+        async function loadData() {
+            try {
+                const savedData = localStorage.getItem('transfermarktSimpleData');
+                if (savedData) {
+                    const parsed = JSON.parse(savedData);
+                    if (parsed.clubs && parsed.clubs.length > 0) {
+                        clubs = parsed.clubs;
+                        console.log(`تم تحميل ${clubs.length} نادي`);
+                        startDisplay();
+                        return true;
+                    }
+                }
+            } catch (error) {
+                console.error('خطأ في تحميل البيانات:', error);
+            }
+            return false;
+        }
+        
+        // مراقبة التحديثات
+        function setupListeners() {
+            // BroadcastChannel
+            const channel = new BroadcastChannel('transfermarkt-simple');
+            channel.addEventListener('message', (event) => {
+                if (event.data.type === 'DATA_UPDATE') {
+                    clubs = event.data.data.clubs;
+                    console.log(`تم استقبال ${clubs.length} نادي عبر BroadcastChannel`);
+                    startDisplay();
+                } else if (event.data.type === 'CLEAR_DATA') {
+                    stopDisplay();
+                }
+            });
+
+            // localStorage changes
+            window.addEventListener('storage', (event) => {
+                if (event.key === 'transfermarktSimpleData') {
+                    loadData();
+                }
+            });
+        }
+
+        // تهيئة النظام
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🎥 تم تشغيل Simple Output');
+
+            setupListeners();
+
+            // تحميل البيانات
+            if (!loadData()) {
+                showWaiting(true);
+                console.log('في انتظار البيانات من Control Panel...');
+            }
+
+            // تحديث دوري كل 10 ثوان
+            setInterval(() => {
+                if (clubs.length === 0) {
+                    loadData();
+                }
+            }, 10000);
+        });
+        
+        // التحكم بلوحة المفاتيح
+        document.addEventListener('keydown', (event) => {
+            switch(event.key) {
+                case 'ArrowRight':
+                case ' ':
+                    if (clubs.length > 0) {
+                        currentIndex = (currentIndex + 1) % clubs.length;
+                        displayClub(clubs[currentIndex], currentIndex);
+                    }
+                    break;
+                case 'ArrowLeft':
+                    if (clubs.length > 0) {
+                        currentIndex = currentIndex > 0 ? currentIndex - 1 : clubs.length - 1;
+                        displayClub(clubs[currentIndex], currentIndex);
+                    }
+                    break;
+                case 'p':
+                case 'P':
+                    if (displayInterval) {
+                        stopDisplay();
+                    } else if (clubs.length > 0) {
+                        startDisplay();
+                    }
+                    break;
+            }
+        });
+    </script>
+</body>
+</html>

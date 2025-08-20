@@ -1,0 +1,142 @@
+[
+  {
+    "arabicName": "ريال مدريد",
+    "englishName": "Real Madrid",
+    "logo": "https://tmssl.akamaized.net/images/wappen/head/418.png",
+    "league": "LaLiga",
+    "country": "إسبانيا"
+  },
+  {
+    "arabicName": "برشلونة",
+    "englishName": "FC Barcelona",
+    "logo": "https://tmssl.akamaized.net/images/wappen/head/131.png",
+    "league": "LaLiga",
+    "country": "إسبانيا"
+  },
+  {
+    "arabicName": "مانشستر سيتي",
+    "englishName": "Manchester City",
+    "logo": "https://tmssl.akamaized.net/images/wappen/head/281.png",
+    "league": "Premier League",
+    "country": "إنجلترا"
+  },
+  {
+    "arabicName": "ليفربول",
+    "englishName": "Liverpool FC",
+    "logo": "https://tmssl.akamaized.net/images/wappen/head/31.png",
+    "league": "Premier League",
+    "country": "إنجلترا"
+  },
+  {
+    "arabicName": "تشيلسي",
+    "englishName": "Chelsea FC",
+    "logo": "https://tmssl.akamaized.net/images/wappen/head/631.png",
+    "league": "Premier League",
+    "country": "إنجلترا"
+  },
+  {
+    "arabicName": "بايرن ميونخ",
+    "englishName": "Bayern Munich",
+    "logo": "https://tmssl.akamaized.net/images/wappen/head/27.png",
+    "league": "Bundesliga",
+    "country": "ألمانيا"
+  },
+  {
+    "arabicName": "بوروسيا دورتموند",
+    "englishName": "Borussia Dortmund",
+    "logo": "https://tmssl.akamaized.net/images/wappen/head/16.png",
+    "league": "Bundesliga",
+    "country": "ألمانيا"
+  },
+  {
+    "arabicName": "باريس سان جيرمان",
+    "englishName": "Paris Saint-Germain",
+    "logo": "https://tmssl.akamaized.net/images/wappen/head/583.png",
+    "league": "Ligue 1",
+    "country": "فرنسا"
+  },
+  {
+    "arabicName": "يوفنتوس",
+    "englishName": "Juventus",
+    "logo": "https://tmssl.akamaized.net/images/wappen/head/506.png",
+    "league": "Serie A",
+    "country": "إيطاليا"
+  },
+  {
+    "arabicName": "إنتر ميلان",
+    "englishName": "Inter Milan",
+    "logo": "https://tmssl.akamaized.net/images/wappen/head/46.png",
+    "league": "Serie A",
+    "country": "إيطاليا"
+  },
+  {
+    "arabicName": "أتلتيكو مدريد",
+    "englishName": "Atletico Madrid",
+    "logo": "https://tmssl.akamaized.net/images/wappen/head/13.png",
+    "league": "LaLiga",
+    "country": "إسبانيا"
+  },
+  {
+    "arabicName": "أرسنال",
+    "englishName": "Arsenal",
+    "logo": "https://tmssl.akamaized.net/images/wappen/head/11.png",
+    "league": "Premier League",
+    "country": "إنجلترا"
+  },
+  {
+    "arabicName": "مانشستر يونايتد",
+    "englishName": "Manchester United",
+    "logo": "https://tmssl.akamaized.net/images/wappen/head/985.png",
+    "league": "Premier League",
+    "country": "إنجلترا"
+  },
+  {
+    "arabicName": "توتنهام",
+    "englishName": "Tottenham Hotspur",
+    "logo": "https://tmssl.akamaized.net/images/wappen/head/148.png",
+    "league": "Premier League",
+    "country": "إنجلترا"
+  },
+  {
+    "arabicName": "ميلان",
+    "englishName": "AC Milan",
+    "logo": "https://tmssl.akamaized.net/images/wappen/head/5.png",
+    "league": "Serie A",
+    "country": "إيطاليا"
+  },
+  {
+    "arabicName": "نابولي",
+    "englishName": "Napoli",
+    "logo": "https://tmssl.akamaized.net/images/wappen/head/6195.png",
+    "league": "Serie A",
+    "country": "إيطاليا"
+  },
+  {
+    "arabicName": "الهلال",
+    "englishName": "Al Hilal",
+    "logo": "https://tmssl.akamaized.net/images/wappen/head/22775.png",
+    "league": "الدوري السعودي",
+    "country": "السعودية"
+  },
+  {
+    "arabicName": "النصر",
+    "englishName": "Al Nassr",
+    "logo": "https://tmssl.akamaized.net/images/wappen/head/21288.png",
+    "league": "الدوري السعودي",
+    "country": "السعودية"
+  },
+  {
+    "arabicName": "الأهلي",
+    "englishName": "Al Ahly",
+    "logo": "https://tmssl.akamaized.net/images/wappen/head/1082.png",
+    "league": "الدوري المصري",
+    "country": "مصر"
+  },
+  {
+    "arabicName": "الزمالك",
+    "englishName": "Zamalek",
+    "logo": "https://tmssl.akamaized.net/images/wappen/head/1084.png",
+    "league": "الدوري المصري",
+    "country": "مصر"
+  }
+]

@@ -1,0 +1,1513 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>💰 أكثر 10 أندية صرفاً في سوق الانتقالات 2025 - البيانات الحقيقية</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', 'Tajawal', sans-serif;
+            background: linear-gradient(135deg, #0a0a0f 0%, #1a1a2e 50%, #16213e 100%);
+            color: #f8fafc;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .main-title {
+            font-size: 3rem;
+            font-weight: 900;
+            background: linear-gradient(45deg, #ffd700, #ffed4e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: #94a3b8;
+            margin-bottom: 2rem;
+        }
+
+        .data-source-info {
+            background: rgba(16, 185, 129, 0.2);
+            border: 1px solid #10b981;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .update-section {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+        }
+
+        .update-btn {
+            background: linear-gradient(45deg, #ffd700, #ffed4e);
+            color: #1a1a2e;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 16px;
+        }
+
+        .update-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.4);
+        }
+
+        .update-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .progress-section {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 2rem;
+            display: none;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 15px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #ffd700, #ffed4e);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .progress-text {
+            text-align: center;
+            color: #ffd700;
+            font-weight: bold;
+        }
+
+        .clubs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .club-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 1.5rem;
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .club-card:hover {
+            transform: translateY(-5px);
+            border-color: #ffd700;
+            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.2);
+        }
+
+        .club-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #ffd700, #ffed4e);
+        }
+
+        .club-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .club-logo {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #ffd700;
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+        }
+
+        .club-info h3 {
+            font-size: 1.4rem;
+            color: #ffd700;
+            margin-bottom: 0.5rem;
+        }
+
+        .club-rank {
+            background: linear-gradient(45deg, #ffd700, #ffed4e);
+            color: #1a1a2e;
+            padding: 6px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .club-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            border: 1px solid rgba(255, 215, 0, 0.2);
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: #94a3b8;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-value {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #ffd700;
+        }
+
+        .expenditure-highlight {
+            font-size: 1.4rem;
+            color: #ff6b6b;
+            text-shadow: 0 0 10px rgba(255, 107, 107, 0.5);
+        }
+
+        .error-message {
+            background: rgba(239, 68, 68, 0.2);
+            border: 1px solid #ef4444;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            color: #ef4444;
+            margin: 2rem 0;
+            display: none;
+        }
+
+        .success-message {
+            background: rgba(16, 185, 129, 0.2);
+            border: 1px solid #10b981;
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            color: #10b981;
+            margin: 1rem 0;
+            display: none;
+        }
+
+        .last-updated {
+            text-align: center;
+            color: #94a3b8;
+            font-size: 0.9rem;
+            margin-top: 2rem;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+        }
+
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .loading-content {
+            text-align: center;
+            color: #ffd700;
+        }
+
+        .loading-spinner {
+            width: 60px;
+            height: 60px;
+            border: 6px solid rgba(255, 215, 0, 0.3);
+            border-top: 6px solid #ffd700;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .real-data-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(16, 185, 129, 0.2);
+            color: #10b981;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            border: 1px solid #10b981;
+        }
+
+        @media (max-width: 768px) {
+            .main-title {
+                font-size: 2rem;
+            }
+            
+            .clubs-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .update-section {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-content">
+            <div class="loading-spinner"></div>
+            <h3>جاري استخراج البيانات الحقيقية من Transfermarkt...</h3>
+            <p id="loadingStatus">الاتصال بالخادم...</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="header">
+            <h1 class="main-title">
+                <i class="fas fa-trophy"></i>
+                أكثر 10 أندية صرفاً في سوق الانتقالات 2025
+            </h1>
+            <p class="subtitle">بيانات حقيقية ومحدثة من Transfermarkt مع شعارات عالية الجودة</p>
+            
+            <div class="data-source-info">
+                <i class="fas fa-check-circle"></i>
+                <strong>البيانات الحقيقية فقط</strong> - مستخرجة مباشرة من Transfermarkt
+                <span class="real-data-badge">
+                    <i class="fas fa-satellite-dish"></i>
+                    مباشر
+                </span>
+            </div>
+        </div>
+
+        <div class="update-section">
+            <button class="update-btn" onclick="fetchRealTimeData()" id="updateBtn">
+                <i class="fas fa-sync-alt"></i>
+                تحديث البيانات الآن
+            </button>
+            <button class="update-btn" onclick="saveCurrentData()" id="saveBtn" style="display: none;">
+                <i class="fas fa-save"></i>
+                حفظ البيانات الحالية
+            </button>
+            <button class="update-btn" onclick="loadSavedData()">
+                <i class="fas fa-folder-open"></i>
+                تحميل البيانات المحفوظة
+            </button>
+            <button class="update-btn" onclick="exportRealData()">
+                <i class="fas fa-download"></i>
+                تصدير البيانات الحقيقية
+            </button>
+            <button class="update-btn" onclick="openDisplayPage()">
+                <i class="fas fa-external-link-alt"></i>
+                العرض الاحترافي
+            </button>
+            <button class="update-btn" onclick="openLogoManager()">
+                <i class="fas fa-image"></i>
+                إدارة الشعارات
+            </button>
+        </div>
+
+        <div class="progress-section" id="progressSection">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <div class="progress-text" id="progressText">جاري التحضير...</div>
+        </div>
+
+        <div class="error-message" id="errorMessage">
+            <h3><i class="fas fa-exclamation-triangle"></i> خطأ في استخراج البيانات</h3>
+            <p id="errorText">حدث خطأ في الاتصال بـ Transfermarkt. يرجى المحاولة مرة أخرى.</p>
+        </div>
+
+        <div class="success-message" id="successMessage">
+            <i class="fas fa-check-circle"></i>
+            <span id="successText">تم تحديث البيانات بنجاح!</span>
+        </div>
+
+        <div id="clubsGrid" class="clubs-grid">
+            <!-- سيتم ملء البيانات الحقيقية هنا -->
+        </div>
+
+        <div id="lastUpdated" class="last-updated">
+            <i class="fas fa-clock"></i>
+            آخر تحديث: لم يتم التحديث بعد
+            <br>
+            <small>اضغط "تحديث البيانات الآن" للحصول على أحدث البيانات من Transfermarkt</small>
+        </div>
+    </div>
+
+    <!-- تحميل نظام إدارة البيانات والشعارات -->
+    <script src="../public/data-manager.js"></script>
+    <script src="universal-logo-fix.js"></script>
+    <script src="transfermarkt-unified-system.js"></script>
+    <script>
+        // متغيرات عامة
+        let dataManager;
+        let currentRealData = [];
+        let isUpdating = false;
+
+        // تهيئة النظام
+        document.addEventListener('DOMContentLoaded', async function() {
+            console.log('🚀 تهيئة نظام البيانات الحقيقية...');
+
+            try {
+                // انتظار تهيئة النظام الموحد لحل مشكلة الشعارات - محسن
+                if (window.universalLogoFix && !window.universalLogoFix.isInitialized) {
+                    console.log('🔄 تهيئة النظام الموحد لحل مشكلة الشعارات...');
+                    await window.universalLogoFix.init();
+                    console.log('✅ تم تهيئة النظام الموحد لحل مشكلة الشعارات');
+                } else if (window.universalLogoFix && window.universalLogoFix.isInitialized) {
+                    console.log('✅ النظام الموحد متهيأ بالفعل');
+                }
+
+                // انتظار تهيئة النظام الموحد - محسن
+                if (window.transfermarktSystem && !window.transfermarktSystem.isInitialized) {
+                    console.log('🔄 تهيئة النظام الموحد...');
+                    await window.transfermarktSystem.init();
+                    console.log('✅ تم تهيئة النظام الموحد');
+                } else if (window.transfermarktSystem && window.transfermarktSystem.isInitialized) {
+                    console.log('✅ النظام الموحد متهيأ بالفعل');
+                }
+
+                // تهيئة مدير البيانات - محسن
+                if (typeof TransfermarktDataManager !== 'undefined' && !dataManager) {
+                    console.log('🔄 تهيئة مدير البيانات...');
+                    dataManager = new TransfermarktDataManager();
+                    await dataManager.ensureDefaultClubs();
+                    console.log('✅ تم تهيئة مدير البيانات');
+                } else if (dataManager) {
+                    console.log('✅ مدير البيانات متهيأ بالفعل');
+                }
+
+                console.log('✅ تم تهيئة النظام بنجاح');
+
+                // محاولة تحميل البيانات المحفوظة
+                loadSavedRealData();
+
+            } catch (error) {
+                console.error('❌ خطأ في تهيئة النظام:', error);
+                showError('فشل في تهيئة النظام');
+            }
+        });
+
+        // استخراج البيانات الحقيقية من Transfermarkt
+        async function fetchRealTimeData() {
+            if (isUpdating) {
+                console.log('⚠️ التحديث قيد التنفيذ بالفعل');
+                return;
+            }
+
+            isUpdating = true;
+            console.log('🚀 بدء استخراج البيانات الحقيقية من Transfermarkt...');
+
+            // إظهار التحميل
+            showLoading(true);
+            updateProgress(0, 'بدء الاتصال بـ Transfermarkt...');
+
+            // تعطيل الزر
+            const updateBtn = document.getElementById('updateBtn');
+            updateBtn.disabled = true;
+            updateBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري الاستخراج...';
+
+            try {
+                // الخطوة 1: الاتصال بـ Transfermarkt
+                updateProgress(20, 'الاتصال بخادم Transfermarkt...');
+                const htmlContent = await fetchTransfermarktHTML();
+
+                if (!htmlContent) {
+                    throw new Error('فشل في الحصول على البيانات من Transfermarkt');
+                }
+
+                // الخطوة 2: تحليل البيانات
+                updateProgress(50, 'تحليل البيانات المستخرجة...');
+                const clubsData = await parseTransfermarktData(htmlContent);
+
+                if (!clubsData || clubsData.length === 0) {
+                    throw new Error('لم يتم العثور على بيانات صالحة');
+                }
+
+                // الخطوة 3: ربط الشعارات
+                updateProgress(70, 'ربط شعارات الأندية...');
+                const enrichedData = window.transfermarktSystem ?
+                    window.transfermarktSystem.enrichWithLogos(clubsData) :
+                    await enrichWithLogos(clubsData);
+
+                // الخطوة 4: حفظ البيانات
+                updateProgress(90, 'حفظ البيانات...');
+                currentRealData = enrichedData;
+                saveRealData(enrichedData);
+
+                // الخطوة 5: عرض البيانات
+                updateProgress(100, 'عرض البيانات...');
+                displayRealClubs(enrichedData);
+
+                showSuccess(`تم استخراج ${enrichedData.length} نادي بنجاح من Transfermarkt!`);
+                updateLastUpdatedTime();
+
+                // إظهار زر الحفظ
+                document.getElementById('saveBtn').style.display = 'inline-flex';
+
+                console.log('✅ تم استخراج البيانات الحقيقية بنجاح');
+
+            } catch (error) {
+                console.error('❌ خطأ في استخراج البيانات:', error);
+                showError(`فشل في استخراج البيانات: ${error.message}`);
+            } finally {
+                isUpdating = false;
+                showLoading(false);
+
+                // إعادة تفعيل الزر
+                updateBtn.disabled = false;
+                updateBtn.innerHTML = '<i class="fas fa-sync-alt"></i> تحديث البيانات الآن';
+            }
+        }
+
+        // جلب HTML من Transfermarkt - نسخة محسنة من الأداة الناجحة
+        async function fetchTransfermarktHTML() {
+            const TRANSFERMARKT_URL = 'https://www.transfermarkt.com/transfers/einnahmenausgaben/statistik/plus/0?ids=a&sa=&saison_id=2025&saison_id_bis=2025&land_id=&nat=&kontinent_id=&pos=&altersklasse=&w_s=&leihe=&intern=0&plus=0';
+
+            // قائمة Proxies محدثة ومتنوعة - نفس الطريقة الناجحة
+            const proxies = [
+                {
+                    url: 'https://api.allorigins.win/get?url=',
+                    type: 'allorigins',
+                    name: 'AllOrigins'
+                },
+                {
+                    url: 'https://corsproxy.io/?',
+                    type: 'direct',
+                    name: 'CorsProxy.io'
+                },
+                {
+                    url: 'https://api.codetabs.com/v1/proxy?quest=',
+                    type: 'direct',
+                    name: 'CodeTabs'
+                },
+                {
+                    url: 'https://cors-anywhere.herokuapp.com/',
+                    type: 'direct',
+                    name: 'CORS Anywhere'
+                }
+            ];
+
+            console.log('🔄 بدء استخراج البيانات الحقيقية من Transfermarkt...');
+            console.log(`📊 الرابط المستهدف: ${TRANSFERMARKT_URL}`);
+
+            // محاولة استخدام كل proxy - نفس الطريقة الناجحة
+            for (let i = 0; i < proxies.length; i++) {
+                const proxy = proxies[i];
+
+                try {
+                    console.log(`🌐 محاولة ${i + 1}/${proxies.length}: ${proxy.name}`);
+                    updateProgress(20 + (i * 15), `محاولة الاتصال عبر ${proxy.name}...`);
+
+                    let requestUrl, options = {
+                        method: 'GET',
+                        headers: {
+                            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
+                            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+                            'Accept-Language': 'en-US,en;q=0.5',
+                            'Accept-Encoding': 'gzip, deflate',
+                            'DNT': '1',
+                            'Connection': 'keep-alive',
+                            'Upgrade-Insecure-Requests': '1'
+                        }
+                    };
+
+                    if (proxy.type === 'allorigins') {
+                        requestUrl = proxy.url + encodeURIComponent(TRANSFERMARKT_URL);
+                    } else {
+                        requestUrl = proxy.url + TRANSFERMARKT_URL;
+                        options.headers['X-Requested-With'] = 'XMLHttpRequest';
+                    }
+
+                    console.log(`📡 إرسال طلب إلى: ${proxy.name}`);
+
+                    const response = await fetch(requestUrl, options);
+
+                    if (!response.ok) {
+                        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                    }
+
+                    console.log(`✅ تم الحصول على استجابة من ${proxy.name}`);
+
+                    let htmlContent;
+                    if (proxy.type === 'allorigins') {
+                        const data = await response.json();
+                        htmlContent = data.contents;
+                    } else {
+                        htmlContent = await response.text();
+                    }
+
+                    if (!htmlContent || htmlContent.length < 1000) {
+                        throw new Error('محتوى HTML فارغ أو قصير جداً');
+                    }
+
+                    console.log(`📄 تم الحصول على HTML بحجم: ${htmlContent.length} حرف`);
+                    return htmlContent;
+
+                } catch (error) {
+                    console.log(`❌ خطأ في ${proxy.name}:`, error.message);
+                    continue;
+                }
+            }
+
+            // إذا فشلت جميع المحاولات
+            console.log('❌ فشل في استخراج البيانات الحقيقية من جميع المصادر');
+            throw new Error('فشل في الاتصال بـ Transfermarkt - تحقق من الاتصال بالإنترنت');
+        }
+
+        // تحليل البيانات من HTML - نسخة محسنة من الأداة الناجحة
+        async function parseTransfermarktData(html) {
+            try {
+                console.log('🔍 بدء تحليل HTML من Transfermarkt...');
+                console.log(`📄 حجم HTML: ${html.length} حرف`);
+
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html');
+
+                // البحث عن الجدول بطرق متعددة ومتقدمة - نفس الطريقة الناجحة
+                let table = null;
+                const tableSelectors = [
+                    'table.items',
+                    '.responsive-table table',
+                    'table[class*="items"]',
+                    'table tbody',
+                    'table',
+                    '.tm-table table',
+                    '[data-table] table'
+                ];
+
+                for (const selector of tableSelectors) {
+                    table = doc.querySelector(selector);
+                    if (table) {
+                        console.log(`✅ تم العثور على الجدول باستخدام: ${selector}`);
+                        break;
+                    }
+                }
+
+                if (!table) {
+                    console.log('❌ لم يتم العثور على الجدول');
+                    // محاولة البحث عن أي جدول يحتوي على بيانات مالية
+                    const allTables = doc.querySelectorAll('table');
+                    for (const t of allTables) {
+                        if (t.textContent.includes('€') && t.textContent.includes('m')) {
+                            table = t;
+                            console.log('✅ تم العثور على جدول يحتوي على بيانات مالية');
+                            break;
+                        }
+                    }
+                }
+
+                if (!table) {
+                    console.log('❌ لا يوجد جدول مناسب');
+                    throw new Error('لم يتم العثور على جدول البيانات في الصفحة');
+                }
+
+                // استخراج الصفوف
+                const rows = table.querySelectorAll('tbody tr, tr');
+                console.log(`📊 تم العثور على ${rows.length} صف`);
+
+                const clubs = [];
+                let validRowCount = 0;
+
+                rows.forEach((row, index) => {
+                    if (validRowCount >= 10) return; // أخذ أول 10 أندية فقط
+
+                    const cells = row.querySelectorAll('td, th');
+
+                    // تخطي الصفوف التي لا تحتوي على بيانات كافية
+                    if (cells.length < 4) return;
+
+                    try {
+                        const clubData = extractAdvancedClubData(cells, validRowCount + 1);
+                        if (clubData) {
+                            validRowCount++;
+                            clubs.push(clubData);
+                            console.log(`✅ ${validRowCount}. ${clubData.englishName} - ${clubData.expenditure}`);
+                        }
+                    } catch (cellError) {
+                        console.log(`❌ خطأ في معالجة الصف ${index}:`, cellError.message);
+                    }
+                });
+
+                console.log(`🎉 تم استخراج ${clubs.length} نادي بنجاح من Transfermarkt`);
+
+                if (clubs.length === 0) {
+                    console.log('❌ لم يتم استخراج أي بيانات صالحة');
+                    throw new Error('لم يتم استخراج أي بيانات صالحة من الصفحة');
+                }
+
+                return clubs;
+
+            } catch (error) {
+                console.error('❌ خطأ في تحليل HTML:', error);
+                throw error;
+            }
+        }
+
+        // استخراج بيانات النادي من صف الجدول - نسخة محسنة من الأداة الناجحة
+        function extractAdvancedClubData(cells, rank) {
+            try {
+                // استخراج اسم النادي بطرق متعددة - نفس الطريقة الناجحة
+                let clubName = '';
+                let clubLogo = '';
+
+                // البحث في الخلايا المختلفة
+                for (let i = 0; i < Math.min(3, cells.length); i++) {
+                    const cell = cells[i];
+
+                    // البحث عن رابط النادي
+                    const nameLink = cell.querySelector('a[href*="/verein/"]') ||
+                                   cell.querySelector('a[title]') ||
+                                   cell.querySelector('a');
+
+                    if (nameLink && nameLink.textContent.trim().length > 2) {
+                        clubName = nameLink.textContent.trim();
+                        break;
+                    }
+
+                    // البحث عن صورة الشعار
+                    const logoImg = cell.querySelector('img[alt]');
+                    if (logoImg && logoImg.alt.trim().length > 2) {
+                        if (!clubName) clubName = logoImg.alt.trim();
+                        clubLogo = logoImg.src;
+                    }
+
+                    // البحث في النص المباشر
+                    const cellText = cell.textContent.trim();
+                    if (!clubName && cellText.length > 2 && !cellText.includes('€') && !cellText.match(/^\d+$/)) {
+                        clubName = cellText;
+                    }
+                }
+
+                // تنظيف اسم النادي
+                clubName = clubName.replace(/^\d+\.?\s*/, '').trim(); // إزالة الأرقام من البداية
+
+                if (!clubName || clubName.length < 2) {
+                    console.log(`⚠️ تخطي الصف ${rank}: اسم النادي غير صالح`);
+                    return null;
+                }
+
+                // استخراج البيانات المالية - نفس الطريقة الناجحة
+                let expenditure = '€0.00m';
+                let arrivals = '0';
+                let income = '€0.00m';
+                let departures = '0';
+                let balance = '€0.00m';
+
+                // البحث عن البيانات المالية في الخلايا
+                for (let i = 1; i < cells.length; i++) {
+                    const cellText = cells[i].textContent.trim();
+
+                    if (cellText.includes('€') && cellText.includes('m')) {
+                        if (expenditure === '€0.00m') {
+                            expenditure = cellText;
+                        } else if (income === '€0.00m') {
+                            income = cellText;
+                        } else if (balance === '€0.00m') {
+                            balance = cellText;
+                        }
+                    } else if (cellText.match(/^\d+$/)) {
+                        if (arrivals === '0') {
+                            arrivals = cellText;
+                        } else if (departures === '0') {
+                            departures = cellText;
+                        }
+                    }
+                }
+
+                // التحقق من صحة البيانات
+                if (!expenditure.includes('€') || expenditure === '€0.00m') {
+                    console.log(`⚠️ تخطي ${clubName}: بيانات مالية غير صالحة`);
+                    return null;
+                }
+
+                // ترجمة اسم النادي
+                const arabicName = translateClubName(clubName);
+
+                return {
+                    rank: rank,
+                    englishName: clubName,
+                    arabicName: arabicName,
+                    expenditure: expenditure,
+                    arrivals: parseInt(arrivals.replace(/\D/g, '')) || 0,
+                    income: income,
+                    departures: parseInt(departures.replace(/\D/g, '')) || 0,
+                    balance: balance,
+                    league: getClubLeague(clubName),
+                    logoUrl: null, // سيتم ملؤه لاحقاً
+                    lastUpdated: new Date().toISOString(),
+                    dataSource: 'transfermarkt-real-time'
+                };
+
+            } catch (error) {
+                console.error('خطأ في استخراج بيانات النادي:', error);
+                return null;
+            }
+        }
+
+        // ترجمة أسماء الأندية
+        function translateClubName(englishName) {
+            const translations = {
+                'Liverpool FC': 'ليفربول',
+                'Chelsea FC': 'تشيلسي',
+                'Real Madrid': 'ريال مدريد',
+                'Manchester United': 'مانشستر يونايتد',
+                'Manchester City': 'مانشستر سيتي',
+                'Arsenal FC': 'آرسنال',
+                'Tottenham Hotspur': 'توتنهام',
+                'FC Barcelona': 'برشلونة',
+                'Atletico Madrid': 'أتلتيكو مدريد',
+                'Paris Saint-Germain': 'باريس سان جيرمان',
+                'Bayern Munich': 'بايرن ميونخ',
+                'Borussia Dortmund': 'بوروسيا دورتموند',
+                'Juventus': 'يوفنتوس',
+                'AC Milan': 'ميلان',
+                'Inter Milan': 'إنتر ميلان',
+                'AS Roma': 'روما',
+                'Napoli': 'نابولي',
+                'Sevilla FC': 'إشبيلية',
+                'Valencia CF': 'فالنسيا',
+                'Villarreal CF': 'فياريال'
+            };
+
+            return translations[englishName] || englishName;
+        }
+
+        // تحديد دوري النادي
+        function getClubLeague(clubName) {
+            const leagues = {
+                'Liverpool FC': 'الدوري الإنجليزي الممتاز',
+                'Chelsea FC': 'الدوري الإنجليزي الممتاز',
+                'Manchester United': 'الدوري الإنجليزي الممتاز',
+                'Manchester City': 'الدوري الإنجليزي الممتاز',
+                'Arsenal FC': 'الدوري الإنجليزي الممتاز',
+                'Tottenham Hotspur': 'الدوري الإنجليزي الممتاز',
+                'Real Madrid': 'الدوري الإسباني',
+                'FC Barcelona': 'الدوري الإسباني',
+                'Atletico Madrid': 'الدوري الإسباني',
+                'Sevilla FC': 'الدوري الإسباني',
+                'Valencia CF': 'الدوري الإسباني',
+                'Villarreal CF': 'الدوري الإسباني',
+                'Paris Saint-Germain': 'الدوري الفرنسي',
+                'Bayern Munich': 'الدوري الألماني',
+                'Borussia Dortmund': 'الدوري الألماني',
+                'Juventus': 'الدوري الإيطالي',
+                'AC Milan': 'الدوري الإيطالي',
+                'Inter Milan': 'الدوري الإيطالي',
+                'AS Roma': 'الدوري الإيطالي',
+                'Napoli': 'الدوري الإيطالي'
+            };
+
+            return leagues[clubName] || 'الدوري الأوروبي';
+        }
+
+        // ربط البيانات بالشعارات - محسن للعمل مع club-logo-manager
+        async function enrichWithLogos(clubsData) {
+            console.log('🎨 بدء ربط الشعارات مع قاعدة البيانات الشاملة...');
+
+            // استخدام النظام الموحد إذا كان متاحاً - محسن
+            if (window.universalLogoFix) {
+                console.log('🔄 استخدام النظام الموحد لحل مشكلة الشعارات...');
+                return window.universalLogoFix.enrichWithLogos(clubsData);
+            }
+
+            // الطريقة التقليدية كاحتياطي - محسن
+            console.log('🔄 استخدام الطريقة التقليدية لربط الشعارات...');
+            
+            // تحميل قاعدة بيانات الشعارات من club-logo-manager
+            const logoDatabase = await loadLogoDatabase();
+
+            const enrichedClubs = [];
+
+            for (const club of clubsData) {
+                try {
+                    // البحث في قاعدة البيانات الشاملة
+                    let logoUrl = findClubLogo(club.englishName, logoDatabase);
+
+                    // إذا لم نجد بالاسم الإنجليزي، جرب الاسم العربي
+                    if (!logoUrl && club.arabicName) {
+                        logoUrl = findClubLogo(club.arabicName, logoDatabase);
+                    }
+
+                    // إذا لم نجد، جرب البحث الذكي
+                    if (!logoUrl) {
+                        logoUrl = smartLogoSearch(club.englishName, logoDatabase);
+                    }
+
+                    // إذا لم نجد، جرب البحث بالكلمات المفتاحية
+                    if (!logoUrl) {
+                        logoUrl = keywordLogoSearch(club.englishName, logoDatabase);
+                    }
+
+                    // إذا لم نجد، استخدم نظام إدارة البيانات
+                    if (!logoUrl && dataManager) {
+                        logoUrl = dataManager.getClubLogo(club.englishName) ||
+                                 dataManager.getClubLogo(club.arabicName);
+                    }
+
+                    // إذا لم نجد، جرب البحث في البيانات المحفوظة
+                    if (!logoUrl) {
+                        logoUrl = searchInSavedData(club.englishName);
+                    }
+
+                    const enrichedClub = {
+                        ...club,
+                        logoUrl: logoUrl || generateFallbackLogo(club.englishName)
+                    };
+
+                    enrichedClubs.push(enrichedClub);
+
+                } catch (error) {
+                    console.warn(`⚠️ خطأ في ربط شعار ${club.englishName}:`, error);
+
+                    // استخدام شعار احتياطي
+                    enrichedClubs.push({
+                        ...club,
+                        logoUrl: generateFallbackLogo(club.englishName)
+                    });
+                }
+            }
+
+            console.log(`✅ تم ربط ${enrichedClubs.length} شعار من قاعدة البيانات الشاملة`);
+            return enrichedClubs;
+        }
+
+        // تحميل قاعدة بيانات الشعارات من club-logo-manager - محسن
+        async function loadLogoDatabase() {
+            try {
+                console.log('📊 تحميل قاعدة بيانات الشعارات...');
+
+                // محاولة تحميل من localStorage أولاً
+                const clubManagerData = localStorage.getItem('clubManagerData');
+                const verifiedClubs = localStorage.getItem('verifiedClubs');
+                const transfermarktData = localStorage.getItem('transfermarktData');
+
+                let logoDatabase = [];
+
+                if (clubManagerData) {
+                    try {
+                        const data = JSON.parse(clubManagerData);
+                        logoDatabase = logoDatabase.concat(data);
+                        console.log(`📥 تم تحميل ${data.length} نادي من clubManagerData`);
+                    } catch (e) {
+                        console.warn('⚠️ خطأ في تحميل clubManagerData:', e);
+                    }
+                }
+
+                if (verifiedClubs) {
+                    try {
+                        const data = JSON.parse(verifiedClubs);
+                        logoDatabase = logoDatabase.concat(data);
+                        console.log(`📥 تم تحميل ${data.length} نادي من verifiedClubs`);
+                    } catch (e) {
+                        console.warn('⚠️ خطأ في تحميل verifiedClubs:', e);
+                    }
+                }
+
+                // إضافة البيانات من transfermarktData إذا كانت تحتوي على شعارات
+                if (transfermarktData) {
+                    try {
+                        const data = JSON.parse(transfermarktData);
+                        if (Array.isArray(data)) {
+                            const clubsWithLogos = data.filter(club => club.logoUrl);
+                            logoDatabase = logoDatabase.concat(clubsWithLogos);
+                            console.log(`📥 تم تحميل ${clubsWithLogos.length} نادي من transfermarktData`);
+                        }
+                    } catch (e) {
+                        console.warn('⚠️ خطأ في تحميل transfermarktData:', e);
+                    }
+                }
+
+                // إزالة التكرارات
+                const uniqueClubs = logoDatabase.filter((club, index, self) =>
+                    index === self.findIndex(c =>
+                        c.englishName === club.englishName ||
+                        c.arabicName === club.arabicName ||
+                        c.name === club.name
+                    )
+                );
+
+                console.log(`✅ قاعدة بيانات الشعارات جاهزة: ${uniqueClubs.length} نادي`);
+                return uniqueClubs;
+
+            } catch (error) {
+                console.error('❌ خطأ في تحميل قاعدة بيانات الشعارات:', error);
+                return [];
+            }
+        }
+
+        // البحث عن شعار النادي في قاعدة البيانات - محسن
+        function findClubLogo(clubName, logoDatabase) {
+            if (!clubName || !logoDatabase) return null;
+
+            // البحث المباشر
+            const club = logoDatabase.find(c =>
+                c.englishName === clubName ||
+                c.arabicName === clubName ||
+                c.name === clubName
+            );
+
+            if (club && club.logoUrl) {
+                return club.logoUrl;
+            }
+
+            // البحث بدون FC
+            const cleanName = clubName.replace(/\s+FC$/, '').replace(/\s+Football Club$/, '');
+            const clubWithoutFC = logoDatabase.find(c => {
+                const cleanEnglish = (c.englishName || '').replace(/\s+FC$/, '').replace(/\s+Football Club$/, '');
+                const cleanArabic = (c.arabicName || '').replace(/\s+FC$/, '').replace(/\s+Football Club$/, '');
+                return cleanEnglish === cleanName || cleanArabic === cleanName;
+            });
+
+            return clubWithoutFC ? clubWithoutFC.logoUrl : null;
+        }
+
+        // البحث الذكي للشعار - محسن
+        function smartLogoSearch(clubName, logoDatabase) {
+            if (!clubName || !logoDatabase) return null;
+
+            const searchName = clubName.toLowerCase();
+
+            // البحث بالكلمات المفتاحية
+            const club = logoDatabase.find(c => {
+                const englishName = (c.englishName || '').toLowerCase();
+                const arabicName = (c.arabicName || '').toLowerCase();
+                const name = (c.name || '').toLowerCase();
+
+                return englishName.includes(searchName) ||
+                       searchName.includes(englishName) ||
+                       arabicName.includes(searchName) ||
+                       name.includes(searchName);
+            });
+
+            return club ? club.logoUrl : null;
+        }
+
+        // البحث بالكلمات المفتاحية - جديد
+        function keywordLogoSearch(clubName, logoDatabase) {
+            if (!clubName || !logoDatabase) return null;
+
+            const keywords = clubName.toLowerCase().split(' ').filter(word => word.length > 2);
+            
+            for (const keyword of keywords) {
+                const club = logoDatabase.find(c => {
+                    const englishName = (c.englishName || '').toLowerCase();
+                    const arabicName = (c.arabicName || '').toLowerCase();
+                    const name = (c.name || '').toLowerCase();
+
+                    return englishName.includes(keyword) ||
+                           arabicName.includes(keyword) ||
+                           name.includes(keyword);
+                });
+
+                if (club && club.logoUrl) {
+                    return club.logoUrl;
+                }
+            }
+
+            return null;
+        }
+
+        // البحث في البيانات المحفوظة - جديد
+        function searchInSavedData(clubName) {
+            try {
+                // البحث في transfermarktRealData
+                const realData = localStorage.getItem('transfermarktRealData');
+                if (realData) {
+                    const data = JSON.parse(realData);
+                    if (data.clubs && Array.isArray(data.clubs)) {
+                        const club = data.clubs.find(c => 
+                            c.englishName === clubName || 
+                            c.arabicName === clubName
+                        );
+                        if (club && club.logoUrl) {
+                            return club.logoUrl;
+                        }
+                    }
+                }
+
+                // البحث في transfermarktData
+                const savedData = localStorage.getItem('transfermarktData');
+                if (savedData) {
+                    const data = JSON.parse(savedData);
+                    if (Array.isArray(data)) {
+                        const club = data.find(c => 
+                            c.englishName === clubName || 
+                            c.arabicName === clubName ||
+                            c.name === clubName
+                        );
+                        if (club && club.logoUrl) {
+                            return club.logoUrl;
+                        }
+                    }
+                }
+
+                return null;
+            } catch (error) {
+                console.warn('⚠️ خطأ في البحث في البيانات المحفوظة:', error);
+                return null;
+            }
+        }
+
+        // إنشاء شعار احتياطي
+        function generateFallbackLogo(clubName) {
+            const initials = clubName.split(' ')
+                .map(word => word.charAt(0))
+                .join('')
+                .substring(0, 2)
+                .toUpperCase();
+
+            return `https://ui-avatars.com/api/?name=${encodeURIComponent(initials)}&size=400&background=1a1a2e&color=ffd700&bold=true&format=png&rounded=true&font-size=0.6`;
+        }
+
+        // عرض الأندية الحقيقية
+        function displayRealClubs(clubs) {
+            const grid = document.getElementById('clubsGrid');
+            grid.innerHTML = '';
+
+            clubs.forEach(club => {
+                const clubCard = createRealClubCard(club);
+                grid.appendChild(clubCard);
+            });
+
+            console.log(`✅ تم عرض ${clubs.length} نادي`);
+        }
+
+        // إنشاء بطاقة النادي الحقيقية
+        function createRealClubCard(club) {
+            const card = document.createElement('div');
+            card.className = 'club-card';
+
+            card.innerHTML = `
+                <div class="club-header">
+                    <img src="${club.logoUrl}" alt="${club.arabicName}" class="club-logo"
+                         onerror="this.src='${generateFallbackLogo(club.englishName)}'">
+                    <div class="club-info">
+                        <h3>${club.arabicName}</h3>
+                        <div class="club-rank">المركز ${club.rank}</div>
+                    </div>
+                </div>
+                <div class="club-stats">
+                    <div class="stat-item">
+                        <div class="stat-label">المصروفات</div>
+                        <div class="stat-value expenditure-highlight">${club.expenditure}</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">الإيرادات</div>
+                        <div class="stat-value">${club.income}</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">الميزانية</div>
+                        <div class="stat-value">${club.balance}</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">الدوري</div>
+                        <div class="stat-value">${club.league}</div>
+                    </div>
+                </div>
+                <div style="margin-top: 10px; text-align: center;">
+                    <span class="real-data-badge">
+                        <i class="fas fa-satellite-dish"></i>
+                        بيانات حقيقية
+                    </span>
+                </div>
+            `;
+
+            return card;
+        }
+
+        // حفظ البيانات الحقيقية
+        function saveRealData(clubs) {
+            try {
+                const dataToSave = {
+                    clubs: clubs,
+                    lastUpdate: new Date().toISOString(),
+                    source: 'transfermarkt-real-time',
+                    version: '2025.1.0'
+                };
+
+                localStorage.setItem('transfermarktRealData', JSON.stringify(dataToSave));
+                localStorage.setItem('transfermarktData', JSON.stringify(clubs)); // للتوافق مع النظام القديم
+                localStorage.setItem('transfermarktLastUpdate', new Date().toISOString());
+
+                // إرسال البيانات فوراً لأي صفحة مستقبِلة (مثل صفحة OBS)
+                try {
+                    window.postMessage({
+                        type: 'REAL_DATA_UPDATED',
+                        source: 'transfermarkt-real-data',
+                        payload: dataToSave
+                    }, '*');
+                } catch (e) {
+                    console.warn('⚠️ تعذر إرسال REAL_DATA_UPDATED:', e);
+                }
+
+                console.log('💾 تم حفظ البيانات الحقيقية');
+            } catch (error) {
+                console.error('❌ خطأ في حفظ البيانات:', error);
+            }
+        }
+
+        // تحميل البيانات المحفوظة عند بدء الصفحة
+        function loadSavedRealData() {
+            try {
+                const savedData = localStorage.getItem('transfermarktRealData');
+
+                if (savedData) {
+                    const data = JSON.parse(savedData);
+
+                    if (data.clubs && Array.isArray(data.clubs) && data.clubs.length > 0) {
+                        currentRealData = data.clubs;
+                        displayRealClubs(data.clubs);
+                        updateLastUpdatedTime(data.lastUpdate);
+
+                        // إظهار زر الحفظ إذا كانت هناك بيانات
+                        document.getElementById('saveBtn').style.display = 'inline-flex';
+
+                        console.log(`✅ تم تحميل ${data.clubs.length} نادي من البيانات المحفوظة`);
+                        showSuccess(`تم تحميل ${data.clubs.length} نادي من البيانات المحفوظة`);
+
+                        // التحقق من عمر البيانات
+                        const lastUpdate = new Date(data.lastUpdate);
+                        const now = new Date();
+                        const diffHours = Math.floor((now - lastUpdate) / (1000 * 60 * 60));
+
+                        if (diffHours > 24) {
+                            showSuccess('البيانات قديمة - يُنصح بالتحديث', 'warning');
+                        }
+
+                        return;
+                    }
+                }
+
+                // لا توجد بيانات محفوظة
+                document.getElementById('clubsGrid').innerHTML = `
+                    <div style="grid-column: 1 / -1; text-align: center; padding: 3rem; color: #94a3b8;">
+                        <i class="fas fa-database" style="font-size: 3rem; margin-bottom: 1rem; color: #ffd700;"></i>
+                        <h3>لا توجد بيانات محفوظة</h3>
+                        <p>اضغط "تحديث البيانات الآن" لاستخراج أحدث البيانات من Transfermarkt</p>
+                        <p><small>أو اضغط "تحميل البيانات المحفوظة" إذا كانت لديك بيانات سابقة</small></p>
+                    </div>
+                `;
+
+            } catch (error) {
+                console.error('❌ خطأ في تحميل البيانات المحفوظة:', error);
+                document.getElementById('clubsGrid').innerHTML = `
+                    <div style="grid-column: 1 / -1; text-align: center; padding: 3rem; color: #ef4444;">
+                        <i class="fas fa-exclamation-triangle" style="font-size: 3rem; margin-bottom: 1rem;"></i>
+                        <h3>خطأ في تحميل البيانات</h3>
+                        <p>حدث خطأ في تحميل البيانات المحفوظة</p>
+                    </div>
+                `;
+            }
+        }
+
+        // تصدير البيانات الحقيقية
+        function exportRealData() {
+            try {
+                if (!currentRealData || currentRealData.length === 0) {
+                    showError('لا توجد بيانات للتصدير. يرجى تحديث البيانات أولاً.');
+                    return;
+                }
+
+                const exportData = {
+                    title: 'أكثر 10 أندية صرفاً في سوق الانتقالات 2025',
+                    source: 'Transfermarkt',
+                    extractedAt: new Date().toISOString(),
+                    clubs: currentRealData,
+                    totalClubs: currentRealData.length
+                };
+
+                const blob = new Blob([JSON.stringify(exportData, null, 2)], {
+                    type: 'application/json'
+                });
+
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `transfermarkt-real-data-${new Date().toISOString().split('T')[0]}.json`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+
+                showSuccess('تم تصدير البيانات الحقيقية بنجاح!');
+
+            } catch (error) {
+                console.error('❌ خطأ في التصدير:', error);
+                showError('فشل في تصدير البيانات');
+            }
+        }
+
+        // حفظ البيانات الحالية يدوياً
+        function saveCurrentData() {
+            try {
+                if (!currentRealData || currentRealData.length === 0) {
+                    showError('لا توجد بيانات للحفظ. يرجى استخراج البيانات أولاً.');
+                    return;
+                }
+
+                // استخدام النظام الموحد للحفظ
+                if (window.transfermarktSystem) {
+                    const success = window.transfermarktSystem.saveData(currentRealData, 'manual-save');
+
+                    if (success) {
+                        showSuccess(`تم حفظ ${currentRealData.length} نادي بنجاح!`);
+
+                        // إخفاء زر الحفظ
+                        document.getElementById('saveBtn').style.display = 'none';
+
+                        console.log('💾 تم حفظ البيانات يدوياً عبر النظام الموحد');
+                    } else {
+                        throw new Error('فشل في حفظ البيانات عبر النظام الموحد');
+                    }
+                } else {
+                    // الطريقة التقليدية للحفظ
+                    const dataToSave = {
+                        clubs: currentRealData,
+                        lastUpdate: new Date().toISOString(),
+                        source: 'manual-save',
+                        version: '2025.2.0',
+                        savedAt: new Date().toISOString()
+                    };
+
+                    localStorage.setItem('transfermarktRealData', JSON.stringify(dataToSave));
+                    localStorage.setItem('transfermarktData', JSON.stringify(currentRealData));
+                    localStorage.setItem('transfermarktLastUpdate', new Date().toISOString());
+
+                    // إرسال إشعار للصفحات الأخرى
+                    if ('BroadcastChannel' in window) {
+                        const channel = new BroadcastChannel('transfermarkt-updates');
+                        channel.postMessage({
+                            type: 'data-saved',
+                            timestamp: new Date().toISOString(),
+                            clubsCount: currentRealData.length
+                        });
+                        channel.close();
+                    }
+
+                    showSuccess(`تم حفظ ${currentRealData.length} نادي بنجاح!`);
+
+                    // إخفاء زر الحفظ
+                    document.getElementById('saveBtn').style.display = 'none';
+
+                    console.log('💾 تم حفظ البيانات يدوياً');
+                }
+
+            } catch (error) {
+                console.error('❌ خطأ في حفظ البيانات:', error);
+                showError('فشل في حفظ البيانات');
+            }
+        }
+
+        // تحميل البيانات المحفوظة
+        function loadSavedData() {
+            try {
+                const savedData = localStorage.getItem('transfermarktRealData');
+
+                if (!savedData) {
+                    showError('لا توجد بيانات محفوظة');
+                    return;
+                }
+
+                const data = JSON.parse(savedData);
+
+                if (!data.clubs || !Array.isArray(data.clubs) || data.clubs.length === 0) {
+                    showError('البيانات المحفوظة تالفة أو فارغة');
+                    return;
+                }
+
+                currentRealData = data.clubs;
+                displayRealClubs(data.clubs);
+                updateLastUpdatedTime(data.lastUpdate);
+
+                showSuccess(`تم تحميل ${data.clubs.length} نادي من البيانات المحفوظة`);
+
+                // إظهار زر الحفظ
+                document.getElementById('saveBtn').style.display = 'inline-flex';
+
+                console.log(`✅ تم تحميل ${data.clubs.length} نادي من البيانات المحفوظة`);
+
+            } catch (error) {
+                console.error('❌ خطأ في تحميل البيانات:', error);
+                showError('فشل في تحميل البيانات المحفوظة');
+            }
+        }
+
+        // فتح صفحة العرض
+        function openDisplayPage() {
+            window.open('/obs-new-tols/transfermarkt-ultimate-display-fixed.html', '_blank');
+        }
+
+        // فتح مدير الشعارات
+        function openLogoManager() {
+            window.open('/club-logo-manager.html', '_blank');
+        }
+
+        // وظائف المساعدة
+        function showLoading(show) {
+            const overlay = document.getElementById('loadingOverlay');
+            const progressSection = document.getElementById('progressSection');
+
+            overlay.style.display = show ? 'flex' : 'none';
+            progressSection.style.display = show ? 'block' : 'none';
+        }
+
+        function updateProgress(percent, text) {
+            const progressFill = document.getElementById('progressFill');
+            const progressText = document.getElementById('progressText');
+            const loadingStatus = document.getElementById('loadingStatus');
+
+            progressFill.style.width = percent + '%';
+            progressText.textContent = text;
+            if (loadingStatus) loadingStatus.textContent = text;
+        }
+
+        function showError(message) {
+            const errorDiv = document.getElementById('errorMessage');
+            const errorText = document.getElementById('errorText');
+            const successDiv = document.getElementById('successMessage');
+
+            errorText.textContent = message;
+            errorDiv.style.display = 'block';
+            successDiv.style.display = 'none';
+
+            setTimeout(() => {
+                errorDiv.style.display = 'none';
+            }, 5000);
+        }
+
+        function showSuccess(message) {
+            const successDiv = document.getElementById('successMessage');
+            const successText = document.getElementById('successText');
+            const errorDiv = document.getElementById('errorMessage');
+
+            successText.textContent = message;
+            successDiv.style.display = 'block';
+            errorDiv.style.display = 'none';
+
+            setTimeout(() => {
+                successDiv.style.display = 'none';
+            }, 3000);
+        }
+
+        function updateLastUpdatedTime(customTime) {
+            const lastUpdatedDiv = document.getElementById('lastUpdated');
+            const time = customTime ? new Date(customTime) : new Date();
+
+            lastUpdatedDiv.innerHTML = `
+                <i class="fas fa-clock"></i>
+                آخر تحديث: ${time.toLocaleString('ar-SA')}
+                <br>
+                <small>البيانات مستخرجة مباشرة من Transfermarkt</small>
+            `;
+        }
+
+        // معالجة الأخطاء العامة
+        window.addEventListener('error', function(event) {
+            console.error('خطأ JavaScript:', event.error);
+        });
+
+        console.log('✅ تم تحميل نظام البيانات الحقيقية بنجاح');
+    </script>
+  <script>
+    // مستلم طلب البيانات من صفحات أخرى (مثل OBS Bridge/Ultimate)
+    window.addEventListener('message', function(event) {
+      try {
+        const data = event.data;
+        if (!data || typeof data !== 'object') return;
+        if (data.type === 'REQUEST_REAL_DATA') {
+          // حاول إرسال currentRealData إن كانت متوفرة، وإلا من localStorage
+          let toSend = null;
+          try {
+            if (typeof currentRealData !== 'undefined' && Array.isArray(currentRealData) && currentRealData.length > 0) {
+              toSend = { clubs: currentRealData, lastUpdate: new Date().toISOString(), source: 'real-page-memory' };
+            }
+          } catch {}
+          if (!toSend) {
+            try {
+              const raw = localStorage.getItem('transfermarktRealData');
+              if (raw) {
+                const parsed = JSON.parse(raw);
+                if (parsed && parsed.clubs && parsed.clubs.length > 0) {
+                  toSend = parsed;
+                }
+              }
+            } catch {}
+          }
+          if (toSend) {
+            try {
+              window.postMessage({ type: 'REAL_DATA_UPDATED', source: 'transfermarkt-real-data', payload: toSend }, '*');
+              console.log('📨 تم إرسال REAL_DATA_UPDATED كرد على REQUEST_REAL_DATA');
+            } catch (e) { console.warn('⚠️ تعذر إرسال الرد:', e); }
+          } else {
+            console.warn('⚠️ لا توجد بيانات حقيقية لإرسالها حالياً');
+          }
+        }
+      } catch (e) {
+        console.warn('⚠️ خطأ في مستلم الرسائل:', e);
+      }
+    });
+  </script>
+</body>
+</html>

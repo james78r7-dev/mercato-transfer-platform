@@ -1,0 +1,1601 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🏆 العرض الاحترافي لأكثر الأندية صرفاً في سوق الانتقالات</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', 'Tajawal', sans-serif;
+            background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
+            color: #fff;
+            min-height: 100vh;
+            overflow: hidden;
+            /* تحسينات للتوافق مع OBS */
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeLegibility;
+        }
+
+        .container {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
+        }
+
+        .club-display {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .club-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            filter: blur(30px) brightness(0.1) saturate(0.5);
+            z-index: 1;
+            transition: all 1.5s ease;
+            opacity: 0.3;
+            /* تحسينات للتوافق مع OBS */
+            image-rendering: -webkit-optimize-contrast;
+            backface-visibility: hidden;
+            transform: translateZ(0);
+        }
+
+        .club-content {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            max-width: 1400px;
+            padding: 3rem;
+        }
+
+        .club-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 3rem;
+            width: 100%;
+            background: rgba(15, 15, 35, 0.8);
+            border-radius: 25px;
+            padding: 2rem;
+            border: 2px solid rgba(255, 215, 0, 0.2);
+            backdrop-filter: blur(20px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        .club-logo {
+            width: 180px;
+            height: 180px;
+            object-fit: contain;
+            margin-left: 2rem;
+            filter: drop-shadow(0 0 25px rgba(255, 215, 0, 0.6));
+            animation: logoGlow 3s ease-in-out infinite alternate;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1rem;
+            /* تحسينات للتوافق مع OBS */
+            image-rendering: -webkit-optimize-contrast;
+            image-rendering: crisp-edges;
+            backface-visibility: hidden;
+            transform: translateZ(0);
+        }
+
+        .club-info {
+            text-align: center;
+            flex: 1;
+        }
+
+        .club-name {
+            font-size: 4.5rem;
+            font-weight: 900;
+            background: linear-gradient(45deg, #ffd700, #ffed4e, #ffd700);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+            text-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
+            animation: textGlow 2s ease-in-out infinite alternate;
+        }
+
+        .club-rank {
+            font-size: 2.2rem;
+            color: #fff;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 700;
+        }
+
+        .club-league {
+            font-size: 1.8rem;
+            color: #94a3b8;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .expenditure-section {
+            background: rgba(15, 15, 35, 0.9);
+            border-radius: 25px;
+            padding: 3rem;
+            margin: 2rem 0;
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            backdrop-filter: blur(20px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6);
+            text-align: center;
+            width: 100%;
+            max-width: 800px;
+        }
+
+        .expenditure-label {
+            font-size: 2rem;
+            color: #94a3b8;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .expenditure-value {
+            font-size: 7rem;
+            font-weight: 900;
+            color: #ffd700;
+            text-align: center;
+            margin: 1rem 0;
+            text-shadow: 0 0 40px rgba(255, 215, 0, 0.8);
+            animation: expenditureGlow 3s ease-in-out infinite alternate;
+            background: linear-gradient(45deg, #ffd700, #ffed4e, #ffd700);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .club-stats {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            margin-top: 2rem;
+            gap: 2rem;
+        }
+
+        .stat-item {
+            text-align: center;
+            flex: 1;
+            padding: 2rem;
+            background: rgba(15, 15, 35, 0.8);
+            border-radius: 20px;
+            border: 2px solid rgba(255, 215, 0, 0.2);
+            backdrop-filter: blur(15px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .stat-item:hover {
+            transform: translateY(-5px);
+            border-color: rgba(255, 215, 0, 0.5);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+        }
+
+        .stat-label {
+            font-size: 1.4rem;
+            color: #94a3b8;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .stat-value {
+            font-size: 3.5rem;
+            font-weight: bold;
+            color: #ffd700;
+            animation: statGlow 2s ease-in-out infinite alternate;
+        }
+
+        .data-source {
+            position: absolute;
+            bottom: 2rem;
+            right: 2rem;
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.6);
+            z-index: 3;
+            background: rgba(15, 15, 35, 0.8);
+            padding: 1rem 1.5rem;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            backdrop-filter: blur(10px);
+        }
+
+        .loading {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+        }
+
+        .loading-spinner {
+            width: 100px;
+            height: 100px;
+            border: 10px solid rgba(255, 215, 0, 0.2);
+            border-top: 10px solid #ffd700;
+            border-radius: 50%;
+            animation: spin 1.5s linear infinite;
+            margin-bottom: 3rem;
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
+        }
+
+        .loading-text {
+            font-size: 2rem;
+            color: #ffd700;
+            font-weight: 600;
+        }
+
+        .error-message {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(239, 68, 68, 0.2);
+            border: 2px solid #ef4444;
+            border-radius: 20px;
+            padding: 3rem;
+            text-align: center;
+            color: #ef4444;
+            z-index: 10;
+            backdrop-filter: blur(15px);
+            max-width: 80%;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes logoGlow {
+            0% {
+                filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.4));
+                transform: scale(1);
+            }
+            100% {
+                filter: drop-shadow(0 0 35px rgba(255, 215, 0, 0.8));
+                transform: scale(1.08);
+            }
+        }
+
+        @keyframes textGlow {
+            0% {
+                text-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+                transform: scale(1);
+            }
+            100% {
+                text-shadow: 0 0 40px rgba(255, 215, 0, 0.6);
+                transform: scale(1.02);
+            }
+        }
+
+        @keyframes expenditureGlow {
+            0% {
+                text-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
+                transform: scale(1);
+            }
+            100% {
+                text-shadow: 0 0 50px rgba(255, 215, 0, 0.8);
+                transform: scale(1.03);
+            }
+        }
+
+        @keyframes statGlow {
+            0% {
+                text-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
+                transform: scale(1);
+            }
+            100% {
+                text-shadow: 0 0 25px rgba(255, 215, 0, 0.6);
+                transform: scale(1.05);
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideOut {
+            from {
+                transform: translateX(0);
+                opacity: 1;
+            }
+            to {
+                transform: translateX(-100%);
+                opacity: 0;
+            }
+        }
+
+        /* إخفاء الإشعارات في الواجهة الرئيسية */
+        .notification {
+            display: none !important;
+        }
+
+        /* تحسينات إضافية للعرض */
+        .club-header::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, #ffd700, #ffed4e, #ffd700);
+            border-radius: 25px;
+            z-index: -1;
+            opacity: 0.3;
+            animation: borderGlow 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes borderGlow {
+            0% {
+                opacity: 0.2;
+            }
+            100% {
+                opacity: 0.5;
+            }
+        }
+
+        /* تحسين التجاوب */
+        @media (max-width: 1200px) {
+            .club-name {
+                font-size: 3.5rem;
+            }
+            .expenditure-value {
+                font-size: 5rem;
+            }
+            .stat-value {
+                font-size: 2.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .club-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            .club-logo {
+                margin-left: 0;
+                margin-bottom: 1rem;
+                width: 120px;
+                height: 120px;
+            }
+            .club-name {
+                font-size: 2.5rem;
+            }
+            .expenditure-value {
+                font-size: 3.5rem;
+            }
+            .club-stats {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+
+        /* تحسينات إضافية للتوافق مع OBS */
+        @media screen and (max-width: 1920px) {
+            .club-name {
+                font-size: 4rem;
+            }
+            .expenditure-value {
+                font-size: 6rem;
+            }
+            .stat-value {
+                font-size: 3rem;
+            }
+        }
+
+        /* تحسينات للتوافق مع OBS في الشاشات الصغيرة */
+        @media screen and (max-width: 1366px) {
+            .club-name {
+                font-size: 3.5rem;
+            }
+            .expenditure-value {
+                font-size: 5rem;
+            }
+            .stat-value {
+                font-size: 2.5rem;
+            }
+            .club-logo {
+                width: 150px;
+                height: 150px;
+            }
+        }
+
+        /* تحسينات خاصة للبث المباشر 1920x1080 */
+        @media screen and (width: 1920px) and (height: 1080px) {
+            .club-name {
+                font-size: 4.5rem;
+            }
+            .expenditure-value {
+                font-size: 7rem;
+            }
+            .stat-value {
+                font-size: 3.5rem;
+            }
+            .club-logo {
+                width: 180px;
+                height: 180px;
+            }
+            .club-header {
+                padding: 2.5rem;
+            }
+            .expenditure-section {
+                padding: 3.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="loadingSection" class="loading">
+            <div class="loading-spinner"></div>
+            <p class="loading-text">جاري تحميل البيانات...</p>
+        </div>
+
+        <div id="errorSection" class="error-message" style="display: none;">
+            <h2><i class="fas fa-exclamation-triangle"></i> خطأ</h2>
+            <p id="errorText">حدث خطأ في تحميل البيانات. يرجى التحقق من الاتصال وإعادة المحاولة.</p>
+            <div style="margin-top: 1rem;">
+                <button onclick="window.open('/obs-new-tols/transfermarkt-real-data.html', '_blank')"
+                        style="background: linear-gradient(135deg, #ffd700, #ffed4e); color: #1a1a2e; border: none; padding: 15px 25px; border-radius: 10px; cursor: pointer; font-weight: bold; box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3);">
+                    فتح صفحة استخراج البيانات
+                </button>
+            </div>
+        </div>
+
+        <div id="clubDisplay" class="club-display" style="display: none;">
+            <div id="clubBackground" class="club-background"></div>
+
+            <div class="club-content">
+                <div class="club-header">
+                    <img id="clubLogo" src="" alt="" class="club-logo">
+                    <div class="club-info">
+                        <h1 id="clubName" class="club-name"></h1>
+                        <div id="clubRank" class="club-rank"></div>
+                        <div id="clubLeague" class="club-league"></div>
+                    </div>
+                </div>
+
+                <div class="expenditure-section">
+                    <div class="expenditure-label">إجمالي الإنفاق</div>
+                    <div id="expenditureValue" class="expenditure-value"></div>
+                </div>
+
+                <div class="club-stats">
+                    <div class="stat-item">
+                        <div class="stat-label">الإيرادات</div>
+                        <div id="incomeValue" class="stat-value"></div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">الميزانية</div>
+                        <div id="balanceValue" class="stat-value"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="dataSource" class="data-source">
+                <div style="margin-bottom: 0.5rem;">
+                    <strong>المصدر:</strong> Transfermarkt | <span id="dataSourceType">غير محدد</span>
+                </div>
+                <div>
+                    آخر تحديث: <span id="lastUpdated">غير محدد</span>
+                </div>
+                <button onclick="loadData()" style="margin-top: 0.5rem; background: linear-gradient(135deg, #ffd700, #ffed4e); color: #1a1a2e; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer; font-size: 0.8rem; font-weight: bold;">
+                    🔄 تحديث
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- تحميل الأنظمة المساعدة -->
+    <script src="/public/data-manager.js"></script>
+    <script src="/obs-new-tols/universal-logo-fix.js"></script>
+    <!-- جلب مباشر من Transfermarkt (حل OBS) -->
+    <script src="/obs-new-tols/transfermarkt-direct-fetch.js"></script>
+    <script>
+        // ملاحظة: تم إزالة البيانات الافتراضية لضمان استخدام البيانات الحقيقية فقط
+        // البيانات ستأتي من transfermarkt-real-data.html حصرياً
+
+        let currentClubIndex = 0;
+        let clubs = [];
+        let displayInterval;
+
+        // عرض تنبيه مصدر البيانات - محسن ومتوافق مع OBS
+        function showDataSourceNotification(source) {
+            // تم إخفاء الإشعارات في الواجهة الرئيسية
+            // فقط طباعة الرسائل في console
+            let message = '';
+
+            switch(source) {
+                case 'live':
+                    message = 'البيانات محدثة ومباشرة';
+                    break;
+                case 'cached':
+                    message = 'البيانات من الذاكرة المؤقتة';
+                    break;
+                case 'old':
+                    message = 'البيانات قديمة - يُنصح بالتحديث';
+                    break;
+                case 'default':
+                    message = 'البيانات الافتراضية - قم بتشغيل صفحة الاستخراج';
+                    break;
+                case 'quick-fix':
+                    message = 'البيانات من نظام الإصلاح السريع';
+                    break;
+                default:
+                    message = 'مصدر البيانات غير معروف';
+            }
+
+            console.log(`📊 مصدر البيانات: ${message}`);
+        }
+
+        // تحديث الطابع الزمني للبيانات
+        function updateDataTimestamp() {
+            const lastUpdatedSpan = document.getElementById('lastUpdated');
+            const dataSourceTypeSpan = document.getElementById('dataSourceType');
+
+            // التحقق من مصدر البيانات
+            const realData = localStorage.getItem('transfermarktRealData');
+            const oldData = localStorage.getItem('transfermarktData');
+
+            if (realData) {
+                try {
+                    const data = JSON.parse(realData);
+                    if (data.source) {
+                        dataSourceTypeSpan.textContent = data.source;
+                    } else {
+                        dataSourceTypeSpan.textContent = 'transfermarktRealData';
+                    }
+
+                    if (data.lastUpdate) {
+                        const updateDate = new Date(data.lastUpdate);
+                        // استخدام التقويم الميلادي بدلاً من الهجري
+                        lastUpdatedSpan.textContent = updateDate.toLocaleString('en-US', {
+                            year: 'numeric',
+                            month: '2-digit',
+                            day: '2-digit',
+                            hour: '2-digit',
+                            minute: '2-digit',
+                            second: '2-digit',
+                            hour12: false
+                        });
+                    } else {
+                        lastUpdatedSpan.textContent = 'غير محدد';
+                    }
+                } catch (error) {
+                    dataSourceTypeSpan.textContent = 'transfermarktRealData (خطأ)';
+                    lastUpdatedSpan.textContent = 'غير محدد';
+                }
+            } else if (oldData) {
+                dataSourceTypeSpan.textContent = 'transfermarktData';
+                const lastUpdate = localStorage.getItem('transfermarktLastUpdate');
+
+                if (lastUpdate) {
+                    const updateDate = new Date(lastUpdate);
+                    // استخدام التقويم الميلادي بدلاً من الهجري
+                    lastUpdatedSpan.textContent = updateDate.toLocaleString('en-US', {
+                        year: 'numeric',
+                        month: '2-digit',
+                        day: '2-digit',
+                        hour: '2-digit',
+                        minute: '2-digit',
+                        second: '2-digit',
+                        hour12: false
+                    });
+                } else {
+                    lastUpdatedSpan.textContent = 'غير محدد';
+                }
+            } else {
+                dataSourceTypeSpan.textContent = 'البيانات الافتراضية';
+                lastUpdatedSpan.textContent = 'غير محدد';
+            }
+        }
+
+        // عرض النادي الحالي - محسن ومتوافق مع OBS
+        function displayCurrentClub() {
+            if (!clubs || clubs.length === 0) {
+                console.warn('⚠️ لا توجد أندية للعرض');
+                return;
+            }
+
+            try {
+                const club = clubs[currentClubIndex];
+
+                // تحديث المعلومات - يدعم البيانات الجديدة والقديمة
+                const clubName = club.arabicName || club.name || club.englishName;
+                let clubLogo = club.logoUrl || club.logo;
+
+                // إذا لم يكن هناك شعار، حاول البحث عنه
+                if (!clubLogo) {
+                    clubLogo = findClubLogo(club.englishName || clubName);
+                }
+
+                // تحديث النصوص
+                const nameElement = document.getElementById('clubName');
+                const rankElement = document.getElementById('clubRank');
+                const leagueElement = document.getElementById('clubLeague');
+                const expenditureElement = document.getElementById('expenditureValue');
+                const incomeElement = document.getElementById('incomeValue');
+                const balanceElement = document.getElementById('balanceValue');
+
+                if (nameElement) nameElement.textContent = clubName;
+                if (rankElement) rankElement.textContent = `المركز ${club.rank}`;
+                if (leagueElement) leagueElement.textContent = club.league;
+                if (expenditureElement) expenditureElement.textContent = club.expenditure;
+                if (incomeElement) incomeElement.textContent = club.income;
+                if (balanceElement) balanceElement.textContent = club.balance;
+
+                // تم إزالة عرض عدد الصفقات القادمة والخروج حسب الطلب
+
+                // تحديث الشعار مع تحسينات للتوافق مع OBS + ربط بقاعدة الشعارات
+                const logoImg = document.getElementById('clubLogo');
+                const nameForLogo = club.englishName || clubName;
+                let finalLogoUrl = clubLogo || findClubLogo(nameForLogo);
+                if (!finalLogoUrl) {
+                    try {
+                        const resp = await fetch(`/api/get-club-logo?clubName=${encodeURIComponent(nameForLogo)}`);
+                        const json = await resp.json();
+                        finalLogoUrl = json?.data?.logoUrl || generateFallbackLogo(nameForLogo);
+                    } catch {
+                        finalLogoUrl = generateFallbackLogo(nameForLogo);
+                    }
+                }
+
+                if (logoImg) {
+                    logoImg.onload = function() {
+                        console.log(`✅ تم تحميل شعار ${clubName} بنجاح`);
+                    };
+                    logoImg.onerror = async function() {
+                        console.warn(`⚠️ فشل في تحميل شعار ${clubName}: ${finalLogoUrl}`);
+                        try {
+                            const resp = await fetch(`/api/get-club-logo?clubName=${encodeURIComponent(nameForLogo)}`);
+                            const json = await resp.json();
+                            const apiLogo = json?.data?.logoUrl;
+                            if (apiLogo) {
+                                this.src = apiLogo + (apiLogo.includes('?') ? `&v=${Date.now()}` : `?v=${Date.now()}`);
+                                return;
+                            }
+                        } catch {}
+                        this.src = generateFallbackLogo(nameForLogo);
+                    };
+                    const cacheBustedUrl = finalLogoUrl + (finalLogoUrl.includes('?') ? `&v=${Date.now()}` : `?v=${Date.now()}`);
+                    setTimeout(() => {
+                        logoImg.src = cacheBustedUrl;
+                        logoImg.alt = clubName;
+                    }, 50);
+                }
+
+                // تحديث الخلفية مع تحسينات للتوافق مع OBS
+                const background = document.getElementById('clubBackground');
+                if (background) {
+                    setTimeout(() => {
+                        background.style.backgroundImage = `url(${finalLogoUrl})`;
+                    }, 200);
+                }
+
+                console.log(`عرض النادي: ${clubName} (${currentClubIndex + 1}/${clubs.length}) - الشعار: ${finalLogoUrl}`);
+            } catch (error) {
+                console.error('❌ خطأ في عرض النادي:', error);
+            }
+        }
+
+        // إنشاء شعار احتياطي - محسن للتوافق مع OBS
+        function generateFallbackLogo(clubName) {
+            const initials = clubName.split(' ')
+                .map(word => word.charAt(0))
+                .join('')
+                .substring(0, 2)
+                .toUpperCase();
+
+            // استخدام شعار احتياطي محسن للتوافق مع OBS
+            return `https://ui-avatars.com/api/?name=${encodeURIComponent(initials)}&size=400&background=1a1a2e&color=ffd700&bold=true&format=png&rounded=true&font-size=0.6&cache=${Date.now()}`;
+        }
+
+        // البحث عن شعار النادي - محسن ومتوافق مع OBS
+        function findClubLogo(clubName) {
+            if (!clubName) return null;
+
+            // استخدام النظام الموحد إذا كان متاحاً
+            if (window.universalLogoFix && window.universalLogoFix.isInitialized) {
+                return window.universalLogoFix.findClubLogo(clubName);
+            }
+
+            // الطريقة التقليدية كاحتياطي
+            try {
+                // البحث في قاعدة بيانات الشعارات
+                const clubManagerData = localStorage.getItem('clubManagerData');
+                const verifiedClubs = localStorage.getItem('verifiedClubs');
+
+                let logoDatabase = [];
+
+                // تحميل من clubManagerData
+                if (clubManagerData) {
+                    try {
+                        const data = JSON.parse(clubManagerData);
+                        logoDatabase = logoDatabase.concat(data);
+                    } catch (e) {
+                        console.warn('⚠️ خطأ في تحميل clubManagerData:', e);
+                    }
+                }
+
+                // تحميل من verifiedClubs
+                if (verifiedClubs) {
+                    try {
+                        const data = JSON.parse(verifiedClubs);
+                        logoDatabase = logoDatabase.concat(data);
+                    } catch (e) {
+                        console.warn('⚠️ خطأ في تحميل verifiedClubs:', e);
+                    }
+                }
+
+                // البحث المباشر
+                const club = logoDatabase.find(c =>
+                    c.englishName === clubName ||
+                    c.arabicName === clubName ||
+                    c.name === clubName
+                );
+
+                if (club && club.logoUrl) {
+                    return club.logoUrl;
+                }
+
+                // البحث بدون FC
+                const cleanName = clubName.replace(/\s+FC$/, '').replace(/\s+Football Club$/, '');
+                const clubWithoutFC = logoDatabase.find(c => {
+                    const cleanEnglish = (c.englishName || '').replace(/\s+FC$/, '').replace(/\s+Football Club$/, '');
+                    const cleanArabic = (c.arabicName || '').replace(/\s+FC$/, '').replace(/\s+Football Club$/, '');
+                    return cleanEnglish === cleanName || cleanArabic === cleanName;
+                });
+
+                if (clubWithoutFC && clubWithoutFC.logoUrl) {
+                    return clubWithoutFC.logoUrl;
+                }
+
+                // البحث الذكي
+                const searchName = clubName.toLowerCase();
+                const smartMatch = logoDatabase.find(c => {
+                    const englishName = (c.englishName || '').toLowerCase();
+                    const arabicName = (c.arabicName || '').toLowerCase();
+                    const name = (c.name || '').toLowerCase();
+
+                    return englishName.includes(searchName) ||
+                           searchName.includes(englishName) ||
+                           arabicName.includes(searchName) ||
+                           name.includes(searchName);
+                });
+
+                if (smartMatch && smartMatch.logoUrl) {
+                    return smartMatch.logoUrl;
+                }
+
+                // البحث بالكلمات المفتاحية
+                const keywords = clubName.toLowerCase().split(' ').filter(word => word.length > 2);
+                for (const keyword of keywords) {
+                    const keywordMatch = logoDatabase.find(c => {
+                        const englishName = (c.englishName || '').toLowerCase();
+                        const arabicName = (c.arabicName || '').toLowerCase();
+                        const name = (c.name || '').toLowerCase();
+
+                        return englishName.includes(keyword) ||
+                               arabicName.includes(keyword) ||
+                               name.includes(keyword);
+                    });
+
+                    if (keywordMatch && keywordMatch.logoUrl) {
+                        return keywordMatch.logoUrl;
+                    }
+                }
+
+                return null;
+            } catch (error) {
+                console.warn('⚠️ خطأ في البحث عن الشعار:', error);
+                return null;
+            }
+        }
+
+        // الانتقال للنادي التالي - محسن للتوافق مع OBS
+        function nextClub() {
+            if (!clubs || clubs.length === 0) {
+                console.warn('⚠️ لا توجد أندية للعرض');
+                return;
+            }
+
+            try {
+                currentClubIndex = (currentClubIndex + 1) % clubs.length;
+                displayCurrentClub();
+                console.log(`🔄 الانتقال للنادي ${currentClubIndex + 1}/${clubs.length}`);
+            } catch (error) {
+                console.error('❌ خطأ في الانتقال للنادي التالي:', error);
+            }
+        }
+
+        // بدء العرض التلقائي - محسن ومتوافق مع OBS
+        function startAutoDisplay() {
+            if (displayInterval) {
+                clearInterval(displayInterval);
+            }
+
+            displayCurrentClub();
+
+            // تغيير النادي كل 5 ثوانٍ مع تحسين للتوافق مع OBS
+            displayInterval = setInterval(() => {
+                try {
+                    nextClub();
+                } catch (error) {
+                    console.warn('⚠️ خطأ في تغيير النادي:', error);
+                    // إعادة المحاولة
+                    setTimeout(() => {
+                        nextClub();
+                    }, 1000);
+                }
+            }, 5000);
+
+            console.log('✅ تم بدء العرض التلقائي');
+        }
+
+        // إيقاف العرض التلقائي - محسن ومتوافق مع OBS
+        function stopAutoDisplay() {
+            if (displayInterval) {
+                clearInterval(displayInterval);
+                displayInterval = null;
+                console.log('⏸️ تم إيقاف العرض التلقائي');
+            }
+        }
+
+        // إظهار/إخفاء التحميل - محسن ومتوافق مع OBS
+        function showLoading(show = true) {
+            try {
+                const loadingSection = document.getElementById('loadingSection');
+                const clubDisplay = document.getElementById('clubDisplay');
+                const errorSection = document.getElementById('errorSection');
+
+                if (show) {
+                    loadingSection.style.display = 'flex';
+                    clubDisplay.style.display = 'none';
+                    errorSection.style.display = 'none';
+                    console.log('⏳ إظهار شاشة التحميل');
+                } else {
+                    loadingSection.style.display = 'none';
+                    clubDisplay.style.display = 'flex';
+                    errorSection.style.display = 'none';
+                    console.log('✅ إخفاء شاشة التحميل');
+                }
+            } catch (error) {
+                console.warn('⚠️ خطأ في إظهار/إخفاء التحميل:', error);
+            }
+        }
+
+        // إظهار رسالة خطأ - محسن ومتوافق مع OBS
+        function showError(message = 'حدث خطأ في تحميل البيانات') {
+            try {
+                const errorSection = document.getElementById('errorSection');
+                const loadingSection = document.getElementById('loadingSection');
+                const clubDisplay = document.getElementById('clubDisplay');
+
+                errorSection.style.display = 'block';
+                errorSection.querySelector('p').textContent = message;
+                loadingSection.style.display = 'none';
+                clubDisplay.style.display = 'none';
+
+                console.error('❌ خطأ:', message);
+            } catch (error) {
+                console.error('❌ خطأ في إظهار رسالة الخطأ:', error);
+            }
+        }
+
+        // تحميل البيانات - نظام محسن ومتوافق مع OBS مع حل مشكلة التخزين المؤقت
+        async function loadData(forceRefresh = true) {
+            // إضافة معلمة إجبار التحديث مع طابع زمني فريد
+            const timestamp = Date.now();
+            const url = 'transfermarkt-real-data.html' + (forceRefresh ? '?force=' + timestamp + '&cache=' + Math.random() : '');
+            console.log('🚀 بدء تحميل البيانات...');
+            console.log('📊 فحص مصادر البيانات المتاحة...');
+
+            // في OBS: بدلاً من الجلب المباشر، استخدم أسلوب Bridge لضمان التوافق بدون localStorage ولا proxies
+            try {
+                const ua = navigator.userAgent.toLowerCase();
+                const isOBS = ua.includes('obs') || ua.includes('cef') || !!window.obsstudio;
+                if (isOBS) {
+                    console.log('🧩 OBS detected: تشغيل Bridge مضمّن داخل الصفحة...');
+                    await runEmbeddedBridge();
+                    return; // سيقوم bridge بنداء display بمجرد وصول البيانات
+                }
+            } catch (e) {
+                console.warn('⚠️ فشل تفعيل Bridge:', e.message);
+            }
+
+            // Bridge المضمّن داخل الصفحة (يعمل فقط داخل OBS)
+            async function runEmbeddedBridge() {
+                return new Promise((resolve, reject) => {
+                    try {
+                        const iframe = document.createElement('iframe');
+                        iframe.src = '/obs-new-tols/transfermarkt-real-data.html?embed=1&_=' + Date.now();
+                        iframe.style.width = '1px';
+                        iframe.style.height = '1px';
+                        iframe.style.opacity = '0';
+                        iframe.style.position = 'absolute';
+                        iframe.style.pointerEvents = 'none';
+                        document.body.appendChild(iframe);
+
+                        const onMsg = async (event) => {
+                            try {
+                                const data = event.data;
+                                if (!data || typeof data !== 'object') return;
+                                if (data.type === 'REAL_DATA_UPDATED' && data.payload && data.payload.clubs) {
+                                    window.removeEventListener('message', onMsg);
+                                    console.log('✅ Bridge: استقبلنا بيانات حقيقية بعدد:', data.payload.clubs.length);
+                                    clubs = data.payload.clubs;
+                                    showLoading(false);
+                                    updateDataTimestamp();
+                                    startAutoDisplay();
+                                    resolve();
+                                }
+                            } catch (e) {
+                                console.warn('⚠️ Bridge: رسالة غير صالحة:', e.message);
+                            }
+                        };
+                        window.addEventListener('message', onMsg);
+
+                        // طلب البيانات في حال لم تُرسل تلقائياً
+                        setTimeout(() => {
+                            try {
+                                iframe.contentWindow.postMessage({ type: 'REQUEST_REAL_DATA' }, '*');
+                                console.log('📨 Bridge: طلب البيانات من IFRAME');
+                            } catch {}
+                        }, 1500);
+
+                        // مهلة أمان
+                        setTimeout(() => {
+                            window.removeEventListener('message', onMsg);
+                            reject(new Error('Bridge timeout'));
+                        }, 15000);
+                    } catch (err) {
+                        reject(err);
+                    }
+                });
+            }
+
+            showLoading(true);
+
+            // تأخير قصير للتأكد من اكتمال التحميل في OBS
+            await new Promise(resolve => setTimeout(resolve, 500));
+
+            // حل مشكلة OBS: إضافة headers لمنع التخزين المؤقت
+            if (forceRefresh) {
+                // محاولة تنظيف التخزين المؤقت للمتصفح
+                try {
+                    if ('caches' in window) {
+                        const cacheNames = await caches.keys();
+                        await Promise.all(
+                            cacheNames.map(cacheName => caches.delete(cacheName))
+                        );
+                        console.log('🧹 تم تنظيف التخزين المؤقت للمتصفح');
+                    }
+                } catch (error) {
+                    console.warn('⚠️ لا يمكن تنظيف التخزين المؤقت:', error);
+                }
+            }
+
+            // تحديث البيانات كل دقيقتين مع منع التخزين المؤقت
+            if (!window.dataUpdateInterval) {
+                window.dataUpdateInterval = setInterval(() => {
+                    console.log('🔄 تحديث دوري للبيانات...');
+                    loadData(true);
+                }, 2 * 60 * 1000);
+            }
+
+            // إعادة تحميل كاملة للصفحة كل 30 دقيقة للتأكد من تحديث البيانات
+            if (!window.pageReloadInterval) {
+                window.pageReloadInterval = setInterval(() => {
+                    console.log('🔄 إعادة تحميل الصفحة لتحديث البيانات...');
+                    // إضافة معلمة لمنع التخزين المؤقت في OBS
+                    window.location.href = window.location.href.split('?')[0] + '?refresh=' + Date.now();
+                }, 30 * 60 * 1000);
+            }
+
+            // فحص البيانات المتاحة
+            const realData = localStorage.getItem('transfermarktRealData');
+            const oldData = localStorage.getItem('transfermarktData');
+
+            if (realData) {
+                console.log('✅ يوجد بيانات في transfermarktRealData');
+            } else {
+                console.log('❌ لا توجد بيانات في transfermarktRealData');
+            }
+
+            if (oldData) {
+                console.log('✅ يوجد بيانات في transfermarktData');
+            } else {
+                console.log('❌ لا توجد بيانات في transfermarktData');
+            }
+
+            try {
+                // نظام تحميل البيانات المحسن والمتوافق مع OBS
+                console.log('🔧 بدء نظام التحميل المحسن...');
+
+                // محاولة تحميل البيانات من جميع المصادر المتاحة
+                let dataLoaded = false;
+
+                // 1. محاولة تحميل من transfermarktRealData (الأولوية الأولى)
+                if (!dataLoaded) {
+                    const realData = localStorage.getItem('transfermarktRealData');
+                    if (realData) {
+                        try {
+                            const data = JSON.parse(realData);
+                            console.log('📊 بيانات transfermarktRealData:', data);
+
+                            if (data.clubs && Array.isArray(data.clubs) && data.clubs.length > 0) {
+                                clubs = await enrichClubsWithLogos(data.clubs);
+                                console.log(`✅ تم تحميل ${clubs.length} نادي من transfermarktRealData`);
+
+                                // التحقق من عمر البيانات
+                                if (data.lastUpdate) {
+                                    const updateTime = new Date(data.lastUpdate);
+                                    const now = new Date();
+                                    const diffMinutes = Math.floor((now - updateTime) / (1000 * 60));
+
+                                    console.log(`📅 عمر البيانات: ${diffMinutes} دقيقة`);
+                                }
+
+                                dataLoaded = true;
+                                console.log('✅ تم تحميل البيانات من transfermarktRealData');
+                            }
+                        } catch (error) {
+                            console.warn('⚠️ خطأ في تحليل transfermarktRealData:', error);
+                        }
+                    }
+                }
+
+                // 2. محاولة تحميل من transfermarktData (الاحتياطي)
+                if (!dataLoaded) {
+                    const savedData = localStorage.getItem('transfermarktData');
+                    if (savedData) {
+                        try {
+                            const data = JSON.parse(savedData);
+                            console.log('📊 بيانات transfermarktData:', data);
+
+                            if (Array.isArray(data) && data.length > 0) {
+                                clubs = await enrichClubsWithLogos(data);
+                                console.log(`✅ تم تحميل ${clubs.length} نادي من transfermarktData`);
+
+                                // التحقق من عمر البيانات
+                                const lastUpdate = localStorage.getItem('transfermarktLastUpdate');
+                                if (lastUpdate) {
+                                    const updateTime = new Date(lastUpdate);
+                                    const now = new Date();
+                                    const diffMinutes = Math.floor((now - updateTime) / (1000 * 60));
+
+                                    console.log(`📅 عمر البيانات: ${diffMinutes} دقيقة`);
+                                }
+
+                                dataLoaded = true;
+                                console.log('✅ تم تحميل البيانات من transfermarktData');
+                            }
+                        } catch (error) {
+                            console.warn('⚠️ خطأ في تحليل transfermarktData:', error);
+                        }
+                    }
+                }
+
+                // 3. لا توجد أنظمة احتياطية - البيانات الحقيقية فقط
+                // تم إزالة جميع الأنظمة الاحتياطية لضمان استخدام البيانات الحقيقية حصرياً
+
+                // 5. إذا لم يتم تحميل أي بيانات، عرض رسالة خطأ واضحة
+                if (!dataLoaded) {
+                    console.error('❌ لم يتم العثور على بيانات حقيقية!');
+                    showError(`
+❌ لم يتم العثور على بيانات حقيقية!
+
+يرجى اتباع الخطوات التالية:
+
+1. افتح صفحة استخراج البيانات:
+   http://localhost:8201/obs-new-tols/transfermarkt-real-data.html
+
+2. اضغط "تحديث البيانات الآن" لاستخراج البيانات الحقيقية
+
+3. انتظر حتى اكتمال الاستخراج
+
+4. عد إلى هذه الصفحة وأعد تحميلها
+
+ملاحظة: هذه الصفحة تعرض البيانات الحقيقية فقط من transfermarkt-real-data.html
+                    `);
+
+                    throw new Error('لا توجد بيانات حقيقية متاحة');
+                }
+
+                // عرض البيانات النهائية
+                if (dataLoaded && clubs && clubs.length > 0) {
+                    console.log(`🎉 تم تحميل ${clubs.length} نادي بنجاح!`);
+
+                    // تأخير قصير للتأكد من اكتمال التحميل في OBS
+                    await new Promise(resolve => setTimeout(resolve, 300));
+
+                    showLoading(false);
+                    updateDataTimestamp();
+                    startAutoDisplay();
+                } else {
+                    throw new Error('فشل في تحميل أي بيانات متاحة');
+                }
+
+            } catch (error) {
+                console.error('❌ خطأ في تحميل البيانات:', error.message);
+                showError('فشل في تحميل البيانات: ' + error.message + '\n\nيرجى:\n1. فتح صفحة استخراج البيانات أولاً\n2. استخراج البيانات من Transfermarkt\n3. العودة لهذه الصفحة');
+            }
+        }
+
+        // ربط الشعارات بالبيانات - محسن ومتوافق مع OBS
+        async function enrichClubsWithLogos(clubsData) {
+            if (!clubsData || clubsData.length === 0) {
+                return [];
+            }
+
+            console.log('🎨 بدء ربط الشعارات بالبيانات...');
+
+            try {
+                // استخدام النظام الموحد إذا كان متاحاً
+                if (window.universalLogoFix && window.universalLogoFix.isInitialized) {
+                    console.log('🔄 استخدام النظام الموحد لحل مشكلة الشعارات...');
+                    return window.universalLogoFix.enrichWithLogos(clubsData);
+                }
+
+                // الطريقة التقليدية كاحتياطي
+                console.log('🔄 استخدام الطريقة التقليدية لربط الشعارات...');
+
+                // تحميل قاعدة بيانات الشعارات
+                const logoDatabase = await loadLogoDatabase();
+
+                const enrichedClubs = [];
+
+                for (const club of clubsData) {
+                    try {
+                        // البحث عن الشعار
+                        let logoUrl = club.logoUrl || club.logo;
+
+                        if (!logoUrl) {
+                            logoUrl = findClubLogo(club.englishName || club.arabicName || club.name);
+                        }
+
+                        // تحسين الشعار للتوافق مع OBS
+                        const finalLogoUrl = logoUrl || generateFallbackLogo(club.englishName || club.arabicName || club.name);
+
+                        const enrichedClub = {
+                            ...club,
+                            logoUrl: finalLogoUrl
+                        };
+
+                        enrichedClubs.push(enrichedClub);
+                        console.log(`🎨 ربط شعار ${club.englishName || club.arabicName || club.name}: ${logoUrl ? '✅ موجود' : '⚠️ احتياطي'}`);
+
+                    } catch (error) {
+                        console.warn(`⚠️ خطأ في ربط شعار ${club.englishName || club.arabicName || club.name}:`, error);
+
+                        enrichedClubs.push({
+                            ...club,
+                            logoUrl: generateFallbackLogo(club.englishName || club.arabicName || club.name)
+                        });
+                    }
+                }
+
+                console.log(`✅ تم ربط ${enrichedClubs.length} شعار بالبيانات`);
+                return enrichedClubs;
+            } catch (error) {
+                console.error('❌ خطأ في ربط الشعارات:', error);
+
+                // إرجاع البيانات بدون شعارات في حالة الخطأ
+                return clubsData.map(club => ({
+                    ...club,
+                    logoUrl: generateFallbackLogo(club.englishName || club.arabicName || club.name)
+                }));
+            }
+        }
+
+        // تحميل قاعدة بيانات الشعارات - محسن ومتوافق مع OBS
+        async function loadLogoDatabase() {
+            try {
+                console.log('📊 تحميل قاعدة بيانات الشعارات...');
+
+                const clubManagerData = localStorage.getItem('clubManagerData');
+                const verifiedClubs = localStorage.getItem('verifiedClubs');
+
+                let logoDatabase = [];
+
+                // تحميل من clubManagerData
+                if (clubManagerData) {
+                    try {
+                        const data = JSON.parse(clubManagerData);
+                        if (Array.isArray(data)) {
+                            logoDatabase = logoDatabase.concat(data);
+                            console.log(`📥 تم تحميل ${data.length} نادي من clubManagerData`);
+                        }
+                    } catch (e) {
+                        console.warn('⚠️ خطأ في تحميل clubManagerData:', e);
+                    }
+                }
+
+                // تحميل من verifiedClubs
+                if (verifiedClubs) {
+                    try {
+                        const data = JSON.parse(verifiedClubs);
+                        if (Array.isArray(data)) {
+                            logoDatabase = logoDatabase.concat(data);
+                            console.log(`📥 تم تحميل ${data.length} نادي من verifiedClubs`);
+                        }
+                    } catch (e) {
+                        console.warn('⚠️ خطأ في تحميل verifiedClubs:', e);
+                    }
+                }
+
+                // إزالة التكرارات
+                const uniqueClubs = logoDatabase.filter((club, index, self) =>
+                    index === self.findIndex(c =>
+                        c.englishName === club.englishName ||
+                        c.arabicName === club.arabicName ||
+                        c.name === club.name
+                    )
+                );
+
+                console.log(`✅ قاعدة بيانات الشعارات جاهزة: ${uniqueClubs.length} نادي`);
+                return uniqueClubs;
+
+            } catch (error) {
+                console.error('❌ خطأ في تحميل قاعدة بيانات الشعارات:', error);
+                return [];
+            }
+        }
+
+        // مراقبة تحديثات localStorage - محسن ومتوافق مع OBS
+        function setupStorageListener() {
+            console.log('🔧 إعداد مراقبة التحديثات...');
+
+            // مراقبة تغييرات localStorage (للصفحات المختلفة)
+            window.addEventListener('storage', function(event) {
+                if (event.key === 'transfermarktRealData' || event.key === 'transfermarktData') {
+                    console.log('🔄 تم اكتشاف تحديث في البيانات من صفحة أخرى:', event.key);
+
+                    // تأخير قصير للتأكد من اكتمال الحفظ
+                    setTimeout(() => {
+                        loadData();
+                    }, 500);
+                }
+            });
+
+            // مراقبة BroadcastChannel للتحديثات (إذا كان مدعوماً)
+            if ('BroadcastChannel' in window) {
+                try {
+                    const channel = new BroadcastChannel('transfermarkt-updates');
+                    channel.addEventListener('message', function(event) {
+                        if (event.data.type === 'data-updated' || event.data.type === 'data-saved') {
+                            console.log('🔄 تم اكتشاف تحديث عبر BroadcastChannel:', event.data);
+
+                            setTimeout(() => {
+                                loadData();
+                            }, 500);
+                        }
+                    });
+                    console.log('✅ تم إعداد BroadcastChannel');
+                } catch (error) {
+                    console.warn('⚠️ BroadcastChannel غير مدعوم:', error);
+                }
+            } else {
+                console.warn('⚠️ BroadcastChannel غير مدعوم في هذا المتصفح');
+            }
+
+            // مراقبة التغييرات في نفس الصفحة (للتوافق مع OBS)
+            try {
+                const originalSetItem = localStorage.setItem;
+                localStorage.setItem = function(key, value) {
+                    originalSetItem.apply(this, arguments);
+                    if (key === 'transfermarktRealData' || key === 'transfermarktData') {
+                        console.log('🔄 تم حفظ بيانات جديدة في نفس الصفحة:', key);
+
+                        // تأخير أطول للتأكد من اكتمال الحفظ في OBS
+                        setTimeout(() => {
+                            loadData();
+                        }, 1000);
+                    }
+                };
+                console.log('✅ تم إعداد مراقبة localStorage المحسنة');
+            } catch (error) {
+                console.warn('⚠️ خطأ في إعداد مراقبة localStorage:', error);
+            }
+
+            // إضافة مراقبة دورية محسنة للبيانات (للتوافق مع OBS)
+            if (!window.obsDataMonitor) {
+                window.obsDataMonitor = setInterval(() => {
+                    const realData = localStorage.getItem('transfermarktRealData');
+                    const lastCheck = localStorage.getItem('lastDataCheck');
+
+                    if (realData && realData !== lastCheck) {
+                        console.log('🔄 تم اكتشاف تحديث في البيانات عبر المراقبة الدورية');
+                        localStorage.setItem('lastDataCheck', realData);
+
+                        // تأخير إضافي للتأكد من اكتمال الحفظ في OBS
+                        setTimeout(() => {
+                            loadData(true);
+                        }, 1500);
+                    }
+
+                    // فحص إضافي لحالة البيانات
+                    try {
+                        const data = JSON.parse(realData || '{}');
+                        if (data.clubs && data.clubs.length > 0) {
+                            const lastUpdate = new Date(data.lastUpdate || 0);
+                            const now = new Date();
+                            const diffMinutes = Math.floor((now - lastUpdate) / (1000 * 60));
+
+                            // إذا كانت البيانات قديمة جداً (أكثر من ساعة)، أعد التحميل
+                            if (diffMinutes > 60) {
+                                console.log('⚠️ البيانات قديمة، إعادة تحميل...');
+                                loadData(true);
+                            }
+                        }
+                    } catch (error) {
+                        console.warn('⚠️ خطأ في فحص البيانات:', error);
+                    }
+                }, 3000); // فحص كل 3 ثوانٍ
+            }
+
+            console.log('✅ تم إكمال إعداد مراقبة التحديثات');
+        }
+
+        // التحكم بلوحة المفاتيح - محسن ومتوافق مع OBS
+        function setupKeyboardControls() {
+            document.addEventListener('keydown', function(event) {
+                // منع السلوك الافتراضي للمفاتيح
+                if (['ArrowRight', 'ArrowLeft', ' ', 'r', 'R', 'p', 'P'].includes(event.key)) {
+                    event.preventDefault();
+                }
+
+                switch(event.key) {
+                    case 'ArrowRight':
+                    case ' ':
+                        nextClub();
+                        break;
+                    case 'ArrowLeft':
+                        currentClubIndex = currentClubIndex > 0 ? currentClubIndex - 1 : clubs.length - 1;
+                        displayCurrentClub();
+                        break;
+                    case 'r':
+                    case 'R':
+                        console.log('🔄 تحديث البيانات يدوياً...');
+                        loadData();
+                        break;
+                    case 'p':
+                    case 'P':
+                        if (displayInterval) {
+                            stopAutoDisplay();
+                            console.log('⏸️ تم إيقاف العرض التلقائي');
+                        } else {
+                            startAutoDisplay();
+                            console.log('▶️ تم استئناف العرض التلقائي');
+                        }
+                        break;
+                }
+            });
+
+            console.log('⌨️ تم إعداد التحكم بلوحة المفاتيح');
+        }
+
+        // إضافة معلمة منع التخزين المؤقت
+        const cacheBuster = '?v=' + new Date().getTime();
+
+        // تشغيل عند تحميل الصفحة - محسن ومتوافق مع OBS مع حل مشكلة التخزين المؤقت
+        document.addEventListener('DOMContentLoaded', async function() {
+            console.log('🚀 تم تحميل صفحة العرض الاحترافي', new Date().toLocaleString());
+            console.log('🔧 إعداد التوافق مع OBS...');
+
+            // حل مشكلة OBS: فحص معلمات URL للتحديث الإجباري
+            const urlParams = new URLSearchParams(window.location.search);
+            const forceRefresh = urlParams.has('refresh') || urlParams.has('force') || urlParams.has('cache');
+
+            if (forceRefresh) {
+                console.log('🔄 تم طلب تحديث إجباري للبيانات من OBS');
+                // مسح البيانات المحفوظة لإجبار التحديث
+                localStorage.removeItem('lastDataCheck');
+
+                // مسح التخزين المؤقت إذا أمكن
+                try {
+                    if ('caches' in window) {
+                        caches.keys().then(cacheNames => {
+                            cacheNames.forEach(cacheName => {
+                                caches.delete(cacheName);
+                            });
+                        });
+                    }
+                } catch (error) {
+                    console.warn('⚠️ لا يمكن مسح التخزين المؤقت:', error);
+                }
+            }
+
+            // إضافة معلمة منع التخزين المؤقت لطلبات الصور
+            const images = document.querySelectorAll('img');
+            images.forEach(img => {
+                if (img.src && !img.src.includes('cache=')) {
+                    img.src += (img.src.includes('?') ? '&' : '?') + 'cache=' + Date.now();
+                }
+            });
+
+            // مراقبة الصور الجديدة لمنع التخزين المؤقت
+            const observer = new MutationObserver(function(mutations) {
+                mutations.forEach(function(mutation) {
+                    mutation.addedNodes.forEach(function(node) {
+                        if (node.nodeType === 1 && node.tagName === 'IMG') {
+                            if (node.src && !node.src.includes('cache=')) {
+                                node.src += (node.src.includes('?') ? '&' : '?') + 'cache=' + Date.now();
+                            }
+                        }
+                    });
+                });
+            });
+            observer.observe(document.body, { childList: true, subtree: true });
+
+            try {
+                // تهيئة بسيطة ومتوافقة مع OBS
+                console.log('🔄 بدء التهيئة البسيطة...');
+
+                // تهيئة مدير البيانات إذا كان متاحاً
+                if (typeof TransfermarktDataManager !== 'undefined') {
+                    try {
+                        console.log('🔄 تهيئة مدير البيانات...');
+                        const dataManager = new TransfermarktDataManager();
+                        await dataManager.ensureDefaultClubs();
+                        console.log('✅ تم تهيئة مدير البيانات');
+                    } catch (error) {
+                        console.warn('⚠️ خطأ في تهيئة مدير البيانات:', error.message);
+                    }
+                } else {
+                    console.warn('⚠️ مدير البيانات غير متاح');
+                }
+
+                // تهيئة النظام الموحد لحل مشكلة الشعارات إذا كان متاحاً
+                if (window.universalLogoFix) {
+                    try {
+                        if (!window.universalLogoFix.isInitialized) {
+                            console.log('🔄 تهيئة النظام الموحد لحل مشكلة الشعارات...');
+                            await window.universalLogoFix.init();
+                            console.log('✅ تم تهيئة النظام الموحد لحل مشكلة الشعارات');
+                        } else {
+                            console.log('✅ النظام الموحد متهيأ بالفعل');
+                        }
+                    } catch (error) {
+                        console.warn('⚠️ خطأ في تهيئة النظام الموحد لحل مشكلة الشعارات:', error.message);
+                    }
+                } else {
+                    console.warn('⚠️ النظام الموحد لحل مشكلة الشعارات غير متاح');
+                }
+
+                // تهيئة النظام الموحد إذا كان متاحاً
+                if (window.transfermarktSystem) {
+                    try {
+                        if (!window.transfermarktSystem.isInitialized) {
+                            console.log('🔄 تهيئة النظام الموحد...');
+                            await window.transfermarktSystem.init();
+                            console.log('✅ تم تهيئة النظام الموحد');
+                        } else {
+                            console.log('✅ النظام الموحد متهيأ بالفعل');
+                        }
+                    } catch (error) {
+                        console.warn('⚠️ خطأ في تهيئة النظام الموحد:', error.message);
+                    }
+                } else {
+                    console.warn('⚠️ النظام الموحد غير متاح');
+                }
+
+                console.log('✅ تم إكمال التهيئة البسيطة');
+
+                // تهيئة نظام الإصلاح السريع
+                if (window.quickFixSystem) {
+                    try {
+                        console.log('🔄 تهيئة نظام الإصلاح السريع...');
+                        await window.quickFixSystem.init();
+                        console.log('✅ تم تهيئة نظام الإصلاح السريع');
+                    } catch (error) {
+                        console.warn('⚠️ خطأ في تهيئة نظام الإصلاح السريع:', error.message);
+                    }
+                }
+
+                // إعداد المراقبة والتحكم
+                setupStorageListener();
+                setupKeyboardControls();
+
+                // تأخير قصير للتأكد من اكتمال التهيئة في OBS
+                setTimeout(() => {
+                    // تحميل البيانات مع إجبار التحديث إذا لزم الأمر
+                    loadData(forceRefresh || true);
+                }, 1500);
+
+                console.log('⌨️ التحكم: مسافة/سهم يمين = التالي، سهم يسار = السابق، R = تحديث، P = إيقاف/تشغيل');
+                console.log('🔧 النظام جاهز للعمل مع OBS');
+
+            } catch (error) {
+                console.error('❌ خطأ في تهيئة النظام:', error);
+
+                // محاولة تحميل البيانات حتى لو فشلت التهيئة
+                try {
+                    console.log('🔄 محاولة تحميل البيانات رغم فشل التهيئة...');
+                    setupStorageListener();
+                    setupKeyboardControls();
+
+                    // تأخير أطول في حالة الخطأ
+                    setTimeout(() => {
+                        loadData(true); // إجبار التحديث في حالة الخطأ
+                    }, 3000);
+                } catch (fallbackError) {
+                    console.error('❌ فشل في تحميل البيانات:', fallbackError);
+                    showError('فشل في تهيئة النظام: ' + error.message + '\n\nيرجى:\n1. فتح صفحة استخراج البيانات أولاً\n2. استخراج البيانات من Transfermarkt\n3. العودة لهذه الصفحة');
+                }
+            }
+        });
+
+        // معالجة الأخطاء العامة - محسن ومتوافق مع OBS
+        window.addEventListener('error', function(event) {
+            console.error('❌ خطأ JavaScript:', event.error);
+            console.error('❌ تفاصيل الخطأ:', {
+                message: event.message,
+                filename: event.filename,
+                lineno: event.lineno,
+                colno: event.colno
+            });
+
+            // عدم إظهار رسالة خطأ في OBS لتجنب التداخل
+            // showError('حدث خطأ في التطبيق');
+        });
+
+        // تنظيف عند إغلاق الصفحة - محسن ومتوافق مع OBS
+        window.addEventListener('beforeunload', function() {
+            try {
+                stopAutoDisplay();
+                console.log('🧹 تم تنظيف الموارد عند إغلاق الصفحة');
+            } catch (error) {
+                console.warn('⚠️ خطأ في تنظيف الموارد:', error);
+            }
+        });
+
+        console.log('✅ تم تحميل جميع وظائف العرض الاحترافي');
+        console.log('🔧 النظام محسن ومتوافق مع OBS');
+        console.log('📊 جاهز لعرض البيانات من جميع المصادر');
+        console.log('🚫 تم إخفاء الإشعارات في الواجهة الرئيسية');
+        console.log('📱 النظام محسن للبث المباشر 1920x1080');
+    </script>
+</body>
+</html>

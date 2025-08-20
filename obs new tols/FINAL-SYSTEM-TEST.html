@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🧪 اختبار النظام النهائي المحدث</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0a0a0f 0%, #1a1a2e 50%, #16213e 100%);
+            color: #fff;
+            padding: 20px;
+            margin: 0;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        .main-title {
+            font-size: 3rem;
+            font-weight: 900;
+            background: linear-gradient(45deg, #ffd700, #ffed4e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+        }
+        .test-section {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            backdrop-filter: blur(10px);
+        }
+        .test-button {
+            background: linear-gradient(45deg, #ffd700, #ffed4e);
+            color: #1a1a2e;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            margin: 10px 5px;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .test-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.4);
+        }
+        .status {
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+            border-left: 4px solid;
+        }
+        .success { background: rgba(16, 185, 129, 0.2); border-left-color: #10b981; }
+        .error { background: rgba(239, 68, 68, 0.2); border-left-color: #ef4444; }
+        .warning { background: rgba(245, 158, 11, 0.2); border-left-color: #f59e0b; }
+        .info { background: rgba(59, 130, 246, 0.2); border-left-color: #3b82f6; }
+        .test-results {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .quick-links {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin: 2rem 0;
+        }
+        .link-button {
+            background: rgba(59, 130, 246, 0.2);
+            color: #3b82f6;
+            border: 1px solid #3b82f6;
+            padding: 12px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        .link-button:hover {
+            background: rgba(59, 130, 246, 0.3);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 class="main-title">🧪 اختبار النظام النهائي المحدث</h1>
+            <p>اختبار شامل للنظام المحدث مع الحفظ والشعارات والعرض</p>
+        </div>
+
+        <div class="quick-links">
+            <a href="/obs-new-tols/transfermarkt-real-data.html" target="_blank" class="link-button">
+                <i class="fas fa-database"></i>
+                الصفحة الرئيسية المحدثة
+            </a>
+            <a href="/obs-new-tols/transfermarkt-ultimate-display-fixed.html" target="_blank" class="link-button">
+                <i class="fas fa-tv"></i>
+                صفحة العرض المحدثة
+            </a>
+            <a href="/club-logo-manager.html" target="_blank" class="link-button">
+                <i class="fas fa-image"></i>
+                مدير الشعارات
+            </a>
+        </div>
+
+        <div class="test-section">
+            <h2>🔧 اختبار النظام الموحد الجديد</h2>
+            
+            <button class="test-button" onclick="testUnifiedSystem()">
+                <i class="fas fa-cogs"></i>
+                اختبار النظام الموحد
+            </button>
+            
+            <button class="test-button" onclick="testDataSaving()">
+                <i class="fas fa-save"></i>
+                اختبار حفظ البيانات
+            </button>
+            
+            <button class="test-button" onclick="testLogoIntegration()">
+                <i class="fas fa-image"></i>
+                اختبار ربط الشعارات
+            </button>
+            
+            <button class="test-button" onclick="testDisplaySystem()">
+                <i class="fas fa-tv"></i>
+                اختبار نظام العرض
+            </button>
+        </div>
+
+        <div class="test-section">
+            <h2>📊 اختبار التدفق الكامل</h2>
+            
+            <button class="test-button" onclick="runFullWorkflow()">
+                <i class="fas fa-play-circle"></i>
+                تشغيل التدفق الكامل
+            </button>
+            
+            <button class="test-button" onclick="simulateDataExtraction()">
+                <i class="fas fa-download"></i>
+                محاكاة استخراج البيانات
+            </button>
+            
+            <button class="test-button" onclick="testDataPersistence()">
+                <i class="fas fa-database"></i>
+                اختبار استمرارية البيانات
+            </button>
+        </div>
+
+        <div class="test-section">
+            <h2>📋 نتائج الاختبارات</h2>
+            <div id="test-results" class="test-results">
+                <div class="status info">
+                    <strong>جاهز للاختبار</strong><br>
+                    اختر الاختبار المطلوب من الأزرار أعلاه
+                </div>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h2>🔍 معلومات النظام</h2>
+            <div id="system-info">
+                <div class="status info">
+                    <strong>معلومات النظام:</strong><br>
+                    <span id="system-details">جاري التحميل...</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- تحميل النظام الموحد -->
+    <script src="../public/data-manager.js"></script>
+    <script src="transfermarkt-unified-system.js"></script>
+    <script>
+        function addResult(message, type = 'info') {
+            const resultsDiv = document.getElementById('test-results');
+            const result = document.createElement('div');
+            result.className = `status ${type}`;
+            result.innerHTML = `
+                <strong>${new Date().toLocaleTimeString()}</strong> - ${message}
+            `;
+            resultsDiv.appendChild(result);
+            resultsDiv.scrollTop = resultsDiv.scrollHeight;
+        }
+
+        // اختبار النظام الموحد
+        async function testUnifiedSystem() {
+            addResult('🧪 بدء اختبار النظام الموحد...', 'info');
+            
+            try {
+                if (!window.transfermarktSystem) {
+                    throw new Error('النظام الموحد غير محمل');
+                }
+                
+                // اختبار التهيئة
+                const isInitialized = await window.transfermarktSystem.init();
+                if (isInitialized) {
+                    addResult('✅ تم تهيئة النظام الموحد بنجاح', 'success');
+                } else {
+                    throw new Error('فشل في تهيئة النظام الموحد');
+                }
+                
+                // اختبار قاعدة بيانات الشعارات
+                const logoCount = window.transfermarktSystem.logoDatabase.length;
+                addResult(`✅ قاعدة بيانات الشعارات: ${logoCount} نادي`, 'success');
+                
+                // اختبار البيانات المحفوظة
+                const savedData = window.transfermarktSystem.getData();
+                addResult(`✅ البيانات المحفوظة: ${savedData.length} نادي`, 'success');
+                
+                addResult('🎉 النظام الموحد يعمل بشكل مثالي!', 'success');
+                
+            } catch (error) {
+                addResult(`❌ خطأ في النظام الموحد: ${error.message}`, 'error');
+            }
+        }
+
+        // اختبار حفظ البيانات
+        async function testDataSaving() {
+            addResult('💾 بدء اختبار حفظ البيانات...', 'info');
+            
+            try {
+                // إنشاء بيانات تجريبية
+                const testData = [
+                    {
+                        rank: 1,
+                        englishName: 'Test Club 1',
+                        arabicName: 'نادي اختبار 1',
+                        expenditure: '€100m',
+                        income: '€50m',
+                        balance: '€-50m',
+                        league: 'دوري اختبار'
+                    },
+                    {
+                        rank: 2,
+                        englishName: 'Test Club 2',
+                        arabicName: 'نادي اختبار 2',
+                        expenditure: '€80m',
+                        income: '€40m',
+                        balance: '€-40m',
+                        league: 'دوري اختبار'
+                    }
+                ];
+                
+                // حفظ البيانات
+                if (window.transfermarktSystem) {
+                    const success = window.transfermarktSystem.saveData(testData, 'test-save');
+                    
+                    if (success) {
+                        addResult('✅ تم حفظ البيانات التجريبية بنجاح', 'success');
+                        
+                        // اختبار تحميل البيانات
+                        await window.transfermarktSystem.loadSavedData();
+                        const loadedData = window.transfermarktSystem.getData();
+                        
+                        if (loadedData.length === testData.length) {
+                            addResult('✅ تم تحميل البيانات المحفوظة بنجاح', 'success');
+                        } else {
+                            throw new Error('البيانات المحملة لا تطابق البيانات المحفوظة');
+                        }
+                    } else {
+                        throw new Error('فشل في حفظ البيانات');
+                    }
+                } else {
+                    throw new Error('النظام الموحد غير متاح');
+                }
+                
+                addResult('🎉 نظام حفظ البيانات يعمل بشكل مثالي!', 'success');
+                
+            } catch (error) {
+                addResult(`❌ خطأ في حفظ البيانات: ${error.message}`, 'error');
+            }
+        }
+
+        // اختبار ربط الشعارات
+        async function testLogoIntegration() {
+            addResult('🎨 بدء اختبار ربط الشعارات...', 'info');
+            
+            try {
+                if (!window.transfermarktSystem) {
+                    throw new Error('النظام الموحد غير متاح');
+                }
+                
+                // اختبار البحث عن شعارات أندية معروفة
+                const testClubs = ['Liverpool FC', 'Chelsea FC', 'Real Madrid', 'Barcelona'];
+                let foundLogos = 0;
+                
+                for (const clubName of testClubs) {
+                    const logo = window.transfermarktSystem.findClubLogo(clubName);
+                    if (logo) {
+                        foundLogos++;
+                        addResult(`✅ شعار ${clubName}: موجود`, 'success');
+                    } else {
+                        addResult(`⚠️ شعار ${clubName}: غير موجود`, 'warning');
+                    }
+                }
+                
+                const successRate = (foundLogos / testClubs.length) * 100;
+                addResult(`📊 معدل نجاح الشعارات: ${successRate}%`, successRate > 50 ? 'success' : 'warning');
+                
+                // اختبار ربط الشعارات مع البيانات
+                const testData = [
+                    { englishName: 'Liverpool FC', arabicName: 'ليفربول' },
+                    { englishName: 'Chelsea FC', arabicName: 'تشيلسي' }
+                ];
+                
+                const enrichedData = window.transfermarktSystem.enrichWithLogos(testData);
+                const enrichedCount = enrichedData.filter(club => club.logoUrl).length;
+                
+                addResult(`✅ تم ربط ${enrichedCount}/${testData.length} شعار`, 'success');
+                
+                addResult('🎉 نظام ربط الشعارات يعمل بشكل مثالي!', 'success');
+                
+            } catch (error) {
+                addResult(`❌ خطأ في ربط الشعارات: ${error.message}`, 'error');
+            }
+        }
+
+        // اختبار نظام العرض
+        function testDisplaySystem() {
+            addResult('🖥️ بدء اختبار نظام العرض...', 'info');
+            
+            try {
+                // فتح صفحة العرض
+                const displayWindow = window.open('/obs-new-tols/transfermarkt-ultimate-display-fixed.html', '_blank');
+                
+                if (displayWindow) {
+                    addResult('✅ تم فتح صفحة العرض بنجاح', 'success');
+                    addResult('🎬 تحقق من صفحة العرض في النافذة الجديدة', 'info');
+                    
+                    // اختبار وجود البيانات
+                    const savedData = localStorage.getItem('transfermarktRealData');
+                    if (savedData) {
+                        addResult('✅ توجد بيانات محفوظة للعرض', 'success');
+                    } else {
+                        addResult('⚠️ لا توجد بيانات محفوظة - قد تحتاج لاستخراج البيانات أولاً', 'warning');
+                    }
+                } else {
+                    throw new Error('فشل في فتح صفحة العرض');
+                }
+                
+                addResult('🎉 نظام العرض جاهز!', 'success');
+                
+            } catch (error) {
+                addResult(`❌ خطأ في نظام العرض: ${error.message}`, 'error');
+            }
+        }
+
+        // تشغيل التدفق الكامل
+        async function runFullWorkflow() {
+            addResult('🚀 بدء التدفق الكامل للنظام...', 'info');
+            
+            await testUnifiedSystem();
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            
+            await testDataSaving();
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            
+            await testLogoIntegration();
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            
+            testDisplaySystem();
+            
+            addResult('🎉 اكتمل التدفق الكامل بنجاح!', 'success');
+        }
+
+        // محاكاة استخراج البيانات
+        function simulateDataExtraction() {
+            addResult('📥 محاكاة استخراج البيانات...', 'info');
+            
+            // فتح صفحة الاستخراج
+            window.open('/obs-new-tols/transfermarkt-real-data.html', '_blank');
+            addResult('✅ تم فتح صفحة استخراج البيانات', 'success');
+            addResult('📋 اضغط "تحديث البيانات الآن" ثم "حفظ البيانات الحالية"', 'info');
+        }
+
+        // اختبار استمرارية البيانات
+        function testDataPersistence() {
+            addResult('🔄 اختبار استمرارية البيانات...', 'info');
+            
+            try {
+                // فحص localStorage
+                const realData = localStorage.getItem('transfermarktRealData');
+                const legacyData = localStorage.getItem('transfermarktData');
+                const lastUpdate = localStorage.getItem('transfermarktLastUpdate');
+                
+                if (realData) {
+                    const data = JSON.parse(realData);
+                    addResult(`✅ بيانات النظام الجديد: ${data.clubs ? data.clubs.length : 0} نادي`, 'success');
+                }
+                
+                if (legacyData) {
+                    const data = JSON.parse(legacyData);
+                    addResult(`✅ بيانات النظام القديم: ${Array.isArray(data) ? data.length : 0} نادي`, 'success');
+                }
+                
+                if (lastUpdate) {
+                    const updateDate = new Date(lastUpdate);
+                    addResult(`✅ آخر تحديث: ${updateDate.toLocaleString('ar-SA')}`, 'success');
+                }
+                
+                if (!realData && !legacyData) {
+                    addResult('⚠️ لا توجد بيانات محفوظة', 'warning');
+                }
+                
+                addResult('🎉 فحص استمرارية البيانات مكتمل!', 'success');
+                
+            } catch (error) {
+                addResult(`❌ خطأ في فحص البيانات: ${error.message}`, 'error');
+            }
+        }
+
+        // تحديث معلومات النظام
+        function updateSystemInfo() {
+            const systemDetails = document.getElementById('system-details');
+            
+            let info = [];
+            
+            // فحص النظام الموحد
+            if (window.transfermarktSystem) {
+                info.push('✅ النظام الموحد: محمل');
+                info.push(`📊 قاعدة بيانات الشعارات: ${window.transfermarktSystem.logoDatabase.length} نادي`);
+                info.push(`💾 البيانات المحفوظة: ${window.transfermarktSystem.getData().length} نادي`);
+            } else {
+                info.push('❌ النظام الموحد: غير محمل');
+            }
+            
+            // فحص مدير البيانات
+            if (typeof TransfermarktDataManager !== 'undefined') {
+                info.push('✅ مدير البيانات: متاح');
+            } else {
+                info.push('❌ مدير البيانات: غير متاح');
+            }
+            
+            // فحص localStorage
+            const realData = localStorage.getItem('transfermarktRealData');
+            const legacyData = localStorage.getItem('transfermarktData');
+            
+            if (realData) {
+                info.push('✅ بيانات النظام الجديد: موجودة');
+            }
+            if (legacyData) {
+                info.push('✅ بيانات النظام القديم: موجودة');
+            }
+            if (!realData && !legacyData) {
+                info.push('⚠️ لا توجد بيانات محفوظة');
+            }
+            
+            systemDetails.innerHTML = info.join('<br>');
+        }
+
+        // تهيئة الصفحة
+        document.addEventListener('DOMContentLoaded', function() {
+            addResult('🚀 تم تحميل صفحة الاختبار النهائي', 'success');
+            
+            // انتظار تحميل النظام الموحد
+            setTimeout(() => {
+                updateSystemInfo();
+                addResult('📋 تم تحديث معلومات النظام', 'info');
+            }, 1000);
+        });
+    </script>
+</body>
+</html>

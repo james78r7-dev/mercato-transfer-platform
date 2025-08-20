@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔧 أداة اختبار النظام المحسن - Crash Test Tool</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0a0a0f 0%, #1a1a2e 50%, #16213e 100%);
+            color: #f8fafc;
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .title {
+            font-size: 2.5rem;
+            font-weight: 900;
+            background: linear-gradient(45deg, #ffd700, #ffed4e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: #94a3b8;
+            margin-bottom: 2rem;
+        }
+
+        .test-section {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .test-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #ffd700;
+            margin-bottom: 1rem;
+        }
+
+        .test-btn {
+            background: linear-gradient(45deg, #ffd700, #ffed4e);
+            color: #1a1a2e;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            margin: 0.5rem;
+            font-size: 16px;
+        }
+
+        .test-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.4);
+        }
+
+        .test-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .result-area {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-top: 1rem;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            white-space: pre-wrap;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .status {
+            padding: 10px 15px;
+            border-radius: 8px;
+            margin: 0.5rem 0;
+            font-weight: bold;
+        }
+
+        .status.success {
+            background: rgba(16, 185, 129, 0.2);
+            border: 1px solid #10b981;
+            color: #10b981;
+        }
+
+        .status.error {
+            background: rgba(239, 68, 68, 0.2);
+            border: 1px solid #ef4444;
+            color: #ef4444;
+        }
+
+        .status.warning {
+            background: rgba(245, 158, 11, 0.2);
+            border: 1px solid #f59e0b;
+            color: #f59e0b;
+        }
+
+        .status.info {
+            background: rgba(59, 130, 246, 0.2);
+            border: 1px solid #3b82f6;
+            color: #3b82f6;
+        }
+
+        .quick-links {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+
+        .quick-link {
+            background: linear-gradient(45deg, #3b82f6, #1d4ed8);
+            color: white;
+            text-decoration: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .quick-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(59, 130, 246, 0.4);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 class="title">🔧 أداة اختبار النظام المحسن</h1>
+            <p class="subtitle">اختبار النظام قبل فتح الصفحات الرئيسية لتجنب الانهيار</p>
+        </div>
+
+        <div class="test-section">
+            <h2 class="test-title">🧪 اختبار النظام الموحد</h2>
+            <button class="test-btn" onclick="testUniversalLogoFix()">اختبار النظام الموحد</button>
+            <button class="test-btn" onclick="testInitialization()">اختبار التهيئة</button>
+            <button class="test-btn" onclick="testLogoSearch()">اختبار البحث عن الشعارات</button>
+            <button class="test-btn" onclick="testMemoryUsage()">اختبار استخدام الذاكرة</button>
+            <div id="universalTestResult" class="result-area"></div>
+        </div>
+
+        <div class="test-section">
+            <h2 class="test-title">🔍 فحص البيانات</h2>
+            <button class="test-btn" onclick="checkLocalStorage()">فحص localStorage</button>
+            <button class="test-btn" onclick="checkDataIntegrity()">فحص سلامة البيانات</button>
+            <button class="test-btn" onclick="clearTestData()">مسح بيانات الاختبار</button>
+            <div id="dataTestResult" class="result-area"></div>
+        </div>
+
+        <div class="test-section">
+            <h2 class="test-title">🚀 اختبار الصفحات</h2>
+            <button class="test-btn" onclick="testPageLoad()">اختبار تحميل الصفحات</button>
+            <button class="test-btn" onclick="testPerformance()">اختبار الأداء</button>
+            <div id="pageTestResult" class="result-area"></div>
+        </div>
+
+        <div class="quick-links">
+            <a href="transfermarkt-real-data.html" class="quick-link" target="_blank">فتح صفحة البيانات الحقيقية</a>
+            <a href="transfermarkt-ultimate-display-fixed.html" class="quick-link" target="_blank">فتح صفحة العرض الاحترافي</a>
+            <a href="instant-logo-fix.html" class="quick-link" target="_blank">أداة إصلاح الشعارات</a>
+            <a href="logo-debug-tool.html" class="quick-link" target="_blank">أداة تشخيص الشعارات</a>
+        </div>
+    </div>
+
+    <script src="universal-logo-fix.js"></script>
+    <script>
+        let testResults = [];
+
+        function log(message, type = 'info') {
+            const timestamp = new Date().toLocaleTimeString();
+            const logMessage = `[${timestamp}] ${message}`;
+            testResults.push({ message: logMessage, type });
+            console.log(logMessage);
+        }
+
+        function displayResults(containerId) {
+            const container = document.getElementById(containerId);
+            let html = '';
+            
+            testResults.forEach(result => {
+                const statusClass = result.type || 'info';
+                html += `<div class="status ${statusClass}">${result.message}</div>`;
+            });
+            
+            container.innerHTML = html;
+            container.scrollTop = container.scrollHeight;
+        }
+
+        function clearResults() {
+            testResults = [];
+        }
+
+        // اختبار النظام الموحد
+        async function testUniversalLogoFix() {
+            clearResults();
+            log('🧪 بدء اختبار النظام الموحد...', 'info');
+
+            try {
+                // اختبار وجود النظام
+                if (!window.universalLogoFix) {
+                    log('❌ النظام الموحد غير موجود', 'error');
+                    return;
+                }
+                log('✅ النظام الموحد موجود', 'success');
+
+                // اختبار التهيئة
+                if (!window.universalLogoFix.isInitialized) {
+                    log('🔄 تهيئة النظام الموحد...', 'warning');
+                    await window.universalLogoFix.init();
+                }
+                log('✅ النظام الموحد متهيأ', 'success');
+
+                // اختبار قاعدة البيانات
+                const database = window.universalLogoFix.getDatabase();
+                log(`📊 قاعدة البيانات تحتوي على ${database.length} نادي`, 'info');
+
+                const clubsWithLogos = window.universalLogoFix.getClubsWithLogosCount();
+                log(`🎨 ${clubsWithLogos} نادي لديهم شعارات`, 'info');
+
+                // اختبار البحث عن الشعارات
+                const testClub = 'Liverpool FC';
+                const logo = window.universalLogoFix.findClubLogo(testClub);
+                if (logo) {
+                    log(`✅ تم العثور على شعار ${testClub}`, 'success');
+                } else {
+                    log(`⚠️ لم يتم العثور على شعار ${testClub}`, 'warning');
+                }
+
+                log('✅ اختبار النظام الموحد مكتمل بنجاح', 'success');
+
+            } catch (error) {
+                log(`❌ خطأ في اختبار النظام الموحد: ${error.message}`, 'error');
+            }
+
+            displayResults('universalTestResult');
+        }
+
+        // اختبار التهيئة
+        async function testInitialization() {
+            clearResults();
+            log('🔄 بدء اختبار التهيئة...', 'info');
+
+            try {
+                // اختبار التهيئة المتعددة
+                log('🔄 محاولة التهيئة الأولى...', 'info');
+                await window.universalLogoFix.init();
+                log('✅ التهيئة الأولى نجحت', 'success');
+
+                log('🔄 محاولة التهيئة الثانية (يجب أن تتجاهل)...', 'info');
+                await window.universalLogoFix.init();
+                log('✅ التهيئة الثانية تم تجاهلها (صحيح)', 'success');
+
+                // اختبار حالة التهيئة
+                log(`📊 حالة التهيئة: ${window.universalLogoFix.isInitialized}`, 'info');
+                log(`📊 حالة التهيئة الجارية: ${window.universalLogoFix.isInitializing}`, 'info');
+
+                log('✅ اختبار التهيئة مكتمل بنجاح', 'success');
+
+            } catch (error) {
+                log(`❌ خطأ في اختبار التهيئة: ${error.message}`, 'error');
+            }
+
+            displayResults('universalTestResult');
+        }
+
+        // اختبار البحث عن الشعارات
+        async function testLogoSearch() {
+            clearResults();
+            log('🔍 بدء اختبار البحث عن الشعارات...', 'info');
+
+            try {
+                const testClubs = [
+                    'Liverpool FC',
+                    'Chelsea FC',
+                    'Real Madrid',
+                    'Barcelona',
+                    'Manchester United',
+                    'نادي غير موجود'
+                ];
+
+                for (const club of testClubs) {
+                    const logo = window.universalLogoFix.findClubLogo(club);
+                    if (logo) {
+                        log(`✅ ${club}: ${logo.substring(0, 50)}...`, 'success');
+                    } else {
+                        log(`⚠️ ${club}: لم يتم العثور على شعار`, 'warning');
+                    }
+                }
+
+                log('✅ اختبار البحث عن الشعارات مكتمل', 'success');
+
+            } catch (error) {
+                log(`❌ خطأ في اختبار البحث عن الشعارات: ${error.message}`, 'error');
+            }
+
+            displayResults('universalTestResult');
+        }
+
+        // اختبار استخدام الذاكرة
+        async function testMemoryUsage() {
+            clearResults();
+            log('💾 بدء اختبار استخدام الذاكرة...', 'info');
+
+            try {
+                // اختبار تحميل بيانات كبيرة
+                const largeDataset = Array.from({ length: 1000 }, (_, i) => ({
+                    englishName: `Test Club ${i}`,
+                    arabicName: `نادي اختبار ${i}`,
+                    logoUrl: `https://example.com/logo${i}.png`
+                }));
+
+                log(`📊 إنشاء مجموعة بيانات كبيرة: ${largeDataset.length} نادي`, 'info');
+
+                // اختبار ربط الشعارات
+                const startTime = performance.now();
+                const enrichedData = window.universalLogoFix.enrichWithLogos(largeDataset);
+                const endTime = performance.now();
+
+                log(`⏱️ وقت ربط الشعارات: ${(endTime - startTime).toFixed(2)}ms`, 'info');
+                log(`📊 البيانات المربوطة: ${enrichedData.length} نادي`, 'info');
+
+                // اختبار استخدام الذاكرة
+                if (performance.memory) {
+                    const memory = performance.memory;
+                    log(`💾 استخدام الذاكرة: ${(memory.usedJSHeapSize / 1024 / 1024).toFixed(2)}MB`, 'info');
+                    log(`💾 الحد الأقصى للذاكرة: ${(memory.jsHeapSizeLimit / 1024 / 1024).toFixed(2)}MB`, 'info');
+                }
+
+                log('✅ اختبار استخدام الذاكرة مكتمل', 'success');
+
+            } catch (error) {
+                log(`❌ خطأ في اختبار استخدام الذاكرة: ${error.message}`, 'error');
+            }
+
+            displayResults('universalTestResult');
+        }
+
+        // فحص localStorage
+        function checkLocalStorage() {
+            clearResults();
+            log('🔍 بدء فحص localStorage...', 'info');
+
+            try {
+                const keys = [
+                    'clubManagerData',
+                    'verifiedClubs',
+                    'transfermarktData',
+                    'transfermarktRealData',
+                    'unifiedLogoDatabase'
+                ];
+
+                for (const key of keys) {
+                    const data = localStorage.getItem(key);
+                    if (data) {
+                        try {
+                            const parsed = JSON.parse(data);
+                            let count = 0;
+                            
+                            if (Array.isArray(parsed)) {
+                                count = parsed.length;
+                            } else if (parsed.clubs && Array.isArray(parsed.clubs)) {
+                                count = parsed.clubs.length;
+                            }
+
+                            log(`✅ ${key}: ${count} نادي (${(data.length / 1024).toFixed(2)}KB)`, 'success');
+                        } catch (e) {
+                            log(`⚠️ ${key}: بيانات غير صالحة`, 'warning');
+                        }
+                    } else {
+                        log(`❌ ${key}: غير موجود`, 'error');
+                    }
+                }
+
+                log('✅ فحص localStorage مكتمل', 'success');
+
+            } catch (error) {
+                log(`❌ خطأ في فحص localStorage: ${error.message}`, 'error');
+            }
+
+            displayResults('dataTestResult');
+        }
+
+        // فحص سلامة البيانات
+        function checkDataIntegrity() {
+            clearResults();
+            log('🔍 بدء فحص سلامة البيانات...', 'info');
+
+            try {
+                const clubManagerData = localStorage.getItem('clubManagerData');
+                if (clubManagerData) {
+                    const data = JSON.parse(clubManagerData);
+                    let validClubs = 0;
+                    let clubsWithLogos = 0;
+
+                    for (const club of data) {
+                        if (club && (club.englishName || club.arabicName)) {
+                            validClubs++;
+                            if (club.logoUrl) {
+                                clubsWithLogos++;
+                            }
+                        }
+                    }
+
+                    log(`📊 الأندية الصالحة: ${validClubs}/${data.length}`, 'info');
+                    log(`🎨 الأندية مع الشعارات: ${clubsWithLogos}/${validClubs}`, 'info');
+
+                    if (clubsWithLogos > 0) {
+                        log('✅ البيانات صالحة وتحتوي على شعارات', 'success');
+                    } else {
+                        log('⚠️ البيانات صالحة ولكن بدون شعارات', 'warning');
+                    }
+                } else {
+                    log('❌ لا توجد بيانات في clubManagerData', 'error');
+                }
+
+                log('✅ فحص سلامة البيانات مكتمل', 'success');
+
+            } catch (error) {
+                log(`❌ خطأ في فحص سلامة البيانات: ${error.message}`, 'error');
+            }
+
+            displayResults('dataTestResult');
+        }
+
+        // مسح بيانات الاختبار
+        function clearTestData() {
+            clearResults();
+            log('🧹 بدء مسح بيانات الاختبار...', 'info');
+
+            try {
+                const testKeys = [
+                    'testData',
+                    'tempData',
+                    'debugData'
+                ];
+
+                for (const key of testKeys) {
+                    if (localStorage.getItem(key)) {
+                        localStorage.removeItem(key);
+                        log(`🗑️ تم مسح ${key}`, 'info');
+                    }
+                }
+
+                log('✅ مسح بيانات الاختبار مكتمل', 'success');
+
+            } catch (error) {
+                log(`❌ خطأ في مسح بيانات الاختبار: ${error.message}`, 'error');
+            }
+
+            displayResults('dataTestResult');
+        }
+
+        // اختبار تحميل الصفحات
+        async function testPageLoad() {
+            clearResults();
+            log('🚀 بدء اختبار تحميل الصفحات...', 'info');
+
+            try {
+                // اختبار تحميل النظام الموحد
+                log('🔄 اختبار تحميل النظام الموحد...', 'info');
+                if (window.universalLogoFix) {
+                    log('✅ النظام الموحد محمل بنجاح', 'success');
+                } else {
+                    log('❌ فشل في تحميل النظام الموحد', 'error');
+                }
+
+                // اختبار تحميل النظام الموحد للبيانات
+                log('🔄 اختبار تحميل النظام الموحد للبيانات...', 'info');
+                if (window.transfermarktSystem) {
+                    log('✅ النظام الموحد للبيانات محمل بنجاح', 'success');
+                } else {
+                    log('⚠️ النظام الموحد للبيانات غير محمل', 'warning');
+                }
+
+                // اختبار مدير البيانات
+                log('🔄 اختبار تحميل مدير البيانات...', 'info');
+                if (typeof TransfermarktDataManager !== 'undefined') {
+                    log('✅ مدير البيانات محمل بنجاح', 'success');
+                } else {
+                    log('⚠️ مدير البيانات غير محمل', 'warning');
+                }
+
+                log('✅ اختبار تحميل الصفحات مكتمل', 'success');
+
+            } catch (error) {
+                log(`❌ خطأ في اختبار تحميل الصفحات: ${error.message}`, 'error');
+            }
+
+            displayResults('pageTestResult');
+        }
+
+        // اختبار الأداء
+        async function testPerformance() {
+            clearResults();
+            log('⚡ بدء اختبار الأداء...', 'info');
+
+            try {
+                // اختبار وقت التهيئة
+                const initStart = performance.now();
+                await window.universalLogoFix.init();
+                const initEnd = performance.now();
+                log(`⏱️ وقت التهيئة: ${(initEnd - initStart).toFixed(2)}ms`, 'info');
+
+                // اختبار وقت البحث
+                const searchStart = performance.now();
+                for (let i = 0; i < 100; i++) {
+                    window.universalLogoFix.findClubLogo('Liverpool FC');
+                }
+                const searchEnd = performance.now();
+                log(`⏱️ وقت 100 عملية بحث: ${(searchEnd - searchStart).toFixed(2)}ms`, 'info');
+
+                // اختبار وقت ربط الشعارات
+                const testData = Array.from({ length: 50 }, (_, i) => ({
+                    englishName: `Test Club ${i}`,
+                    arabicName: `نادي اختبار ${i}`
+                }));
+
+                const enrichStart = performance.now();
+                window.universalLogoFix.enrichWithLogos(testData);
+                const enrichEnd = performance.now();
+                log(`⏱️ وقت ربط 50 شعار: ${(enrichEnd - enrichStart).toFixed(2)}ms`, 'info');
+
+                log('✅ اختبار الأداء مكتمل', 'success');
+
+            } catch (error) {
+                log(`❌ خطأ في اختبار الأداء: ${error.message}`, 'error');
+            }
+
+            displayResults('pageTestResult');
+        }
+
+        // تهيئة الصفحة
+        document.addEventListener('DOMContentLoaded', function() {
+            log('🚀 تم تحميل أداة اختبار النظام المحسن', 'success');
+            log('💡 انقر على الأزرار لاختبار النظام قبل فتح الصفحات الرئيسية', 'info');
+        });
+    </script>
+</body>
+</html> 

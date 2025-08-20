@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تشخيص مشاكل النظام</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #1a1a2e;
+            color: #fff;
+            padding: 20px;
+            margin: 0;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .test-section {
+            background: #16213e;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 4px solid #ffd700;
+        }
+        .test-result {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+        .success { background: #10b981; }
+        .error { background: #ef4444; }
+        .warning { background: #f59e0b; }
+        .info { background: #3b82f6; }
+        button {
+            background: #ffd700;
+            color: #1a1a2e;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background: #ffed4e;
+        }
+        pre {
+            background: #0f172a;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔍 تشخيص مشاكل نظام Transfermarkt</h1>
+        
+        <div class="test-section">
+            <h2>1. فحص localStorage</h2>
+            <button onclick="testLocalStorage()">فحص البيانات المحفوظة</button>
+            <div id="localStorage-result"></div>
+        </div>
+
+        <div class="test-section">
+            <h2>2. فحص CORS Proxy</h2>
+            <button onclick="testCORSProxy()">اختبار AllOrigins</button>
+            <div id="cors-result"></div>
+        </div>
+
+        <div class="test-section">
+            <h2>3. فحص نظام الشعارات</h2>
+            <button onclick="testLogoSystem()">اختبار نظام الشعارات</button>
+            <div id="logo-result"></div>
+        </div>
+
+        <div class="test-section">
+            <h2>4. فحص الاتصال بين الصفحات</h2>
+            <button onclick="testCommunication()">اختبار التواصل</button>
+            <div id="communication-result"></div>
+        </div>
+
+        <div class="test-section">
+            <h2>5. محاكاة استخراج البيانات</h2>
+            <button onclick="simulateDataExtraction()">محاكاة الاستخراج</button>
+            <div id="extraction-result"></div>
+        </div>
+
+        <div class="test-section">
+            <h2>6. فحص شامل للنظام</h2>
+            <button onclick="runFullDiagnosis()">تشخيص شامل</button>
+            <div id="full-diagnosis-result"></div>
+        </div>
+    </div>
+
+    <script src="smart-logo-system.js"></script>
+    <script>
+        // فحص localStorage
+        function testLocalStorage() {
+            const resultDiv = document.getElementById('localStorage-result');
+            resultDiv.innerHTML = '<div class="test-result info">جاري الفحص...</div>';
+            
+            try {
+                const keys = ['transfermarktData', 'transfermarktDataFull', 'transfermarktLastUpdate'];
+                let results = '<h3>نتائج فحص localStorage:</h3>';
+                
+                keys.forEach(key => {
+                    const data = localStorage.getItem(key);
+                    if (data) {
+                        try {
+                            const parsed = JSON.parse(data);
+                            results += `<div class="test-result success">✅ ${key}: موجود (${data.length} حرف)</div>`;
+                            if (key === 'transfermarktData' && Array.isArray(parsed)) {
+                                results += `<div class="test-result info">📊 عدد الأندية: ${parsed.length}</div>`;
+                            }
+                        } catch (e) {
+                            results += `<div class="test-result warning">⚠️ ${key}: موجود لكن تالف</div>`;
+                        }
+                    } else {
+                        results += `<div class="test-result error">❌ ${key}: غير موجود</div>`;
+                    }
+                });
+                
+                resultDiv.innerHTML = results;
+            } catch (error) {
+                resultDiv.innerHTML = `<div class="test-result error">❌ خطأ: ${error.message}</div>`;
+            }
+        }
+
+        // فحص CORS Proxy
+        async function testCORSProxy() {
+            const resultDiv = document.getElementById('cors-result');
+            resultDiv.innerHTML = '<div class="test-result info">جاري اختبار CORS Proxy...</div>';
+            
+            try {
+                const testUrl = 'https://api.allorigins.win/get?url=' + encodeURIComponent('https://www.transfermarkt.com');
+                
+                const response = await fetch(testUrl);
+                const data = await response.json();
+                
+                if (data.contents) {
+                    resultDiv.innerHTML = `
+                        <div class="test-result success">✅ CORS Proxy يعمل بشكل صحيح</div>
+                        <div class="test-result info">📄 حجم المحتوى: ${data.contents.length} حرف</div>
+                        <div class="test-result info">🌐 الحالة: ${data.status.http_code}</div>
+                    `;
+                } else {
+                    resultDiv.innerHTML = '<div class="test-result error">❌ CORS Proxy لا يعمل - لا يوجد محتوى</div>';
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `<div class="test-result error">❌ خطأ في CORS Proxy: ${error.message}</div>`;
+            }
+        }
+
+        // فحص نظام الشعارات
+        async function testLogoSystem() {
+            const resultDiv = document.getElementById('logo-result');
+            resultDiv.innerHTML = '<div class="test-result info">جاري فحص نظام الشعارات...</div>';
+            
+            try {
+                if (typeof SmartLogoSystem === 'undefined') {
+                    resultDiv.innerHTML = '<div class="test-result error">❌ نظام الشعارات غير محمل</div>';
+                    return;
+                }
+                
+                const testClubs = ['Liverpool FC', 'Chelsea FC', 'Real Madrid'];
+                let results = '<h3>نتائج فحص الشعارات:</h3>';
+                
+                for (const club of testClubs) {
+                    try {
+                        const logo = await SmartLogoSystem.getClubLogo(club);
+                        results += `<div class="test-result success">✅ ${club}: ${logo}</div>`;
+                    } catch (error) {
+                        results += `<div class="test-result error">❌ ${club}: ${error.message}</div>`;
+                    }
+                }
+                
+                const stats = SmartLogoSystem.getStats();
+                results += `<div class="test-result info">📊 إحصائيات: ${stats.totalClubs} نادي، ${stats.cachedLogos} شعار محفوظ</div>`;
+                
+                resultDiv.innerHTML = results;
+            } catch (error) {
+                resultDiv.innerHTML = `<div class="test-result error">❌ خطأ: ${error.message}</div>`;
+            }
+        }
+
+        // فحص التواصل بين الصفحات
+        function testCommunication() {
+            const resultDiv = document.getElementById('communication-result');
+            resultDiv.innerHTML = '<div class="test-result info">جاري فحص التواصل...</div>';
+            
+            try {
+                // اختبار BroadcastChannel
+                let results = '<h3>نتائج فحص التواصل:</h3>';
+                
+                if ('BroadcastChannel' in window) {
+                    results += '<div class="test-result success">✅ BroadcastChannel مدعوم</div>';
+                    
+                    const channel = new BroadcastChannel('transfermarkt-updates');
+                    channel.postMessage({
+                        type: 'test',
+                        timestamp: new Date().toISOString()
+                    });
+                    results += '<div class="test-result info">📡 تم إرسال رسالة اختبار</div>';
+                    channel.close();
+                } else {
+                    results += '<div class="test-result warning">⚠️ BroadcastChannel غير مدعوم</div>';
+                }
+                
+                // اختبار Storage Event
+                if ('addEventListener' in window) {
+                    results += '<div class="test-result success">✅ Storage Events مدعومة</div>';
+                    
+                    // اختبار localStorage
+                    localStorage.setItem('test-communication', JSON.stringify({
+                        test: true,
+                        timestamp: new Date().toISOString()
+                    }));
+                    results += '<div class="test-result info">💾 تم حفظ بيانات اختبار في localStorage</div>';
+                    localStorage.removeItem('test-communication');
+                } else {
+                    results += '<div class="test-result error">❌ Storage Events غير مدعومة</div>';
+                }
+                
+                resultDiv.innerHTML = results;
+            } catch (error) {
+                resultDiv.innerHTML = `<div class="test-result error">❌ خطأ: ${error.message}</div>`;
+            }
+        }
+
+        // محاكاة استخراج البيانات
+        async function simulateDataExtraction() {
+            const resultDiv = document.getElementById('extraction-result');
+            resultDiv.innerHTML = '<div class="test-result info">جاري محاكاة استخراج البيانات...</div>';
+
+            try {
+                // محاكاة HTML من Transfermarkt
+                const mockHTML = `
+                    <table class="items">
+                        <thead>
+                            <tr>
+                                <th>Rang</th>
+                                <th>Verein</th>
+                                <th>Ausgaben</th>
+                                <th>Einnahmen</th>
+                                <th>Bilanz</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td><a href="/liverpool">Liverpool FC</a></td>
+                                <td>€308.68m</td>
+                                <td>€63.30m</td>
+                                <td>€-245.38m</td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td><a href="/chelsea">Chelsea FC</a></td>
+                                <td>€243.77m</td>
+                                <td>€121.48m</td>
+                                <td>€-122.29m</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                `;
+
+                // تحليل HTML
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(mockHTML, 'text/html');
+                const table = doc.querySelector('table.items');
+
+                if (table) {
+                    const rows = table.querySelectorAll('tbody tr');
+                    let results = '<h3>نتائج محاكاة الاستخراج:</h3>';
+                    results += `<div class="test-result success">✅ تم العثور على الجدول</div>`;
+                    results += `<div class="test-result info">📊 عدد الصفوف: ${rows.length}</div>`;
+
+                    rows.forEach((row, index) => {
+                        const cells = row.querySelectorAll('td');
+                        if (cells.length >= 5) {
+                            const clubName = cells[1].textContent.trim();
+                            const expenditure = cells[2].textContent.trim();
+                            results += `<div class="test-result success">✅ ${index + 1}. ${clubName}: ${expenditure}</div>`;
+                        }
+                    });
+
+                    resultDiv.innerHTML = results;
+                } else {
+                    resultDiv.innerHTML = '<div class="test-result error">❌ لم يتم العثور على الجدول</div>';
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `<div class="test-result error">❌ خطأ: ${error.message}</div>`;
+            }
+        }
+
+        // تشخيص شامل
+        async function runFullDiagnosis() {
+            const resultDiv = document.getElementById('full-diagnosis-result');
+            resultDiv.innerHTML = '<div class="test-result info">جاري التشخيص الشامل...</div>';
+
+            let diagnostics = '<h3>🔍 تقرير التشخيص الشامل:</h3>';
+            let issues = [];
+            let recommendations = [];
+
+            // فحص localStorage
+            const transfermarktData = localStorage.getItem('transfermarktData');
+            if (!transfermarktData) {
+                issues.push('لا توجد بيانات محفوظة في localStorage');
+                recommendations.push('تشغيل صفحة الاستخراج أولاً والضغط على "تحديث البيانات"');
+            } else {
+                try {
+                    const data = JSON.parse(transfermarktData);
+                    if (!Array.isArray(data) || data.length === 0) {
+                        issues.push('البيانات المحفوظة فارغة أو تالفة');
+                        recommendations.push('إعادة تحديث البيانات من الصفحة الرئيسية');
+                    } else {
+                        diagnostics += `<div class="test-result success">✅ البيانات موجودة: ${data.length} نادي</div>`;
+                    }
+                } catch (e) {
+                    issues.push('البيانات المحفوظة تالفة');
+                    recommendations.push('مسح البيانات وإعادة التحديث');
+                }
+            }
+
+            // فحص نظام الشعارات
+            if (typeof SmartLogoSystem === 'undefined') {
+                issues.push('نظام الشعارات غير محمل');
+                recommendations.push('التأكد من تحميل ملف smart-logo-system.js');
+            } else {
+                diagnostics += '<div class="test-result success">✅ نظام الشعارات محمل</div>';
+            }
+
+            // فحص المتصفح
+            if (!('fetch' in window)) {
+                issues.push('المتصفح لا يدعم fetch API');
+                recommendations.push('استخدام متصفح حديث');
+            }
+
+            if (!('localStorage' in window)) {
+                issues.push('المتصفح لا يدعم localStorage');
+                recommendations.push('استخدام متصفح حديث');
+            }
+
+            // عرض المشاكل والتوصيات
+            if (issues.length > 0) {
+                diagnostics += '<h4>🚨 المشاكل المكتشفة:</h4>';
+                issues.forEach(issue => {
+                    diagnostics += `<div class="test-result error">❌ ${issue}</div>`;
+                });
+
+                diagnostics += '<h4>💡 التوصيات:</h4>';
+                recommendations.forEach(rec => {
+                    diagnostics += `<div class="test-result warning">⚠️ ${rec}</div>`;
+                });
+            } else {
+                diagnostics += '<div class="test-result success">🎉 لا توجد مشاكل واضحة!</div>';
+            }
+
+            resultDiv.innerHTML = diagnostics;
+        }
+    </script>
+</body>
+</html>
